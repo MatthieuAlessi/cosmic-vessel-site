@@ -5,6 +5,7 @@ import Footer from '@components/Footer.astro';
 import BgImage from '@components/BgImage.astro';
 import DividerGeo from '@components/DividerGeo.astro';
 import CornerOrnament from '@components/CornerOrnament.astro';
+import StarMarks from '@components/StarMarks.astro';
 import GalaxyCanvas from '@components/GalaxyCanvas.astro';
 import Button from '@components/ui/Button.astro';
 import Card from '@components/ui/Card.astro';
@@ -17,7 +18,7 @@ const roadmap = roadmapEntries.sort((a, b) => a.data.order - b.data.order);
 
 const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+  .slice(0, 4);
 
 ---
 
@@ -97,9 +98,39 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       maskClass="mask-galaxy"
     /> -->
 
+
+
+<!-- 
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.05}
+      position="object-center"
+       
+      fixedBg
+      size="cover"
+      class="   "
+    />  -->
+    <!-- Texture de fond subtile -->
+      <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.1}
+      position="object-center"
+       fixedBg
+      size="cover"
+       
+    /> 
+
+
+<div class="overlay-top"></div>
+ 
+   <!-- <div class="cache--gradient2 "></div>   -->
+
+
+
+
     <!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.9} count={180} /> -->
     <!-- <div class="cache--gradient2b"></div> -->
-    <div class="cache--gradient2"></div>
+    <!-- <div class="cache--gradient2"></div> -->
 
     <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 translate-y-[-50%] top-0">
       <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
@@ -119,8 +150,8 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
 
     <!-- ─── numbers:stats ───────────────────────────────────────── -->
-    <div class="max-w-7xl mx-auto px-6 pt-20 z-20 relative">
-      <p class="section-label text-center">Project Scale</p>
+    <div class="max-w-5xl mx-auto px-6 pt-6 z-20 relative">
+      
       <div class="relative z-10 backdrop-blur-xs p-6 mt-12 border border-primary-500 outline-1 outline-primary-700/30 outline-offset-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
           <CornerOrnament size={34} />
@@ -148,12 +179,16 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
     </div>
 
+
+ 
+
   </section>
 
 
 
 
-  <!-- <div class="relative   h-[60vh] min-h-[300px]">
+
+<div class="relative   h-[60vh] min-h-[300px]">
 
     <BgImage
       src="/images/bg1.jpeg"
@@ -165,13 +200,100 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       class="z-10"
     />
 
-
-<div class="char ">  
-    <img src="/images/char_placeholder.png" alt="">
-  </div>
-
+ 
 </div>
- -->
+
+
+
+
+  <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
+  <section class="relative bg-background-500 py-24 lg:py-32 overflow-clip">
+
+
+
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.05}
+      position="object-center"
+       
+      fixedBg
+      size="cover"
+      class="   "
+    /> 
+
+
+<div class="overlay-top"></div>
+ 
+   <!-- <div class="cache--gradient2 "></div>   -->
+
+
+    <!-- Texture de fond subtile -->
+      <!-- <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.2}
+      position="object-center"
+       fixedBg
+      size="cover"
+       
+    /> -->
+
+    
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 flex flex-col gap-24 lg:gap-36">
+
+      <!-- Bloc 1 : texte gauche / image droite -->
+      <div class="flex items-start lg:flex-row flex-col  gap-8 lg:gap-24 xl:gap-36 ">
+
+        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
+          <p class="section-label">Chapter I — The Red Moon</p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts grow more ravenous, and the children of the void become visible. In this nightmare, the world reveals the eldritch truths it had long kept hidden.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            As a result, everything turns darker, and the character begins to see the world as it would if they had gathered enough insight. By following the call, you usher in the coming of the Red Moon.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Whether it brings salvation or ruin, no one can say. The cosmos is a towering, labyrinthine cathedral — and you are the key turning in its lock.
+          </p>
+          <StarMarks class="pt-2" />
+        </div>
+
+        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
+          <img src="https://picsum.photos/seed/lore-1/640/800" alt="" class="w-full aspect-4/5 object-cover" loading="lazy" />
+        </div>
+
+      </div>
+
+      <!-- Bloc 2 : image gauche / texte droite -->
+       <div class="flex items-start lg:flex-row-reverse flex-col  gap-8 lg:gap-24 xl:gap-36 ">
+
+        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
+          <p class="section-label">Chapter II — The Ashen Blood</p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Eventually, the old sanctuary was founded — but it was brought low by an affliction known as the Ashen Blood, a slow and merciless corruption that spread through every living thing it touched.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Along with the physical transformation comes a mental unraveling. At first the afflicted assume that all they do not know is hostile, and they strike on sight — until nothing of who they were remains.
+          </p>
+          <StarMarks class="pt-2" />
+        </div>
+
+        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
+          <img src="https://picsum.photos/seed/lore-2/640/800" alt="" class="w-full aspect-4/5 object-cover" loading="lazy" />
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="line absolute top-0 left-0 w-full"></div>
+
+  </section>
+
+
+
+
 
  
 
@@ -678,9 +800,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
 
       <!-- Ornament top-left -->
-      <div class="absolute top-1 left-6 flex gap-1 text-primary text-xs">
-        <span>✦</span><span>✦</span><span>✦</span>
-      </div>
+      <StarMarks class="absolute top-1 left-6" />
 
       <!-- Editorial grid -->
       <!-- grid-rows : r1 titre | r2 titre | r3 gap | r4 texte | r5 gap | r6 titre | r7 titre | r8 gap | r9 texte -->
@@ -728,15 +848,16 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
         </div>
 
       <!-- Ornament bottom -->
-      <div class="flex justify-center gap-1 text-primary text-xs mt-8">
-        <span>✦</span><span>✦</span><span>✦</span>
-      </div>
+      <StarMarks class="justify-center mt-8" />
 
     </div>
 
      <div class="line absolute top-0 left-0 w-full"></div>
 
   </section>
+
+
+
 
 
 
@@ -752,11 +873,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       class="z-10"
     />
 
-
-<div class="char ">  
-    <img src="/images/char_placeholder.png" alt="">
-  </div>
-
+ 
 </div>
 
 
@@ -777,21 +894,22 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
   <div class="text-center relative z-20 ">
-     <p class="section-label mb-10">Timeline</p>
-    <h2 class="title-1 mb-8 text-primary-100">Roadmap</h2>
+     <p class="section-label mb-10">Concept Art & Screenshots</p>
+    <h2 class="title-1 mb-8 text-primary-100">Gallery</h2>
  <DividerGeo class="my-8"  />
-</div>  
+</div>
 
 
- 
-    <div class="max-w-7xl mx-auto">
+
+    <div class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {['gallery-1', 'gallery-2', 'gallery-3', 'gallery-4'].map((seed, i) => (
-        <div class:list={['img-overlay', i === 0 ? 'col-span-2 row-span-2' : '']}>
+      {Array.from({ length: 8 }, (_, i) => `gallery-${i + 1}`).map((seed) => (
+        <div class="img-overlay">
           <img
             src={`https://picsum.photos/seed/${seed}/800/800`}
             alt=""
             class="w-full h-full object-cover aspect-square"
+            loading="lazy"
           />
         </div>
       ))}
@@ -913,7 +1031,80 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
   </section>
 
-  <!-- ─── Blog récent ───────────────────────────────────────────────────── -->
+  <!-- ─── News (50/50 : vedette à gauche + 3 articles horizontaux à droite) ─── -->
+  {recentPosts.length > 0 && (
+    <section class="max-w-5xl mx-auto px-6 py-20 border-t border-background-100">
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="section-label">Latest News</p>
+          <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase">News</h2>
+        </div>
+        <Button variant="ghost" href="/blog" class="text-primary">View all →</Button>
+      </div>
+
+      <div class:list={['grid grid-cols-1 gap-10', recentPosts.length > 1 && 'lg:grid-cols-2']}>
+
+        {/* Post vedette */}
+        <a href={`/blog/${recentPosts[0].id}`} class="group block">
+          <div class="img-overlay relative overflow-hidden mb-5 outline-1 outline-primary-700/30 outline-offset-4">
+            <img
+              src={recentPosts[0].data.cover ?? `https://picsum.photos/seed/${recentPosts[0].id}/1200/675`}
+              alt={recentPosts[0].data.title}
+              class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          <div class="flex gap-2 mb-3">
+            {recentPosts[0].data.tags.slice(0, 2).map(tag => (
+              <span class="badge badge--primary">{tag}</span>
+            ))}
+          </div>
+          <h3 class="font-display text-2xl tracking-wide text-primary-100 uppercase leading-tight mb-3 group-hover:text-primary transition-colors duration-300">
+            {recentPosts[0].data.title}
+          </h3>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed mb-3 line-clamp-2">
+            {recentPosts[0].data.excerpt}
+          </p>
+          <span class="text-2xs text-foreground-700 font-ui tracking-wider uppercase">
+            {recentPosts[0].data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </span>
+        </a>
+
+        {/* Articles suivants — format horizontal (vignette + texte) */}
+        {recentPosts.length > 1 && (
+          <div class="flex flex-col gap-6 lg:h-full lg:justify-between">
+            {recentPosts.slice(1).map(post => (
+              <a href={`/blog/${post.id}`} class="group flex gap-4 items-stretch">
+                <div class="img-overlay relative overflow-hidden w-32 sm:w-40 shrink-0 outline-1 outline-primary-700/30 outline-offset-2">
+                  <img
+                    src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/400/300`}
+                    alt={post.data.title}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="flex flex-col justify-center min-w-0">
+                  <div class="flex items-center gap-3 mb-1.5 text-2xs font-ui tracking-wider uppercase text-foreground-700">
+                    <span>{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    {post.data.tags[0] && (<><span>·</span><span class="text-primary">{post.data.tags[0]}</span></>)}
+                  </div>
+                  <h3 class="font-display text-base tracking-wide text-primary-100 uppercase leading-tight mb-1.5 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-foreground-500 font-body text-xs leading-relaxed line-clamp-2">
+                    {post.data.excerpt}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+
+      </div>
+    </section>
+  )}
+
+  {/* ─── Ancienne section News (3 image-cards) — conservée au cas où ───────
   {recentPosts.length > 0 && (
     <section class="max-w-5xl mx-auto px-6 py-20 border-t border-background-100">
       <div class="flex items-end justify-between mb-12">
@@ -943,6 +1134,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
     </section>
   )}
+  ───────────────────────────────────────────────────────────────────── */}
 
   <!-- ─── CTA Team ──────────────────────────────────────────────────────── -->
   <section class="py-24 text-center border-t border-background-100">

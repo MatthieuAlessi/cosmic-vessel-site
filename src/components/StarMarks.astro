@@ -1,0 +1,12 @@
+---
+interface Props {
+  count?: number;
+  class?: string;
+}
+
+const { count = 3, class: className = '' } = Astro.props;
+---
+
+<div class:list={['flex gap-1 text-primary text-xs', className]} aria-hidden="true">
+  {Array.from({ length: count }).map(() => <span>✦</span>)}
+</div>

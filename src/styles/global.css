@@ -120,6 +120,10 @@
   --shadow-glow-secondary:  0 0 20px 4px rgba(184, 76, 30, 0.3);
   --shadow-inner-dark:      inset 0 2px 20px rgba(6, 6, 8, 0.8);
   --shadow-cinematic:       0 25px 80px rgba(6, 6, 8, 0.9);
+  /* Ombre d'image noire prononcée (lisible car les images sont posées sur la
+     texture BgImage + cache--gradient2, pas sur du noir pur). Double couche :
+     une proche pour l'ancrage, une large et profonde pour l'étalement. */
+  --shadow-img-lift:        0 18px 35px -8px rgba(0, 0, 0, 0.9), 0 50px 90px -20px rgba(0, 0, 0, 0.85);
 
   /* ─── Easing ───────────────────────────────────────────────────────────────*/
   --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -145,6 +149,11 @@
   --z-1:        1;
   --z-2:        2;
   --z-100:      100;
+
+  /* ─── Header ───────────────────────────────────────────────────────────────*/
+  /* Hauteur visuelle du nav fixe (scrolled ≈ 3.1rem) + marge de respiration.
+     Sert d'offset pour les éléments sticky qui doivent se caler sous le nav. */
+  --header-height: 6.5rem;
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────*/
@@ -295,6 +304,10 @@ body {
 
 @utility glow-primary-lg {
   box-shadow: var(--shadow-glow-primary-lg);
+}
+
+@utility shadow-img-lift {
+  box-shadow: var(--shadow-img-lift);
 }
 
 @utility img-cover {
@@ -597,6 +610,15 @@ article:hover .card-expand {
 
 .img-overlay:hover img {
   transform: scale(1.04);
+}
+
+/* ─── Sticky sous le header ─────────────────────────────────────────────────*/
+/* Colonne qui se fige sous le nav fixe. `align-self: start` empêche l'étirement
+   en pleine hauteur (sinon le sticky n'a pas de marge pour bouger dans sa row). */
+@utility sticky-header {
+  position: sticky;
+  top: var(--header-height);
+  align-self: flex-start;
 }
 
 /* ─── Navigation ────────────────────────────────────────────────────────────*/
