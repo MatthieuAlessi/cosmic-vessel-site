@@ -1,0 +1,114 @@
+---
+interface Props {
+  size?: number;
+  class?: string;
+  corner?: 'top' | 'left' | 'right' | 'bottom' | 'all';
+}
+const { size = 36, class: className = '', corner = 'all' } = Astro.props;
+---
+
+
+
+{corner === 'all' && (
+<!-- Top-left: coin à (0,0) -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute top-0 left-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 32,0 A 32,32 0 0 0 0,32"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="6" cy="6" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+
+<!-- Top-right: coin à (36,0) — miroir horizontal du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute top-0 right-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 4,0 A 32,32 0 0 1 36,32"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="30" cy="6" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+
+<!-- Bottom-left: coin à (0,36) — miroir vertical du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute bottom-0 left-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 0,4 A 32,32 0 0 0 32,36"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="6" cy="30" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+
+<!-- Bottom-right: coin à (36,36) — rotation 180° du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute bottom-0 right-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 36,4 A 32,32 0 0 1 4,36"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="30" cy="30" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+)}
+
+
+{corner === 'top' && (
+<!-- Top-left: coin à (0,0) -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute top-0 left-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 32,0 A 32,32 0 0 0 0,32"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="6" cy="6" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+
+<!-- Top-right: coin à (36,0) — miroir horizontal du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute top-0 right-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 4,0 A 32,32 0 0 1 36,32"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="30" cy="6" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+)}
+
+
+{corner === 'bottom' && (
+<!-- Bottom-left: coin à (0,36) — miroir vertical du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute bottom-0 left-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 0,4 A 32,32 0 0 0 32,36"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="6" cy="30" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+
+<!-- Bottom-right: coin à (36,36) — rotation 180° du TL -->
+<svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
+  class:list={['absolute bottom-0 right-0', className]}
+  style={`width:${size}px;height:${size}px;`}>
+  <path d="M 36,4 A 32,32 0 0 1 4,36"
+    stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9"/>
+  <circle cx="30" cy="30" r="2.5"
+    stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9"/>
+  <circle cx="18" cy="18" r="1.8"
+    fill="var(--color-primary-500)" opacity="1"/>
+</svg>
+)}

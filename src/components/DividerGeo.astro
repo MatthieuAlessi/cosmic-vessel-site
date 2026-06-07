@@ -1,0 +1,98 @@
+---
+interface Props {
+  size?: 'xs' | 'sm' | 'md';
+  class?: string;
+}
+
+const { size = 'md', class: className = '' } = Astro.props;
+
+---
+
+<div class:list={['flex items-center justify-center w-full', className]}>
+  {size === 'xs' ? (
+    <svg
+      viewBox="0 0 280 24"
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-full max-w-2xs"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id="xs-line-left" gradientUnits="userSpaceOnUse" x1="6" y1="12" x2="115" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="0"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="xs-line-right" gradientUnits="userSpaceOnUse" x1="165" y1="12" x2="274" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="1"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <circle cx="4"   cy="12" r="2" fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="6" y1="12" x2="115" y2="12" stroke="url(#xs-line-left)" stroke-width="0.75"/>
+      <circle cx="117" cy="12" r="2" fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="119" y1="12" x2="161" y2="12" stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.4"/>
+      <circle cx="163" cy="12" r="2" fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="165" y1="12" x2="274" y2="12" stroke="url(#xs-line-right)" stroke-width="0.75"/>
+      <circle cx="276" cy="12" r="2" fill="var(--color-primary-500)" opacity="0.9"/>
+    </svg>
+  ) : size === 'sm' ? (
+    <svg
+      viewBox="0 0 280 24"
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-full max-w-2xs"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id="sm-line-left" gradientUnits="userSpaceOnUse" x1="8" y1="12" x2="58" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="0"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="sm-line-right" gradientUnits="userSpaceOnUse" x1="222" y1="12" x2="272" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="1"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <circle cx="4"   cy="12" r="2"   fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="6" y1="12" x2="113" y2="12" stroke="url(#sm-line-left)" stroke-width="0.75"/>
+      <circle cx="115"  cy="12" r="2"   fill="var(--color-primary-500)" opacity="0.9"/>
+      <circle cx="140" cy="12" r="11"  stroke="var(--color-primary-500)" stroke-width="1"    opacity="0.85"/>
+      <circle cx="140" cy="12" r="8"   stroke="var(--color-primary-300)" stroke-width="1"    opacity="1"/>
+      <circle cx="140" cy="12" r="1.5" fill="var(--color-primary-100)"   opacity="1"/>
+      <circle cx="165" cy="12" r="2"   fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="167" y1="12" x2="274" y2="12" stroke="url(#sm-line-right)" stroke-width="0.75"/>
+      <circle cx="276" cy="12" r="2"   fill="var(--color-primary-500)" opacity="0.9"/>
+    </svg>
+  ) : (
+    <svg
+      viewBox="0 0 520 24"
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-full max-w-lg"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id="line-left" gradientUnits="userSpaceOnUse" x1="10" y1="12" x2="106" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="0"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="line-right" gradientUnits="userSpaceOnUse" x1="419" y1="12" x2="510" y2="12">
+          <stop offset="0%"   stop-color="var(--color-primary-500)" stop-opacity="1"/>
+          <stop offset="100%" stop-color="var(--color-primary-500)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <circle cx="6"   cy="12" r="2"  fill="var(--color-primary-500)" opacity="0.9"/>
+      <line x1="10" y1="12" x2="106" y2="12" stroke="url(#line-left)" stroke-width="0.75"/>
+      <circle cx="113" cy="12" r="6"  stroke="var(--color-primary-500)" stroke-width="1" opacity="1"/>
+      <circle cx="113" cy="12" r="2"  fill="var(--color-primary-300)"   opacity="0.9"/>
+      <line x1="119" y1="12" x2="236" y2="12" stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.85"/>
+      <circle cx="238" cy="12" r="2"  fill="var(--color-primary-500)" opacity="0.85"/>
+      <circle cx="260" cy="12" r="11" stroke="var(--color-primary-500)" stroke-width="1"    opacity="0.85"/>
+      <circle cx="260" cy="12" r="8"  stroke="var(--color-primary-300)" stroke-width="1"    opacity="1"/>
+      <circle cx="260" cy="12" r="1.5" fill="var(--color-primary-100)"  opacity="1"/>
+      <circle cx="282" cy="12" r="2"  fill="var(--color-primary-500)" opacity="0.85"/>
+      <line x1="284" y1="12" x2="406" y2="12" stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.85"/>
+      <circle cx="413" cy="12" r="6"  stroke="var(--color-primary-500)" stroke-width="1" opacity="1"/>
+      <circle cx="413" cy="12" r="2"  fill="var(--color-primary-300)"   opacity="0.9"/>
+      <line x1="419" y1="12" x2="510" y2="12" stroke="url(#line-right)" stroke-width="0.75"/>
+      <circle cx="514" cy="12" r="2"  fill="var(--color-primary-500)" opacity="0.9"/>
+    </svg>
+  )}
+</div>

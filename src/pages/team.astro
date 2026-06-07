@@ -1,0 +1,81 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const members = await getCollection('team');
+---
+
+<Layout
+  title="L'Équipe — [MOD NAME]"
+  description="Rencontrez les ~30 membres bénévoles qui donnent vie à ce mod Baldur's Gate 3."
+>
+  <Nav />
+
+  <main class="pt-32 pb-24">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <header class="mb-20 text-center">
+        <p class="section-label text-center">Bénévoles</p>
+        <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">L'Équipe</h1>
+        <p class="text-foreground-500 font-body text-lg mt-6 max-w-xl mx-auto">
+          Une trentaine de passionnés de Baldur's Gate 3 réunis pour créer quelque chose d'unique.
+        </p>
+      </header>
+
+      <div class="divider-gold mb-20"></div>
+
+      <!-- Grille membres -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {members.map(member => (
+          <div class="card-cinematic p-5 text-center group">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-background-300 border border-primary-700 overflow-hidden flex items-center justify-center">
+              {member.data.avatar
+                ? <img src={member.data.avatar} alt={member.data.name} class="w-full h-full object-cover" />
+                : <span class="font-display text-xl text-primary-700">{member.data.name[0]}</span>
+              }
+            </div>
+            <h3 class="font-display text-sm tracking-wide text-primary-100 uppercase mb-1">
+              {member.data.name}
+            </h3>
+            <p class="font-ui text-2xs tracking-wider text-foreground-500 uppercase">
+              {member.data.role}
+            </p>
+            {member.data.socials && (
+              <div class="flex justify-center gap-3 mt-3">
+                {member.data.socials.twitter && (
+                  <a
+                    href={`https://twitter.com/${member.data.socials.twitter.replace('@', '')}`}
+                    class="text-foreground-700 hover:text-primary transition-colors duration-300 font-ui text-xs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Twitter"
+                  >X</a>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+
+        {/* Placeholder cards pour illustrer l'équipe complète */}
+        {Array.from({ length: 28 }).map((_, i) => (
+          <div class="card-cinematic p-5 text-center opacity-40">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-background-300 border border-background-100 flex items-center justify-center">
+              <span class="text-foreground-700 text-xl">?</span>
+            </div>
+            <h3 class="font-display text-sm tracking-wide text-foreground-700 uppercase mb-1">
+              Membre #{i + 3}
+            </h3>
+            <p class="font-ui text-2xs tracking-wider text-foreground-700 uppercase">
+              Rôle à définir
+            </p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,123 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<Layout
+  title="Contact — [MOD NAME]"
+  description="Rejoignez la communauté ou contactez l'équipe du mod Baldur's Gate 3."
+>
+  <Nav />
+
+  <main class="pt-32 pb-24">
+    <div class="max-w-3xl mx-auto px-6">
+
+      <header class="mb-16 text-center">
+        <p class="section-label text-center">Nous rejoindre</p>
+        <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">Contact</h1>
+        <p class="text-foreground-500 font-body text-lg mt-6 max-w-md mx-auto">
+          Questions sur le mod, retours, ou envie de rejoindre l'équipe — on vous écoute.
+        </p>
+      </header>
+
+      <!-- Discord CTA -->
+      <div class="card-cinematic p-8 mb-10 text-center">
+        <div class="text-4xl text-primary opacity-60 mb-4">◈</div>
+        <h2 class="font-display text-2xl tracking-wider text-primary-100 uppercase mb-3">Rejoignez le Discord</h2>
+        <p class="text-foreground-500 font-body mb-6">
+          La communauté, les annonces en avant-première, et les échanges avec l'équipe.
+        </p>
+        <a
+          href="#"
+          class="btn btn--primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Rejoindre le serveur
+        </a>
+      </div>
+
+      <div class="divider-ornament mb-10">
+        <span class="font-ui text-2xs tracking-widest uppercase text-foreground-700">ou</span>
+      </div>
+
+      <!-- Formulaire contact -->
+      <!-- TODO: connecter à Netlify Forms ou Formspree -->
+      <form
+        class="space-y-6"
+        method="POST"
+        data-netlify="true"
+        name="contact"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+
+        <div>
+          <label for="name" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
+            Nom
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
+            placeholder="Votre nom"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
+            placeholder="votre@email.com"
+          />
+        </div>
+
+        <div>
+          <label for="subject" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
+            Sujet
+          </label>
+          <select
+            id="subject"
+            name="subject"
+            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
+          >
+            <option value="general">Question générale</option>
+            <option value="team">Rejoindre l'équipe</option>
+            <option value="press">Presse / média</option>
+            <option value="bug">Signaler un bug</option>
+            <option value="other">Autre</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="6"
+            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300 resize-y"
+            placeholder="Votre message..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary w-full">
+          Envoyer le message
+        </button>
+      </form>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

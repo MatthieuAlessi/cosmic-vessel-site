@@ -1,0 +1,13 @@
+{
+  "title": "Phase 1 — Fondations",
+  "description": "Mise en place des systèmes de base : intégration du personnage, mécanique de classe, dialogue système.",
+  "status": "completed",
+  "order": 1,
+  "date": "Q1 2026",
+  "features": [
+    "Intégration du personnage Origin",
+    "Classe de base implémentée",
+    "Dialogues d'introduction",
+    "Assets visuels provisoires"
+  ]
+}

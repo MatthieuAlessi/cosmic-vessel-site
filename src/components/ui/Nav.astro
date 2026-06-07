@@ -1,0 +1,49 @@
+---
+interface Props {
+  variant?: 'default' | 'centered' | 'split';
+}
+
+const { variant = 'default' } = Astro.props;
+---
+
+<header class="sticky top-0 z-sticky border-b border-white/8 bg-background/80 backdrop-blur-md">
+  <div class="max-w-5xl mx-auto px-6 h-16">
+
+    {variant === 'default' && (
+      <div class="flex items-center justify-between h-full gap-8">
+        <slot name="logo" />
+        <div class="flex items-center gap-6">
+          <slot name="links" />
+          <slot name="cta" />
+        </div>
+      </div>
+    )}
+
+    {variant === 'centered' && (
+      <div class="grid grid-cols-3 items-center h-full">
+        <div class="flex items-center gap-6">
+          <slot name="links" />
+        </div>
+        <div class="flex justify-center">
+          <slot name="logo" />
+        </div>
+        <div class="flex justify-end">
+          <slot name="cta" />
+        </div>
+      </div>
+    )}
+
+    {variant === 'split' && (
+      <div class="grid grid-cols-3 items-center h-full">
+        <slot name="logo" />
+        <div class="flex justify-center items-center gap-6">
+          <slot name="links" />
+        </div>
+        <div class="flex justify-end">
+          <slot name="cta" />
+        </div>
+      </div>
+    )}
+
+  </div>
+</header>

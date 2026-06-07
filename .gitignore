@@ -22,3 +22,15 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Claude Code
+CLAUDE.md
+
+# Notes internes
+synthese.md
+
+#  photos stock
+stock photos/
+
+# Placeholders stock — à retirer quand les vrais assets arrivent
+public/images/

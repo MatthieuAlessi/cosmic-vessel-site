@@ -1,0 +1,59 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  opacity?: number;
+  position?: string;
+  size?: string;
+  maskClass?: string;
+  fixedBg?: boolean;
+  grayscale?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt = '',
+  opacity = 1,
+  position = 'object-top',
+  size = 'cover',
+  maskClass = '',
+  fixedBg = false,
+  grayscale = false,
+  class: className = '',
+} = Astro.props;
+
+const positionMap: Record<string, string> = {
+  'object-top': 'top',
+  'object-center': 'center',
+  'object-bottom': 'bottom',
+  'object-left': 'left',
+  'object-right': 'right',
+};
+const bgPosition = positionMap[position] ?? 'center';
+---
+
+{fixedBg ? (
+  <div
+    class:list={['absolute inset-0 z-0 bgimage', maskClass, className]}
+    style={`
+      background-image: url('${src}');
+      background-attachment: fixed;
+      background-size: ${size};
+      background-position: ${bgPosition};
+      opacity: ${opacity};
+      ${grayscale ? 'filter: grayscale(1);' : ''}
+    `}
+    role="img"
+    aria-label={alt}
+  />
+) : (
+  <div class:list={['absolute inset-0 z-0 bgimage  ', maskClass, className]}>
+    <img
+      src={src}
+      alt={alt}
+      class:list={['w-full h-full object-cover', position, grayscale && 'grayscale']}
+      style={`opacity: ${opacity}`}
+    />
+  </div>
+)}

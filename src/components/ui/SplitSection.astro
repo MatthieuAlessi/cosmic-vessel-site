@@ -1,0 +1,42 @@
+---
+interface Props {
+  imageSrc: string;
+  imageAlt?: string;
+  imagePosition?: 'left' | 'right';
+  imageObjectPosition?: string;
+  class?: string;
+}
+
+const {
+  imageSrc,
+  imageAlt = '',
+  imagePosition = 'left',
+  imageObjectPosition = 'object-center',
+  class: className = '',
+} = Astro.props;
+
+const isLeft = imagePosition === 'left';
+---
+
+<div class:list={['max-w-7xl mx-auto px-6', className]}>
+  <div class:list={[
+    'grid grid-cols-1 lg:grid-cols-2 gap-0',
+    !isLeft && 'lg:[&>*:first-child]:order-2',
+  ]}>
+
+    <!-- Image -->
+    <div class="relative overflow-hidden min-h-[320px] lg:min-h-[480px] aspect-[4/3] lg:aspect-auto">
+      <img
+        src={imageSrc}
+        alt={imageAlt}
+        class:list={['w-full h-full object-cover', imageObjectPosition]}
+      />
+    </div>
+
+    <!-- Contenu -->
+    <div class="flex flex-col justify-center px-0 lg:px-12 py-12 lg:py-16">
+      <slot />
+    </div>
+
+  </div>
+</div>

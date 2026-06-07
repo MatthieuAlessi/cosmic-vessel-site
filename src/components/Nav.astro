@@ -1,0 +1,51 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/character', label: 'Character' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/team', label: 'Team' },
+  { href: '/blog', label: 'News' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav" id="main-nav">
+  <div class="grid grid-cols-3 items-center w-full">
+
+    <!-- Logo -->
+    <a href="/" class="nav__logo">[MOD NAME]</a>
+
+    <!-- Liens centrés -->
+    <ul class="nav__links justify-center">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav__link', { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- CTA -->
+    <div class="flex justify-end">
+      <a href="/blog" class="btn btn--outline text-xs py-2 px-4">Follow Dev</a>
+    </div>
+
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>

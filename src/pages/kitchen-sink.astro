@@ -1,0 +1,681 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Button from '@components/ui/Button.astro';
+import ColorSwatch from '@components/ui/ColorSwatch.astro';
+import NavUI from '@components/ui/Nav.astro';
+import FooterUI from '@components/ui/Footer.astro';
+import Hero from '@components/ui/Hero.astro';
+import Card from '@components/ui/Card.astro';
+import DividerGeo from '@components/DividerGeo.astro';
+import CornerOrnament from '@components/CornerOrnament.astro';
+import BgImage from '@components/BgImage.astro';
+---
+
+<Layout title="Kitchen Sink — Cosmic Vessel">
+
+  <div class="max-w-5xl mx-auto px-6 py-section-md space-y-section-lg">
+
+    <!-- En-tête -->
+    <header class="space-y-4">
+      <span class="section-label">Cosmic Vessel</span>
+      <h1 class="title-hero">Kitchen Sink</h1>
+      <p class="text-foreground-500 max-w-xl">
+        Référence visuelle de tous les tokens et composants. Modifier les valeurs
+        dans <code class="text-primary-300 font-mono text-sm">global.css</code>
+        met à jour tout ce qui suit automatiquement.
+      </p>
+    </header>
+
+    <div class="divider-gold"></div>
+
+    <!-- Typographie -->
+    <section class="space-y-8">
+      <span class="section-label">Typographie</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">title-hero</p>
+        <p class="title-hero">Le design commence ici</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">title-1</p>
+        <p class="title-1">Titre de section principal</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">title-2</p>
+        <p class="title-2">Titre de sous-section</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">title-3</p>
+        <p class="title-3">Titre tertiaire</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">title-4</p>
+        <p class="title-4">Titre quaternaire</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">section-label</p>
+        <p class="section-label">Label de section</p>
+      </div>
+
+      <div class="space-y-2">
+        <p class="text-foreground-500 text-sm">Corps de texte (font-body)</p>
+        <p class="max-w-prose">
+          Voici un exemple de texte courant. Inter est conçue pour être lisible
+          à petite taille sur écran. La hauteur de ligne de 1.7 assure un
+          confort de lecture optimal sur les longs paragraphes.
+        </p>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Couleurs -->
+    <section class="space-y-6">
+      <span class="section-label">Couleurs</span>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <ColorSwatch name="primary" shades={[
+          { label: '100', class: 'bg-primary-100' },
+          { label: '300', class: 'bg-primary-300' },
+          { label: '500', class: 'bg-primary-500' },
+          { label: '700', class: 'bg-primary-700' },
+        ]} />
+
+        <ColorSwatch name="secondary" shades={[
+          { label: '300', class: 'bg-secondary-300' },
+          { label: '500', class: 'bg-secondary-500' },
+          { label: '700', class: 'bg-secondary-700' },
+        ]} />
+
+        <ColorSwatch name="accent" shades={[
+          { label: '300', class: 'bg-accent-300' },
+          { label: '500', class: 'bg-accent-500' },
+          { label: '700', class: 'bg-accent-700' },
+        ]} />
+
+        <ColorSwatch name="foreground" shades={[
+          { label: '100', class: 'bg-foreground-100' },
+          { label: '300', class: 'bg-foreground-300' },
+          { label: '500', class: 'bg-foreground-500' },
+          { label: '700', class: 'bg-foreground-700' },
+        ]} />
+
+        <ColorSwatch name="background" shades={[
+          { label: '100', class: 'bg-background-100' },
+          { label: '300', class: 'bg-background-300' },
+          { label: '500', class: 'bg-background-500' },
+          { label: '700', class: 'bg-background-700' },
+        ]} />
+
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Boutons -->
+    <section class="space-y-8">
+      <span class="section-label">Boutons</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">Variantes</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="ghost-white">Ghost white</Button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">Tailles</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <Button variant="primary" size="xs">Extra small</Button>
+          <Button variant="primary" size="sm">Small</Button>
+          <Button variant="primary" size="md">Medium</Button>
+          <Button variant="primary" size="lg">Large</Button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">Lien (href fourni)</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <Button href="#" variant="primary">Lien primary</Button>
+          <Button href="#" variant="outline">Lien outline</Button>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">Désactivé</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <Button variant="primary" disabled>Désactivé</Button>
+          <Button variant="outline" disabled>Désactivé</Button>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Badges -->
+    <section class="space-y-6">
+      <span class="section-label">Badges</span>
+      <div class="flex flex-wrap gap-3 items-center">
+        <span class="badge badge--primary">Primary</span>
+        <span class="badge badge--secondary">Secondary</span>
+        <span class="badge badge--accent">Accent</span>
+        <span class="badge badge--dark">Dark</span>
+        <span class="badge badge--white">White</span>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Séparateurs -->
+    <section class="space-y-8">
+      <span class="section-label">Séparateurs</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">divider-gold</p>
+        <div class="divider-gold"></div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">divider-ornament</p>
+        <div class="divider-ornament"></div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">DividerGeo size="md" (défaut)</p>
+        <DividerGeo />
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">DividerGeo size="sm"</p>
+        <DividerGeo size="sm" />
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- CornerOrnament -->
+    <section class="space-y-6">
+      <span class="section-label">CornerOrnament</span>
+
+      <div class="relative border border-white/8 rounded-2xl h-40">
+        <CornerOrnament />
+        <div class="absolute inset-0 flex items-center justify-center text-foreground-500 text-sm">
+          Contenu avec ornements aux coins
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Cards -->
+    <section class="space-y-12">
+      <span class="section-label">Cards</span>
+
+      <!-- article -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">article — image en haut (défaut)</p>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+
+          <Card variant="article" bordered cta="Lire →" href="#">
+            <img slot="image" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--primary">Design</span>
+            <Fragment slot="title">Un titre d'article accrocheur</Fragment>
+            <Fragment slot="excerpt">Quelques lignes d'introduction qui donnent envie de lire la suite de l'article.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
+          </Card>
+
+          <Card variant="article" bordered cta="Lire →" href="#">
+            <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--accent">Tech</span>
+            <Fragment slot="title">Explorer les nouvelles frontières</Fragment>
+            <Fragment slot="excerpt">Une introduction courte et percutante pour capter l'attention dès les premières lignes.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">8 mai · 3 min</span>
+          </Card>
+
+          <Card variant="article" bordered cta="Lire →" href="#">
+            <img slot="image" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--secondary">Actualité</span>
+            <Fragment slot="title">Ce que l'on retient de ce mois</Fragment>
+            <Fragment slot="excerpt">Un résumé des points clés, présenté de façon claire et digeste pour le lecteur pressé.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">2 mai · 7 min</span>
+          </Card>
+
+        </div>
+      </div>
+
+      <!-- horizontal -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">horizontal — image gauche, contenu droite</p>
+        <div class="flex flex-col gap-4">
+
+          <Card variant="horizontal" bordered cta="Lire →" href="#">
+            <img slot="image" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--primary">Design</span>
+            <Fragment slot="title">Format compact pour les listes d'articles</Fragment>
+            <Fragment slot="excerpt">Idéal pour les pages avec beaucoup d'articles à parcourir.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
+          </Card>
+
+          <Card variant="horizontal" bordered cta="Lire →" href="#">
+            <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--accent">Tech</span>
+            <Fragment slot="title">Un second article en format horizontal</Fragment>
+            <Fragment slot="excerpt">La hauteur s'adapte au contenu textuel, l'image suit grâce au h-full sur le conteneur.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">8 mai · 3 min</span>
+          </Card>
+
+        </div>
+      </div>
+
+      <!-- overlay -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">overlay — image pleine, texte superposé</p>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+          <Card variant="overlay">
+            <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--white">À la une</span>
+            <Fragment slot="title">Le grand article du moment</Fragment>
+            <Fragment slot="excerpt">Le texte se superpose à l'image avec un fondu sombre pour garantir la lisibilité.</Fragment>
+            <span slot="meta" class="text-foreground-300 text-xs">12 mai · 5 min</span>
+          </Card>
+
+          <Card variant="overlay">
+            <img slot="image" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80" alt="" class="img-cover" />
+            <span slot="badge" class="badge badge--secondary">Reportage</span>
+            <Fragment slot="title">Immersion dans un autre univers</Fragment>
+            <Fragment slot="excerpt">Format très visuel, parfait pour du magazine ou du photojournalisme.</Fragment>
+            <span slot="meta" class="text-foreground-300 text-xs">8 mai · 8 min</span>
+          </Card>
+
+        </div>
+      </div>
+
+      <!-- minimal -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">minimal — sans image, texte seul</p>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+
+          <Card variant="minimal" bordered cta="Lire →" href="#">
+            <span slot="badge" class="badge badge--primary">Design</span>
+            <Fragment slot="title">Titre sans image</Fragment>
+            <Fragment slot="excerpt">Pour les listes denses ou les contenus où l'image n'apporte pas de valeur.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
+          </Card>
+
+          <Card variant="minimal" bordered cta="Lire →" href="#">
+            <span slot="badge" class="badge badge--accent">Tech</span>
+            <Fragment slot="title">Un second article minimaliste</Fragment>
+            <Fragment slot="excerpt">Ce format fonctionne très bien dans une sidebar ou une liste de résultats.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">8 mai · 3 min</span>
+          </Card>
+
+          <Card variant="minimal" bordered cta="Lire →" href="#">
+            <span slot="badge" class="badge badge--secondary">Actualité</span>
+            <Fragment slot="title">Troisième sans image</Fragment>
+            <Fragment slot="excerpt">Lisible, aéré, rapide à scanner. Le badge donne le contexte, le titre fait le reste.</Fragment>
+            <span slot="meta" class="text-foreground-500 text-xs">2 mai · 4 min</span>
+          </Card>
+
+        </div>
+      </div>
+
+      <!-- icon -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">icon — picto en avant, sans image</p>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+
+          <Card variant="icon" bordered cta="En savoir plus →" href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2L4.09 13H11L10 22L20.91 11H14L13 2Z"/>
+            </svg>
+            <Fragment slot="title">Performance</Fragment>
+            <Fragment slot="excerpt">Des temps de chargement optimisés dès le départ. Moins de friction, plus de conversions.</Fragment>
+          </Card>
+
+          <Card variant="icon" bordered cta="En savoir plus →" href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z"/>
+            </svg>
+            <Fragment slot="title">Sécurité</Fragment>
+            <Fragment slot="excerpt">Protégé par défaut. Chaque décision d'architecture tient compte de la sécurité dès le départ.</Fragment>
+          </Card>
+
+          <Card variant="icon" bordered cta="En savoir plus →" href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            <Fragment slot="title">Composants</Fragment>
+            <Fragment slot="excerpt">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
+          </Card>
+
+        </div>
+      </div>
+
+      <!-- card-cinematic -->
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">card-cinematic — style site spécifique</p>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+
+          <div class="card-cinematic h-64 flex flex-col justify-end">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover absolute inset-0" />
+            <div class="overlay-bottom"></div>
+            <div class="relative z-10 p-6">
+              <span class="badge badge--primary mb-3 block w-fit">Exemple</span>
+              <p class="title-3">Titre cinématique</p>
+            </div>
+          </div>
+
+          <div class="card-cinematic h-64 flex flex-col justify-end">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover absolute inset-0" />
+            <div class="overlay-bottom"></div>
+            <div class="relative z-10 p-6">
+              <span class="badge badge--secondary mb-3 block w-fit">Exemple</span>
+              <p class="title-3">Style immersif</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Ombres / Glows -->
+    <section class="space-y-6">
+      <span class="section-label">Ombres & Glows</span>
+
+      <div class="flex flex-wrap gap-8 items-center">
+        <div class="glow-primary bg-background-300 rounded-2xl px-8 py-4 text-sm">
+          glow-primary
+        </div>
+        <div class="glow-primary-lg bg-background-300 rounded-2xl px-8 py-4 text-sm">
+          glow-primary-lg
+        </div>
+        <div class="bg-background-300 rounded-2xl px-8 py-4 text-sm" style="box-shadow: var(--shadow-glow-secondary)">
+          glow-secondary
+        </div>
+        <div class="bg-background-300 rounded-2xl px-8 py-4 text-sm" style="box-shadow: var(--shadow-cinematic)">
+          cinematic
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Utilitaires visuels -->
+    <section class="space-y-6">
+      <span class="section-label">Utilitaires visuels</span>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+        <div class="relative h-48 rounded-2xl overflow-hidden bg-background-300">
+          <div class="overlay-bottom"></div>
+          <div class="absolute bottom-4 left-4">
+            <p class="text-sm font-semibold">.overlay-bottom</p>
+          </div>
+        </div>
+
+        <div class="relative h-48 rounded-2xl overflow-hidden bg-background-300">
+          <div class="vignette"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <p class="text-sm font-semibold">.vignette</p>
+          </div>
+        </div>
+
+        <div class="relative h-48 rounded-2xl overflow-hidden bg-background-300">
+          <div class="cache--gradient absolute inset-0"></div>
+          <div class="absolute bottom-4 left-4">
+            <p class="text-sm font-semibold">.cache--gradient</p>
+          </div>
+        </div>
+
+        <div class="relative h-48 rounded-2xl overflow-hidden bg-background-300">
+          <div class="glow-eclipse"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <p class="text-sm font-semibold">.glow-eclipse</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- BgImage -->
+    <section class="space-y-6">
+      <span class="section-label">BgImage</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">opacity={0.4} + mask-galaxy--img</p>
+        <div class="relative h-64 rounded-2xl overflow-hidden">
+          <BgImage
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
+            opacity={0.4}
+            maskClass="mask-galaxy--img"
+          />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <p class="text-sm font-semibold">Contenu par-dessus</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">grayscale + opacity={0.3}</p>
+        <div class="relative h-64 rounded-2xl overflow-hidden">
+          <BgImage
+            src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1200&q=80"
+            opacity={0.3}
+            grayscale
+          />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <p class="text-sm font-semibold">Grayscale</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Nav ui/ -->
+    <section class="space-y-8">
+      <span class="section-label">Nav (ui/)</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">default — logo gauche, liens + CTA droite</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <NavUI variant="default">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Button slot="cta" variant="primary" size="sm">CTA</Button>
+          </NavUI>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">centered — liens gauche, logo centre, CTA droite</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <NavUI variant="centered">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Button slot="cta" variant="outline" size="sm">CTA</Button>
+          </NavUI>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">split — logo gauche, liens centre, CTA droite</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <NavUI variant="split">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Button slot="cta" variant="secondary" size="sm">CTA</Button>
+          </NavUI>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Footer ui/ -->
+    <section class="space-y-8">
+      <span class="section-label">Footer (ui/)</span>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">simple — une ligne</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <FooterUI variant="simple">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Fragment slot="copyright">© 2025 Cosmic Vessel</Fragment>
+          </FooterUI>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">two-col — logo gauche, liens droite</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <FooterUI variant="two-col">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="description">Courte description du projet ou de la marque sur une ou deux lignes.</Fragment>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Fragment slot="copyright">© 2025 Cosmic Vessel. Tous droits réservés.</Fragment>
+          </FooterUI>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">centered — tout centré</p>
+        <div class="rounded-2xl overflow-hidden border border-white/8">
+          <FooterUI variant="centered">
+            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
+            <Fragment slot="links">
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
+            </Fragment>
+            <Fragment slot="copyright">© 2025 Cosmic Vessel</Fragment>
+          </FooterUI>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Hero — pleine largeur -->
+  <div class="border-t border-white/8 pt-section-md pb-2">
+    <div class="max-w-5xl mx-auto px-6">
+      <span class="section-label">Hero (ui/)</span>
+    </div>
+  </div>
+
+  <div class="border-t border-white/8">
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-4">
+      <p class="text-foreground-500 text-sm">centered</p>
+    </div>
+    <Hero variant="centered">
+      <span slot="badge" class="badge badge--primary">Nouveauté</span>
+      <Fragment slot="title">Le titre qui<br />accroche tout de suite</Fragment>
+      <Fragment slot="subtitle">Sous-titre qui explique la valeur en une phrase. Court, direct, mémorable.</Fragment>
+      <Fragment slot="cta">
+        <Button variant="primary" size="lg">Commencer</Button>
+        <Button variant="ghost" size="lg">En savoir plus</Button>
+      </Fragment>
+    </Hero>
+  </div>
+
+  <div class="border-t border-white/8">
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-4">
+      <p class="text-foreground-500 text-sm">split</p>
+    </div>
+    <Hero variant="split">
+      <span slot="badge" class="badge badge--accent">v1.0</span>
+      <Fragment slot="title">Une solution pour chaque besoin</Fragment>
+      <Fragment slot="subtitle">Description claire de ce que fait le projet et pourquoi ça vaut le détour.</Fragment>
+      <Fragment slot="cta">
+        <Button variant="primary">Démarrer</Button>
+        <Button variant="outline">Voir la démo</Button>
+      </Fragment>
+      <div slot="visual" class="aspect-video rounded-2xl overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1200&q=80"
+          alt=""
+          class="img-cover"
+        />
+      </div>
+    </Hero>
+  </div>
+
+  <div class="border-t border-white/8">
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-4">
+      <p class="text-foreground-500 text-sm">fullscreen</p>
+    </div>
+    <Hero variant="fullscreen">
+      <img
+        slot="background"
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
+        alt=""
+        class="absolute inset-0 img-cover"
+      />
+      <span slot="badge" class="badge badge--white">Bientôt disponible</span>
+      <Fragment slot="title">Le futur commence ici</Fragment>
+      <Fragment slot="subtitle">Une phrase qui donne envie de scroller ou de s'inscrire.</Fragment>
+      <Fragment slot="cta">
+        <Button variant="primary" size="lg">Rejoindre la liste</Button>
+      </Fragment>
+    </Hero>
+  </div>
+
+  <div class="border-t border-white/8">
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-4">
+      <p class="text-foreground-500 text-sm">image-bg</p>
+    </div>
+    <Hero variant="image-bg">
+      <img
+        slot="background"
+        src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1920&q=80"
+        alt=""
+        class="absolute inset-0 img-cover"
+      />
+      <span slot="badge" class="badge badge--secondary">Offre limitée</span>
+      <Fragment slot="title">Passez à l'action<br />maintenant</Fragment>
+      <Fragment slot="subtitle">Une proposition de valeur courte qui lève les derniers doutes.</Fragment>
+      <Fragment slot="cta">
+        <Button variant="primary" size="lg">Commencer</Button>
+        <Button variant="ghost-white" size="lg">Voir les tarifs</Button>
+      </Fragment>
+    </Hero>
+  </div>
+
+</Layout>

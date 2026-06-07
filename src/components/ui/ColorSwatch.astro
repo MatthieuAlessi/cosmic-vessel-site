@@ -1,0 +1,22 @@
+---
+interface Props {
+  name: string;
+  shades: Array<{ label: string; class: string }>;
+}
+
+const { name, shades } = Astro.props;
+---
+
+<div class="space-y-2">
+  <p class="text-foreground-500 text-xs font-mono">{name}</p>
+  <div class="flex gap-1">
+    {shades.map(({ label, class: cls }) => (
+      <div class={`h-10 flex-1 rounded-lg ${cls}`} title={`${name}-${label}`} />
+    ))}
+  </div>
+  <div class="flex gap-1">
+    {shades.map(({ label }) => (
+      <p class="flex-1 text-center text-foreground-500 text-2xs font-mono">{label}</p>
+    ))}
+  </div>
+</div>

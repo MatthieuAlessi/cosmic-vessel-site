@@ -1,0 +1,100 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<Layout
+  title="[CHARACTER NAME] — Personnage Origin | [MOD NAME]"
+  description="Découvrez le personnage origin inédit — son lore, sa classe unique et ses spells exclusifs."
+>
+  <Nav />
+
+  <!-- Hero personnage -->
+  <section class="hero" style="min-height: 80vh;">
+    <div class="hero__bg">
+      <img src="https://picsum.photos/seed/character-hero/1920/1080" alt="" />
+    </div>
+    <div class="hero__vignette"></div>
+    <div class="hero__content">
+      <p class="section-label text-center">Origin Character</p>
+      <h1 class="hero__title">[CHARACTER NAME]</h1>
+      <p class="hero__subtitle">[Classe] · [Origine] · [Arcane]</p>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-6">
+
+    <!-- Lore -->
+    <section class="py-24">
+      <p class="section-label">Histoire</p>
+      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Lore</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="prose">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula tortor a
+            arcu faucibus, sit amet tincidunt nisi fringilla. Proin vel justo non erat vestibulum
+            tempus.
+          </p>
+          <p>
+            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+            egestas. Vivamus nec feugiat lectus, eget porta eros.
+          </p>
+        </div>
+        <div class="img-overlay aspect-[3/4]">
+          <img src="https://picsum.photos/seed/character-portrait/600/800" alt="[CHARACTER NAME]" class="w-full h-full object-cover" />
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Classe -->
+    <section class="py-24">
+      <p class="section-label">Mécanique</p>
+      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Classe</h2>
+      <div class="card-cinematic p-8 mb-8">
+        <h3 class="font-display text-2xl tracking-wider text-primary uppercase mb-4">[CLASS NAME]</h3>
+        <p class="text-foreground-500 font-body text-lg leading-relaxed max-w-2xl">
+          Description de la classe — ses mécaniques uniques, son fantasy, sa place dans le système
+          de jeu de BG3.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {['Caractéristique 1', 'Caractéristique 2', 'Caractéristique 3'].map(feature => (
+          <div class="card-cinematic p-5 text-center">
+            <div class="text-3xl text-primary opacity-50 mb-3">◈</div>
+            <h4 class="font-display text-sm tracking-wider text-primary-100 uppercase mb-2">{feature}</h4>
+            <p class="text-foreground-500 font-body text-sm">Description courte à compléter.</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider-gold"></div>
+
+    <!-- Spells -->
+    <section class="py-24">
+      <p class="section-label">Magie</p>
+      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Spells Inédits</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[1, 2, 3, 4].map(i => (
+          <div class="card-cinematic p-6 flex gap-4">
+            <div class="w-12 h-12 bg-background-300 border border-primary-700 rounded flex items-center justify-center shrink-0">
+              <span class="text-primary text-lg">✦</span>
+            </div>
+            <div>
+              <h4 class="font-display text-base tracking-wide text-primary-100 uppercase mb-1">[Spell Name {i}]</h4>
+              <p class="font-ui text-2xs tracking-wider text-primary-700 uppercase mb-2">Niveau {i} · École de magie</p>
+              <p class="text-foreground-500 font-body text-sm">Description du sort à compléter avec les mécaniques finales.</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </div>
+
+  <Footer />
+</Layout>

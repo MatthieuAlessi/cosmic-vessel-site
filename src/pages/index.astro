@@ -1,11 +1,958 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+﻿---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import BgImage from '@components/BgImage.astro';
+import DividerGeo from '@components/DividerGeo.astro';
+import CornerOrnament from '@components/CornerOrnament.astro';
+import GalaxyCanvas from '@components/GalaxyCanvas.astro';
+import Button from '@components/ui/Button.astro';
+import Card from '@components/ui/Card.astro';
+import ClassTextPanel from '@components/ClassTextPanel.astro';
+import RoadmapCard from '@components/RoadmapCard.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const roadmapEntries = await getCollection('roadmap');
+const roadmap = roadmapEntries.sort((a, b) => a.data.order - b.data.order);
+
+const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="[MOD NAME] — Origin Mod for Baldur's Gate 3">
+  <Nav />
+
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="section-hero overflow-hidden lg:h-screen h-[50vh] bg-background">
+
+   
+        <BgImage
+      src="/images/galaxy-pitch2.jpeg"
+      opacity={1}
+      position="object-center"
+       fixedBg
+      size="cover"
+      maskClass="mask-galaxy--img"
+    />
+
+
+    <div class="cache--gradient2b"></div>
+
+    <!-- Eclipse décorative -->
+    <div class="absolute pointer-events-none aspect-square h-full rounded-full border border-primary-100/20 glow-eclipse top-50  inset-x-0 mx-auto"></div>
+
+    <!-- Contenu centré -->
+    <div class="relative z-10 flex xl:items-end items-center justify-center w-full h-full">
+      <div class="mx-auto text-center p-2 lg:pb-40 pb-12">
+        <div class="title-label text-center mb-6">Baldur's Gate 3 — Mod</div>
+        <h1 class="title-hero mb-6">
+          Cosmic Vessel
+        </h1>
+
+        <p class="title-4 text-white tracking-[0.3em]">
+          An origin character. A questline. A destiny.
+        </p>
+
+        <div class="flex items-center justify-center gap-4 mt-12">
+          <Button href="/character">Discover</Button>
+          <Button variant="outline" href="/blog">Follow Development</Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll-indicator z-40">
+      <span>Scroll</span>
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+        <rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+        <circle cx="8" cy="7" r="2" fill="currentColor"/>
+      </svg>
+    </div>
+
+   
+    <div class="cercle z-1 absolute inset-x-0 mx-auto w-50  translate-y-[50%] bottom-0 ">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20">  </div>
+      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[-40%]"></div>
+    </div>
+
+     <div class="line absolute bottom-0 left-0 w-full"></div>
+   
+ 
+
+
+  </section>
+
+
+
+    <!-- ─── Pitch ─────────────────────────────────────────────────────────── -->
+  <section class="mx-auto px-6 py-36 relative overflow-hidden bg-background">
+
+    <!-- <BgImage
+      src="/images/galaxy-pitch.jpeg"
+      opacity={0.35} grayscale
+      fixedBg
+      position="object-center"
+      size="80%"
+      maskClass="mask-galaxy"
+    /> -->
+
+    <!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.9} count={180} /> -->
+    <!-- <div class="cache--gradient2b"></div> -->
+    <div class="cache--gradient2"></div>
+
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 translate-y-[-50%] top-0">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[40%]"></div>
+    </div>
+
+    <!-- ─── pitch text ───────────────────────────────────────── -->
+    <div class="max-w-3xl mx-auto text-center mt-6 z-20 relative">
+      <p class="text-white text-xs tracking-widest text-center uppercase mb-6">
+        An origin character. A questline. A destiny.
+      </p>
+      <h2 class="title-1">Origin Character</h2>
+      <DividerGeo size="sm" class="my-8" />
+      <p class="text-foreground-300 font-body text-base">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+
+    <!-- ─── numbers:stats ───────────────────────────────────────── -->
+    <div class="max-w-7xl mx-auto px-6 pt-20 z-20 relative">
+      <p class="section-label text-center">Project Scale</p>
+      <div class="relative z-10 backdrop-blur-xs p-6 mt-12 border border-primary-500 outline-1 outline-primary-700/30 outline-offset-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <CornerOrnament size={34} />
+          <div class="relative text-center border border-primary-700/30 p-6 lg:rounded-tl-3xl lg:rounded-bl-3xl">
+            <p class="font-display text-4xl text-primary-300">200+</p>
+            <h3 class="font-display text-sm tracking-wider text-primary-300 uppercase mb-2">Items</h3>
+            <p class="text-foreground-500 font-body text-xs leading-relaxed">Weapons, armor and unique items</p>
+          </div>
+          <div class="relative text-center border border-primary-700/30 p-6">
+            <p class="font-display text-4xl text-primary-300">80+</p>
+            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Spells</h3>
+            <p class="text-foreground-500 font-body text-xs leading-relaxed">Exclusive spells and abilities</p>
+          </div>
+          <div class="relative text-center border border-primary-700/30 p-6">
+            <p class="font-display text-4xl text-primary-300">3</p>
+            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Classes</h3>
+            <p class="text-foreground-500 font-body text-xs leading-relaxed">Original playable subclasses</p>
+          </div>
+          <div class="relative text-center border border-primary-700/30 p-6 lg:rounded-tr-3xl lg:rounded-br-3xl">
+            <p class="font-display text-4xl text-primary-300">10h+</p>
+            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Gameplay</h3>
+            <p class="text-foreground-500 font-body text-xs leading-relaxed">Narrative content and quests</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+  <!-- <div class="relative   h-[60vh] min-h-[300px]">
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={1}  
+      fixedBg
+      position="object-center"
+       
+      
+      class="z-10"
+    />
+
+
+<div class="char ">  
+    <img src="/images/char_placeholder.png" alt="">
+  </div>
+
+</div>
+ -->
+
+ 
+
+  <!-- ─── The Character ──────────────────────────────────────────────────── -->
+  <section class="relative bg-background-500 pt-96 pb-32 overflow-x-hidden">
+
+ 
+
+    <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.35}
+      position="object-center"
+       
+      size="cover"
+      maskClass="mask-galaxy--img"
+    />
+
+
+
+
+      <!-- Lueurs primaires décoratives -->
+  <!-- <div class="absolute inset-0  pointer-events-none overflow-hidden z-10">
+   
+    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+   
+    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+    
+  </div> -->
+
+
+
+<!-- <div class="absolute bg-primary w-full h-1/2 left-0 bottom-0"></div> -->
+
+
+<div class="char mask-galaxy--img">  
+    <img src="/images/char_placeholder.png" alt="">
+  </div>
+
+  <div class="cache--gradient2b "></div> 
+
+ 
+
+ <div class="line absolute top-0 left-0 w-full"></div>
+   
+
+    <!-- Splash art — centré, déborde en haut -->
+    <!-- <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/3 z-10 w-80 pointer-events-none">
+      <img
+        src="https://picsum.photos/seed/character-splash/500/800"
+        alt="Personnage"
+        class="w-full object-contain drop-shadow-[0_0_80px_rgba(201,147,58,0.3)]"
+      />
+    </div> -->
+
+    <div class="relative z-10 max-w-6xl mx-auto p-6 lg:mt-42 mt-24">
+       <CornerOrnament size={34} />
+      <p class="section-label text-center">The Character</p>
+      <h2 class="title-hero text-center ">[NOM DU PERSO]</h2>
+
+      <DividerGeo class="my-12" />
+
+      <div class="bg-background/40 backdrop-blur-sm p-12 m-4 relative   ">
+        <!-- <CornerOrnament size={34} /> -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <p class="text-foreground-300 font-body text-base leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+        </p>
+        <p class="text-foreground-300 font-body text-base leading-relaxed">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.
+        </p>
+      </div>
+
+      <div class="flex justify-center mt-12">
+        <Button href="/character">Character Sheet</Button>
+      </div>
+    </div>
+
+
+  </div>
+
+ <div class="line absolute bottom-0 left-0 w-full"></div>
+   
+  
+  </section>
+
+  <!-- ─── Classes / Subclasses ───────────────────────────────────────── -->
+
+  
+  <!-- <section class="bg-background-100 px-6 pt-36 pb-32  relative overflow-y-clip">
+
+    <div class="relative z-1">
+
+       <div class="line absolute top-1/2 left-0 w-full"></div>
+
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
+      </div>
+
+       <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+      </div>
+</div>
+
+ 
+
+    <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.15}
+      position="object-bottom"
+        
+      size="cover"
+      class="mix-blend-hard-light z-1 "
+    />
+
+<div class="overlay-top z-2  opacity-90"></div>
+
+
+
+<div class="relative z-20  ">
+    <div class="line absolute bottom-0 left-0 w-full"></div> 
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+      </div>
+</div>
+
+
+
+
+    <BgImage
+      src="/images/galaxy-pitch.jpeg"
+      opacity={0.25} grayscale
+      fixedBg
+      position="object-center"
+      size="80%"
+      maskClass="mask-galaxy"
+      class="z-10"
+    />
+
+ 
+
+    <GalaxyCanvas   opacity={0.5} count={180} class="z-20" />
+   
+<div class="text-center relative z-20 mt-16">
+     <p class="section-label mb-10">Game System</p> 
+    <h2 class="title-1 mb-8 text-primary-100">Classes & Subclasses</h2>
+ <DividerGeo class="my-8"  />
+
+
+  <div class="max-w-3xl mx-auto text-center my-8 z-20 relative">
+
+
+        <p class="text-foreground-300 font-body text-base  ">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        </p>
+      </div>
+
+
+</div>
+
+ <div class="max-w-5xl mx-auto z-30 relative">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+
+      
+  <Card variant="class" bordered , shadow  href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            <Fragment slot="title">Composants</Fragment>
+            <Fragment slot="excerpt">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
+          </Card>
+
+
+          <div class="pt-12">
+            <Card variant="class" bordered shadow cta="En savoir plus →" href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            <Fragment slot="title">Composants</Fragment>
+            <Fragment slot="excerpt">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
+            <Fragment slot="details">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
+          </Card>
+          </div>
+
+
+            <Card variant="class" bordered shadow cta="En savoir plus →" href="#">
+            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+            <Fragment slot="title">Composants</Fragment>
+            <Fragment slot="excerpt">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
+          </Card>
+
+   </div>
+
+
+    </div>
+
+
+  </section> -->
+
+  
+
+  <!-- ─── Classes v2 ──────────────────────────────────────────────────────── -->
+  <section class="bg-background-300 px-6 pt-36 pb-32  relative overflow-y-clip">
+
+
+
+
+    <div class="relative z-1">
+       <div class="line absolute top-1/2 left-0 w-full"></div>
+
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
+      </div>
+
+       <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-10"></div>
+      </div>
+</div>
+
+<div class="relative z-20  ">
+    <!-- <div class="line absolute bottom-0 left-0 w-full"></div> -->
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+      </div>
+</div>
+
+<div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l-1 border-primary-300  opacity-30 z-1"></div>
+
+
+     <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.15}
+      position="object-bottom"
+        
+      size="cover"
+      class="mix-blend-hard-light z-1 "
+    /> 
+
+<div class="overlay-top z-1  opacity-90"></div>
+<div class="overlay-bottom z-1  opacity-90"></div>
+
+  <!-- Lueurs primaires décoratives -->
+  <!-- <div class="absolute inset-0  pointer-events-none overflow-hidden zi-1">
+   
+    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+  
+    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+ 
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
+      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
+  </div> -->
+
+ 
+
+
+    <BgImage
+      src="/images/galaxy-pitch.jpeg"
+      opacity={0.25} grayscale
+      fixedBg
+      position="object-center"
+      size="80%"
+      maskClass="mask-galaxy"
+      class="z-10"
+    />
+
+ 
+    <GalaxyCanvas   opacity={0.5} count={180} class="z-20" />
+     <!-- <div class="cache--gradient2b"></div> -->
+
+
+     
+    <div class="text-center relative z-20 mt-16">
+     <p class="section-label mb-10">Game System</p> 
+    <h2 class="title-1 mb-8 text-primary-100">Classes & Subclasses</h2>
+ <DividerGeo class="my-8"  />
+</div>  
+
+     
+ 
+
+ 
+    <div class="flex gap-12 items-start relative z-40 max-w-7xl mx-auto pt-8 ">
+
+      <!-- Col 1 : tabs -->
+      <div class="flex flex-col gap-3 flex-1" id="class-tabs">
+
+     <p class="section-label">Game System</p>
+    <h2 class="title-1  ">Cosmic Vessel</h2>
+
+     <DividerGeo class="my-4"  />  
+
+
+  <div class=" mx-auto text-left mb-8   z-20 relative">
+ 
+        <p class="text-foreground-300 font-body text-base  ">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+      </div>
+
+        <button class="class-tab is-active" data-index="0">
+          <span class="text-primary text-lg">⚔</span>
+          <span class="font-display text-sm tracking-wide uppercase">Class 1</span>
+        </button>
+        <button class="class-tab" data-index="1">
+          <span class="text-primary text-lg">✦</span>
+          <span class="font-display text-sm tracking-wide uppercase">Class 2</span>
+        </button>
+        <button class="class-tab" data-index="2">
+          <span class="text-primary text-lg">◈</span>
+          <span class="font-display text-sm tracking-wide uppercase">Class 3</span>
+        </button>
+      </div>
+
+      <!-- Col 2 : cards -->
+      <div id="class-cards" class="w-[28%] shrink-0">
+        <div class="class-card is-active" data-index="0">
+          <Card variant="class" bordered shadow>
+            <Fragment slot="title">Class 1</Fragment>
+            <Fragment slot="excerpt">Short description.</Fragment>
+          </Card>
+        </div>
+        <div class="class-card" data-index="1">
+          <Card variant="class" bordered shadow>
+            <Fragment slot="title">Class 2</Fragment>
+            <Fragment slot="excerpt">Short description.</Fragment>
+          </Card>
+        </div>
+        <div class="class-card" data-index="2">
+          <Card variant="class" bordered shadow>
+            <Fragment slot="title">Class 3</Fragment>
+            <Fragment slot="excerpt">Short description.</Fragment>
+          </Card>
+        </div>
+      </div>
+
+      <!-- Col 3 : textes -->
+      <div id="class-texts" class="flex-1 min-w-0 self-end">
+        
+         
+        
+        <ClassTextPanel index={0} active title="Class 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A class designed to fully embody the character's cosmic nature and martial heritage." subclasses={[
+          { name: 'Subclass A', description: 'Focused on combat and mastery of ancient weapons.' },
+          { name: 'Subclass B', description: 'Focused on arcane magic and shadow manipulation.' },
+        ]} />
+        <ClassTextPanel index={1} title="Class 2" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A second class with its own unique abilities and cosmic playstyle." subclasses={[
+          { name: 'Subclass A', description: 'Focused on summoning and cosmic pacts.' },
+          { name: 'Subclass B', description: 'Focused on stealth and temporal manipulation.' },
+        ]} />
+        <ClassTextPanel index={2} title="Class 3" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A third class built around narrative versatility and adaptive power." subclasses={[
+          { name: 'Subclass A', description: 'Focused on healing and protecting allies.' },
+          { name: 'Subclass B', description: 'Focused on raw destruction and cosmic channeling.' },
+        ]} />
+      </div>
+
+    </div>
+  </section>
+
+  <style is:global>
+    #class-cards .class-card article {
+      transition-delay: 0s;
+    }
+    #class-cards .class-card.is-hovered article {
+      transform: translateY(-0.5rem);
+      filter: drop-shadow(0 0 30px rgba(173, 141, 89, 0.15));
+      transition-delay: 0.5s;
+    }
+  </style>
+
+  <script>
+    const tabs = document.querySelectorAll('#class-tabs .class-tab');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const i = (tab as HTMLElement).dataset.index;
+
+        tabs.forEach(t => t.classList.remove('is-active'));
+        document.querySelectorAll('#class-cards .class-card').forEach(p => {
+          p.classList.remove('is-active');
+          p.classList.remove('is-hovered');
+        });
+        document.querySelectorAll('#class-texts .class-text').forEach(p => p.classList.remove('is-active'));
+
+        tab.classList.add('is-active');
+        document.querySelector(`#class-cards .class-card[data-index="${i}"]`)?.classList.add('is-active');
+        document.querySelector(`#class-texts .class-text[data-index="${i}"]`)?.classList.add('is-active');
+        document.querySelector(`#class-cards .class-card[data-index="${i}"]`)?.classList.add('is-hovered');
+      });
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <!-- ─── Editorial / Lore ──────────────────────────────────────────────── -->
+   <!-- ─── Editorial / Lore ──────────────────────────────────────────────── -->
+  <section class="relative bg-background-700 pt-32 pb-24 overflow-hidden">
+
+      <!-- Overlay lignes de grille (positionné sur la section entière) -->
+      <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
+        <div class="col-start-1  row-start-1 row-end-10  "></div>
+        <div class="col-start-2  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-3  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-4  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-5  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-6  row-start-1 row-end-10   border-primary-700/10"></div>
+        <div class="col-start-7  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-8  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-9  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-10 row-start-1 row-end-10 border-r border-primary-700/10"></div>
+        <div class="col-start-11 row-start-1 row-end-10  "></div>
+        <div class="col-start-12 row-start-1 row-end-10"></div>
+        <div class="col-start-1 col-end-13 row-start-5 border-t border-primary-700/10"></div>
+        <div class="col-start-1 col-end-13 row-start-8 border-t border-primary-700/10"></div>
+      </div>
+
+
+
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.5}
+      position="object-center"
+      fixedBg
+      size="cover"
+      maskClass="mask-galaxy--img"
+      class="blur-sm"
+    />
+
+
+
+ 
+   <div class="cache--gradient2 "></div>  
+
+
+    <div class="relative z-1">
+       <div class="line absolute top-1/2 left-0 w-full"></div>
+
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+      </div>
+
+        <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-10"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+      </div>  
+</div>
+
+
+ 
+
+<div class="overlay-top z-2  opacity-90"></div>
+
+  <!-- Lueurs primaires décoratives -->
+   <div class="absolute inset-0  pointer-events-none overflow-hidden zi-1">
+   
+    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+  
+    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+ 
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
+      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
+  </div>  
+
+ 
+<div class="relative z-20  ">
+    <!-- <div class="line absolute bottom-0 left-0 w-full"></div> -->
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+      </div>
+</div>
+
+<div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l-1 border-primary-300  opacity-20 z-1"></div>
+
+
+    <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
+
+      <!-- Date / corner mark -->
+      <div class="absolute top-0 right-6 text-right  ">
+        <p class="font-display text-xs text-primary tracking-widest">CHAPITRE I</p>
+        <p class="font-display text-xs text-foreground-500 tracking-widest">VOYAGE COSMIQUE</p>
+      </div>
+
+      <!-- Ornament top-left -->
+      <div class="absolute top-1 left-6 flex gap-1 text-primary text-xs">
+        <span>✦</span><span>✦</span><span>✦</span>
+      </div>
+
+      <!-- Editorial grid -->
+      <!-- grid-rows : r1 titre | r2 titre | r3 gap | r4 texte | r5 gap | r6 titre | r7 titre | r8 gap | r9 texte -->
+        <div class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] gap-4 pt-16">
+
+        <!-- row 1 : "Au-delà" -->
+        <h2 class="editorial-word col-span-7 col-start-1 row-start-1 self-start">Beyond</h2>
+
+        <!-- row 2 : "des étoiles" -->
+        <h2 class="editorial-word col-span-7 col-start-5 row-start-2 whitespace-nowrap text-primary-300">the stars</h2>
+
+        <!-- row 3 : gap (6rem) — vide -->
+
+        <!-- row 4 : petit texte haut-droit -->
+        <div class="col-span-4 col-start-8 row-start-3 mt-8">
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer. You are not alone — you never were.
+          </p>
+        </div>
+
+        <!-- row 5 : gap (4rem) — vide -->
+
+        <!-- row 6 : "Un vaisseau" -->
+        <h2 class="editorial-word col-span-8 col-start-1 row-start-6 self-start whitespace-nowrap">A vessel</h2>
+
+        <!-- row 7 : "cosmique" -->
+        <h2 class="editorial-word col-span-9 col-start-1 row-start-7 self-start text-primary-300">cosmic</h2>
+
+        <!-- row 8 : gap (6rem) — vide -->
+
+               <!-- row 4 : petit texte haut-droit -->
+        <div class="col-span-4 col-start-10 row-start-6 mt-4">
+          <p class="text-foreground-500 font-body text-xs  uppercase leading-relaxed tracking-wide">
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer.
+          </p>
+        </div>
+
+        <!-- row 9 : petit texte bas-gauche -->
+        <div class="col-span-4 col-start-1 row-start-8 mt-8">
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer. You are not alone — you never were.
+          </p>
+        </div>
+
+        </div>
+
+      <!-- Ornament bottom -->
+      <div class="flex justify-center gap-1 text-primary text-xs mt-8">
+        <span>✦</span><span>✦</span><span>✦</span>
+      </div>
+
+    </div>
+
+     <div class="line absolute top-0 left-0 w-full"></div>
+
+  </section>
+
+
+
+<div class="relative   h-[60vh] min-h-[300px]">
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={1}  
+      fixedBg
+      position="object-center"
+       
+      
+      class="z-10"
+    />
+
+
+<div class="char ">  
+    <img src="/images/char_placeholder.png" alt="">
+  </div>
+
+</div>
+
+
+  <!-- ─── Galerie teaser ───────────────────────────────────────────────── -->
+ <section class="relative bg-background-500 py-24  overflow-hidden"> 
+
+
+  <div class="overlay-bottom z-2   "></div>
+<!-- <div class="overlay-top z-2   "></div> -->
+
+ 
+
+ 
+
+  
+<div class="z-10 relative">
+
+
+
+  <div class="text-center relative z-20 ">
+     <p class="section-label mb-10">Timeline</p>
+    <h2 class="title-1 mb-8 text-primary-100">Roadmap</h2>
+ <DividerGeo class="my-8"  />
+</div>  
+
+
+ 
+    <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      {['gallery-1', 'gallery-2', 'gallery-3', 'gallery-4'].map((seed, i) => (
+        <div class:list={['img-overlay', i === 0 ? 'col-span-2 row-span-2' : '']}>
+          <img
+            src={`https://picsum.photos/seed/${seed}/800/800`}
+            alt=""
+            class="w-full h-full object-cover aspect-square"
+          />
+        </div>
+      ))}
+    </div></div>
+
+    <div class="flex justify-center mt-10">
+      <Button variant="outline" href="/gallery">Explore the gallery</Button>
+    </div>
+
+</div>
+   <div class="line absolute bottom-0 left-0 w-full"></div>
+   
+ 
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ─── Roadmap ───────────────────────────────────────────────────────── -->
+ 
+ <section class="relative bg-background-700 py-24  overflow-hidden"> 
+
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.25}
+      position="object-center"
+      fixedBg
+      size="cover"
+      maskClass="mask-galaxy--img"
+      class="blur-sm grayscale"
+    />
+
+
+
+   <div class="cache--gradient2 "></div>  
+
+<div class="overlay-top z-2   "></div>
+
+ 
+
+  <!-- Lueurs primaires décoratives -->
+   <div class="absolute inset-0  pointer-events-none overflow-hidden zi-1">
+   
+    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+  
+    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+ 
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
+      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
+  </div>  
+
+ 
+ 
+
+
+
+    <div class="text-center relative z-20 ">
+     <p class="section-label mb-10">Timeline</p>
+    <h2 class="title-1 mb-8 text-primary-100">Roadmap</h2>
+ <DividerGeo class="my-8"  />
+</div>  
+
+
+
+
+    <div class="relative max-w-5xl mx-auto z-40">
+  
+      
+
+
+
+      <!-- Jauge verticale -->
+      <div class="absolute left-1 top-2 bottom-2 w-px bg-gradient-to-b from-transparent via-primary-700/50 to-transparent pointer-events-none"></div>
+
+      <div class="flex flex-col gap-8">
+        {roadmap.map((phase) => {
+          const dotClass = {
+            completed: 'bg-primary ring-2 ring-background',
+            'in-progress': 'bg-secondary ring-2 ring-background animate-pulse',
+            planned: 'bg-background-300 ring-2 ring-background border border-foreground-700',
+          }[phase.data.status];
+
+          return (
+            <div class="flex gap-6 items-center">
+              <!-- Dot timeline -->
+              <div class="flex justify-center  ">
+                <div class:list={['w-2.5 h-2.5 rounded-full relative z-10 shrink-0', dotClass]}></div>
+              </div>
+              <!-- Card -->
+              <RoadmapCard
+                title={phase.data.title}
+                description={phase.data.description}
+                status={phase.data.status}
+                date={phase.data.date}
+                features={phase.data.features}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+    </div>
+
+
+   <div class="line absolute bottom-0 left-0 w-full"></div>
+   
+ 
+
+  </section>
+
+  <!-- ─── Blog récent ───────────────────────────────────────────────────── -->
+  {recentPosts.length > 0 && (
+    <section class="max-w-5xl mx-auto px-6 py-20 border-t border-background-100">
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="section-label">Latest News</p>
+          <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase">News</h2>
+        </div>
+        <Button variant="ghost" href="/blog" class="text-primary">View all →</Button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {recentPosts.map(post => (
+          <Card variant="article" bordered cta="Read →" href={`/blog/${post.slug}`}>
+            <img slot="image" src={post.data.cover ?? `https://picsum.photos/seed/${post.slug}/800/450`} alt={post.data.title} class="img-cover" />
+            <Fragment slot="badge">
+              {post.data.tags.slice(0, 2).map(tag => (
+                <span class="badge badge--primary">{tag}</span>
+              ))}
+            </Fragment>
+            <Fragment slot="title">{post.data.title}</Fragment>
+            <Fragment slot="excerpt">{post.data.excerpt}</Fragment>
+            <span slot="meta" class="text-2xs text-foreground-700 font-ui">
+              {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+          </Card>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- ─── CTA Team ──────────────────────────────────────────────────────── -->
+  <section class="py-24 text-center border-t border-background-100">
+    <p class="section-label text-center">Behind the mod</p>
+    <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-6">A passionate team</h2>
+    <p class="text-foreground-500 font-body text-lg max-w-xl mx-auto mb-10">
+      Around thirty volunteers — artists, developers, writers, composers — united by their love of the game.
+    </p>
+    <Button variant="outline" href="/team">Meet the team</Button>
+  </section>
+
+  <Footer />
 </Layout>

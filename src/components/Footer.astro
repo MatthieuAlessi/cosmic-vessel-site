@@ -1,0 +1,28 @@
+---
+import FooterUI from '@components/ui/Footer.astro';
+const year = new Date().getFullYear();
+---
+
+<FooterUI variant="centered">
+  <a slot="logo" href="/" class="font-display text-sm tracking-display text-primary-100 uppercase">
+    [MOD NAME]
+  </a>
+
+  <Fragment slot="links">
+    <a href="/" class="nav__link">Accueil</a>
+    <a href="/character" class="nav__link">Personnage</a>
+    <a href="/gallery" class="nav__link">Galerie</a>
+    <a href="/blog" class="nav__link">Actus</a>
+    <a href="/contact" class="nav__link">Contact</a>
+  </Fragment>
+
+  <Fragment slot="copyright">
+    <p class="text-xs tracking-wider text-foreground-700 font-ui uppercase mb-3">
+      Un mod non-officiel pour Baldur's Gate 3
+    </p>
+    <div class="divider-gold w-48 mx-auto opacity-30 mb-4"></div>
+    <p class="text-2xs text-foreground-700 font-ui">
+      © {year} Cosmic Vessel Team — Projet bénévole, non affilié à Larian Studios.
+    </p>
+  </Fragment>
+</FooterUI>

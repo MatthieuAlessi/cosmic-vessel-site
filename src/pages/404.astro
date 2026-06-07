@@ -1,0 +1,14 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/Nav.astro';
+---
+
+<Layout title="404 — Page introuvable | [MOD NAME]">
+  <Nav />
+  <main class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+    <p class="font-ui text-8xl font-light text-background-100 mb-6">404</p>
+    <h1 class="font-display text-3xl tracking-widest text-primary-100 uppercase mb-4">Page introuvable</h1>
+    <p class="text-foreground-500 font-body mb-10">Cette page n'existe pas ou a été déplacée.</p>
+    <a href="/" class="btn btn--outline">Retour à l'accueil</a>
+  </main>
+</Layout>

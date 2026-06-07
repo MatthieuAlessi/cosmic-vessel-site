@@ -1,0 +1,91 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  status: 'completed' | 'in-progress' | 'planned';
+  date?: string;
+  features: string[];
+}
+
+const { title, description, status, date, features } = Astro.props;
+
+const statusConfig = {
+  completed: {
+    label: 'Terminé',
+    labelClass: 'text-primary border-primary/60',
+    panelClass: 'bg-primary/5 border-l border-primary/20',
+    featureIcon: '✓',
+    featureIconClass: 'text-primary',
+    featureTextClass: 'text-foreground-300',
+    panelTitle: 'Livré',
+    panelTitleClass: 'text-primary',
+  },
+  'in-progress': {
+    label: 'En cours',
+    labelClass: 'text-secondary-300 border-secondary/60',
+    panelClass: 'bg-secondary/5 border-l border-secondary/20',
+    featureIcon: '◉',
+    featureIconClass: 'text-secondary-300',
+    featureTextClass: 'text-foreground-300',
+    panelTitle: 'En développement',
+    panelTitleClass: 'text-secondary-300',
+  },
+  planned: {
+    label: 'Prévu',
+    labelClass: 'text-foreground-700 border-background-100',
+    panelClass: 'bg-background-100/20 border-l border-background-100/60',
+    featureIcon: '◇',
+    featureIconClass: 'text-foreground-700',
+    featureTextClass: 'text-foreground-700',
+    panelTitle: 'Au programme',
+    panelTitleClass: 'text-foreground-500',
+  },
+};
+
+const cfg = statusConfig[status];
+---
+
+<div class="card-cinematic flex  overflow-hidden w-full">
+
+  <!-- Panneau gauche : infos principales -->
+  <div class="p-6 flex flex-col justify-between gap-4 w-2/3">
+    <div>
+      <div class="flex items-start justify-between gap-4 mb-3">
+        <h3 class="font-display text-xl tracking-wide text-primary-100 uppercase leading-tight">
+          {title}
+        </h3>
+        <span class:list={[
+          'font-ui text-2xs tracking-widest uppercase border px-3 py-1 shrink-0 rounded',
+          cfg.labelClass
+        ]}>
+          {cfg.label}
+        </span>
+      </div>
+      <p class="text-foreground-500 font-body text-sm leading-relaxed">{description}</p>
+    </div>
+
+    {date && (
+      <p class="font-ui text-2xs tracking-wider text-foreground-700 uppercase">{date}</p>
+    )}
+  </div>
+
+  <!-- Panneau droit : features, varie selon le status -->
+  {features.length > 0 && (
+    <div class:list={['p-5   w-1/3  flex flex-col gap-3', cfg.panelClass]}>
+      <p class:list={['font-ui text-2xs tracking-widest uppercase mb-1', cfg.panelTitleClass]}>
+        {cfg.panelTitle}
+      </p>
+      {features.map(feature => (
+        <div class="flex items-start gap-2.5">
+          <span class:list={['text-xs mt-0.5 shrink-0 leading-none', cfg.featureIconClass]}>
+            {cfg.featureIcon}
+          </span>
+          <span class:list={['font-body text-xs leading-relaxed', cfg.featureTextClass]}>
+            {feature}
+          </span>
+        </div>
+      ))}
+    </div>
+  )}
+
+</div>
