@@ -926,8 +926,8 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {recentPosts.map(post => (
-          <Card variant="article" bordered cta="Read →" href={`/blog/${post.slug}`}>
-            <img slot="image" src={post.data.cover ?? `https://picsum.photos/seed/${post.slug}/800/450`} alt={post.data.title} class="img-cover" />
+          <Card variant="article" bordered cta="Read →" href={`/blog/${post.id}`}>
+            <img slot="image" src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/800/450`} alt={post.data.title} class="img-cover" />
             <Fragment slot="badge">
               {post.data.tags.slice(0, 2).map(tag => (
                 <span class="badge badge--primary">{tag}</span>

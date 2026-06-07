@@ -28,9 +28,9 @@ function formatDate(date: Date) {
 
       <div class="space-y-8">
         {posts.map(post => (
-          <a href={`/blog/${post.slug}`} class="card-cinematic group flex gap-6 p-0 overflow-hidden block">
+          <a href={`/blog/${post.id}`} class="card-cinematic group flex gap-6 p-0 overflow-hidden block">
             <div class="img-overlay w-48 shrink-0">
-              <img src={post.data.cover ?? `https://picsum.photos/seed/${post.slug}/400/300`} alt={post.data.title} class="w-full h-full object-cover" />
+              <img src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/400/300`} alt={post.data.title} class="w-full h-full object-cover" />
             </div>
             <div class="p-6 flex flex-col justify-center">
               <div class="flex gap-3 mb-3">
