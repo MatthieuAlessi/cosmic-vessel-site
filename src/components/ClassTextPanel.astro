@@ -18,7 +18,7 @@ const { title, description, subclasses, index, active = false } = Astro.props;
 ---
 
 <div
-  class:list={['class-text bg-background/40 backdrop-blur-sm p-10 outline-1 outline-primary-700/30 outline-offset-6 border-primary-500/40 border-1', active && 'is-active']}
+  class:list={['class-text layer bg-background/40 backdrop-blur-sm p-10 outline-1 outline-primary-700/30 outline-offset-6 border-primary-500/40 border-1', active && 'is-active']}
   data-index={index}
 >
   <CornerOrnament size={34} />

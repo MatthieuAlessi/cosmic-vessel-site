@@ -1,0 +1,190 @@
+---
+import ArchFrame from '@components/ArchFrame.astro';
+import DividerGeo from '@components/DividerGeo.astro';
+
+// Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
+const voies = [
+  {
+    icon: '⚔',
+    name: 'Voie 1',
+    role: 'Lame cosmique',
+    tags: ['Mêlée', 'Burst', 'Mobilité'],
+    art: 'https://picsum.photos/seed/voie-1/800/1200',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la première voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+    abilities: [
+      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
+      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
+      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
+    ],
+    subclasses: [
+      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    ],
+  },
+  {
+    icon: '✦',
+    name: 'Voie 2',
+    role: 'Tisseur d\'arcanes',
+    tags: ['Distance', 'Contrôle', 'Invocation'],
+    art: 'https://picsum.photos/seed/voie-2/800/1200',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la deuxième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+    abilities: [
+      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
+      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
+      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
+    ],
+    subclasses: [
+      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    ],
+  },
+  {
+    icon: '◈',
+    name: 'Voie 3',
+    role: 'Gardien des éclipses',
+    tags: ['Soutien', 'Protection', 'Soin'],
+    art: 'https://picsum.photos/seed/voie-3/800/1200',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la troisième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+    abilities: [
+      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
+      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
+      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
+    ],
+    subclasses: [
+      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    ],
+  },
+  {
+    icon: '❂',
+    name: 'Voie 4',
+    role: 'Héraut du néant',
+    tags: ['Hybride', 'Sacrifice', 'Channeling'],
+    art: 'https://picsum.photos/seed/voie-4/800/1200',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la quatrième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+    abilities: [
+      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
+      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
+      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
+    ],
+    subclasses: [
+      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    ],
+  },
+];
+---
+
+<section class="bg-background-300 px-6 pt-24 pb-32 lg:pt-32 relative overflow-clip">
+
+  <!-- En-tête -->
+  <div class="text-center relative z-20 mb-12">
+    <p class="section-label mb-6">Game System</p>
+    <h2 class="title-1 text-primary-100">Les 4 Voies</h2>
+    <DividerGeo class="my-8" />
+  </div>
+
+  <!-- Onglets horizontaux -->
+  <div id="voies-tabs" class="flex flex-wrap justify-center gap-3 mb-12 relative z-20 max-w-5xl mx-auto">
+    {voies.map((voie, i) => (
+      <button class:list={['class-tab', i === 0 && 'is-active']} data-index={i}>
+        <span class="text-primary text-lg">{voie.icon}</span>
+        <span class="font-display text-sm tracking-wide uppercase">{voie.name}</span>
+      </button>
+    ))}
+  </div>
+
+  <!--
+    Panneaux détail empilés (un seul visible via .is-active).
+    Le toggle JS plus bas déplace .is-active sur l'onglet + le panneau du même
+    data-index. Remplaçable par ta propre version (GSAP, etc.).
+  -->
+  <div id="voies-panels" class="layer-stack max-w-6xl mx-auto relative z-20">
+    {voies.map((voie, i) => (
+      <div class:list={['layer', i === 0 && 'is-active']} data-index={i}>
+        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,20rem)_1fr] gap-10 lg:gap-16 items-start">
+
+          <!-- Art (motif arche) -->
+          <div class="w-full max-w-xs mx-auto lg:max-w-none">
+            <ArchFrame>
+              <img src={voie.art} alt={voie.name} class="w-full h-full object-cover" loading="lazy" />
+            </ArchFrame>
+          </div>
+
+          <!-- Détail -->
+          <div class="space-y-6">
+            <div>
+              <p class="section-label mb-2">{voie.role}</p>
+              <h3 class="title-2 text-primary-100">{voie.name}</h3>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              {voie.tags.map((tag) => (
+                <span class="badge badge--primary">{tag}</span>
+              ))}
+            </div>
+
+            <p class="text-foreground-300 font-body text-base leading-relaxed">
+              {voie.description}
+            </p>
+
+            <DividerGeo size="sm" class="my-2" />
+
+            <!-- Capacités signatures -->
+            <div>
+              <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Capacités signatures</p>
+              <div class="space-y-3">
+                {voie.abilities.map((ability) => (
+                  <div class="flex gap-3">
+                    <span class="text-primary text-sm shrink-0 mt-0.5">◆</span>
+                    <div>
+                      <p class="font-display text-sm text-primary-100 uppercase">{ability.name}</p>
+                      <p class="text-foreground-500 font-body text-sm leading-relaxed">{ability.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Sous-voies -->
+            <div>
+              <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Sous-voies</p>
+              <div class="grid sm:grid-cols-2 gap-4">
+                {voie.subclasses.map((sub) => (
+                  <div class="card-cinematic p-5">
+                    <p class="font-display text-base text-primary-300 uppercase mb-1">{sub.name}</p>
+                    <p class="text-foreground-500 font-body text-sm leading-relaxed">{sub.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  // Toggle des voies : au clic sur un onglet, on déplace .is-active sur
+  // l'onglet et le panneau correspondants (même data-index).
+  const tabs = document.querySelectorAll<HTMLElement>('#voies-tabs .class-tab');
+  const panels = document.querySelectorAll<HTMLElement>('#voies-panels .layer');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const i = tab.dataset.index;
+      tabs.forEach((t) => t.classList.remove('is-active'));
+      panels.forEach((p) => p.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      document
+        .querySelector(`#voies-panels .layer[data-index="${i}"]`)
+        ?.classList.add('is-active');
+    });
+  });
+</script>

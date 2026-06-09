@@ -2,99 +2,204 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
+import BgImage from '@components/BgImage.astro';
+import DividerGeo from '@components/DividerGeo.astro';
+import StarMarks from '@components/StarMarks.astro';
+import ArchFrame from '@components/ArchFrame.astro';
+import VoiesSection from '@components/VoiesSection.astro';
+import Button from '@components/ui/Button.astro';
+import SplitSection from '@components/ui/SplitSection.astro';
 ---
 
 <Layout
-  title="[CHARACTER NAME] — Personnage Origin | [MOD NAME]"
-  description="Découvrez le personnage origin inédit — son lore, sa classe unique et ses spells exclusifs."
+  title="[CHARACTER NAME] — Origin Character | [MOD NAME]"
+  description="Discover the origin character — lore, unique class and exclusive paths."
 >
   <Nav />
 
-  <!-- Hero personnage -->
-  <section class="hero" style="min-height: 80vh;">
-    <div class="hero__bg">
-      <img src="https://picsum.photos/seed/character-hero/1920/1080" alt="" />
+  <!-- ─── 1. Hero — portrait arche plein écran ──────────────────────────── -->
+  <section class="section-hero overflow-hidden lg:h-[50vh] h-[70vh] bg-background relative">
+
+    <BgImage
+      src="/images/galaxy-pitch2.jpeg"
+      opacity={0.45}
+      position="object-center"
+      fixedBg
+      size="cover"
+      maskClass="mask-galaxy--img"
+    />
+    <div class="cache--gradient2b"></div>
+
+    <div class="relative z-10 h-full flex flex-col items-start xl:justify-end justify-center justify-center text-left px-6 py-24 gap-10 max-w-7xl mx-auto">
+ 
+      <div class="space-y-4">
+        <p class="section-label">Origin Character</p>
+        <h1 class="title-1">[CHARACTER NAME]</h1>
+        <p class="title-4 text-white tracking-display">[Class] · [Origin] · [Arcane]</p>
+      </div>
     </div>
-    <div class="hero__vignette"></div>
-    <div class="hero__content">
-      <p class="section-label text-center">Origin Character</p>
-      <h1 class="hero__title">[CHARACTER NAME]</h1>
-      <p class="hero__subtitle">[Classe] · [Origine] · [Arcane]</p>
+
+    <div class="line absolute bottom-0 left-0 w-full"></div>
+  </section>
+
+
+
+  <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
+  <section class="relative bg-background-500 py-24 lg:py-32 overflow-clip">
+
+
+
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.05}
+      position="object-center"
+       
+      fixedBg
+      size="cover"
+      class="   "
+    /> 
+
+
+<div class="overlay-top"></div>
+ 
+ 
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col gap-24 lg:gap-24">
+
+      <!-- Bloc 1 : texte gauche / image droite -->
+      <div class="flex items-start lg:flex-row-reverse flex-col  gap-8 lg:gap-24 xl:gap-24 ">
+
+        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
+         
+             <p class="section-label mb-4">Lore</p>
+      <h2 class="title-1 mb-6">[Lore Heading]</h2>
+
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts grow more ravenous, and the children of the void become visible. In this nightmare, the world reveals the eldritch truths it had long kept hidden.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            As a result, everything turns darker, and the character begins to see the world as it would if they had gathered enough insight. By following the call, you usher in the coming of the Red Moon.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Whether it brings salvation or ruin, no one can say. The cosmos is a towering, labyrinthine cathedral — and you are the key turning in its lock.
+          </p>
+          <StarMarks class="pt-2" />
+        </div>
+
+        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
+          <img src="https://picsum.photos/seed/lore-1/640/800" alt="" class="w-full aspect-square object-cover" loading="lazy" />
+        </div>
+
+      </div>
+
+      <!-- Bloc 2 : image gauche / texte droite -->
+       <div class="flex items-start lg:flex-row flex-col  gap-8 lg:gap-24 xl:gap-36 ">
+
+        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
+          <p class="section-label">Chapter II — The Ashen Blood</p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Eventually, the old sanctuary was founded — but it was brought low by an affliction known as the Ashen Blood, a slow and merciless corruption that spread through every living thing it touched.
+          </p>
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Along with the physical transformation comes a mental unraveling. At first the afflicted assume that all they do not know is hostile, and they strike on sight — until nothing of who they were remains.
+          </p>
+          <StarMarks class="pt-2" />
+        </div>
+
+        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
+          <img src="https://picsum.photos/seed/lore-2/640/800" alt="" class="w-full aspect-square object-cover" loading="lazy" />
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="line absolute top-0 left-0 w-full"></div>
+
+  </section>
+
+
+
+  <!-- ─── 2. Lore — art à gauche, texte à droite (sticky plus tard) ──────── -->
+  <!-- <section class="bg-background-500 py-16 lg:py-24 relative overflow-clip">
+    <SplitSection
+      imageSrc="https://picsum.photos/seed/character-lore/800/1000"
+      imageAlt="[CHARACTER NAME]"
+      imagePosition="left"
+    >
+      <p class="section-label mb-4">Lore</p>
+      <h2 class="title-1 mb-6">[Lore Heading]</h2>
+      <p class="text-foreground-300 font-body text-base leading-relaxed mb-5">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+      </p>
+      <p class="text-foreground-500 font-body text-sm leading-relaxed">
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.
+      </p>
+      <StarMarks class="pt-8" />
+    </SplitSection>
+  </section> -->
+
+  <!-- ─── 3. Questline — rangée de 4 actes (aperçu placeholder) ─────────── -->
+  <section class="bg-background py-24 lg:py-32 relative overflow-hidden">
+    <div class="text-center relative z-20 mb-12">
+      <p class="section-label mb-6">Questline</p>
+      <h2 class="title-1 text-primary-100">The Four Acts</h2>
+      <DividerGeo class="my-8" />
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[1, 2, 3, 4].map((n) => (
+        <article class="card-cinematic p-6 flex flex-col gap-3">
+          <p class="font-display text-xs tracking-widest text-primary-700 uppercase">Act {n}</p>
+          <h3 class="title-3 text-primary-100">[Act {n} title]</h3>
+          <DividerGeo size="xs" class="my-1" />
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder preview of this act.
+          </p>
+        </article>
+      ))}
     </div>
   </section>
 
-  <div class="max-w-5xl mx-auto px-6">
+  <!-- ─── 4. Les 4 Voies — sélecteur (statique, TODO toggle JS) ──────────── -->
+  <VoiesSection />
 
-    <!-- Lore -->
-    <section class="py-24">
-      <p class="section-label">Histoire</p>
-      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Lore</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div class="prose">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula tortor a
-            arcu faucibus, sit amet tincidunt nisi fringilla. Proin vel justo non erat vestibulum
-            tempus.
-          </p>
-          <p>
-            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-            egestas. Vivamus nec feugiat lectus, eget porta eros.
-          </p>
+  <!-- ─── 5. CTA — teaser galerie + suivre le projet ────────────────────── -->
+  <section class="bg-background-500 py-24 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Teaser galerie -->
+      <div>
+        <p class="section-label mb-6">Gallery</p>
+        <div class="grid grid-cols-3 gap-3">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div class="img-overlay">
+              <img src={`https://picsum.photos/seed/char-gal-${i}/400/400`} alt="" class="w-full h-full object-cover aspect-square" loading="lazy" />
+            </div>
+          ))}
         </div>
-        <div class="img-overlay aspect-[3/4]">
-          <img src="https://picsum.photos/seed/character-portrait/600/800" alt="[CHARACTER NAME]" class="w-full h-full object-cover" />
+        <div class="mt-8">
+          <Button variant="outline" href="/gallery">Explore the gallery</Button>
         </div>
       </div>
-    </section>
 
-    <div class="divider-gold"></div>
-
-    <!-- Classe -->
-    <section class="py-24">
-      <p class="section-label">Mécanique</p>
-      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Classe</h2>
-      <div class="card-cinematic p-8 mb-8">
-        <h3 class="font-display text-2xl tracking-wider text-primary uppercase mb-4">[CLASS NAME]</h3>
-        <p class="text-foreground-500 font-body text-lg leading-relaxed max-w-2xl">
-          Description de la classe — ses mécaniques uniques, son fantasy, sa place dans le système
-          de jeu de BG3.
+      <!-- Suivre le projet -->
+      <div class="text-center lg:text-left">
+        <p class="section-label mb-6">Follow the project</p>
+        <h2 class="title-1 mb-6 text-primary-100">[Join the journey]</h2>
+        <p class="text-foreground-500 font-body text-base leading-relaxed mb-10 max-w-md mx-auto lg:mx-0">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder pour inciter à suivre le développement du mod.
         </p>
+        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+          <Button href="/blog">Follow Development</Button>
+          <Button variant="outline" href="/contact">Join the Discord</Button>
+        </div>
+        <StarMarks class="justify-center lg:justify-start mt-12" />
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {['Caractéristique 1', 'Caractéristique 2', 'Caractéristique 3'].map(feature => (
-          <div class="card-cinematic p-5 text-center">
-            <div class="text-3xl text-primary opacity-50 mb-3">◈</div>
-            <h4 class="font-display text-sm tracking-wider text-primary-100 uppercase mb-2">{feature}</h4>
-            <p class="text-foreground-500 font-body text-sm">Description courte à compléter.</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <div class="divider-gold"></div>
-
-    <!-- Spells -->
-    <section class="py-24">
-      <p class="section-label">Magie</p>
-      <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase mb-10">Spells Inédits</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {[1, 2, 3, 4].map(i => (
-          <div class="card-cinematic p-6 flex gap-4">
-            <div class="w-12 h-12 bg-background-300 border border-primary-700 rounded flex items-center justify-center shrink-0">
-              <span class="text-primary text-lg">✦</span>
-            </div>
-            <div>
-              <h4 class="font-display text-base tracking-wide text-primary-100 uppercase mb-1">[Spell Name {i}]</h4>
-              <p class="font-ui text-2xs tracking-wider text-primary-700 uppercase mb-2">Niveau {i} · École de magie</p>
-              <p class="text-foreground-500 font-body text-sm">Description du sort à compléter avec les mécaniques finales.</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-  </div>
+    </div>
+  </section>
 
   <Footer />
 </Layout>

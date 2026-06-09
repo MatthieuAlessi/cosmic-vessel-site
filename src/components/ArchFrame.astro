@@ -1,0 +1,32 @@
+---
+import CornerOrnament from '@components/CornerOrnament.astro';
+
+interface Props {
+  /** Classes en plus sur le cadre (ex. largeur, ratio override). */
+  class?: string;
+  /** Ornement de coin en bas (comme la card de classe). */
+  ornament?: boolean;
+}
+
+const { class: className = '', ornament = true } = Astro.props;
+---
+
+<!--
+  Motif "arche" extrait du Card variant="class" : silhouette arrondie en haut +
+  cadre outline décalé. Slot = visuel (img / BgImage), positionné en absolute.
+  NB : le même motif existe encore en dur dans ui/Card.astro (variant "class").
+-->
+<div
+  class:list={[
+    'relative overflow-hidden rounded-t-full aspect-2/4 border border-primary-500 outline-1 outline-primary-700/30 outline-offset-6',
+    className,
+  ]}
+>
+  <div class="absolute inset-0">
+    <slot />
+  </div>
+
+  <div class="overlay-bottom"></div>
+
+  {ornament && <CornerOrnament size={34} corner="bottom" />}
+</div>

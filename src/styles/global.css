@@ -718,7 +718,8 @@ article:hover .card-expand {
   transition: border-color 0.3s, color 0.3s, background-color 0.3s;
   background: transparent;
   cursor: pointer;
-  width: 100%;
+  /* Largeur pilotée par le conteneur : pleine largeur en colonne (home,
+     via align-items:stretch), au contenu en ligne (voies horizontales). */
 }
 .class-tab:hover,
 .class-tab.is-active {
@@ -726,30 +727,20 @@ article:hover .card-expand {
   color: var(--color-primary-100);
   background: rgba(173, 141, 89, 0.05);
 }
-#class-cards { display: grid; }
-#class-cards .class-card {
+/* Pile de calques superposés (grid-area 1/1) : un seul visible (.is-active),
+   les autres masqués en attente d'un toggle JS. Réutilisé par le sélecteur de
+   classes (home) et la section Voies (character). */
+.layer-stack { display: grid; }
+.layer-stack > .layer {
   grid-area: 1 / 1;
   opacity: 0;
   transform: translateY(24px) scale(0.97);
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
-#class-cards .class-card.is-active {
+.layer-stack > .layer.is-active {
   opacity: 1;
   transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-#class-texts { display: grid; }
-#class-texts .class-text {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-#class-texts .class-text.is-active {
-  opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
 }
 

@@ -618,20 +618,20 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
 
       <!-- Col 2 : cards -->
-      <div id="class-cards" class="w-[28%] shrink-0">
-        <div class="class-card is-active" data-index="0">
+      <div id="class-cards" class="layer-stack w-[28%] shrink-0">
+        <div class="class-card layer is-active" data-index="0">
           <Card variant="class" bordered shadow>
             <Fragment slot="title">Class 1</Fragment>
             <Fragment slot="excerpt">Short description.</Fragment>
           </Card>
         </div>
-        <div class="class-card" data-index="1">
+        <div class="class-card layer" data-index="1">
           <Card variant="class" bordered shadow>
             <Fragment slot="title">Class 2</Fragment>
             <Fragment slot="excerpt">Short description.</Fragment>
           </Card>
         </div>
-        <div class="class-card" data-index="2">
+        <div class="class-card layer" data-index="2">
           <Card variant="class" bordered shadow>
             <Fragment slot="title">Class 3</Fragment>
             <Fragment slot="excerpt">Short description.</Fragment>
@@ -640,7 +640,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
 
       <!-- Col 3 : textes -->
-      <div id="class-texts" class="flex-1 min-w-0 self-end">
+      <div id="class-texts" class="layer-stack flex-1 min-w-0 self-end">
         
          
         
