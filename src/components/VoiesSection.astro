@@ -1,6 +1,8 @@
 ---
 import ArchFrame from '@components/ArchFrame.astro';
 import DividerGeo from '@components/DividerGeo.astro';
+import BgImage from '@components/BgImage.astro';
+import GalaxyCanvas from '@components/GalaxyCanvas.astro';
 
 // Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
 const voies = [
@@ -11,7 +13,7 @@ const voies = [
     tags: ['Mêlée', 'Burst', 'Mobilité'],
     art: 'https://picsum.photos/seed/voie-1/800/1200',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la première voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la première voie, son rôle en combat et ce qui la rend unique.',
     abilities: [
       { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
       { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
@@ -29,7 +31,7 @@ const voies = [
     tags: ['Distance', 'Contrôle', 'Invocation'],
     art: 'https://picsum.photos/seed/voie-2/800/1200',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la deuxième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la deuxième voie, son rôle en combat et ce qui la rend unique.',
     abilities: [
       { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
       { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
@@ -47,7 +49,7 @@ const voies = [
     tags: ['Soutien', 'Protection', 'Soin'],
     art: 'https://picsum.photos/seed/voie-3/800/1200',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la troisième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la troisième voie, son rôle en combat et ce qui la rend unique.',
     abilities: [
       { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
       { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
@@ -65,7 +67,7 @@ const voies = [
     tags: ['Hybride', 'Sacrifice', 'Channeling'],
     art: 'https://picsum.photos/seed/voie-4/800/1200',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la quatrième voie, son rôle en combat et ce qui la rend unique dans le système de jeu.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la quatrième voie, son rôle en combat et ce qui la rend unique.',
     abilities: [
       { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
       { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
@@ -81,6 +83,51 @@ const voies = [
 
 <section class="bg-background-300 px-6 pt-24 pb-32 lg:pt-32 relative overflow-clip">
 
+  <!-- Décor : cercles (identique à la section Classes home) -->
+  <div class="relative z-1">
+    <div class="line absolute top-1/2 left-0 w-full"></div>
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
+    </div>
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-10"></div>
+    </div>
+  </div>
+
+  <div class="relative z-20">
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
+      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+    </div>
+  </div>
+
+  <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l border-primary-300 opacity-30 z-1"></div>
+
+  <BgImage
+    src="/images/smoke1.jpeg"
+    opacity={0.15}
+    position="object-bottom"
+    size="cover"
+    class="mix-blend-hard-light z-1"
+  />
+
+  <div class="overlay-top z-1 opacity-90"></div>
+  <div class="overlay-bottom z-1 opacity-90"></div>
+
+  <BgImage
+    src="/images/galaxy-pitch.jpeg"
+    opacity={0.25}
+    grayscale
+    fixedBg
+    position="object-center"
+    size="80%"
+    maskClass="mask-galaxy"
+    class="z-10"
+  />
+
+  <GalaxyCanvas opacity={0.5} count={180} class="z-20" />
+
   <!-- En-tête -->
   <div class="text-center relative z-20 mb-12">
     <p class="section-label mb-6">Game System</p>
@@ -88,103 +135,168 @@ const voies = [
     <DividerGeo class="my-8" />
   </div>
 
-  <!-- Onglets horizontaux -->
-  <div id="voies-tabs" class="flex flex-wrap justify-center gap-3 mb-12 relative z-20 max-w-5xl mx-auto">
-    {voies.map((voie, i) => (
-      <button class:list={['class-tab', i === 0 && 'is-active']} data-index={i}>
-        <span class="text-primary text-lg">{voie.icon}</span>
-        <span class="font-display text-sm tracking-wide uppercase">{voie.name}</span>
-      </button>
-    ))}
-  </div>
+  <div class="max-w-7xl mx-auto relative z-20">
 
-  <!--
-    Panneaux détail empilés (un seul visible via .is-active).
-    Le toggle JS plus bas déplace .is-active sur l'onglet + le panneau du même
-    data-index. Remplaçable par ta propre version (GSAP, etc.).
-  -->
-  <div id="voies-panels" class="layer-stack max-w-6xl mx-auto relative z-20">
-    {voies.map((voie, i) => (
-      <div class:list={['layer', i === 0 && 'is-active']} data-index={i}>
-        <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,20rem)_1fr] gap-10 lg:gap-16 items-start">
 
-          <!-- Art (motif arche) -->
-          <div class="w-full max-w-xs mx-auto lg:max-w-none">
-            <ArchFrame>
-              <img src={voie.art} alt={voie.name} class="w-full h-full object-cover" loading="lazy" />
-            </ArchFrame>
-          </div>
 
-          <!-- Détail -->
-          <div class="space-y-6">
-            <div>
-              <p class="section-label mb-2">{voie.role}</p>
-              <h3 class="title-2 text-primary-100">{voie.name}</h3>
-            </div>
-
-            <div class="flex flex-wrap gap-2">
-              {voie.tags.map((tag) => (
-                <span class="badge badge--primary">{tag}</span>
-              ))}
-            </div>
-
-            <p class="text-foreground-300 font-body text-base leading-relaxed">
-              {voie.description}
-            </p>
-
-            <DividerGeo size="sm" class="my-2" />
-
-            <!-- Capacités signatures -->
-            <div>
-              <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Capacités signatures</p>
-              <div class="space-y-3">
-                {voie.abilities.map((ability) => (
-                  <div class="flex gap-3">
-                    <span class="text-primary text-sm shrink-0 mt-0.5">◆</span>
-                    <div>
-                      <p class="font-display text-sm text-primary-100 uppercase">{ability.name}</p>
-                      <p class="text-foreground-500 font-body text-sm leading-relaxed">{ability.description}</p>
-                    </div>
-                  </div>
-                ))}
+    <!-- Bande de chips (thumbs Swiper) + flèches de navigation -->
+    <div class="flex items-stretch gap-4 mt-12 sticky-header p-2 bg-background-300 border border-background-100 z-20 ">
+      <div class="voies-thumbs swiper flex-1 min-w-0">
+        <div class="swiper-wrapper">
+          {voies.map((voie) => (
+            <div class="swiper-slide flex-1">
+              <div class="voie-chip">
+                <span class="voie-chip__label w-full">
+                  <span class="text-primary-100 font-body font-weight-400 mr-2"></span>{voie.name}
+                </span>
+                <span class="voie-chip__thumb">
+                  <img src={voie.art} alt="" loading="lazy" />
+                </span>
               </div>
             </div>
-
-            <!-- Sous-voies -->
-            <div>
-              <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Sous-voies</p>
-              <div class="grid sm:grid-cols-2 gap-4">
-                {voie.subclasses.map((sub) => (
-                  <div class="card-cinematic p-5">
-                    <p class="font-display text-base text-primary-300 uppercase mb-1">{sub.name}</p>
-                    <p class="text-foreground-500 font-body text-sm leading-relaxed">{sub.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
-    ))}
+
+      <div class="flex gap-2 shrink-0 items-center">
+        <button type="button" class="voies-prev voie-nav" aria-label="Voie précédente"><span class="material-icons">chevron_left</span></button>
+        <button type="button" class="voies-next voie-nav" aria-label="Voie suivante"><span class="material-icons">chevron_right</span></button>
+      </div>
+    </div>
+
+
+
+    <!-- Slider principal : panneaux détail (piloté par les chips + flèches) -->
+    <div class="voies-main swiper">
+      <div class="swiper-wrapper">
+        {voies.map((voie) => (
+          <div class="swiper-slide">
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-12 items-start pt-10">
+
+              <!-- Gauche : nom + description -->
+              <div class="space-y-6 lg:grow-5 lg:basis-0 lg:min-w-0">
+                <div>
+                  <p class="section-label mb-2">{voie.role}</p>
+                  <h3 class="title-2 text-primary-100">{voie.name}</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  {voie.tags.map((tag) => (
+                    <span class="badge badge--primary">{tag}</span>
+                  ))}
+                </div>
+                <DividerGeo size="xs" />
+                <p class="text-foreground-300 font-body text-base leading-relaxed">
+                  {voie.description}
+                </p>
+              </div>
+
+              <!-- Centre : art -->
+              <div class="lg:grow-4 lg:basis-0 lg:min-w-0">
+                <ArchFrame>
+                  <img src={voie.art} alt={voie.name} class="w-full h-full object-cover" loading="lazy" />
+                </ArchFrame>
+              </div>
+
+              <!-- Droite : capacités + sous-voies -->
+              <div class="space-y-8 lg:grow-5 lg:basis-0 lg:min-w-0">
+                <div>
+                  <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Capacités signatures</p>
+                  <div class="space-y-3">
+                    {voie.abilities.map((ability) => (
+                      <div class="flex gap-3">
+                        <span class="text-primary text-sm shrink-0 mt-0.5">◆</span>
+                        <div>
+                          <p class="font-display text-sm text-primary-100 uppercase">{ability.name}</p>
+                          <p class="text-foreground-500 font-body text-sm leading-relaxed">{ability.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* <DividerGeo size="sm" /> */}
+                <div>
+                  <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Sous-voies</p>
+                  <div class="flex flex-col gap-4">
+                    {voie.subclasses.map((sub) => (
+                      <div class="card-cinematic p-5">
+                        <p class="font-display text-base text-primary-300 uppercase mb-1">{sub.name}</p>
+                        <p class="text-foreground-500 font-body text-sm leading-relaxed">{sub.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+
   </div>
 </section>
 
 <script>
-  // Toggle des voies : au clic sur un onglet, on déplace .is-active sur
-  // l'onglet et le panneau correspondants (même data-index).
-  const tabs = document.querySelectorAll<HTMLElement>('#voies-tabs .class-tab');
-  const panels = document.querySelectorAll<HTMLElement>('#voies-panels .layer');
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const i = tab.dataset.index;
-      tabs.forEach((t) => t.classList.remove('is-active'));
-      panels.forEach((p) => p.classList.remove('is-active'));
-      tab.classList.add('is-active');
-      document
-        .querySelector(`#voies-panels .layer[data-index="${i}"]`)
-        ?.classList.add('is-active');
-    });
-  });
+  import '../scripts/voies-swiper.js';
 </script>
+
+<style is:global>
+  /* Chips de la bande thumbs — largeur au contenu (slidesPerView:'auto'). */
+  .voies-thumbs .swiper-slide { width: auto; }
+
+  .voie-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    border: 1px solid rgba(173, 141, 89, 0.18);
+    background: var(--color-background-500);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  .voie-chip__label {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground-500);
+    transition: color 0.3s;
+  }
+  .voie-chip__thumb {
+    width: 3rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    overflow: hidden;
+    filter: grayscale(1);
+    opacity: 0.7;
+    transition: filter 0.3s, opacity 0.3s;
+  }
+  .voie-chip__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Chip active (classe ajoutée par le module Thumbs de Swiper). */
+  .voies-thumbs .swiper-slide-thumb-active .voie-chip {
+    border-color: rgba(173, 141, 89, 0.6);
+    background: rgba(173, 141, 89, 0.08);
+  }
+  .voies-thumbs .swiper-slide-thumb-active .voie-chip__label { color: var(--color-primary-100); }
+  .voies-thumbs .swiper-slide-thumb-active .voie-chip__thumb { filter: none; opacity: 1; }
+
+  /* Flèches de navigation. */
+  .voie-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(173, 141, 89, 0.4);
+    color: var(--color-primary-100);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: background-color 0.3s, border-color 0.3s, opacity 0.3s;
+  }
+  .voie-nav:hover { background: rgba(173, 141, 89, 0.12); }
+  .voie-nav.swiper-button-disabled { opacity: 0.35; cursor: default; }
+</style>

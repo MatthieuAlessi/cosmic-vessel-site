@@ -3,19 +3,17 @@ import Layout from '@layouts/Layout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
 
-// Catégories placeholder — à alimenter avec les vrais assets
 const categories = ['Tout', 'Personnage', 'Environnement', 'Créatures', 'Items'];
 
-// Placeholder items
 const galleryItems = [
-  { id: 1, title: 'Portrait — [CHARACTER NAME]', category: 'Personnage', ratio: 'aspect-[3/4]', seed: 'gal-portrait-1' },
-  { id: 2, title: 'Environnement — Scène 1', category: 'Environnement', ratio: 'aspect-video', seed: 'gal-env-1' },
-  { id: 3, title: 'Créature — Concept A', category: 'Créatures', ratio: 'aspect-square', seed: 'gal-creature-1' },
-  { id: 4, title: 'Portrait — Action', category: 'Personnage', ratio: 'aspect-[3/4]', seed: 'gal-portrait-2' },
-  { id: 5, title: 'Environnement — Scène 2', category: 'Environnement', ratio: 'aspect-video', seed: 'gal-env-2' },
-  { id: 6, title: 'Item — Artefact', category: 'Items', ratio: 'aspect-square', seed: 'gal-item-1' },
-  { id: 7, title: 'Portrait — Gros plan', category: 'Personnage', ratio: 'aspect-[3/4]', seed: 'gal-portrait-3' },
-  { id: 8, title: 'Créature — Concept B', category: 'Créatures', ratio: 'aspect-video', seed: 'gal-creature-2' },
+  { id: 1,  title: 'Portrait — [CHARACTER NAME]', category: 'Personnage',    ratio: 'aspect-[3/4]',   seed: 'gal-portrait-1',  fw: 1200, fh: 1600 },
+  { id: 2,  title: 'Environnement — Scène 1',     category: 'Environnement', ratio: 'aspect-video',   seed: 'gal-env-1',       fw: 1600, fh: 900  },
+  { id: 3,  title: 'Créature — Concept A',         category: 'Créatures',     ratio: 'aspect-square',  seed: 'gal-creature-1',  fw: 1200, fh: 1200 },
+  { id: 4,  title: 'Portrait — Action',            category: 'Personnage',    ratio: 'aspect-[3/4]',   seed: 'gal-portrait-2',  fw: 1200, fh: 1600 },
+  { id: 5,  title: 'Environnement — Scène 2',     category: 'Environnement', ratio: 'aspect-video',   seed: 'gal-env-2',       fw: 1600, fh: 900  },
+  { id: 6,  title: 'Item — Artefact',              category: 'Items',         ratio: 'aspect-square',  seed: 'gal-item-1',      fw: 1200, fh: 1200 },
+  { id: 7,  title: 'Portrait — Gros plan',         category: 'Personnage',    ratio: 'aspect-[3/4]',   seed: 'gal-portrait-3',  fw: 1200, fh: 1600 },
+  { id: 8,  title: 'Créature — Concept B',         category: 'Créatures',     ratio: 'aspect-video',   seed: 'gal-creature-2',  fw: 1600, fh: 900  },
 ];
 ---
 
@@ -26,43 +24,51 @@ const galleryItems = [
   <Nav />
 
   <main class="pt-32 pb-24">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="mx-auto px-6">
 
-      <header class="mb-12">
+      <div class="max-w-7xl mx-auto mb-12">
         <p class="section-label">Concept Arts</p>
         <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">Galerie</h1>
-      </header>
+      </div>
 
       <!-- Filtres -->
-      <div class="flex gap-3 flex-wrap mb-12" id="gallery-filters">
+      <!-- <div class="flex gap-3 flex-wrap mb-12" id="gallery-filters">
         {categories.map((cat, i) => (
           <button
-            class:list={[
-              'gallery-filter btn py-2 px-5 text-2xs',
-              i === 0 ? 'btn--primary' : 'btn--outline',
-            ]}
+            class:list={['gallery-filter btn py-2 px-5 text-2xs', i === 0 ? 'btn--primary' : 'btn--outline']}
             data-filter={cat === 'Tout' ? 'all' : cat}
           >
             {cat}
           </button>
         ))}
-      </div>
+      </div> -->
 
-      <!-- Grille masonry-like -->
+      <!-- Grille masonry PhotoSwipe -->
       <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4" id="gallery-grid">
         {galleryItems.map(item => (
-          <div
-            class="gallery-item card-cinematic overflow-hidden break-inside-avoid cursor-pointer group"
+          <a
+            href={`https://picsum.photos/seed/${item.seed}/${item.fw}/${item.fh}`}
+            data-pswp-width={item.fw}
+            data-pswp-height={item.fh}
+            class="gallery-item break-inside-avoid cursor-pointer group relative block overflow-hidden"
             data-category={item.category}
           >
-            <div class:list={['img-overlay', item.ratio]}>
-              <img src={`https://picsum.photos/seed/${item.seed}/800/800`} alt={item.title} class="w-full h-full object-cover" />
+            <div class:list={['relative overflow-hidden', item.ratio]}>
+              <img
+                src={`https://picsum.photos/seed/${item.seed}/800/800`}
+                alt={item.title}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <!-- Overlay gradient + info au hover -->
+              <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <div>
+                  <p class="font-display text-sm tracking-wide text-white uppercase leading-tight">{item.title}</p>
+                  <p class="font-ui text-2xs tracking-wider text-white/60 uppercase mt-1">{item.category}</p>
+                </div>
+              </div>
             </div>
-            <div class="p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <p class="font-display text-sm tracking-wide text-primary-100 uppercase">{item.title}</p>
-              <p class="font-ui text-2xs tracking-wider text-foreground-700 uppercase mt-1">{item.category}</p>
-            </div>
-          </div>
+          </a>
         ))}
       </div>
 
@@ -73,26 +79,13 @@ const galleryItems = [
 </Layout>
 
 <script>
-  const filters = document.querySelectorAll<HTMLButtonElement>('.gallery-filter');
-  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
 
-  filters.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-
-      // Update active state
-      filters.forEach(b => {
-        b.classList.remove('btn--primary');
-        b.classList.add('btn--outline');
-      });
-      btn.classList.remove('btn--outline');
-      btn.classList.add('btn--primary');
-
-      // Filter items
-      items.forEach(item => {
-        const match = filter === 'all' || item.dataset.category === filter;
-        item.style.display = match ? '' : 'none';
-      });
-    });
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery-grid',
+    children: 'a.gallery-item',
+    pswpModule: () => import('photoswipe'),
   });
+  lightbox.init();
 </script>

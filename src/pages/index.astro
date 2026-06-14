@@ -703,30 +703,26 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 
-  <!-- ─── Editorial / Lore ──────────────────────────────────────────────── -->
-   <!-- ─── Editorial / Lore ──────────────────────────────────────────────── -->
+  <!-- ─── Editorial / Lore ────────────────────────────────────────────── -->
   <section class="relative bg-background-700 pt-32 pb-24 overflow-hidden">
 
-      <!-- Overlay lignes de grille (positionné sur la section entière) -->
-      <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
-        <div class="col-start-1  row-start-1 row-end-10  "></div>
-        <div class="col-start-2  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-3  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-4  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-5  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-6  row-start-1 row-end-10   border-primary-700/10"></div>
-        <div class="col-start-7  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-8  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-9  row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-10 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-        <div class="col-start-11 row-start-1 row-end-10  "></div>
-        <div class="col-start-12 row-start-1 row-end-10"></div>
-        <div class="col-start-1 col-end-13 row-start-5 border-t border-primary-700/10"></div>
-        <div class="col-start-1 col-end-13 row-start-8 border-t border-primary-700/10"></div>
-      </div>
-
-
-
+    <!-- Overlay lignes de grille (12 colonnes, motif décoratif) -->
+    <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
+      <div class="col-start-1  row-start-1 row-end-10"></div>
+      <div class="col-start-2  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-3  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-4  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-5  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-6  row-start-1 row-end-10 border-primary-700/10"></div>
+      <div class="col-start-7  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-8  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-9  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-10 row-start-1 row-end-10 border-r border-primary-700/10"></div>
+      <div class="col-start-11 row-start-1 row-end-10"></div>
+      <div class="col-start-12 row-start-1 row-end-10"></div>
+      <div class="col-start-1 col-end-13 row-start-5 border-t border-primary-700/10"></div>
+      <div class="col-start-1 col-end-13 row-start-8 border-t border-primary-700/10"></div>
+    </div>
 
     <BgImage
       src="/images/bg1.jpeg"
@@ -738,122 +734,84 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       class="blur-sm"
     />
 
-
-
- 
-   <div class="cache--gradient2 "></div>  
-
+    <div class="cache--gradient2"></div>
 
     <div class="relative z-1">
-       <div class="line absolute top-1/2 left-0 w-full"></div>
-
+      <div class="line absolute top-1/2 left-0 w-full"></div>
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
-        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="aspect-square border border-primary-300 rounded-full opacity-30"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
         <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
       </div>
-
-        <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-10"></div>
-        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+      <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+        <div class="aspect-square border border-primary-300 rounded-full opacity-10"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
         <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
-      </div>  
-</div>
+      </div>
+    </div>
 
+    <div class="overlay-top z-2 opacity-90"></div>
 
- 
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+        style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+      <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+        style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
+        style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
+    </div>
 
-<div class="overlay-top z-2  opacity-90"></div>
-
-  <!-- Lueurs primaires décoratives -->
-   <div class="absolute inset-0  pointer-events-none overflow-hidden zi-1">
-   
-    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
-      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
-  
-    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
-      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
- 
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
-      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
-  </div>  
-
- 
-<div class="relative z-20  ">
-    <!-- <div class="line absolute bottom-0 left-0 w-full"></div> -->
+    <div class="relative z-20">
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
-        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+        <div class="aspect-square border border-primary-300 rounded-full opacity-20"></div>
+        <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
         <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
       </div>
-</div>
+    </div>
 
-<div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l-1 border-primary-300  opacity-20 z-1"></div>
-
+    <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l border-primary-300 opacity-20 z-1"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
 
-      <!-- Date / corner mark -->
-      <div class="absolute top-0 right-6 text-right  ">
+      <div class="absolute top-0 right-6 text-right">
         <p class="font-display text-xs text-primary tracking-widest">CHAPITRE I</p>
         <p class="font-display text-xs text-foreground-500 tracking-widest">VOYAGE COSMIQUE</p>
       </div>
-
-      <!-- Ornament top-left -->
       <StarMarks class="absolute top-1 left-6" />
 
-      <!-- Editorial grid -->
-      <!-- grid-rows : r1 titre | r2 titre | r3 gap | r4 texte | r5 gap | r6 titre | r7 titre | r8 gap | r9 texte -->
-        <div class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] gap-4 pt-16">
+      <!-- Composition home : Beyond / the stars / A vessel / cosmic -->
+      <div class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] gap-4 pt-16">
 
-        <!-- row 1 : "Au-delà" -->
         <h2 class="editorial-word col-span-7 col-start-1 row-start-1 self-start">Beyond</h2>
-
-        <!-- row 2 : "des étoiles" -->
         <h2 class="editorial-word col-span-7 col-start-5 row-start-2 whitespace-nowrap text-primary-300">the stars</h2>
 
-        <!-- row 3 : gap (6rem) — vide -->
-
-        <!-- row 4 : petit texte haut-droit -->
         <div class="col-span-4 col-start-8 row-start-3 mt-8">
           <p class="text-foreground-500 font-body text-sm leading-relaxed">
             When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer. You are not alone — you never were.
           </p>
         </div>
 
-        <!-- row 5 : gap (4rem) — vide -->
-
-        <!-- row 6 : "Un vaisseau" -->
         <h2 class="editorial-word col-span-8 col-start-1 row-start-6 self-start whitespace-nowrap">A vessel</h2>
-
-        <!-- row 7 : "cosmique" -->
         <h2 class="editorial-word col-span-9 col-start-1 row-start-7 self-start text-primary-300">cosmic</h2>
 
-        <!-- row 8 : gap (6rem) — vide -->
-
-               <!-- row 4 : petit texte haut-droit -->
         <div class="col-span-4 col-start-10 row-start-6 mt-4">
-          <p class="text-foreground-500 font-body text-xs  uppercase leading-relaxed tracking-wide">
+          <p class="text-foreground-500 font-body text-xs uppercase leading-relaxed tracking-wide">
             When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer.
           </p>
         </div>
 
-        <!-- row 9 : petit texte bas-gauche -->
         <div class="col-span-4 col-start-1 row-start-8 mt-8">
           <p class="text-foreground-500 font-body text-sm leading-relaxed">
             When the light of constellations awakens, a voice whispers through the cosmic silence — a call that crosses ages and forgotten realms. Every destiny is a star, and every star awaits its bearer. You are not alone — you never were.
           </p>
         </div>
 
-        </div>
+      </div>
 
-      <!-- Ornament bottom -->
       <StarMarks class="justify-center mt-8" />
-
     </div>
 
-     <div class="line absolute top-0 left-0 w-full"></div>
-
+    <div class="line absolute top-0 left-0 w-full"></div>
   </section>
 
 

@@ -1,0 +1,125 @@
+---
+import BgImage from '@components/BgImage.astro';
+import StarMarks from '@components/StarMarks.astro';
+
+interface Props {
+  chapter: string;
+  chapterSub: string;
+  bgSrc?: string;
+  class?: string;
+}
+
+const {
+  chapter,
+  chapterSub,
+  bgSrc = '/images/bg1.jpeg',
+  class: className = '',
+} = Astro.props;
+---
+
+<!--
+  Décor "éditorial destructuré" partagé (home + character) : fond flouté,
+  overlay de lignes de grille, cercles/glows, repère de chapitre + StarMarks.
+  La COMPOSITION (les mots .editorial-word + flavour) va dans le slot et diffère
+  selon la page. Voir .editorial-word dans global.css.
+-->
+<section class:list={['relative bg-background-700 pt-32 pb-24 overflow-hidden', className]}>
+
+  <!-- Overlay lignes de grille (12 colonnes, motif décoratif) -->
+  <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
+    <div class="col-start-1  row-start-1 row-end-10"></div>
+    <div class="col-start-2  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-3  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-4  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-5  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-6  row-start-1 row-end-10 border-primary-700/10"></div>
+    <div class="col-start-7  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-8  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-9  row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-10 row-start-1 row-end-10 border-r border-primary-700/10"></div>
+    <div class="col-start-11 row-start-1 row-end-10"></div>
+    <div class="col-start-12 row-start-1 row-end-10"></div>
+    <div class="col-start-1 col-end-13 row-start-5 border-t border-primary-700/10"></div>
+    <div class="col-start-1 col-end-13 row-start-8 border-t border-primary-700/10"></div>
+  </div>
+
+  <BgImage
+    src={bgSrc}
+    opacity={0.5}
+    position="object-center"
+    fixedBg
+    size="cover"
+    maskClass="mask-galaxy--img"
+    class="blur-sm"
+  />
+
+
+    <div class="char mask-galaxy--img">
+      <img src="/images/char_placeholder.png" alt="" />
+    </div>
+
+
+
+  <div class="cache--gradient2"></div>
+
+  <!-- Cercles décoratifs (bleed haut/bas) -->
+  <div class="relative z-1">
+    <div class="line absolute top-1/2 left-0 w-full"></div>
+
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
+      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+    </div>
+
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-10"></div>
+      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+    </div>
+  </div>
+
+  <div class="overlay-top z-2 opacity-90"></div>
+
+  <!-- Lueurs primaires décoratives -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden zi-1">
+    <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+    <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
+      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
+      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"></div>
+  </div>
+
+  <div class="relative z-20">
+    <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
+      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
+      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
+      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
+    </div>
+  </div>
+
+  <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l-1 border-primary-300 opacity-20 z-1"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
+
+    <!-- Repère de chapitre -->
+    <div class="absolute top-0 right-6 text-right">
+      <p class="font-display text-xs text-primary tracking-widest">{chapter}</p>
+      <p class="font-display text-xs text-foreground-500 tracking-widest">{chapterSub}</p>
+    </div>
+
+    <!-- Ornement haut-gauche -->
+    <StarMarks class="absolute top-1 left-6" />
+
+    <!-- Composition (mots étagés + flavour) — propre à chaque page -->
+    <slot />
+
+    <!-- Ornement bas -->
+    <StarMarks class="justify-center mt-8" />
+
+  </div>
+
+  <div class="line absolute top-0 left-0 w-full"></div>
+
+</section>
