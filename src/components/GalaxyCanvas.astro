@@ -4,20 +4,21 @@ interface Props {
   opacity?: number;
   count?: number;
   class?: string;
+  fixed?: boolean;
 }
-const { maskClass = '', opacity = 0.85, count = 90 ,  class: className = '', } = Astro.props;
+const { maskClass = '', opacity = 0.85, count = 90, class: className = '', fixed = false } = Astro.props;
 const uid = `gc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div
   id={uid}
-  class:list={['absolute inset-0 pointer-events-none', maskClass, className]}
+  class:list={[fixed ? 'fixed' : 'absolute', 'inset-0 pointer-events-none', maskClass, className]}
   style={`opacity: ${opacity}`}
 >
   <canvas class="w-full h-full block"></canvas>
 </div>
 
-<script define:vars={{ uid, count }}>
+<script define:vars={{ uid, count, fixed }}>
   const wrapper = document.getElementById(uid);
   const canvas  = wrapper.querySelector('canvas');
   const ctx     = canvas.getContext('2d');
@@ -27,8 +28,8 @@ const uid = `gc-${Math.random().toString(36).slice(2, 8)}`;
   let active = true;
 
   function resize() {
-    W = canvas.width  = wrapper.offsetWidth;
-    H = canvas.height = wrapper.offsetHeight;
+    W = canvas.width  = fixed ? window.innerWidth  : wrapper.offsetWidth;
+    H = canvas.height = fixed ? window.innerHeight : wrapper.offsetHeight;
   }
 
   // Tout ce qui est constant est pré-calculé à la création — zéro calcul répété en hot loop

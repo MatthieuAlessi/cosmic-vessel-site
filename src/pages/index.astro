@@ -11,6 +11,7 @@ import Button from '@components/ui/Button.astro';
 import Card from '@components/ui/Card.astro';
 import ClassTextPanel from '@components/ClassTextPanel.astro';
 import RoadmapCard from '@components/RoadmapCard.astro';
+import StatCard from '@components/StatCard.astro';
 import { getCollection } from 'astro:content';
 
 const roadmapEntries = await getCollection('roadmap');
@@ -98,8 +99,6 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       maskClass="mask-galaxy"
     /> -->
 
-
-
 <!-- 
     <BgImage
       src="/images/bg1.jpeg"
@@ -110,6 +109,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       size="cover"
       class="   "
     />  -->
+
     <!-- Texture de fond subtile -->
       <BgImage
       src="/images/smoke1.jpeg"
@@ -122,13 +122,12 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 <div class="overlay-top"></div>
+<div class="overlay-bottom"></div>
  
    <!-- <div class="cache--gradient2 "></div>   -->
 
+    <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.5} count={180} />
 
-
-
-    <!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.9} count={180} /> -->
     <!-- <div class="cache--gradient2b"></div> -->
     <!-- <div class="cache--gradient2"></div> -->
 
@@ -142,40 +141,20 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       <p class="text-white text-xs tracking-widest text-center uppercase mb-6">
         An origin character. A questline. A destiny.
       </p>
-      <h2 class="title-1">Origin Character</h2>
-      <DividerGeo size="sm" class="my-8" />
+      <h2 class="title-hero">Origin Character</h2>
+      <DividerGeo size="sm" class="my-8 lg:my-12 xl:my-20" />
       <p class="text-foreground-300 font-body text-base">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
     </div>
 
     <!-- ─── numbers:stats ───────────────────────────────────────── -->
-    <div class="max-w-5xl mx-auto px-6 pt-6 z-20 relative">
-      
-      <div class="relative z-10 backdrop-blur-xs p-6 mt-12 border border-primary-500 outline-1 outline-primary-700/30 outline-offset-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <CornerOrnament size={34} />
-          <div class="relative text-center border border-primary-700/30 p-6 lg:rounded-tl-3xl lg:rounded-bl-3xl">
-            <p class="font-display text-4xl text-primary-300">200+</p>
-            <h3 class="font-display text-sm tracking-wider text-primary-300 uppercase mb-2">Items</h3>
-            <p class="text-foreground-500 font-body text-xs leading-relaxed">Weapons, armor and unique items</p>
-          </div>
-          <div class="relative text-center border border-primary-700/30 p-6">
-            <p class="font-display text-4xl text-primary-300">80+</p>
-            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Spells</h3>
-            <p class="text-foreground-500 font-body text-xs leading-relaxed">Exclusive spells and abilities</p>
-          </div>
-          <div class="relative text-center border border-primary-700/30 p-6">
-            <p class="font-display text-4xl text-primary-300">3</p>
-            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Classes</h3>
-            <p class="text-foreground-500 font-body text-xs leading-relaxed">Original playable subclasses</p>
-          </div>
-          <div class="relative text-center border border-primary-700/30 p-6 lg:rounded-tr-3xl lg:rounded-br-3xl">
-            <p class="font-display text-4xl text-primary-300">10h+</p>
-            <h3 class="font-display text-sm tracking-widest text-primary-300 uppercase mb-2">Gameplay</h3>
-            <p class="text-foreground-500 font-body text-xs leading-relaxed">Narrative content and quests</p>
-          </div>
-        </div>
+    <div class="max-w-7xl mx-auto px-6 pt-8 lg:pt-24 z-20 relative">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard icon="ph:sword"        value="200+" label="Items"    description="Weapons, armor and unique items"  class="lg:aspect-3/4" />
+        <StatCard icon="ph:sparkle"      value="80+"  label="Spells"   description="Exclusive spells and abilities"   class="lg:aspect-3/4" />
+        <StatCard icon="ph:users-three"  value="3"    label="Classes"  description="Original playable subclasses"     class="lg:aspect-3/4" />
+        <StatCard icon="ph:hourglass"    value="10h+" label="Gameplay" description="Narrative content and quests"      class="lg:aspect-3/4" />
       </div>
     </div>
 
@@ -184,26 +163,21 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
   </section>
 
+  
 
 
 
-
-<div class="relative   h-[60vh] min-h-[300px]">
+<div class="relative h-[60vh] min-h-75">
 
     <BgImage
       src="/images/bg1.jpeg"
-      opacity={1}  
+      opacity={1}
       fixedBg
       position="object-center"
-       
-      
       class="z-10"
     />
 
- 
 </div>
-
-
 
 
   <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
@@ -292,6 +266,23 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   </section>
 
 
+
+
+
+<div class="relative   h-[60vh] min-h-[300px]">
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={1}  
+      fixedBg
+      position="object-center"
+       
+      
+      class="z-10"
+    />
+
+ 
+</div>
 
 
 
@@ -701,6 +692,23 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 
+<div class="relative   h-[60vh] min-h-[300px]">
+
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={1}  
+      fixedBg
+      position="object-center"
+       
+      
+      class="z-10"
+    />
+
+ 
+</div>
+
+
+
 
 
   <!-- ─── Editorial / Lore ────────────────────────────────────────────── -->
@@ -818,22 +826,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 
-
-<div class="relative   h-[60vh] min-h-[300px]">
-
-    <BgImage
-      src="/images/bg1.jpeg"
-      opacity={1}  
-      fixedBg
-      position="object-center"
-       
-      
-      class="z-10"
-    />
-
  
-</div>
-
 
   <!-- ─── Galerie teaser ───────────────────────────────────────────────── -->
  <section class="relative bg-background-500 py-24  overflow-hidden"> 

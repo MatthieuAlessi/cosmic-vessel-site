@@ -3,6 +3,7 @@ import ArchFrame from '@components/ArchFrame.astro';
 import DividerGeo from '@components/DividerGeo.astro';
 import BgImage from '@components/BgImage.astro';
 import GalaxyCanvas from '@components/GalaxyCanvas.astro';
+import { Icon } from 'astro-icon/components';
 
 // Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
 const voies = [
@@ -159,8 +160,8 @@ const voies = [
       </div>
 
       <div class="flex gap-2 shrink-0 items-center">
-        <button type="button" class="voies-prev voie-nav" aria-label="Voie précédente"><span class="material-icons">chevron_left</span></button>
-        <button type="button" class="voies-next voie-nav" aria-label="Voie suivante"><span class="material-icons">chevron_right</span></button>
+        <button type="button" class="voies-prev voie-nav" aria-label="Voie précédente"><Icon name="lucide:chevron-left" class="w-5 h-5" /></button>
+        <button type="button" class="voies-next voie-nav" aria-label="Voie suivante"><Icon name="lucide:chevron-right" class="w-5 h-5" /></button>
       </div>
     </div>
 
