@@ -1,17 +1,20 @@
 ﻿---
 import Layout from '@layouts/Layout.astro';
-import Nav from '@components/Nav.astro';
-import Footer from '@components/Footer.astro';
-import BgImage from '@components/BgImage.astro';
-import DividerGeo from '@components/DividerGeo.astro';
-import CornerOrnament from '@components/CornerOrnament.astro';
-import StarMarks from '@components/StarMarks.astro';
-import GalaxyCanvas from '@components/GalaxyCanvas.astro';
+import Nav from '@components/ui/Nav.astro';
+import Footer from '@components/ui/Footer.astro';
+import BgImage from '@components/decor/BgImage.astro';
+import DividerGeo from '@components/decor/DividerGeo.astro';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import StarMarks from '@components/decor/StarMarks.astro';
+import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
+import CircleSmall from '@components/decor/CircleSmall.astro';
+import Divider from '@components/decor/Divider.astro';
+import DividerV from '@components/decor/DividerV.astro';
 import Button from '@components/ui/Button.astro';
 import Card from '@components/ui/Card.astro';
-import ClassTextPanel from '@components/ClassTextPanel.astro';
-import RoadmapCard from '@components/RoadmapCard.astro';
-import StatCard from '@components/StatCard.astro';
+import ClassTextPanel from '@components/ui/ClassTextPanel.astro';
+import RoadmapCard from '@components/ui/RoadmapCard.astro';
+import StatCard from '@components/ui/StatCard.astro';
 import { getCollection } from 'astro:content';
 
 const roadmapEntries = await getCollection('roadmap');
@@ -27,37 +30,39 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   <Nav />
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
-  <section class="section-hero overflow-hidden lg:h-screen h-[50vh] bg-background">
+  <section class="section-hero overflow-hidden lg:h-screen h-[50vh] bg-white">
 
    
-        <BgImage
+         <BgImage
       src="/images/galaxy-pitch2.jpeg"
       opacity={1}
       position="object-center"
        fixedBg
       size="cover"
-      maskClass="mask-galaxy--img"
-    />
+      maskClass=" "
+    /> 
 
 
-    <div class="cache--gradient2b"></div>
+    <div class="overlay-vignette-bottom"></div>
 
     <!-- Eclipse décorative -->
-    <div class="absolute pointer-events-none aspect-square h-full rounded-full border border-primary-100/20 glow-eclipse top-50  inset-x-0 mx-auto"></div>
+    <div class=" z-40 absolute pointer-events-none aspect-square w-1/2 rounded-full border border-primary-100/30 opacity-40 glow-eclipse bottom-0 translate-y-1/2 inset-x-0 mx-auto"></div>
+
+      <CircleSmall position="bottom" width="w-50" dotTop="primary" class="z-1" />
 
     <!-- Contenu centré -->
-    <div class="relative z-10 flex xl:items-end items-center justify-center w-full h-full">
-      <div class="mx-auto text-center p-2 lg:pb-40 pb-12">
-        <div class="title-label text-center mb-6">Baldur's Gate 3 — Mod</div>
-        <h1 class="title-hero mb-6">
+    <div class="relative z-50 flex xl:items-center items-center justify-center w-full h-full">
+      <div class="mx-auto text-center p-2 lg:pt-40 pt-24">
+        <div class="title-label text-center mb-6 lg:mb-8 mx-auto">Baldur's Gate 3 — Mod</div>
+        <h1 class="title-hero mb-6 lg:mb-8">
           Cosmic Vessel
         </h1>
 
-        <p class="title-4 text-white tracking-[0.3em]">
-          An origin character. A questline. A destiny.
-        </p>
+       <p class="text-foreground-100 font-body text-md lg:text-xl leading-[1.5] max-w-2xl text-align-center mx-auto  ">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
 
-        <div class="flex items-center justify-center gap-4 mt-12">
+        <div class="flex items-center justify-center gap-4 mt-8 lg:mt-12">
           <Button href="/character">Discover</Button>
           <Button variant="outline" href="/blog">Follow Development</Button>
         </div>
@@ -73,12 +78,9 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
 
    
-    <div class="cercle z-1 absolute inset-x-0 mx-auto w-50  translate-y-[50%] bottom-0 ">
-      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20">  </div>
-      <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[-40%]"></div>
-    </div>
 
-     <div class="line absolute bottom-0 left-0 w-full"></div>
+
+     <Divider position="bottom" />
    
  
 
@@ -90,76 +92,96 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     <!-- ─── Pitch ─────────────────────────────────────────────────────────── -->
   <section class="mx-auto px-6 py-36 relative overflow-hidden bg-background">
 
-    <!-- <BgImage
+      <BgImage
       src="/images/galaxy-pitch.jpeg"
-      opacity={0.35} grayscale
+      opacity={0.15}  
       fixedBg
       position="object-center"
       size="80%"
       maskClass="mask-galaxy"
-    /> -->
+      class=" grayscale  "
+    />  
 
-<!-- 
-    <BgImage
+ 
+    <!-- <BgImage
       src="/images/bg1.jpeg"
       opacity={0.05}
       position="object-center"
        
       fixedBg
       size="cover"
-      class="   "
-    />  -->
+      class=" grayscale  "
+    />   -->
 
-    <!-- Texture de fond subtile -->
+     
       <BgImage
       src="/images/smoke1.jpeg"
-      opacity={0.1}
+      opacity={0.05}
       position="object-center"
        fixedBg
       size="cover"
        
-    /> 
+    />  
 
-
-<div class="overlay-top"></div>
-<div class="overlay-bottom"></div>
  
-   <!-- <div class="cache--gradient2 "></div>   -->
+<div class="overlay-top"></div>
+ 
 
-    <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.5} count={180} />
+<!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.5} count={180} /> -->
 
-    <!-- <div class="cache--gradient2b"></div> -->
-    <!-- <div class="cache--gradient2"></div> -->
+ <CircleSmall position="top" width="w-50" dotBottom="black" class="z-1" />
+ <CircleSmall position="top" width="w-1/2" borderColor="border-primary-300/40"   class="z-1" />
 
-    <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 translate-y-[-50%] top-0">
-      <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
-      <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[40%]"></div>
-    </div>
+
 
     <!-- ─── pitch text ───────────────────────────────────────── -->
-    <div class="max-w-3xl mx-auto text-center mt-6 z-20 relative">
-      <p class="text-white text-xs tracking-widest text-center uppercase mb-6">
+    <div class="  mt-6 z-20 relative">
+
+      <div class="  mx-auto max-w-7xl ">
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center">
+
+<div class="col-span-1 lg:col-span-4">
+  <p class="title-label text-center lg:text-left mb-6 lg:mb-8 mx-auto lg:mx-0">
         An origin character. A questline. A destiny.
       </p>
-      <h2 class="title-hero">Origin Character</h2>
-      <DividerGeo size="sm" class="my-8 lg:my-12 xl:my-20" />
-      <p class="text-foreground-300 font-body text-base">
+      <h2 class="title-1">Origin Character</h2>
+      <!-- <DividerGeo size="sm" class="my-8 lg:my-12 xl:my-20" /> -->
+</div>
+
+<div class="col-span-1 lg:col-span-2">
+  <DividerV dotTop={true} dotBottom={true} position="center"  class="z-1" />
+</div>
+
+    <div class="col-span-1 lg:col-span-4 lg:py-10">
+      <h3 class="title-3 text-foreground-100 mb-4 lg:w-2/3">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h3>
+      <p class="text-foreground-500 font-body text-base">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
+        <StarMarks class="pt-6" />
+</div>
+
+
+
+</div>
+</div>
+
+
+
     </div>
 
     <!-- ─── numbers:stats ───────────────────────────────────────── -->
-    <div class="max-w-7xl mx-auto px-6 pt-8 lg:pt-24 z-20 relative">
+    <div class="max-w-7xl mx-auto  pt-8 lg:pt-24 z-20 relative">
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon="ph:sword"        value="200+" label="Items"    description="Weapons, armor and unique items"  class="lg:aspect-3/4" />
-        <StatCard icon="ph:sparkle"      value="80+"  label="Spells"   description="Exclusive spells and abilities"   class="lg:aspect-3/4" />
-        <StatCard icon="ph:users-three"  value="3"    label="Classes"  description="Original playable subclasses"     class="lg:aspect-3/4" />
-        <StatCard icon="ph:hourglass"    value="10h+" label="Gameplay" description="Narrative content and quests"      class="lg:aspect-3/4" />
+        <StatCard icon="ph:sword"        value="200+" label="New Items"    description="Weapons, armor and unique items"  class="lg:aspect-3/4" />
+        <StatCard icon="ph:sparkle"      value="80+"  label="New Spells"   description="Exclusive spells and abilities"   class="lg:aspect-3/4" />
+        <StatCard icon="ph:users-three"  value="3"    label="New Classes"  description="Original playable subclasses"     class="lg:aspect-3/4" />
+        <StatCard icon="ph:hourglass"    value="10h+" label="New Gameplay" description="Narrative content and quests"      class="lg:aspect-3/4" />
       </div>
     </div>
 
 
- 
+    <Divider position="bottom" />
+   
 
   </section>
 
@@ -177,13 +199,13 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       class="z-10"
     />
 
+    <div class="overlay-vignette z-40"></div>
+
 </div>
 
 
   <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
   <section class="relative bg-background-500 py-24 lg:py-32 overflow-clip">
-
-
 
 
     <BgImage
@@ -198,94 +220,72 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 <div class="overlay-top"></div>
+<div class="overlay-bottom"></div>
+
+      <div class="  mx-auto max-w-7xl z-10 relative">
+
+
+
+
+<!-- 
+<div class="text-center relative z-20  ">
+     <p class="section-label mb-8 mx-auto">Game System</p> 
+    <h2 class="title-1 mb-8 text-primary-100">Lore & story</h2>
  
-   <!-- <div class="cache--gradient2 "></div>   -->
+ </div> -->
 
 
-    <!-- Texture de fond subtile -->
-      <!-- <BgImage
-      src="/images/smoke1.jpeg"
-      opacity={0.2}
-      position="object-center"
-       fixedBg
-      size="cover"
-       
-    /> -->
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative">
 
-    
+<div class="col-span-1 lg:col-span-4">
 
-    <div class="relative z-10 max-w-5xl mx-auto px-6 flex flex-col gap-24 lg:gap-36">
 
-      <!-- Bloc 1 : texte gauche / image droite -->
-      <div class="flex items-start lg:flex-row flex-col  gap-8 lg:gap-24 xl:gap-36 ">
+<div class="text-center lg:text-left  relative z-20  ">
+     <p class="section-label mb-6 mx-auto lg:mx-0">Game System</p> 
+    <h2 class="title-1 mb-10 text-primary-100">Lore & story</h2>
+ 
+ </div>
 
-        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
-          <p class="section-label">Chapter I — The Red Moon</p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts grow more ravenous, and the children of the void become visible. In this nightmare, the world reveals the eldritch truths it had long kept hidden.
-          </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            As a result, everything turns darker, and the character begins to see the world as it would if they had gathered enough insight. By following the call, you usher in the coming of the Red Moon.
-          </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Whether it brings salvation or ruin, no one can say. The cosmos is a towering, labyrinthine cathedral — and you are the key turning in its lock.
-          </p>
-          <StarMarks class="pt-2" />
+   <div class="relative outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift border-panel overflow-hidden ">
+          <img src="https://picsum.photos/seed/lore-1/640/800" alt="" class="w-full aspect-3/2 object-cover" loading="lazy" />
         </div>
+</div>
 
-        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
-          <img src="https://picsum.photos/seed/lore-1/640/800" alt="" class="w-full aspect-4/5 object-cover" loading="lazy" />
-        </div>
+<div class="col-span-1 lg:col-span-2">
+  <DividerV dotTop={true} dotBottom={true} position="center"  class="z-1" />
+</div>
 
-      </div>
+    <div class="col-span-1 lg:col-span-4 lg:py-10">
 
-      <!-- Bloc 2 : image gauche / texte droite -->
-       <div class="flex items-start lg:flex-row-reverse flex-col  gap-8 lg:gap-24 xl:gap-36 ">
-
-        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
-          <p class="section-label">Chapter II — The Ashen Blood</p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Eventually, the old sanctuary was founded — but it was brought low by an affliction known as the Ashen Blood, a slow and merciless corruption that spread through every living thing it touched.
-          </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Along with the physical transformation comes a mental unraveling. At first the afflicted assume that all they do not know is hostile, and they strike on sight — until nothing of who they were remains.
-          </p>
-          <StarMarks class="pt-2" />
-        </div>
-
-        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
-          <img src="https://picsum.photos/seed/lore-2/640/800" alt="" class="w-full aspect-4/5 object-cover" loading="lazy" />
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="line absolute top-0 left-0 w-full"></div>
-
-  </section>
-
-
-
-
-
-<div class="relative   h-[60vh] min-h-[300px]">
-
-    <BgImage
-      src="/images/bg1.jpeg"
-      opacity={1}  
-      fixedBg
-      position="object-center"
-       
+  <p class="title-label text-center lg:text-left mb-6 lg:mb-8 mx-auto lg:mx-0">
+        An origin character. A questline. A destiny.
+      </p>
       
-      class="z-10"
-    />
+        <!-- <DividerGeo size="xs" class="my-8 lg:my-12 xl:my-20" />   -->
 
- 
+      <h3 class="title-3 text-foreground-100 mb-4 lg:w-2/3">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h3>
+      <p class="text-foreground-500 font-body text-base">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+        <StarMarks class="pt-6" />
 </div>
 
 
 
+</div>
+
+
+
+</div>
+
+
+
+    <Divider position="top" />
+
+  </section>
+
+
+ 
  
 
   <!-- ─── The Character ──────────────────────────────────────────────────── -->
@@ -329,7 +329,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
  
 
- <div class="line absolute top-0 left-0 w-full"></div>
+ <Divider position="top" />
    
 
     <!-- Splash art — centré, déborde en haut -->
@@ -367,7 +367,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
   </div>
 
- <div class="line absolute bottom-0 left-0 w-full"></div>
+ <Divider position="bottom" />
    
   
   </section>
@@ -379,7 +379,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
     <div class="relative z-1">
 
-       <div class="line absolute top-1/2 left-0 w-full"></div>
+       <Divider position="unset" class="top-1/2" />
 
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
@@ -406,7 +406,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 <div class="relative z-20  ">
-    <div class="line absolute bottom-0 left-0 w-full"></div> 
+    <Divider position="bottom" /> 
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
         <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
@@ -499,7 +499,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
     <div class="relative z-1">
-       <div class="line absolute top-1/2 left-0 w-full"></div>
+       <Divider position="unset" class="top-1/2" />
 
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
@@ -511,7 +511,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 </div>
 
 <div class="relative z-20  ">
-    <!-- <div class="line absolute bottom-0 left-0 w-full"></div> -->
+    <!-- <Divider position="bottom" /> -->
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-20"></div>
         <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border-1 translate-y-[-40%]"></div>
@@ -519,7 +519,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
 </div>
 
-<div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l-1 border-primary-300  opacity-30 z-1"></div>
+<DividerV position="center" opacity={0.3} class="z-1" />
 
 
      <BgImage
@@ -745,7 +745,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     <div class="cache--gradient2"></div>
 
     <div class="relative z-1">
-      <div class="line absolute top-1/2 left-0 w-full"></div>
+      <Divider position="unset" class="top-1/2" />
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-primary-300 rounded-full opacity-30"></div>
         <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
@@ -777,7 +777,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
     </div>
 
-    <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l border-primary-300 opacity-20 z-1"></div>
+    <DividerV position="center" opacity={0.2} class="z-1" />
 
     <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
 
@@ -819,7 +819,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       <StarMarks class="justify-center mt-8" />
     </div>
 
-    <div class="line absolute top-0 left-0 w-full"></div>
+    <Divider position="top" />
   </section>
 
 
@@ -871,7 +871,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
 
 </div>
-   <div class="line absolute bottom-0 left-0 w-full"></div>
+   <Divider position="bottom" />
    
  
 
@@ -976,7 +976,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
 
 
-   <div class="line absolute bottom-0 left-0 w-full"></div>
+   <Divider position="bottom" />
    
  
 

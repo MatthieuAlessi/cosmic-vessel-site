@@ -7,8 +7,16 @@ interface Props {
   corner?:
     | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
     | 'top' | 'bottom' | 'left' | 'right' | 'all';
+  tone?: 'primary' | 'white';
 }
-const { size = 36, class: className = '', corner = 'all' } = Astro.props;
+const { size = 36, class: className = '', corner = 'all', tone = 'primary' } = Astro.props;
+
+// Couleurs selon le ton : arc (trait long) + accent (cercles)
+const tones: Record<NonNullable<Props['tone']>, { arc: string; accent: string }> = {
+  primary: { arc: 'var(--color-primary-700)', accent: 'var(--color-primary-500)' },
+  white:   { arc: '#ffffff', accent: '#ffffff' },
+};
+const { arc, accent } = tones[tone];
 
 // Quels coins afficher selon le prop
 const groups: Record<NonNullable<Props['corner']>, Code[]> = {
@@ -39,9 +47,9 @@ const defs: Record<Code, { pos: string; path: string; cx: number; cy: number }> 
     <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none"
       class:list={['absolute', d.pos, className]}
       style={`width:${size}px;height:${size}px;`}>
-      <path d={d.path} stroke="var(--color-primary-700)" stroke-width="1" opacity="0.9" />
-      <circle cx={d.cx} cy={d.cy} r="2.5" stroke="var(--color-primary-500)" stroke-width="0.75" opacity="0.9" />
-      <circle cx="18" cy="18" r="1.8" fill="var(--color-primary-500)" opacity="1" />
+      <path d={d.path} stroke={arc} stroke-width="1" opacity="0.9" />
+      <circle cx={d.cx} cy={d.cy} r="2.5" stroke={accent} stroke-width="0.75" opacity="0.9" />
+      <circle cx="18" cy="18" r="1.8" fill={accent} opacity="1" />
     </svg>
   );
 })}

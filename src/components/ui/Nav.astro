@@ -1,49 +1,59 @@
 ---
-interface Props {
-  variant?: 'default' | 'centered' | 'split';
-}
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/character', label: 'Character' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/team', label: 'Team' },
+  { href: '/blog', label: 'News' },
+  { href: '/contact', label: 'Contact' },
+];
 
-const { variant = 'default' } = Astro.props;
+import Button from '@components/ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-sticky border-b border-white/8 bg-background/80 backdrop-blur-md">
-  <div class="max-w-5xl mx-auto px-6 h-16">
+<nav class="nav border-panel border border-white/10" id="main-nav">
 
-    {variant === 'default' && (
-      <div class="flex items-center justify-between h-full gap-8">
-        <slot name="logo" />
-        <div class="flex items-center gap-6">
-          <slot name="links" />
-          <slot name="cta" />
-        </div>
-      </div>
-    )}
+ <CornerOrnament size={34} corner="top-left" tone="white" class="opacity-20" />
+  <CornerOrnament size={34} corner="top-right" tone="white" class="opacity-20" />
 
-    {variant === 'centered' && (
-      <div class="grid grid-cols-3 items-center h-full">
-        <div class="flex items-center gap-6">
-          <slot name="links" />
-        </div>
-        <div class="flex justify-center">
-          <slot name="logo" />
-        </div>
-        <div class="flex justify-end">
-          <slot name="cta" />
-        </div>
-      </div>
-    )}
+  <div class="grid grid-cols-3 items-center w-full px-8">
 
-    {variant === 'split' && (
-      <div class="grid grid-cols-3 items-center h-full">
-        <slot name="logo" />
-        <div class="flex justify-center items-center gap-6">
-          <slot name="links" />
-        </div>
-        <div class="flex justify-end">
-          <slot name="cta" />
-        </div>
-      </div>
-    )}
+    <!-- Logo -->
+    <a href="/" class="nav__logo">[MOD NAME]</a>
+
+    <!-- Liens centrés -->
+    <ul class="nav__links justify-center">
+      {navLinks.map(link => (
+        <li class=" ">
+          <a
+            href={link.href}
+            class:list={['nav__link', { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- CTA -->
+    <div class="flex justify-end">
+      <Button href="/blog" variant="ghost-white" size="xs">Follow Dev</Button>
+    </div>
 
   </div>
-</header>
+</nav>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>

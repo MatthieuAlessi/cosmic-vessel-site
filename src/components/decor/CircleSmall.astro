@@ -1,0 +1,45 @@
+---
+type DotStyle = 'primary' | 'black' | false;
+
+interface Props {
+  position?: 'top' | 'bottom'; // sur quel bord l'anneau déborde
+  width?: string;              // classe de largeur Tailwind (l'anneau est carré)
+  height?: string;             // classe de hauteur Tailwind ; vide = aspect-square (cercle)
+  opacity?: number;            // opacité globale de l'anneau
+  borderColor?: string;        // classe de bordure (couleur + alpha possible, ex. 'border-white/20')
+  dotTop?: DotStyle;           // point en haut de l'anneau : doré, noir bordé, ou aucun
+  dotBottom?: DotStyle;        // point en bas de l'anneau
+  class?: string;              // overrides (z-index, etc.)
+}
+
+const {
+  position = 'bottom',
+  width = 'w-50',
+  opacity = 0.2,
+  borderColor = 'border-primary-300',
+  height = '',
+  dotTop = false,
+  dotBottom = false,
+  class: className = '',
+} = Astro.props;
+
+// L'anneau déborde de moitié sur le bord choisi
+const place = position === 'bottom' ? 'bottom-0 translate-y-1/2' : 'top-0 -translate-y-1/2';
+
+// Style des points selon le type
+const dotStyles: Record<'primary' | 'black', string> = {
+  primary: 'bg-primary',
+  black: 'bg-black border border-primary-700',
+};
+---
+
+<div class:list={['cercle absolute inset-x-0 mx-auto pointer-events-none', width, place, className]} aria-hidden="true">
+  <div class:list={['border rounded-full', borderColor, height || 'aspect-square']} style={`opacity:${opacity}`}></div>
+
+  {dotTop && (
+    <div class:list={['dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full translate-y-[-40%]', dotStyles[dotTop]]}></div>
+  )}
+  {dotBottom && (
+    <div class:list={['dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full translate-y-[40%]', dotStyles[dotBottom]]}></div>
+  )}
+</div>

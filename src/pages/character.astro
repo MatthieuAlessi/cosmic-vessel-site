@@ -1,12 +1,13 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import Nav from '@components/Nav.astro';
-import Footer from '@components/Footer.astro';
-import BgImage from '@components/BgImage.astro';
-import DividerGeo from '@components/DividerGeo.astro';
-import StarMarks from '@components/StarMarks.astro';
-import ArchFrame from '@components/ArchFrame.astro';
-import VoiesSection from '@components/VoiesSection.astro';
+import Nav from '@components/ui/Nav.astro';
+import Footer from '@components/ui/Footer.astro';
+import BgImage from '@components/decor/BgImage.astro';
+import DividerGeo from '@components/decor/DividerGeo.astro';
+import StarMarks from '@components/decor/StarMarks.astro';
+import ArchFrame from '@components/decor/ArchFrame.astro';
+import Divider from '@components/decor/Divider.astro';
+import VoiesSection from '@components/ui/VoiesSection.astro';
 import Button from '@components/ui/Button.astro';
 import SplitSection from '@components/ui/SplitSection.astro';
 ---
@@ -44,7 +45,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
       </div>
     </div>
 
-    <div class="line absolute bottom-0 left-0 w-full"></div>
+    <Divider position="bottom" />
   </section>
 
 
@@ -133,7 +134,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
     </div>
 
    
-      <div class="line absolute bottom-0 left-0 w-full"></div>
+      <Divider position="bottom" />
 
        <div class="overlay-bottom opacity-80"></div> 
 
@@ -185,7 +186,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
     <div class="cache--gradient2"></div>
 
     <div class="relative z-1">
-      <div class="line absolute top-1/2 left-0 w-full"></div>
+      <Divider position="unset" class="top-1/2" />
       <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
         <div class="aspect-square border border-primary-300 rounded-full opacity-30"></div>
         <div class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"></div>
@@ -253,7 +254,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
       <StarMarks class="justify-center mt-8" />
     </div>
 
-    <div class="line absolute top-0 left-0 w-full"></div>
+    <Divider position="top" />
   </section>
 
 
@@ -316,7 +317,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
     </div>
 
 
-<div class="line absolute top-0 left-0 w-full"></div>
+<Divider position="top" />
 
   </section> -->
 
@@ -359,7 +360,7 @@ import SplitSection from '@components/ui/SplitSection.astro';
     </div>
 
 
-<div class="line absolute top-0 left-0 w-full"></div>
+<Divider position="top" />
 
   </section>
 

@@ -1,0 +1,46 @@
+---
+interface Props {
+  /** Position horizontale du trait dans son parent (qui doit être `relative`). */
+  position?: 'left' | 'right' | 'center' | 'unset';
+  /** Hauteur Tailwind (défaut pleine hauteur). */
+  height?: string;
+  /** true = dégradé doré qui s'estompe aux extrémités. false = trait plein doré. */
+  gradient?: boolean;
+  /** Opacité du trait. */
+  opacity?: number;
+  /** Dot en haut du trait. */
+  dotTop?: boolean;
+  /** Dot en bas du trait. */
+  dotBottom?: boolean;
+  class?: string;
+}
+
+const {
+  position = 'left',
+  height = 'h-full',
+  gradient = true,
+  opacity = 0.35,
+  dotTop = true,
+  dotBottom = true,
+  class: className = '',
+} = Astro.props;
+
+const positionClass: Record<'left' | 'right' | 'center' | 'unset', string> = {
+  left:   'left-0',
+  right:  'right-0',
+  center: 'left-0 right-0 mx-auto inset-x0',
+  unset:  '',
+};
+
+const background = gradient
+  ? 'linear-gradient(180deg, transparent, var(--color-primary-500) 30%, var(--color-primary) 50%, var(--color-primary-500) 70%, transparent)'
+  : 'var(--color-primary)';
+---
+
+<div
+  class:list={['absolute top-0 w-px z-3', positionClass[position], height, className]}
+  style={`background:${background};opacity:${opacity}`}
+>
+  {dotTop && <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"></div>}
+  {dotBottom && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"></div>}
+</div>

@@ -1,8 +1,9 @@
 ---
-import ArchFrame from '@components/ArchFrame.astro';
-import DividerGeo from '@components/DividerGeo.astro';
-import BgImage from '@components/BgImage.astro';
-import GalaxyCanvas from '@components/GalaxyCanvas.astro';
+import ArchFrame from '@components/decor/ArchFrame.astro';
+import DividerGeo from '@components/decor/DividerGeo.astro';
+import BgImage from '@components/decor/BgImage.astro';
+import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
+import Divider from '@components/decor/Divider.astro';
 import { Icon } from 'astro-icon/components';
 
 // Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
@@ -86,7 +87,7 @@ const voies = [
 
   <!-- Décor : cercles (identique à la section Classes home) -->
   <div class="relative z-1">
-    <div class="line absolute top-1/2 left-0 w-full"></div>
+    <Divider position="unset" class="top-1/2" />
     <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
       <div class="aspect-square border border-width-1 border-primary-300 rounded-full opacity-30"></div>
     </div>
@@ -239,7 +240,7 @@ const voies = [
 </section>
 
 <script>
-  import '../scripts/voies-swiper.js';
+  import '../../scripts/voies-swiper.js';
 </script>
 
 <style is:global>

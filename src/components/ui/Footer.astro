@@ -1,80 +1,37 @@
 ---
-interface Props {
-  variant?: 'simple' | 'two-col' | 'four-col' | 'centered';
-}
+const year = new Date().getFullYear();
 
-const { variant = 'simple' } = Astro.props;
+const links = [
+  { href: '/', label: 'Accueil' },
+  { href: '/character', label: 'Personnage' },
+  { href: '/gallery', label: 'Galerie' },
+  { href: '/blog', label: 'Actus' },
+  { href: '/contact', label: 'Contact' },
+];
 ---
 
 <footer class="border-t border-white/8 bg-background">
+  <div class="max-w-5xl mx-auto px-6 py-section-sm flex flex-col items-center gap-6 text-center">
 
-  {variant === 'simple' && (
-    <div class="max-w-5xl mx-auto px-6 py-6 flex flex-wrap items-center justify-between gap-4">
-      <slot name="logo" />
-      <nav class="flex items-center gap-6">
-        <slot name="links" />
-      </nav>
-      <p class="text-foreground-500 text-sm">
-        <slot name="copyright" />
+    <a href="/" class="font-display text-sm tracking-display text-primary-100 uppercase">
+      [MOD NAME]
+    </a>
+
+    <nav class="flex flex-wrap justify-center gap-6">
+      {links.map(link => (
+        <a href={link.href} class="nav__link">{link.label}</a>
+      ))}
+    </nav>
+
+    <div>
+      <p class="text-xs tracking-wider text-foreground-700 font-ui uppercase mb-3">
+        Un mod non-officiel pour Baldur's Gate 3
+      </p>
+      <div class="divider-gold w-48 mx-auto opacity-30 mb-4"></div>
+      <p class="text-2xs text-foreground-700 font-ui">
+        © {year} Cosmic Vessel Team — Projet bénévole, non affilié à Larian Studios.
       </p>
     </div>
-  )}
 
-  {variant === 'two-col' && (
-    <div class="max-w-5xl mx-auto px-6 py-section-sm grid grid-cols-1 gap-10 sm:grid-cols-2">
-      <div class="space-y-3">
-        <slot name="logo" />
-        <p class="text-foreground-500 text-sm leading-relaxed max-w-xs">
-          <slot name="description" />
-        </p>
-      </div>
-      <nav class="flex flex-col gap-2 sm:items-end">
-        <slot name="links" />
-      </nav>
-    </div>
-    <div class="max-w-5xl mx-auto px-6 pb-6 border-t border-white/8 pt-6">
-      <p class="text-foreground-500 text-sm">
-        <slot name="copyright" />
-      </p>
-    </div>
-  )}
-
-  {variant === 'four-col' && (
-    <div class="max-w-5xl mx-auto px-6 py-section-sm grid grid-cols-2 gap-10 sm:grid-cols-4">
-      <div class="space-y-3 col-span-2 sm:col-span-1">
-        <slot name="logo" />
-        <p class="text-foreground-500 text-sm leading-relaxed">
-          <slot name="description" />
-        </p>
-      </div>
-      <div class="space-y-3">
-        <slot name="col-1" />
-      </div>
-      <div class="space-y-3">
-        <slot name="col-2" />
-      </div>
-      <div class="space-y-3">
-        <slot name="col-3" />
-      </div>
-    </div>
-    <div class="max-w-5xl mx-auto px-6 pb-6 border-t border-white/8 pt-6">
-      <p class="text-foreground-500 text-sm">
-        <slot name="copyright" />
-      </p>
-    </div>
-  )}
-
-  {variant === 'centered' && (
-    <div class="max-w-5xl mx-auto px-6 py-section-sm flex flex-col items-center gap-6 text-center">
-      <slot name="logo" />
-      <nav class="flex flex-wrap justify-center gap-6">
-        <slot name="links" />
-      </nav>
-      <slot name="social" />
-      <p class="text-foreground-500 text-sm">
-        <slot name="copyright" />
-      </p>
-    </div>
-  )}
-
+  </div>
 </footer>

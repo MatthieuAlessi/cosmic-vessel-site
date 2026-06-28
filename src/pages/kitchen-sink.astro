@@ -2,13 +2,11 @@
 import Layout from '@layouts/Layout.astro';
 import Button from '@components/ui/Button.astro';
 import ColorSwatch from '@components/ui/ColorSwatch.astro';
-import NavUI from '@components/ui/Nav.astro';
-import FooterUI from '@components/ui/Footer.astro';
 import Hero from '@components/ui/Hero.astro';
 import Card from '@components/ui/Card.astro';
-import DividerGeo from '@components/DividerGeo.astro';
-import CornerOrnament from '@components/CornerOrnament.astro';
-import BgImage from '@components/BgImage.astro';
+import DividerGeo from '@components/decor/DividerGeo.astro';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import BgImage from '@components/decor/BgImage.astro';
 ---
 
 <Layout title="Kitchen Sink — Cosmic Vessel">
@@ -486,110 +484,6 @@ import BgImage from '@components/BgImage.astro';
       </div>
     </section>
 
-    <div class="divider-gold"></div>
-
-    <!-- Nav ui/ -->
-    <section class="space-y-8">
-      <span class="section-label">Nav (ui/)</span>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">default — logo gauche, liens + CTA droite</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <NavUI variant="default">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Button slot="cta" variant="primary" size="sm">CTA</Button>
-          </NavUI>
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">centered — liens gauche, logo centre, CTA droite</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <NavUI variant="centered">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Button slot="cta" variant="outline" size="sm">CTA</Button>
-          </NavUI>
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">split — logo gauche, liens centre, CTA droite</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <NavUI variant="split">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Button slot="cta" variant="secondary" size="sm">CTA</Button>
-          </NavUI>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider-gold"></div>
-
-    <!-- Footer ui/ -->
-    <section class="space-y-8">
-      <span class="section-label">Footer (ui/)</span>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">simple — une ligne</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <FooterUI variant="simple">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Fragment slot="copyright">© 2025 Cosmic Vessel</Fragment>
-          </FooterUI>
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">two-col — logo gauche, liens droite</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <FooterUI variant="two-col">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="description">Courte description du projet ou de la marque sur une ou deux lignes.</Fragment>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Fragment slot="copyright">© 2025 Cosmic Vessel. Tous droits réservés.</Fragment>
-          </FooterUI>
-        </div>
-      </div>
-
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">centered — tout centré</p>
-        <div class="rounded-2xl overflow-hidden border border-white/8">
-          <FooterUI variant="centered">
-            <a slot="logo" href="/" class="font-display font-bold text-foreground-100 tracking-tight">Logo</a>
-            <Fragment slot="links">
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-              <a href="#" class="text-sm text-foreground-500 hover:text-foreground-100 transition-colors duration-200">Lien</a>
-            </Fragment>
-            <Fragment slot="copyright">© 2025 Cosmic Vessel</Fragment>
-          </FooterUI>
-        </div>
-      </div>
-    </section>
 
   </div>
 
