@@ -1,0 +1,118 @@
+---
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import CornerRays from '@components/decor/CornerRays.astro';
+
+interface Props {
+  name: string;
+  tagline?: string;
+  art?: string;
+  /** Cadre seul (sans nom ni ornements) — pour les sélecteurs / miniatures. */
+  compact?: boolean;
+  /** Active le tilt 3D magnétique au hover (mousemove). */
+  tilt?: boolean;
+  /** Si fourni, un clic navigue vers cette URL. */
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+const {
+  name,
+  tagline,
+  art,
+  compact = false,
+  tilt = false,
+  href,
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'class-card relative rounded-xl border border-white/10 bg-background-300 shadow-img-lift',
+    compact ? 'p-4' : ' ',
+    tilt && 'card-tilt',
+    (tilt || href) && 'cursor-pointer',
+    className,
+  ]}
+  data-href={href || undefined}
+  {...rest}
+>
+  {!compact && (
+    <>
+      <CornerOrnament size={34} class="opacity-40" />
+      <CornerRays corner="top-left" class="class-card__rays" />
+      <CornerRays corner="top-right" class="class-card__rays" />
+    </>
+  )}
+
+  <div class="p-6 pb-4">
+    <div
+      class="class-card__frame relative aspect-[2/3.3] rounded-t-full overflow-hidden border border-primary-500/50 outline-1 outline-primary-500/20 outline-offset-12"
+    >
+      {art
+        ? <img src={art} alt={name} class="w-full h-full object-cover" loading="lazy" />
+        : <div class="w-full h-full bg-background-500/60" />
+      }
+      <div class="overlay-bottom"></div>
+
+      {!compact && (
+        <div class="class-card__discover">
+          <span class="font-display text-base uppercase">Discover</span>
+          <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+            <path d="M0 4h11.5M8.5 1L12 4l-3.5 3" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      )}
+
+      <CornerOrnament size={34} class="class-card__ornament" />
+    </div>
+  </div>
+
+  {!compact && (
+    <div class="border-t border-primary-500/20 mt-3 p-4 text-center relative">
+      {tagline && (
+        <p class="font-display text-2xs tracking-widest uppercase text-primary-300 mb-1">
+          {tagline}
+        </p>
+      )}
+      <h3 class="title-3 text-primary-100">{name}</h3>
+    </div>
+  )}
+</div>
+
+<script>
+  // --ease-cinematic dupliqué car les custom props CSS ne s'évaluent pas dans style.transition
+  const EC = "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+  const SO = `scale 0.55s ${EC}, opacity 0.55s ${EC}`
+
+  document.querySelectorAll<HTMLElement>(".card-tilt").forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      card.style.transition = `transform 0.1s ease-out, ${SO}`
+    })
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width
+      const y = (e.clientY - rect.top) / rect.height
+      card.style.transform = `perspective(800px) rotateX(${(y - 0.5) * -8}deg) rotateY(${(x - 0.5) * 7}deg) translateZ(4px)`
+    })
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transition = `transform 0.65s cubic-bezier(0.23, 1, 0.32, 1), ${SO}`
+      card.style.transform = ""
+      const cleanup = (e: TransitionEvent) => {
+        if (e.propertyName === "transform") {
+          card.style.transition = ""
+          card.removeEventListener("transitionend", cleanup)
+        }
+      }
+      card.addEventListener("transitionend", cleanup)
+    })
+
+    const dest = card.dataset.href
+    if (dest) {
+      card.addEventListener("click", () => { window.location.href = dest })
+    }
+  })
+</script>

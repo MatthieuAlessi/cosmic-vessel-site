@@ -1,0 +1,61 @@
+---
+// Teaser home — digest par statut (fait / en cours / à faire), avec de vrais
+// noms de features. Pas de chronologie, pas de jauge. Funnel vers /roadmap.
+import { Icon } from "astro-icon/components"
+import { allFeatures, roadmapCounts, type FeatureStatus } from "@data/roadmapFeatures"
+
+interface Props {
+  /** Nombre max de features listées par colonne avant le "+N". */
+  limit?: number
+  class?: string
+}
+const { limit = 6, class: className = "" } = Astro.props
+
+const columns: {
+  status: FeatureStatus
+  label: string
+  glyph: string
+  glyphClass: string
+  count: number
+}[] = [
+  { status: "completed", label: "Done", glyph: "ph:check", glyphClass: "text-primary", count: roadmapCounts.completed },
+  { status: "in-progress", label: "In progress", glyph: "ph:circle-notch", glyphClass: "text-secondary-300", count: roadmapCounts["in-progress"] },
+  { status: "planned", label: "To come", glyph: "ph:diamond", glyphClass: "text-foreground-700", count: roadmapCounts.planned },
+]
+
+const featuresFor = (status: FeatureStatus) => allFeatures.filter((f) => f.status === status)
+---
+
+<div class:list={["max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-primary-700/15", className]}>
+  {
+    columns.map((col) => {
+      const items = featuresFor(col.status)
+      const shown = items.slice(0, limit)
+      const rest = col.count - shown.length
+      return (
+        <div class="bg-background-300 p-7">
+          <header class="flex items-baseline justify-between gap-2 mb-6">
+            <h3 class="font-display text-sm tracking-widest uppercase text-primary-100">
+              {col.label}
+            </h3>
+            <span class="font-display text-2xl text-primary-100 leading-none">{col.count}</span>
+          </header>
+
+          <ul class="flex flex-col gap-3">
+            {shown.map((f) => (
+              <li class="flex items-start gap-2.5">
+                <Icon name={col.glyph} class:list={["w-4 h-4 mt-px shrink-0", col.glyphClass]} />
+                <span class="font-body text-sm text-foreground-300 leading-snug">{f.title}</span>
+              </li>
+            ))}
+            {rest > 0 && (
+              <li class="font-ui text-2xs tracking-widest uppercase text-foreground-700 pl-6.5 pt-1">
+                + {rest} more
+              </li>
+            )}
+          </ul>
+        </div>
+      )
+    })
+  }
+</div>

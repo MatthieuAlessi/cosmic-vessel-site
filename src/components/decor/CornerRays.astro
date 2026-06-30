@@ -1,0 +1,38 @@
+---
+interface Props {
+  /** Coin où ancrer les rayons (l'autre est obtenu par symétrie). */
+  corner?: 'top-left' | 'top-right';
+  size?: number;
+  class?: string;
+}
+const { corner = 'top-left', size = 100, class: className = '' } = Astro.props;
+const flip = corner === 'top-right';
+---
+
+<!--
+  Rayons en line-art convergeant vers le dot du coin (sans le toucher : écart laissé
+  près du foyer ~ (9,9)). Le coin droit est obtenu par symétrie horizontale.
+-->
+<svg
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  fill="none"
+  aria-hidden="true"
+  class:list={['absolute top-1.5 pointer-events-none', flip ? 'right-1.5 -scale-x-100' : 'left-1.5', className]}
+>
+  <!-- Pointes plus longues sur les bords, plus courtes en diagonale :
+       elles tracent un arc concave qui suit le border arrondi de l'image. -->
+  <!-- Arc concave : extrêmes à dist≈85, diagonale à dist≈39 → creux marqué
+       qui suit la courbe intérieure du rounded-t-full vue depuis le coin. -->
+  <g stroke="var(--color-primary-500)" stroke-width="1" stroke-linecap="round">
+    <line x1="22"   y1="8"    x2="93" y2="8"  />
+    <line x1="21.7" y1="11.1" x2="76" y2="24" />
+    <line x1="20.6" y1="14.1" x2="53" y2="30" />
+    <line x1="18.9" y1="16.7" x2="38" y2="33" />
+    <line x1="16.7" y1="18.9" x2="33" y2="38" />
+    <line x1="14.1" y1="20.6" x2="30" y2="53" />
+    <line x1="11.1" y1="21.7" x2="24" y2="76" />
+    <line x1="8"    y1="22"   x2="8"  y2="93" />
+  </g>
+</svg>

@@ -1,5 +1,6 @@
 ---
 import '@styles/global.css';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   title: string;
@@ -12,6 +13,9 @@ const {
   description = 'Un mod Origin pour Baldur\'s Gate 3 — Nouveau personnage, classe inédite, questline complète.',
   image = '/og-default.jpg',
 } = Astro.props;
+
+// Trailer par défaut, utilisé par tout déclencheur [data-trailer-open] sans data-video-id.
+const trailerYouTubeId = 'vEUQxe2uM-w';
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---
@@ -52,5 +56,61 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
   </head>
   <body>
     <slot />
+
+    <!-- ─── Trailer modal (YouTube, lazy, global) ──────────────────────── -->
+    <div
+      id="trailer-modal"
+      class="fixed inset-0 z-[200] hidden items-center justify-center p-4"
+      aria-hidden="true"
+    >
+      <div class="absolute inset-0 bg-background/95 backdrop-blur-sm" data-trailer-close></div>
+      <div class="relative w-full max-w-5xl" role="dialog" aria-modal="true" aria-label="Trailer">
+        <button
+          type="button"
+          class="absolute -top-10 right-0 text-foreground-300 hover:text-primary-100 transition-colors"
+          data-trailer-close
+          aria-label="Close trailer"
+        >
+          <Icon name="ph:x" class="w-7 h-7" />
+        </button>
+        <div
+          class="trailer-frame aspect-video w-full overflow-hidden border-panel bg-black shadow-cinematic"
+        >
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ trailerYouTubeId }}>
+      const modal = document.getElementById("trailer-modal")
+      if (modal) {
+        const frame = modal.querySelector(".trailer-frame")
+        const closers = modal.querySelectorAll("[data-trailer-close]")
+
+        const openModal = (id) => {
+          const videoId = id || trailerYouTubeId
+          frame.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
+          modal.classList.remove("hidden")
+          modal.classList.add("flex")
+          modal.setAttribute("aria-hidden", "false")
+          document.body.style.overflow = "hidden"
+        }
+
+        const closeModal = () => {
+          modal.classList.add("hidden")
+          modal.classList.remove("flex")
+          modal.setAttribute("aria-hidden", "true")
+          frame.innerHTML = "" // stoppe la lecture
+          document.body.style.overflow = ""
+        }
+
+        document.querySelectorAll("[data-trailer-open]").forEach((btn) => {
+          btn.addEventListener("click", () => openModal(btn.dataset.videoId))
+        })
+        closers.forEach((btn) => btn.addEventListener("click", closeModal))
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal()
+        })
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,86 @@
+---
+import { Icon } from "astro-icon/components"
+import type { FeatureStatus } from "@data/roadmapFeatures";
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+interface Props {
+  title: string
+  description: string
+  icon: string
+  status: FeatureStatus
+  class?: string
+  [key: string]: unknown
+}
+const { title, description, icon, status, class: className = "", ...rest } = Astro.props
+
+// Signal de statut sur plusieurs canaux (chip + icône + accent), pas que la couleur de bordure.
+const cfg = {
+  completed: {
+    label: "Completed",
+    chip: "text-primary border-primary/50 bg-primary/10",
+    iconWrap: "text-primary-100 border-primary/40 bg-primary/10",
+    glyph: "ph:check",
+    edge: "before:bg-primary",
+    border: "border-primary-700/60",
+    ornament: "opacity-60",
+  },
+  "in-progress": {
+    label: "In progress",
+    chip: "text-secondary-300 border-secondary/50 bg-secondary/10",
+    iconWrap: "text-secondary-300 border-secondary/40 bg-secondary/10",
+    glyph: "ph:circle-notch",
+    edge: "before:bg-secondary",
+     ornament: "opacity-40",
+  },
+  planned: {
+    label: "Planned",
+    chip: "text-foreground-500 border-foreground-700/60 bg-background-100/30",
+    iconWrap: "text-foreground-500 border-foreground-700/50 bg-background-100/20",
+    glyph: "ph:diamond",
+    edge: "before:bg-foreground-700",
+     ornament: "opacity-40",
+  },
+}[status]
+---
+
+<article
+  class:list={[
+    "roadmap-feature group relative flex flex-col  p-5 h-full",
+    "border border-primary-700/30 border-panel bg-background-300/60 backdrop-blur-xs overflow-hidden hover:-translate-y-0.5 transition-transform duration-300",
+    cfg.border,
+    // Liseré de statut à gauche (accent franc, lisible)
+    // "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5",
+    // cfg.edge,
+    // "transition-colors duration-300 hover:border-primary-700/30",
+    // className,
+  ]}
+  {...rest}
+>
+
+  <CornerOrnament size={34} corner="bottom-right" class:list={[cfg.ornament]} />
+
+  <div class="flex items-center justify-between gap-3">
+    <span
+      class:list={[
+        "flex items-center justify-center w-8 aspect-square rounded-full border shrink-0",
+        cfg.iconWrap,
+      ]}
+    >
+      <Icon name={icon} class="w-5 h-5" />
+    </span>
+    <span
+      class:list={[
+        "inline-flex items-center gap-1 font-ui text-2xs   border px-2 py-1  rounded-sm shrink-0",
+        cfg.chip,
+      ]}
+    >
+      <Icon name={cfg.glyph} class="w-3 h-3" />
+      {cfg.label}
+    </span>
+  </div>
+
+  <h3 class="title-3 capitalize text-sm text-foreground-100 font-body mt-4 mb-0  ">
+    {title}
+  </h3>
+  <p class="font-body text-xs text-foreground-500 leading-relaxed">{description}</p>
+</article>

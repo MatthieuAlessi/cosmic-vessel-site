@@ -1,0 +1,37 @@
+---
+interface Props {
+  /** true = dégradé doré qui s'estompe aux extrémités. false = trait plein doré. */
+  gradient?: boolean;
+  /** Opacité du trait. */
+  opacity?: number;
+  /** Dots aux deux extrémités. */
+  dotEnds?: boolean;
+  /** Dot au centre. */
+  dotCenter?: boolean;
+  /** Largeur Tailwind (défaut pleine largeur). */
+  width?: string;
+  class?: string;
+}
+
+const {
+  gradient = true,
+  opacity = 0.5,
+  dotEnds = true,
+  dotCenter = true,
+  width = 'w-full',
+  class: className = '',
+} = Astro.props;
+
+const background = gradient
+  ? 'linear-gradient(90deg, transparent, var(--color-primary-500) 30%, var(--color-primary) 50%, var(--color-primary-500) 70%, transparent)'
+  : 'var(--color-primary)';
+---
+
+<div
+  class:list={['relative h-px mx-auto z-3', width, className]}
+  style={`background:${background};opacity:${opacity}`}
+>
+  {dotEnds && <div class="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"></div>}
+  {dotCenter && <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary-100"></div>}
+  {dotEnds && <div class="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"></div>}
+</div>

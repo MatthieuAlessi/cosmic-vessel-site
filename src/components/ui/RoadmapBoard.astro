@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components"
+import RoadmapFeatureCard from "@components/ui/RoadmapFeatureCard.astro"
+import { roadmapCategories, slugify } from "@data/roadmapFeatures"
+
+interface Props {
+  class?: string
+}
+const { class: className = "" } = Astro.props
+---
+
+<div class:list={["roadmap-board flex flex-col gap-14", className]}>
+  {
+    roadmapCategories.map((cat) => (
+      <section class="roadmap-category scroll-mt-28" id={slugify(cat.name)} data-toc-section={slugify(cat.name)}>
+        <header class="flex items-center gap-3 mb-6">
+          {/* <Icon name={cat.icon} class="w-5 h-5 text-primary-300" /> */}
+          <h3 class="font-display text-sm title-2 uppercase text-foreground-100">{cat.name}</h3>
+          <span class="h-px flex-1 bg-white/10" />
+          {/* <span class="font-ui text-2xs tracking-wider text-foreground-700">{cat.features.length}</span> */}
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {cat.features.map((f) => (
+            <RoadmapFeatureCard title={f.title} description={f.description} icon={f.icon} status={f.status} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

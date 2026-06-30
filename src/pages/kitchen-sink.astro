@@ -4,7 +4,7 @@ import Button from '@components/ui/Button.astro';
 import ColorSwatch from '@components/ui/ColorSwatch.astro';
 import Hero from '@components/ui/Hero.astro';
 import Card from '@components/ui/Card.astro';
-import DividerGeo from '@components/decor/DividerGeo.astro';
+import DividerH from '@components/decor/DividerH.astro';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
 import BgImage from '@components/decor/BgImage.astro';
 ---
@@ -189,13 +189,18 @@ import BgImage from '@components/decor/BgImage.astro';
       </div>
 
       <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">DividerGeo size="md" (défaut)</p>
-        <DividerGeo />
+        <p class="text-foreground-500 text-sm">DividerH (défaut, w-full)</p>
+        <DividerH />
       </div>
 
       <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">DividerGeo size="sm"</p>
-        <DividerGeo size="sm" />
+        <p class="text-foreground-500 text-sm">DividerH width="max-w-xs"</p>
+        <DividerH width="max-w-xs" />
+      </div>
+
+      <div class="space-y-4">
+        <p class="text-foreground-500 text-sm">DividerH dotCenter={false}</p>
+        <DividerH dotCenter={false} />
       </div>
     </section>
 

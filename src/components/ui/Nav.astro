@@ -3,6 +3,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/character', label: 'Character' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/roadmap', label: 'Roadmap' },
   { href: '/team', label: 'Team' },
   { href: '/blog', label: 'News' },
   { href: '/contact', label: 'Contact' },
@@ -40,7 +41,11 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <!-- CTA -->
-    <div class="flex justify-end">
+    <div class="flex justify-end items-center gap-2">
+      <button type="button" data-trailer-open class="btn btn--ghost-white py-1 px-3 text-xs">
+        <Icon name="ph:play" class="w-4 h-4" />
+        Watch Trailer
+      </button>
       <Button href="/blog" variant="ghost-white" size="xs">Follow Dev</Button>
     </div>
 

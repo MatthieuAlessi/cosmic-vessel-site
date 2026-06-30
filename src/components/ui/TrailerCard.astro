@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  /** ID YouTube — sert à construire la vignette (et est lu par la modal page). */
+  videoId: string;
+  /** Texte sous le bouton play. Vide = pas de caption. */
+  caption?: string;
+  /** Qualité de la vignette YouTube. maxres = HD (pas garanti sur toutes les vidéos). */
+  quality?: 'hqdefault' | 'sddefault' | 'maxresdefault';
+  /** Override complet de l'URL de la vignette. */
+  thumbnail?: string;
+  /** Largeur / overrides (ex: "max-w-lg mx-auto"). */
+  class?: string;
+}
+
+const {
+  videoId,
+  caption = 'Watch the trailer',
+  quality = 'hqdefault',
+  thumbnail,
+  class: className = '',
+} = Astro.props;
+
+const thumbSrc = thumbnail ?? `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
+---
+
+<button
+  type="button"
+  data-trailer-open
+  data-video-id={videoId}
+  class:list={[
+    'trailer-card group relative block w-full border  border-primary-300/30 group-hover:border-primary-300 border-panel overflow-hidden cursor-pointer',
+    className,
+  ]}
+  aria-label={caption || 'Watch the trailer'}
+>
+  <img
+    src={thumbSrc}
+    alt="Trailer"
+    class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+    loading="lazy"
+  />
+  <span
+    class="absolute inset-0 bg-background/70 transition-colors duration-500 group-hover:bg-background/20"
+  ></span>
+  <span class="absolute inset-0 flex flex-col items-center justify-center gap-4">
+    <span
+      class="flex items-center justify-center w-16 h-16 lg:w-16 lg:h-16 rounded-full border border-primary-100/60 bg-background/30 backdrop-blur-sm text-primary-100/60 transition-all duration-500 group-hover:scale-110 group-hover:border-primary-100 group-hover:bg-primary/20"
+    >
+      <Icon name="ph:play" class="w-6 h-6  " />
+    </span>
+    {caption && (
+      <span class="font-display text-xs lg:text-sm tracking-widest uppercase text-primary-100">
+        {caption}
+      </span>
+    )}
+  </span>
+</button>

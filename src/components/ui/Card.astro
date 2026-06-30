@@ -1,7 +1,7 @@
----
+﻿---
 import Button from '@components/ui/Button.astro';
 import BgImage from '@components/decor/BgImage.astro';
-import DividerGeo from '@components/decor/DividerGeo.astro';
+import DividerH from '@components/decor/DividerH.astro';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
 
 interface Props {
@@ -115,7 +115,7 @@ const classes = [
         <slot name="title" />
       </h3>
 
-      <DividerGeo size="xs" class="my-1" />
+      <DividerH class="my-1" />
       <p class="text-foreground-500 text-xs leading-relaxed pb-2">
         <slot name="excerpt" />
       </p>

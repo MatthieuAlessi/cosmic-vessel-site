@@ -1,0 +1,36 @@
+---
+import { roadmapCounts, roadmapProgress } from "@data/roadmapFeatures"
+
+interface Props {
+  class?: string
+}
+const { class: className = "" } = Astro.props
+
+const stats = [
+  { label: "Completed", value: roadmapCounts.completed, dot: "bg-primary" },
+  { label: "In progress", value: roadmapCounts["in-progress"], dot: "bg-secondary" },
+  { label: "Planned", value: roadmapCounts.planned, dot: "bg-foreground-700" },
+]
+---
+
+<div class:list={["max-w-2xl mx-auto lg:mx-0", className]}>
+  <!-- Compteurs par statut -->
+  <div class="flex items-stretch justify-center lg:justify-start divide-x divide-primary-700/25">
+    {
+      stats.map((s) => (
+        <div class="flex flex-col items-center gap-1.5 first:pl-0 px-6 lg:px-12  ">
+          <span class="font-display text-4xl text-primary-100 leading-none">{s.value}</span>
+          <span class="flex items-center gap-1.5">
+            <span class:list={["w-1.5 h-1.5 rounded-full shrink-0", s.dot]} />
+            <span class="font-ui text-2xs   uppercase text-foreground-500">
+              {s.label}
+            </span>
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  <!-- <p class="text-center font-ui text-2xs tracking-widest uppercase text-foreground-700 mt-6">
+    {roadmapCounts.total} features · {roadmapProgress}% complete
+  </p> -->
+</div>
