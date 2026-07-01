@@ -1,81 +1,122 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Nav from '@components/ui/Nav.astro';
-import Footer from '@components/ui/Footer.astro';
-import { getCollection } from 'astro:content';
+import Layout from "@layouts/Layout.astro"
+import Nav from "@components/ui/Nav.astro"
+import Footer from "@components/ui/Footer.astro"
+import DividerH from "@components/decor/DividerH.astro"
+import PageHero from "@components/ui/PageHero.astro"
+import TeamMemberCard from "@components/ui/TeamMemberCard.astro"
+import TeamOpenRoleCard from "@components/ui/TeamOpenRoleCard.astro"
+import { Icon } from "astro-icon/components"
+import { getCollection } from "astro:content"
+import { departments } from "@data/team"
 
-const members = await getCollection('team');
+const members = await getCollection("team")
+
+// ─── Liens (placeholder, à remplacer) ──────────────────────────────────────
+const discordUrl = "https://discord.gg/your-invite"
+const contactUrl = "/contact"
+const teamTotal = 30
+
+const PLACEHOLDERS_PER_DEPT = 8 // cartes placeholder pour visualiser une catégorie remplie
+
+// Membres réels par catégorie, complétés par des placeholders jusqu'à 8.
+// Avatars placeholder : visages variés via pravatar.cc (index déterministe).
+const roster = departments.map((dept, di) => {
+  const real = members
+    .filter((m) => m.data.department === dept.id)
+    .map((m) => ({ name: m.data.name, role: m.data.role, avatar: m.data.avatar, socials: m.data.socials, placeholder: false }))
+
+  const missing = Math.max(0, PLACEHOLDERS_PER_DEPT - real.length)
+  const placeholders = Array.from({ length: missing }, (_, i) => ({
+    name: "Team Member",
+    role: dept.name,
+    avatar: `https://i.pravatar.cc/200?img=${((di * PLACEHOLDERS_PER_DEPT + i) % 70) + 1}`,
+    socials: { linkedin: "placeholder", website: "https://example.com", twitter: "@placeholder" },
+    placeholder: true,
+  }))
+
+  return { ...dept, people: [...real, ...placeholders] }
+})
 ---
 
 <Layout
-  title="L'Équipe — [MOD NAME]"
-  description="Rencontrez les ~30 membres bénévoles qui donnent vie à ce mod Baldur's Gate 3."
+  title="The Team — Cosmic Vessel"
+  description="Meet the volunteers bringing the Cosmic Vessel mod for Baldur's Gate 3 to life."
 >
   <Nav />
 
-  <main class="pt-32 pb-24">
-    <div class="max-w-6xl mx-auto px-6">
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <PageHero
+    label="Behind the mod"
+    title="The Team"
+    description={`Around ${teamTotal} volunteers — artists, writers, composers and developers — united by their love of Baldur's Gate 3, building the Cosmic Vessel together.`}
+  />
 
-      <header class="mb-20 text-center">
-        <p class="section-label text-center">Bénévoles</p>
-        <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">L'Équipe</h1>
-        <p class="text-foreground-500 font-body text-lg mt-6 max-w-xl mx-auto">
-          Une trentaine de passionnés de Baldur's Gate 3 réunis pour créer quelque chose d'unique.
-        </p>
-      </header>
+  <!-- ─── Roster par catégorie ──────────────────────────────────────────── -->
+  <section class="relative bg-background-500 py-24 overflow-hidden">
+    <div class="overlay-top"></div>
 
-      <div class="divider-gold mb-20"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col gap-20">
+      {
+        roster.map((dept) => (
+          <section>
+            <header class="flex items-center gap-3 mb-6">
+              {/* <Icon name={dept.icon} class="w-5 h-5 text-primary-300 shrink-0" /> */}
+              <h2 class="font-display   title-3 uppercase text-foreground-100 shrink-0">
+                {dept.name}
+              </h2>
+              <span class="h-px flex-1 bg-white/10" />
+            </header>
 
-      <!-- Grille membres -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {members.map(member => (
-          <div class="card-cinematic p-5 text-center group">
-            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-background-300 border border-primary-700 overflow-hidden flex items-center justify-center">
-              {member.data.avatar
-                ? <img src={member.data.avatar} alt={member.data.name} class="w-full h-full object-cover" />
-                : <span class="font-display text-xl text-primary-700">{member.data.name[0]}</span>
-              }
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              {dept.people.map((p) => (
+                <TeamMemberCard
+                  name={p.name}
+                  role={p.role}
+                  avatar={p.avatar}
+                  socials={p.socials}
+                  placeholder={p.placeholder}
+                />
+              ))}
+
+              {/* Cartes des rôles recherchés (recrutement) */}
+              {dept.openRoles.map((role) => (
+                <TeamOpenRoleCard role={role} href={contactUrl} />
+              ))}
             </div>
-            <h3 class="font-display text-sm tracking-wide text-primary-100 uppercase mb-1">
-              {member.data.name}
-            </h3>
-            <p class="font-ui text-2xs tracking-wider text-foreground-500 uppercase">
-              {member.data.role}
-            </p>
-            {member.data.socials && (
-              <div class="flex justify-center gap-3 mt-3">
-                {member.data.socials.twitter && (
-                  <a
-                    href={`https://twitter.com/${member.data.socials.twitter.replace('@', '')}`}
-                    class="text-foreground-700 hover:text-primary transition-colors duration-300 font-ui text-xs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Twitter"
-                  >X</a>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Placeholder cards pour illustrer l'équipe complète */}
-        {Array.from({ length: 28 }).map((_, i) => (
-          <div class="card-cinematic p-5 text-center opacity-40">
-            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-background-300 border border-background-100 flex items-center justify-center">
-              <span class="text-foreground-700 text-xl">?</span>
-            </div>
-            <h3 class="font-display text-sm tracking-wide text-foreground-700 uppercase mb-1">
-              Membre #{i + 3}
-            </h3>
-            <p class="font-ui text-2xs tracking-wider text-foreground-700 uppercase">
-              Rôle à définir
-            </p>
-          </div>
-        ))}
-      </div>
-
+          </section>
+        ))
+      }
     </div>
-  </main>
+  </section>
+
+  <!-- ─── CTA recrutement ───────────────────────────────────────────────── -->
+  <section class="relative bg-background-700 py-24 overflow-hidden border-t border-background-100">
+    <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+      <p class="section-label mb-8 mx-auto">Get involved</p>
+      <h2 class="title-1 mb-6 text-primary-100">Join the journey</h2>
+      <p class="text-foreground-300 font-body mb-10">
+        Don't see your exact role? The Cosmic Vessel is a volunteer project — if you're passionate
+        and skilled, we'd love to hear from you.
+      </p>
+      <DividerH width="max-w-md" class="my-10 mx-auto" />
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href={contactUrl} class="btn btn--primary py-3 px-8 text-sm">
+          <Icon name="ph:users-three" class="w-5 h-5" />
+          Join the team
+        </a>
+        <a
+          href={discordUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--outline py-3 px-8 text-sm"
+        >
+          <Icon name="ph:discord-logo" class="w-5 h-5" />
+          Discord
+        </a>
+      </div>
+    </div>
+  </section>
 
   <Footer />
 </Layout>

@@ -1,0 +1,33 @@
+---
+// Hero de /gallery : accroche + titre à gauche, DividerV centré, description à droite.
+import Divider from "@components/decor/Divider.astro"
+import DividerV from "@components/decor/DividerV.astro"
+
+interface Props {
+  eyebrow: string
+  title: string
+  description: string
+}
+const { eyebrow, title, description } = Astro.props
+---
+
+<section class="relative pt-40 pb-20 overflow-hidden bg-background-700">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 text-left">
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center">
+      <div class="col-span-1 lg:col-span-4">
+        <p class="title-label text-center lg:text-left mb-6 lg:mb-8 mx-auto lg:mx-0">{eyebrow}</p>
+        <h1 class="title-hero">{title}</h1>
+      </div>
+
+      <div class="col-span-1 lg:col-span-2">
+        <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
+      </div>
+
+      <div class="col-span-1 lg:col-span-4 lg:py-10">
+        <p class="text-foreground-500 font-body text-base">{description}</p>
+      </div>
+    </div>
+  </div>
+
+  <Divider position="bottom" />
+</section>

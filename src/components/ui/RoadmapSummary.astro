@@ -1,6 +1,6 @@
 ---
 import { roadmapCounts, roadmapProgress } from "@data/roadmapFeatures"
-
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
 interface Props {
   class?: string
 }
@@ -15,10 +15,14 @@ const stats = [
 
 <div class:list={["max-w-2xl mx-auto lg:mx-0", className]}>
   <!-- Compteurs par statut -->
-  <div class="flex items-stretch justify-center lg:justify-start divide-x divide-primary-700/25">
+  <div class="grid grid-cols-3 gap-4 items-stretch relative  justify-center lg:justify-start divide-x divide-primary-700/25">
     {
       stats.map((s) => (
-        <div class="flex flex-col items-center gap-1.5 first:pl-0 px-6 lg:px-12  ">
+
+   
+        <div class="relative flex flex-col items-center gap-1.5  px-6 py-6 lg:px-12 border border-primary-700/30 backdrop-blur-xs border-panel  ">
+              <CornerOrnament size={34} corner="top-left" class="opacity-40" />
+  <CornerOrnament size={34} corner="bottom-right" class="opacity-40" />
           <span class="font-display text-4xl text-primary-100 leading-none">{s.value}</span>
           <span class="flex items-center gap-1.5">
             <span class:list={["w-1.5 h-1.5 rounded-full shrink-0", s.dot]} />

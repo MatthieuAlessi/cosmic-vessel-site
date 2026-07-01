@@ -1,0 +1,28 @@
+---
+import { Icon } from "astro-icon/components"
+
+interface Props {
+  /** Intitulé du poste recherché. */
+  role: string
+  /** Lien de candidature (contact, formulaire…). */
+  href: string
+  class?: string
+}
+const { role, href, class: className = "" } = Astro.props
+---
+
+<a
+  href={href}
+  class:list={[
+    "group relative flex flex-col items-center justify-center gap-1 border  border-accent-500/40 border-panel bg-accent/10 p-6 text-center transition-all hover:border-accent-500/70    duration-300 hover:-translate-y-0.5",
+    className,
+  ]}
+>
+  <span class="flex items-center justify-center w-11 aspect-square rounded-full border border-accent-500/40 text-accent-300 group-hover:border-accent-500/70 mb-3 transition-colors">
+    <Icon name="ph:envelope-simple" class="w-5 h-5" />
+  </span>
+  <span class="font-ui text-2xs  uppercase text-accent-300">Looking for</span>
+  <span class="font-body text-sm   text-white leading-tight">
+    {role}
+  </span>
+</a>

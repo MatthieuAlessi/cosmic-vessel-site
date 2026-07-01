@@ -1,0 +1,84 @@
+---
+import { Icon } from "astro-icon/components"
+import CornerOrnament from "@components/decor/CornerOrnament.astro"
+
+interface Socials {
+  linkedin?: string
+  website?: string
+  twitter?: string
+}
+
+interface Props {
+  name: string
+  role: string
+  avatar?: string
+  socials?: Socials
+  /** Membre provisoire : les liens sociaux sont affichés sans href. */
+  placeholder?: boolean
+  class?: string
+}
+const { name, role, avatar, socials, placeholder = false, class: className = "" } = Astro.props
+
+const socialIcons: Record<string, string> = {
+  linkedin: "ph:linkedin-logo",
+  website: "ph:globe",
+  twitter: "ph:x-logo",
+}
+const socialUrl = (key: string, handle: string) => {
+  const h = handle.replace("@", "")
+  if (key === "linkedin") return `https://www.linkedin.com/in/${h}`
+  if (key === "twitter") return `https://x.com/${h}`
+  if (key === "website") return handle.startsWith("http") ? handle : `https://${handle}`
+  return null
+}
+---
+
+<article
+  class:list={[
+    "group relative border border-primary-700/30 border-panel bg-background-300/60 backdrop-blur-xs p-4 text-center transition-transform duration-300 hover:-translate-y-0.5",
+    className,
+  ]}
+>
+  <CornerOrnament size={24} corner="top-left" class=" " />
+  <CornerOrnament size={24} corner="bottom-right" class=" " />
+
+  <div class="w-20 aspect-square mx-auto mb-4 rounded-full overflow-hidden border border-primary-700/50 bg-background-500 flex items-center justify-center">
+    {
+      avatar ? (
+        <img src={avatar} alt={name} class="w-full h-full object-cover" loading="lazy" />
+      ) : (
+        <span class="font-body uppercase text-2xl text-primary-700">{name[0]}</span>
+      )
+    }
+  </div>
+
+  <h3 class="title-3 capitalize text-sm text-foreground-100 font-body mt-4 mb-0  ">{name}</h3>
+  <p class="font-ui text-2xs  text-foreground-500 uppercase">{role}</p>
+
+  {
+    socials && (
+      <div class="flex justify-center gap-3 mt-4">
+        {Object.entries(socials).map(([key, handle]) => {
+          if (!handle || !socialIcons[key]) return null
+          const url = socialUrl(key, handle)
+          const icon = <Icon name={socialIcons[key]} class="w-5 h-5" />
+          return url && !placeholder ? (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-foreground-300 hover:text-primary-100 transition-colors"
+              aria-label={key}
+            >
+              {icon}
+            </a>
+          ) : (
+            <span class="text-foreground-500" aria-hidden="true">
+              {icon}
+            </span>
+          )
+        })}
+      </div>
+    )
+  }
+</article>

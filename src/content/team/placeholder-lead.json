@@ -1,9 +1,11 @@
 {
   "name": "Placeholder Name",
   "role": "Project Lead & Writer",
+  "department": "leads",
   "avatar": "/images/placeholders/avatar.jpg",
   "socials": {
-    "discord": "username#0000",
+    "linkedin": "placeholder",
+    "website": "https://example.com",
     "twitter": "@placeholder"
   }
 }

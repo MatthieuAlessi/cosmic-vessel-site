@@ -899,131 +899,55 @@ const teamRoles = [
   <Divider position="bottom" />
 </section>
 
-<!-- ─── News (50/50 : vedette à gauche + 3 articles horizontaux à droite) ─── -->
+<!-- ─── News (grid x4, Card article) ───────────────────────────────────── -->
 {
   recentPosts.length > 0 && (
-    <section class="max-w-5xl mx-auto px-6 py-20 border-t border-background-100">
-      <div class="flex items-end justify-between mb-12">
-        <div>
-          <p class="section-label">Latest News</p>
-          <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase">News</h2>
-        </div>
-        <Button variant="ghost" href="/blog" class="text-primary">
-          View all →
-        </Button>
-      </div>
+    <section class="max-w-7xl mx-auto px-6 py-20 border-t border-background-100">
 
-      <div class:list={["grid grid-cols-1 gap-10", recentPosts.length > 1 && "lg:grid-cols-2"]}>
-        {/* Post vedette */}
-        <a href={`/blog/${recentPosts[0].id}`} class="group block">
-          <div class="img-overlay relative overflow-hidden mb-5 outline-1 outline-primary-700/30 outline-offset-4">
+
+<div class="flex justify-between items-end mb-6">
+    <div class="text-left relative z-20">
+      <p class="section-label mb-6">News</p>
+      <h2 class="title-1   text-primary-100">Latest news</h2>
+       
+    </div>
+
+  
+    <div>
+       <Button variant="outline" href="/gallery">See all</Button>
+    </div>
+</div>
+
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {recentPosts.map((post) => (
+          <Card variant="article" bordered cta="Read →" href={`/blog/${post.id}`}>
             <img
-              src={
-                recentPosts[0].data.cover ??
-                `https://picsum.photos/seed/${recentPosts[0].id}/1200/675`
-              }
-              alt={recentPosts[0].data.title}
-              class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105"
+              slot="image"
+              src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/800/450`}
+              alt={post.data.title}
+              class="img-cover"
               loading="lazy"
             />
-          </div>
-          <div class="flex gap-2 mb-3">
-            {recentPosts[0].data.tags.slice(0, 2).map((tag) => (
-              <span class="badge badge--primary">{tag}</span>
-            ))}
-          </div>
-          <h3 class="font-display text-2xl tracking-wide text-primary-100 uppercase leading-tight mb-3 group-hover:text-primary transition-colors duration-300">
-            {recentPosts[0].data.title}
-          </h3>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed mb-3 line-clamp-2">
-            {recentPosts[0].data.excerpt}
-          </p>
-          <span class="text-2xs text-foreground-700 font-ui tracking-wider uppercase">
-            {recentPosts[0].data.date.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-        </a>
-
-        {/* Articles suivants — format horizontal (vignette + texte) */}
-        {recentPosts.length > 1 && (
-          <div class="flex flex-col gap-6 lg:h-full lg:justify-between">
-            {recentPosts.slice(1).map((post) => (
-              <a href={`/blog/${post.id}`} class="group flex gap-4 items-stretch">
-                <div class="img-overlay relative overflow-hidden w-32 sm:w-40 shrink-0 outline-1 outline-primary-700/30 outline-offset-2">
-                  <img
-                    src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/400/300`}
-                    alt={post.data.title}
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="flex flex-col justify-center min-w-0">
-                  <div class="flex items-center gap-3 mb-1.5 text-2xs font-ui tracking-wider uppercase text-foreground-700">
-                    <span>
-                      {post.data.date.toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
-                    {post.data.tags[0] && (
-                      <>
-                        <span>·</span>
-                        <span class="text-primary">{post.data.tags[0]}</span>
-                      </>
-                    )}
-                  </div>
-                  <h3 class="font-display text-base tracking-wide text-primary-100 uppercase leading-tight mb-1.5 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                    {post.data.title}
-                  </h3>
-                  <p class="text-foreground-500 font-body text-xs leading-relaxed line-clamp-2">
-                    {post.data.excerpt}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
-  )
-}
-
-{
-  /* ─── Ancienne section News (3 image-cards) — conservée au cas où ───────
-  {recentPosts.length > 0 && (
-    <section class="max-w-5xl mx-auto px-6 py-20 border-t border-background-100">
-      <div class="flex items-end justify-between mb-12">
-        <div>
-          <p class="section-label">Latest News</p>
-          <h2 class="font-display text-4xl tracking-wider text-primary-100 uppercase">News</h2>
-        </div>
-        <Button variant="ghost" href="/blog" class="text-primary">View all →</Button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {recentPosts.map(post => (
-          <Card variant="article" bordered cta="Read →" href={`/blog/${post.id}`}>
-            <img slot="image" src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/800/450`} alt={post.data.title} class="img-cover" />
             <Fragment slot="badge">
-              {post.data.tags.slice(0, 2).map(tag => (
+              {post.data.tags.slice(0, 2).map((tag) => (
                 <span class="badge badge--primary">{tag}</span>
               ))}
             </Fragment>
             <Fragment slot="title">{post.data.title}</Fragment>
             <Fragment slot="excerpt">{post.data.excerpt}</Fragment>
             <span slot="meta" class="text-2xs text-foreground-700 font-ui">
-              {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {post.data.date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </span>
           </Card>
         ))}
       </div>
     </section>
-  )}
-  ───────────────────────────────────────────────────────────────────── */
+  )
 }
 
 <!-- ─── Team — meet & recruit ─────────────────────────────────────────── -->

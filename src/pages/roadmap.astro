@@ -5,74 +5,27 @@
 import Layout from "@layouts/Layout.astro"
 import Nav from "@components/ui/Nav.astro"
 import Footer from "@components/ui/Footer.astro"
-import BgImage from "@components/decor/BgImage.astro"
 import DividerH from "@components/decor/DividerH.astro"
+import PageHero from "@components/ui/PageHero.astro"
 import RoadmapSummary from "@components/ui/RoadmapSummary.astro"
 import RoadmapDigest from "@components/ui/RoadmapDigest.astro"
 import RoadmapBoard from "@components/ui/RoadmapBoard.astro"
 import RoadmapToc from "@components/ui/RoadmapToc.astro"
-import Divider from "@components/decor/Divider.astro"
-import DividerV from "@components/decor/DividerV.astro"
-import Button from "@components/ui/Button.astro"
-import StarMarks from "@components/decor/StarMarks.astro"
 ---
 
 <Layout title="Roadmap — Cosmic Vessel">
   <Nav />
 
   <!-- ─── Hero + compteur ───────────────────────────────────────────────── -->
-  <section class="relative pt-40 pb-20 overflow-hidden bg-background-700">
-    <BgImage
-      src="/images/bg1.jpeg"
-      opacity={0.1}
-      position="object-center"
-      size="cover"
-      maskClass="mask-galaxy--img"
-      class="grayscale"
-    />
-    <div class="cache--gradient2"></div>
-
-    <!-- <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
-      <p class="section-label mb-8 mx-auto">The plan</p>
-      <h1 class="title-hero  ">Roadmap</h1>
-     <DividerH width="max-w-lg" class="my-8 mx-auto" />
-
-      <p class="text-foreground-300 font-body text-lg leading-relaxed  ">
-        Where the Cosmic Vessel stands today, what we're building right now, and everything still to
-        come.
-      </p>
-<StarMarks class="py-12 mx-auto flex justify-center" />
-
-
+  <PageHero
+    label="The plan"
+    title="Roadmap"
+    description="Where the Cosmic Vessel stands today, what we're building right now, and everything still to come."
+  >
+    <div class="mt-20">
       <RoadmapSummary />
-    </div> -->
-
-    <div class="relative z-10 max-w-7xl mx-auto px-6 text-left">
-      <p class="section-label-ghost mb-8">The plan</p>
-      <h1 class="title-hero">Roadmap</h1>
-      <!-- <DividerH width="max-w-lg" class="my-8 mx-auto lg:mx-0" /> -->
-
-
-<div class="relative py-4 my-8">
-
- <DividerV dotTop={true} dotBottom={true} position="left" class="z-1" />
-      <p class="text-foreground-300 font-body text-md leading-relaxed w-1/2 pl-8">
-        Where the Cosmic Vessel stands today, what we're building right now, and everything  come. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa quistill to
-       
-      </p>
-
     </div>
-
-      <!-- <StarMarks class="py-12 mx-auto lg:mx-0 flex justify-center lg:justify-start" /> -->
-
-   <div class="mt-20">
-      <RoadmapSummary />
-</div>
-    </div>
-
-    <Divider position="bottom" />
-  </section>
+  </PageHero>
 
   <!-- ─── Digest par statut ─────────────────────────────────────────────── -->
   <!-- <section class="relative bg-background-500 py-24 overflow-hidden">

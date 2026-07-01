@@ -1,0 +1,43 @@
+---
+// Hero de page interne (label + titre + description) : BgImage sombre en fond,
+// paragraphe accroché à un DividerV vertical. Utilisé par /roadmap et /team.
+import BgImage from "@components/decor/BgImage.astro"
+import Divider from "@components/decor/Divider.astro"
+import DividerV from "@components/decor/DividerV.astro"
+
+interface Props {
+  label: string
+  title: string
+  description: string
+}
+const { label, title, description } = Astro.props
+---
+
+<section class="relative pt-40 pb-20 overflow-hidden bg-background-700">
+  <BgImage
+    src="/images/bg1.jpeg"
+    opacity={0.1}
+    position="object-center"
+    size="cover"
+    maskClass="mask-galaxy--img"
+    class="grayscale"
+  />
+  <div class="cache--gradient2"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 text-left">
+    <p class="section-label-ghost mb-8">{label}</p>
+    <h1 class="title-hero">{title}</h1>
+
+    <div class="relative py-4 my-8">
+      <DividerV dotTop={true} dotBottom={true} position="left" class="z-1" />
+      <p class="text-foreground-300 font-body text-md leading-relaxed w-1/2 pl-8">
+        {description}
+      </p>
+    </div>
+
+    <!-- Contenu additionnel optionnel (ex: RoadmapSummary) -->
+    <slot />
+  </div>
+
+  <Divider position="bottom" />
+</section>

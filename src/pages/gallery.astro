@@ -2,6 +2,9 @@
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/ui/Nav.astro';
 import Footer from '@components/ui/Footer.astro';
+import GalleryHero from '@components/ui/GalleryHero.astro';
+import { Icon } from 'astro-icon/components';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
 
 const categories = ['Tout', 'Personnage', 'Environnement', 'Créatures', 'Items'];
 
@@ -23,14 +26,20 @@ const galleryItems = [
 >
   <Nav />
 
-  <main class="pt-32 pb-24">
-    <div class="mx-auto px-6">
 
-      <div class="max-w-7xl mx-auto mb-12">
-        <p class="section-label">Concept Arts</p>
-        <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">Galerie</h1>
-      </div>
 
+  <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
+  <GalleryHero
+    eyebrow="An origin character. A questline. A destiny."
+    title="Gallery"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  />
+
+
+  <main class="py-20">
+    <div class="mx-auto max-w-8xl px-6">
+
+  
       <!-- Filtres -->
       <!-- <div class="flex gap-3 flex-wrap mb-12" id="gallery-filters">
         {categories.map((cat, i) => (
@@ -53,7 +62,11 @@ const galleryItems = [
             class="gallery-item break-inside-avoid cursor-pointer group relative block overflow-hidden"
             data-category={item.category}
           >
-            <div class:list={['relative overflow-hidden', item.ratio]}>
+            <div class:list={['relative overflow-hidden border-panel border border-primary-700/30 transition-all group-hover:border-primary-700/60', item.ratio]}>
+{/* 
+ <CornerOrnament size={34} corner="top-left" class="opacity-40 z-10" />
+  <CornerOrnament size={34} corner="bottom-right" class="opacity-40 z-10" /> */}
+
               <img
                 src={`https://picsum.photos/seed/${item.seed}/800/800`}
                 alt={item.title}
@@ -63,8 +76,8 @@ const galleryItems = [
               <!-- Overlay gradient + info au hover -->
               <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <div>
-                  <p class="font-display text-sm tracking-wide text-white uppercase leading-tight">{item.title}</p>
-                  <p class="font-ui text-2xs tracking-wider text-white/60 uppercase mt-1">{item.category}</p>
+                  <p class="font-body text-base   text-white   leading-tight">{item.title}</p>
+                  <p class="font-ui text-xs  text-white/60 uppercase mt-1">{item.category}</p>
                 </div>
               </div>
             </div>

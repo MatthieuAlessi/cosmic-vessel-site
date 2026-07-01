@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { departmentIds } from './data/team';
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
@@ -19,11 +20,12 @@ const team = defineCollection({
   schema: z.object({
     name: z.string(),
     role: z.string(),
+    department: z.enum(departmentIds).optional(),
     avatar: z.string().optional(),
     socials: z.object({
-      discord: z.string().optional(),
+      linkedin: z.string().optional(),
+      website: z.string().optional(),
       twitter: z.string().optional(),
-      github: z.string().optional(),
     }).optional(),
   }),
 });
