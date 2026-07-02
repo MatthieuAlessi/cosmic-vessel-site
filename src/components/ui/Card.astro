@@ -1,168 +1,132 @@
 ﻿---
-import Button from '@components/ui/Button.astro';
-import BgImage from '@components/decor/BgImage.astro';
-import DividerH from '@components/decor/DividerH.astro';
-import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import Button from "@components/ui/Button.astro"
 
 interface Props {
-  variant?: 'article' | 'horizontal' | 'overlay' | 'minimal' | 'icon' | 'class';
-  bordered?: boolean;
-  shadow?: boolean;
-  cta?: string;
-  href?: string;
-   class?: string;
+  variant?: "article" | "horizontal"
+  cta?: string
+  href?: string
+  class?: string
 }
 
-const { variant = 'article', bordered = false, shadow = false, cta, href, class: className = '' } = Astro.props;
+const { variant = "article", cta, href, class: className = "" } = Astro.props
 
 const classes = [
-  'bg-background-300',
-  bordered && 'border border-primary-700/40',
-  shadow && 'drop-shadow-[0_8px_40px_rgba(0,0,0,0.6)]',
+  "bg-background-300",
+  "border-panel",
+  "border",
+  "border-primary-500/20",
+  "shadow-xl",
+  "overflow-hidden",
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(" ")
+
+// Zoom léger de l'image au hover (comme la galerie), via la variante Tailwind
+// "*" (enfants directs) — appliqué au conteneur, pas besoin de toucher les
+// <img slot="image"> des appelants. Nécessite "group" sur l'<article>.
+const imgZoomClasses =
+  "overflow-hidden *:transition-transform *:duration-500 group-hover:*:scale-105"
 ---
 
-{variant === 'article' && (
-  <article class={`${classes}  `}>
-    <div class="aspect-video overflow-hidden">
-      <slot name="image" />
-    </div>
-    <div class="p-4 flex flex-col gap-3">
-<div class="flex gap-1">  
-      <slot name="badge" />
+{
+  variant === "article" && (
+    <article class={`group ${classes}  `}>
+      {href ? (
+        <a
+          href={href}
+          tabindex="-1"
+          aria-hidden="true"
+          class={`block aspect-video ${imgZoomClasses}`}
+        >
+          <slot name="image" />
+        </a>
+      ) : (
+        <div class={`aspect-video ${imgZoomClasses}`}>
+          <slot name="image" />
+        </div>
+      )}
+      <div class="p-4 flex flex-col ">
+        <div class="flex flex-col justify-between h-full">
+          <div class="flex gap-1 mb-3">
+            <slot name="badge" />
+          </div>
+          <h3 class=" text-base font-body text-foreground-300 mb-2">
+            {href ? (
+              <a href={href} class="hover:text-primary-100 transition-colors duration-300">
+                <slot name="title" />
+              </a>
+            ) : (
+              <slot name="title" />
+            )}
+          </h3>
+          <p class="text-foreground-500 text-xs leading-relaxed">
+            <slot name="excerpt" />
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 mt-auto">
+          <div class="flex items-center gap-2 text-2xs font-ui   text-foreground-500/50  ">
+            <slot name="meta" />
+          </div>
+          {cta && (
+            <Button variant="ghost" size="xs" href={href}>
+              {cta}
+            </Button>
+          )}
+        </div>
       </div>
-      <h3 class="title-3">
-        <slot name="title" />
-      </h3>
-      <p class="text-foreground-500 text-sm leading-relaxed">
-        <slot name="excerpt" />
-      </p>
-      <div class="flex items-center justify-between pt-2 mt-auto">
-        <slot name="meta" />
-        {cta && <Button variant="ghost" size="xs" href={href}>{cta}</Button>}
+    </article>
+  )
+}
+
+{
+  variant === "horizontal" && (
+    <article class={`group ${classes} flex flex-col sm:flex-row`}>
+      {href ? (
+        <a
+          href={href}
+          tabindex="-1"
+          aria-hidden="true"
+          class={`  aspect-video   sm:w-1/3 shrink-0 ${imgZoomClasses}`}
+        >
+          <slot name="image" />
+        </a>
+      ) : (
+        <div class={`aspect-video     shrink-0 ${imgZoomClasses}`}>
+          <slot name="image" />
+        </div>
+      )}
+      <div class="p-4 sm:p-8 flex flex-col flex-1">
+        <div class="flex flex-col justify-between h-full">
+          <div class="flex gap-1 mb-3">
+            <slot name="badge" />
+          </div>
+          <h3 class=" text-base font-body text-foreground-300 mb-2">
+            {href ? (
+              <a href={href} class="hover:text-primary-100 transition-colors duration-300">
+                <slot name="title" />
+              </a>
+            ) : (
+              <slot name="title" />
+            )}
+          </h3>
+          <p class="text-foreground-500 text-xs leading-relaxed">
+            <slot name="excerpt" />
+          </p>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 mt-auto">
+          <div class="flex items-center gap-2 text-2xs font-ui  text-foreground-500/50  ">
+            <slot name="meta" />
+          </div>
+          {cta && (
+            <Button variant="ghost" size="xs" href={href}>
+              {cta}
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
-  </article>
-)}
-
-{variant === 'horizontal' && (
-  <article class={`${classes} rounded-2xl flex flex-col sm:flex-row`}>
-    <div class="aspect-video sm:aspect-auto sm:w-48 shrink-0 overflow-hidden">
-      <slot name="image" />
-    </div>
-    <div class="p-6 flex flex-col gap-3 flex-1">
-      <slot name="badge" />
-      <h3 class="title-3">
-        <slot name="title" />
-      </h3>
-      <p class="text-foreground-500 text-sm leading-relaxed">
-        <slot name="excerpt" />
-      </p>
-      <div class="flex items-center justify-between pt-2 mt-auto">
-        <slot name="meta" />
-        {cta && <Button variant="ghost" size="xs" href={href}>{cta}</Button>}
-      </div>
-    </div>
-  </article>
-)}
-
-{variant === 'overlay' && (
-  <article class={`${classes} rounded-2xl relative overflow-hidden aspect-[4/3]`}>
-    <div class="absolute inset-0">
-      <slot name="image" />
-    </div>
-    <div class="overlay-bottom" />
-    <div class="absolute bottom-0 left-0 right-0 z-floating p-6 flex flex-col gap-2">
-      <slot name="badge" />
-      <h3 class="title-3 text-foreground-100">
-        <slot name="title" />
-      </h3>
-      <p class="text-foreground-300 text-sm leading-relaxed">
-        <slot name="excerpt" />
-      </p>
-      <div class="flex items-center justify-between pt-1">
-        <slot name="meta" />
-        {cta && <Button variant="ghost-white" size="xs" href={href}>{cta}</Button>}
-      </div>
-    </div>
-  </article>
-)}
-
-
-
-{variant === 'class' && (
-  <article class={`relative overflow-hidden bg-background-500 backdrop-blur-xs p-6   border border-primary-500 outline-1 outline-primary-700/30 outline-offset-6 rounded-t-full aspect-[2/4] transition-all duration-400 hover:-translate-y-2 hover:drop-shadow-[0_0_30px_rgba(173,141,89,0.15)] ${shadow ? 'drop-shadow-[0_8px_40px_rgba(0,0,0,0.76)]' : ''} ${className}`}>
-
-{/* 
-        <BgImage 
-      src="/images/smoke1.jpeg"
-      opacity={0.05}
-      position="object-center"
-      size="cover"
-       
-       
-    /> */}
-
-    <div class="absolute inset-0">
-      <slot name="image" />
-    </div>
-
-    <div class="overlay-bottom" />
-    <div class="absolute bottom-0 left-0 right-0 z-floating p-8 flex flex-col gap-2 text-center">
-      <slot name="badge" />
-      <h3 class="title-3 text-primary-100">
-        <slot name="title" />
-      </h3>
-
-      <DividerH class="my-1" />
-      <p class="text-foreground-500 text-xs leading-relaxed pb-2">
-        <slot name="excerpt" />
-      </p>
-      <div class="card-expand pt-4 text-foreground-100 text-xs leading-relaxed border-t border-foreground-500/30">
-        <slot name="details" />
-      </div>
-    </div>
-
-<CornerOrnament size={34} corner="bottom" />
-
-  </article>
-)}
-
-
-{variant === 'minimal' && (
-  <article class={`${classes} rounded-2xl p-6 flex flex-col gap-3`}>
-    <slot name="badge" />
-    <h3 class="title-3">
-      <slot name="title" />
-    </h3>
-    <p class="text-foreground-500 text-sm leading-relaxed">
-      <slot name="excerpt" />
-    </p>
-    <div class="flex items-center justify-between pt-2 mt-auto">
-      <slot name="meta" />
-      {cta && <Button variant="ghost" size="xs" href={href}>{cta}</Button>}
-    </div>
-  </article>
-)}
-
-{variant === 'icon' && (
-  <article class={`${classes} rounded-2xl p-6 flex flex-col gap-4`}>
-    <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-primary/10 text-primary-300 shrink-0">
-      <slot name="icon" />
-    </div>
-    <div class="flex flex-col gap-2">
-      <slot name="badge" />
-      <h3 class="title-3">
-        <slot name="title" />
-      </h3>
-      <p class="text-foreground-500 text-sm leading-relaxed">
-        <slot name="excerpt" />
-      </p>
-    </div>
-    <div class="flex items-center justify-between pt-1 mt-auto">
-      <slot name="meta" />
-      {cta && <Button variant="ghost" size="xs" href={href}>{cta}</Button>}
-    </div>
-  </article>
-)}
+    </article>
+  )
+}

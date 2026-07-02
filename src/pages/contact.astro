@@ -1,121 +1,136 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Nav from '@components/ui/Nav.astro';
-import Footer from '@components/ui/Footer.astro';
+import Layout from "@layouts/Layout.astro"
+import Nav from "@components/ui/Nav.astro"
+import Footer from "@components/ui/Footer.astro"
+import BgImage from "@components/decor/BgImage.astro"
+import CornerOrnament from "@components/decor/CornerOrnament.astro"
+import { Icon } from "astro-icon/components"
+
+// ─── Liens communauté (placeholder, à remplacer) ──────────────────────────
+const discordUrl = "https://discord.gg/your-invite"
+const kofiUrl = "https://ko-fi.com/your-page"
+const twitterUrl = "https://x.com/your-handle"
+const youtubeUrl = "https://youtube.com/@your-channel"
+
+const socials = [
+  { icon: "ph:discord-logo", href: discordUrl, label: "Discord" },
+  { icon: "ph:x-logo", href: twitterUrl, label: "X" },
+  { icon: "ph:youtube-logo", href: youtubeUrl, label: "YouTube" },
+  { icon: "ph:coffee", href: kofiUrl, label: "Ko-fi" },
+]
+
+const subjects = ["General question", "Join the team", "Press & media", "Bug report", "Other"]
+
+const fieldClass =
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary px-2 py-2 font-body text-white/40 text-sm transition-all duration-300 placeholder:text-foreground-700"
+const fieldClassSelect =
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary py-4 px-2 font-body text-white/40 text-sm transition-all duration-300 placeholder:text-foreground-700"
+const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 ---
 
 <Layout
-  title="Contact — [MOD NAME]"
-  description="Rejoignez la communauté ou contactez l'équipe du mod Baldur's Gate 3."
+  title="Contact — Cosmic Vessel"
+  description="Get in touch with the team behind the Cosmic Vessel mod for Baldur's Gate 3."
 >
   <Nav />
 
-  <main class="pt-32 pb-24">
-    <div class="max-w-3xl mx-auto px-6">
-
-      <header class="mb-16 text-center">
-        <p class="section-label text-center">Nous rejoindre</p>
-        <h1 class="font-display text-6xl tracking-widest text-primary-100 uppercase">Contact</h1>
-        <p class="text-foreground-500 font-body text-lg mt-6 max-w-md mx-auto">
-          Questions sur le mod, retours, ou envie de rejoindre l'équipe — on vous écoute.
-        </p>
-      </header>
-
-      <!-- Discord CTA -->
-      <div class="card-cinematic p-8 mb-10 text-center">
-        <div class="text-4xl text-primary opacity-60 mb-4">◈</div>
-        <h2 class="font-display text-2xl tracking-wider text-primary-100 uppercase mb-3">Rejoignez le Discord</h2>
-        <p class="text-foreground-500 font-body mb-6">
-          La communauté, les annonces en avant-première, et les échanges avec l'équipe.
-        </p>
-        <a
-          href="#"
-          class="btn btn--primary"
-          target="_blank"
-          rel="noopener noreferrer"
+  <main class="pt-18 pb-6">
+    <div class="px-3 mx-auto  lg:px-3">
+      <!-- Bloc image encadrée : titre en bas-gauche + formulaire flottant à droite -->
+      <div class="relative lg:min-h-160 p-4 sm:p-8 lg:p-12">
+        <!-- Image de fond encadrée (border + corner, comme les bandes de la home) -->
+        <div
+          class="absolute inset-0 shadow-xl border-panel overflow-hidden border border-primary-300/30"
         >
-          Rejoindre le serveur
-        </a>
-      </div>
-
-      <div class="divider-ornament mb-10">
-        <span class="font-ui text-2xs tracking-widest uppercase text-foreground-700">ou</span>
-      </div>
-
-      <!-- Formulaire contact -->
-      <!-- TODO: connecter à Netlify Forms ou Formspree -->
-      <form
-        class="space-y-6"
-        method="POST"
-        data-netlify="true"
-        name="contact"
-      >
-        <input type="hidden" name="form-name" value="contact" />
-
-        <div>
-          <label for="name" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
-            Nom
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
-            placeholder="Votre nom"
-          />
+          <BgImage src="/images/bg1.jpeg" opacity={1} position="object-center" class="z-0" />
+          <div class="overlay-vignette2 z-0"></div>
+          <CornerOrnament size={34} class="opacity-50 z-10" />
         </div>
 
-        <div>
-          <label for="email" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
-            placeholder="votre@email.com"
-          />
-        </div>
+        <!-- Contenu par-dessus l'image -->
+        <div class="relative z-10 grid lg:grid-cols-7 gap-8 lg:gap-6 items-end">
+          <!-- Titre (bas-gauche) -->
+          <div class="lg:pb-8 col-span-4">
+            <p class="section-label mb-4">Contact</p>
+            <h1 class="title-hero">Get in touch</h1>
+            <p class="text-foreground-300 font-body text-lg mt-6 max-w-sm">
+              Questions, feedback, or want to join the team? We're listening.
+            </p>
+          </div>
 
-        <div>
-          <label for="subject" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
-            Sujet
-          </label>
-          <select
-            id="subject"
-            name="subject"
-            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300"
+          <!-- Formulaire flottant (dark, gardé tel quel) -->
+          <div
+            class="relative col-span-3 border-panel border border-primary-500/20 bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
           >
-            <option value="general">Question générale</option>
-            <option value="team">Rejoindre l'équipe</option>
-            <option value="press">Presse / média</option>
-            <option value="bug">Signaler un bug</option>
-            <option value="other">Autre</option>
-          </select>
+            <CornerOrnament size={28} corner="top-left" class="opacity-40" />
+            <CornerOrnament size={28} corner="bottom-right" class="opacity-40" />
+
+            <h2 class="font-display text-xl tracking-wide uppercase text-primary-100 mb-4">
+              Send us a message
+            </h2>
+            <!-- <p class="text-foreground-500 font-body text-sm mb-8">
+              We usually reply within a few days — on Discord for anything quicker.
+            </p> -->
+
+            <form class="flex flex-col gap-4" method="POST" data-netlify="true" name="contact">
+              <input type="hidden" name="form-name" value="contact" />
+
+              <!-- Nom / Email -->
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="name" class={labelClass}>Full name</label>
+                  <input type="text" id="name" name="name" required class={fieldClass} />
+                </div>
+                <div>
+                  <label for="email" class={labelClass}>Email</label>
+                  <input type="email" id="email" name="email" required class={fieldClass} />
+                </div>
+              </div>
+
+              <!-- Sujet -->
+              <div>
+                <label for="subject" class={labelClass}>Subject</label>
+                <select id="subject" name="subject" class={fieldClassSelect}>
+                  {subjects.map((s) => <option value={s}>{s}</option>)}
+                </select>
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label for="message" class={labelClass}>Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows="4"
+                  class={`${fieldClass} resize-y`}></textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary w-full py-3 mt-2">
+                <Icon name="ph:paper-plane-tilt" class="w-5 h-5" />
+                Send message
+              </button>
+            </form>
+
+            <!-- Réseaux -->
+            <div class="flex items-center gap-3 mt-8 pt-6 border-t border-primary-700/20">
+              {
+                socials.map((s) => (
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    class="flex items-center justify-center w-10 aspect-square rounded-full border border-primary-700/30 text-foreground-500 hover:text-primary-100 hover:border-primary-500/60 transition-colors"
+                  >
+                    <Icon name={s.icon} class="w-5 h-5" />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label for="message" class="block font-ui text-2xs tracking-widest uppercase text-foreground-500 mb-2">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            rows="6"
-            class="w-full bg-background-500 border border-background-100 focus:border-primary-700 outline-none px-4 py-3 font-body text-foreground text-base transition-colors duration-300 resize-y"
-            placeholder="Votre message..."
-          ></textarea>
-        </div>
-
-        <button type="submit" class="btn btn--primary w-full">
-          Envoyer le message
-        </button>
-      </form>
-
+      </div>
     </div>
   </main>
 

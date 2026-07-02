@@ -229,7 +229,7 @@ import BgImage from '@components/decor/BgImage.astro';
         <p class="text-foreground-500 text-sm">article — image en haut (défaut)</p>
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
 
-          <Card variant="article" bordered cta="Lire →" href="#">
+          <Card variant="article" cta="Lire →" href="#">
             <img slot="image" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
             <span slot="badge" class="badge badge--primary">Design</span>
             <Fragment slot="title">Un titre d'article accrocheur</Fragment>
@@ -237,7 +237,7 @@ import BgImage from '@components/decor/BgImage.astro';
             <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
           </Card>
 
-          <Card variant="article" bordered cta="Lire →" href="#">
+          <Card variant="article" cta="Lire →" href="#">
             <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
             <span slot="badge" class="badge badge--accent">Tech</span>
             <Fragment slot="title">Explorer les nouvelles frontières</Fragment>
@@ -245,7 +245,7 @@ import BgImage from '@components/decor/BgImage.astro';
             <span slot="meta" class="text-foreground-500 text-xs">8 mai · 3 min</span>
           </Card>
 
-          <Card variant="article" bordered cta="Lire →" href="#">
+          <Card variant="article" cta="Lire →" href="#">
             <img slot="image" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="" class="img-cover" />
             <span slot="badge" class="badge badge--secondary">Actualité</span>
             <Fragment slot="title">Ce que l'on retient de ce mois</Fragment>
@@ -261,7 +261,7 @@ import BgImage from '@components/decor/BgImage.astro';
         <p class="text-foreground-500 text-sm">horizontal — image gauche, contenu droite</p>
         <div class="flex flex-col gap-4">
 
-          <Card variant="horizontal" bordered cta="Lire →" href="#">
+          <Card variant="horizontal" cta="Lire →" href="#">
             <img slot="image" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&q=80" alt="" class="img-cover" />
             <span slot="badge" class="badge badge--primary">Design</span>
             <Fragment slot="title">Format compact pour les listes d'articles</Fragment>
@@ -269,7 +269,7 @@ import BgImage from '@components/decor/BgImage.astro';
             <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
           </Card>
 
-          <Card variant="horizontal" bordered cta="Lire →" href="#">
+          <Card variant="horizontal" cta="Lire →" href="#">
             <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="" class="img-cover" />
             <span slot="badge" class="badge badge--accent">Tech</span>
             <Fragment slot="title">Un second article en format horizontal</Fragment>
@@ -280,90 +280,6 @@ import BgImage from '@components/decor/BgImage.astro';
         </div>
       </div>
 
-      <!-- overlay -->
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">overlay — image pleine, texte superposé</p>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-
-          <Card variant="overlay">
-            <img slot="image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" alt="" class="img-cover" />
-            <span slot="badge" class="badge badge--white">À la une</span>
-            <Fragment slot="title">Le grand article du moment</Fragment>
-            <Fragment slot="excerpt">Le texte se superpose à l'image avec un fondu sombre pour garantir la lisibilité.</Fragment>
-            <span slot="meta" class="text-foreground-300 text-xs">12 mai · 5 min</span>
-          </Card>
-
-          <Card variant="overlay">
-            <img slot="image" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80" alt="" class="img-cover" />
-            <span slot="badge" class="badge badge--secondary">Reportage</span>
-            <Fragment slot="title">Immersion dans un autre univers</Fragment>
-            <Fragment slot="excerpt">Format très visuel, parfait pour du magazine ou du photojournalisme.</Fragment>
-            <span slot="meta" class="text-foreground-300 text-xs">8 mai · 8 min</span>
-          </Card>
-
-        </div>
-      </div>
-
-      <!-- minimal -->
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">minimal — sans image, texte seul</p>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-
-          <Card variant="minimal" bordered cta="Lire →" href="#">
-            <span slot="badge" class="badge badge--primary">Design</span>
-            <Fragment slot="title">Titre sans image</Fragment>
-            <Fragment slot="excerpt">Pour les listes denses ou les contenus où l'image n'apporte pas de valeur.</Fragment>
-            <span slot="meta" class="text-foreground-500 text-xs">12 mai · 5 min</span>
-          </Card>
-
-          <Card variant="minimal" bordered cta="Lire →" href="#">
-            <span slot="badge" class="badge badge--accent">Tech</span>
-            <Fragment slot="title">Un second article minimaliste</Fragment>
-            <Fragment slot="excerpt">Ce format fonctionne très bien dans une sidebar ou une liste de résultats.</Fragment>
-            <span slot="meta" class="text-foreground-500 text-xs">8 mai · 3 min</span>
-          </Card>
-
-          <Card variant="minimal" bordered cta="Lire →" href="#">
-            <span slot="badge" class="badge badge--secondary">Actualité</span>
-            <Fragment slot="title">Troisième sans image</Fragment>
-            <Fragment slot="excerpt">Lisible, aéré, rapide à scanner. Le badge donne le contexte, le titre fait le reste.</Fragment>
-            <span slot="meta" class="text-foreground-500 text-xs">2 mai · 4 min</span>
-          </Card>
-
-        </div>
-      </div>
-
-      <!-- icon -->
-      <div class="space-y-4">
-        <p class="text-foreground-500 text-sm">icon — picto en avant, sans image</p>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-
-          <Card variant="icon" bordered cta="En savoir plus →" href="#">
-            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M13 2L4.09 13H11L10 22L20.91 11H14L13 2Z"/>
-            </svg>
-            <Fragment slot="title">Performance</Fragment>
-            <Fragment slot="excerpt">Des temps de chargement optimisés dès le départ. Moins de friction, plus de conversions.</Fragment>
-          </Card>
-
-          <Card variant="icon" bordered cta="En savoir plus →" href="#">
-            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z"/>
-            </svg>
-            <Fragment slot="title">Sécurité</Fragment>
-            <Fragment slot="excerpt">Protégé par défaut. Chaque décision d'architecture tient compte de la sécurité dès le départ.</Fragment>
-          </Card>
-
-          <Card variant="icon" bordered cta="En savoir plus →" href="#">
-            <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-            </svg>
-            <Fragment slot="title">Composants</Fragment>
-            <Fragment slot="excerpt">Un système de composants réutilisables, cohérent et facile à adapter pour chaque projet.</Fragment>
-          </Card>
-
-        </div>
-      </div>
 
       <!-- card-cinematic -->
       <div class="space-y-4">
