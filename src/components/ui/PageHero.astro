@@ -13,7 +13,7 @@ interface Props {
 const { label, title, description } = Astro.props
 ---
 
-<section class="relative pt-40 pb-20 overflow-hidden bg-background-700">
+<section class="relative pt-24 pb-8 lg:pt-40 lg:pb-20 overflow-hidden bg-background-700">
   <BgImage
     src="/images/bg1.jpeg"
     opacity={0.1}
@@ -24,13 +24,13 @@ const { label, title, description } = Astro.props
   />
   <div class="cache--gradient2"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 text-left">
-    <p class="section-label-ghost mb-8">{label}</p>
-    <h1 class="title-hero">{title}</h1>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 lg:px-6 text-left">
+    <p class="section-label-ghost mb-6 lg:mb-8">{label}</p>
+    <h1 class="title-section">{title}</h1>
 
-    <div class="relative py-4 my-8">
+    <div class="relative py-2 my-6 lg:py-4 lg:my-8">
       <DividerV dotTop={true} dotBottom={true} position="left" class="z-1" />
-      <p class="text-foreground-300 font-body text-md leading-relaxed w-1/2 pl-8">
+      <p class="text-foreground-300 font-body text-base md:text-md leading-relaxed w-full lg:w-1/2 pl-4 md:pl-8">
         {description}
       </p>
     </div>

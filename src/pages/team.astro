@@ -29,7 +29,9 @@ const roster = departments.map((dept, di) => {
   const missing = Math.max(0, PLACEHOLDERS_PER_DEPT - real.length)
   const placeholders = Array.from({ length: missing }, (_, i) => ({
     name: "Team Member",
-    role: dept.name,
+    // Rôle varié pioché dans dept.sampleRoles (éditable dans @data/team) ;
+    // repli sur le nom du département si la liste est vide.
+    role: dept.sampleRoles[i % dept.sampleRoles.length] ?? dept.name,
     avatar: `https://i.pravatar.cc/200?img=${((di * PLACEHOLDERS_PER_DEPT + i) % 70) + 1}`,
     socials: { linkedin: "placeholder", website: "https://example.com", twitter: "@placeholder" },
     placeholder: true,
@@ -53,10 +55,10 @@ const roster = departments.map((dept, di) => {
   />
 
   <!-- ─── Roster par catégorie ──────────────────────────────────────────── -->
-  <section class="relative bg-background-500 py-24 overflow-hidden">
+  <section class="relative bg-background-500 py-12 lg:py-24 overflow-hidden">
     <div class="overlay-top"></div>
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10 flex flex-col gap-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-6 relative z-10 flex flex-col gap-12 lg:gap-20">
       {
         roster.map((dept) => (
           <section>
@@ -68,7 +70,7 @@ const roster = departments.map((dept, di) => {
               <span class="h-px flex-1 bg-white/10" />
             </header>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-4">
               {dept.people.map((p) => (
                 <TeamMemberCard
                   name={p.name}
@@ -91,7 +93,7 @@ const roster = departments.map((dept, di) => {
   </section>
 
   <!-- ─── CTA recrutement ───────────────────────────────────────────────── -->
-  <section class="relative bg-background-700 py-24 overflow-hidden border-t border-background-100">
+  <section class="relative bg-background-700 py-16 lg:py-24 overflow-hidden border-t border-background-100">
     <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
       <p class="section-label mb-8 mx-auto">Get involved</p>
       <h2 class="title-1 mb-6 text-primary-100">Join the journey</h2>

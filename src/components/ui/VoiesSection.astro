@@ -1,12 +1,16 @@
 ---
-import ArchFrame from '@components/decor/ArchFrame.astro';
+import ClassCard from '@components/ui/ClassCard.astro';
+import SpellCard from '@components/ui/SpellCard.astro';
 import DividerH from '@components/decor/DividerH.astro';
 import BgImage from '@components/decor/BgImage.astro';
 import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
 import Divider from '@components/decor/Divider.astro';
 import { Icon } from 'astro-icon/components';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
 
 // Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
+// `spells` = sorts principaux de la voie, assignés MANUELLEMENT ici (image +
+// nom + mini-description). Remplace les `image` par tes propres visuels.
 const voies = [
   {
     icon: '⚔',
@@ -16,14 +20,11 @@ const voies = [
     art: 'https://picsum.photos/seed/voie-1/800/1200',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la première voie, son rôle en combat et ce qui la rend unique.',
-    abilities: [
-      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
-      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
-      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
-    ],
-    subclasses: [
-      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
-      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    spells: [
+      { image: 'https://picsum.photos/seed/spell-1a/200', name: 'Fendoir stellaire', description: 'Une entaille qui déchire l\'espace et inflige des dégâts de force en cône.' },
+      { image: 'https://picsum.photos/seed/spell-1b/200', name: 'Ruée fulgurante', description: 'Se téléporte derrière la cible et frappe avant qu\'elle ne réagisse.' },
+      { image: 'https://picsum.photos/seed/spell-1c/200', name: 'Impact gravitationnel', description: 'Écrase le sol : les ennemis proches sont projetés et étourdis.' },
+      { image: 'https://picsum.photos/seed/spell-1d/200', name: 'Éclat rémanent', description: 'Chaque coup critique laisse une marque qui explose au coup suivant.' },
     ],
   },
   {
@@ -34,14 +35,11 @@ const voies = [
     art: 'https://picsum.photos/seed/voie-2/800/1200',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la deuxième voie, son rôle en combat et ce qui la rend unique.',
-    abilities: [
-      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
-      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
-      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
-    ],
-    subclasses: [
-      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
-      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    spells: [
+      { image: 'https://picsum.photos/seed/spell-2a/200', name: 'Trait arcanique', description: 'Un projectile d\'énergie pure qui traverse les boucliers magiques.' },
+      { image: 'https://picsum.photos/seed/spell-2b/200', name: 'Prison de givre', description: 'Immobilise une zone dans une gangue de glace astrale.' },
+      { image: 'https://picsum.photos/seed/spell-2c/200', name: 'Œil du néant', description: 'Invoque une sentinelle qui révèle et marque les ennemis dissimulés.' },
+      { image: 'https://picsum.photos/seed/spell-2d/200', name: 'Rappel dimensionnel', description: 'Aspire les ennemis vers un point unique avant de les disperser.' },
     ],
   },
   {
@@ -52,14 +50,11 @@ const voies = [
     art: 'https://picsum.photos/seed/voie-3/800/1200',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la troisième voie, son rôle en combat et ce qui la rend unique.',
-    abilities: [
-      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
-      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
-      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
-    ],
-    subclasses: [
-      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
-      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    spells: [
+      { image: 'https://picsum.photos/seed/spell-3a/200', name: 'Voile d\'éclipse', description: 'Érige une barrière qui absorbe les dégâts des alliés proches.' },
+      { image: 'https://picsum.photos/seed/spell-3b/200', name: 'Lumière régénérante', description: 'Restaure les points de vie et purge une affliction.' },
+      { image: 'https://picsum.photos/seed/spell-3c/200', name: 'Aube protectrice', description: 'Bénit le groupe : résistance accrue pendant quelques tours.' },
+      { image: 'https://picsum.photos/seed/spell-3d/200', name: 'Répit lunaire', description: 'Zone de calme qui régénère les ressources des alliés.' },
     ],
   },
   {
@@ -70,14 +65,11 @@ const voies = [
     art: 'https://picsum.photos/seed/voie-4/800/1200',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la quatrième voie, son rôle en combat et ce qui la rend unique.',
-    abilities: [
-      { name: 'Capacité signature A', description: 'Placeholder décrivant la mécanique principale.' },
-      { name: 'Capacité signature B', description: 'Placeholder décrivant une seconde mécanique clé.' },
-      { name: 'Capacité signature C', description: 'Placeholder décrivant un atout situationnel.' },
-    ],
-    subclasses: [
-      { name: 'Sub-voie A', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
-      { name: 'Sub-voie B', description: 'Placeholder de sous-voie — orientation et style de jeu.' },
+    spells: [
+      { image: 'https://picsum.photos/seed/spell-4a/200', name: 'Pacte du vide', description: 'Sacrifie des points de vie pour libérer une vague d\'énergie corrompue.' },
+      { image: 'https://picsum.photos/seed/spell-4b/200', name: 'Canalisation abyssale', description: 'Canalise un rayon dévastateur qui gagne en puissance dans le temps.' },
+      { image: 'https://picsum.photos/seed/spell-4c/200', name: 'Dîme de sang', description: 'Draine la vie des ennemis touchés pour se soigner en retour.' },
+      { image: 'https://picsum.photos/seed/spell-4d/200', name: 'Communion finale', description: 'Ultime : invoque une éclipse qui frappe tout le champ de bataille.' },
     ],
   },
 ];
@@ -131,28 +123,34 @@ const voies = [
   <GalaxyCanvas opacity={0.5} count={180} class="z-20" />
 
   <!-- En-tête -->
-  <div class="text-center relative z-20 mb-12">
-    <p class="section-label mb-6">Game System</p>
-    <h2 class="title-1 text-primary-100">Les 4 Voies</h2>
-    <DividerH class="my-8" />
-  </div>
+ 
 
   <div class="max-w-7xl mx-auto relative z-20">
 
+    <div class="text-center mb-12">
+      <p class="title-label-ghost mb-8 mt-4 mx-auto">Game System</p>
+      <h2 class="title-1 mb-6 text-primary-100">Game System</h2>
 
+   <DividerH width="max-w-lg" class="my-8" />
+
+     
+   
+    </div>
 
     <!-- Bande de chips (thumbs Swiper) + flèches de navigation -->
-    <div class="flex items-stretch gap-4 mt-12 sticky-header p-2 bg-background-300 border border-background-100 z-20 ">
+    <div class="flex items-stretch gap-4 mt-12 sticky-header p-2 bg-background-500/50  backdrop-blur-xs  border border-white/10  border-panel z-20 shadow-img-lift">
       <div class="voies-thumbs swiper flex-1 min-w-0">
         <div class="swiper-wrapper">
           {voies.map((voie) => (
-            <div class="swiper-slide flex-1">
-              <div class="voie-chip">
-                <span class="voie-chip__label w-full">
-                  <span class="text-primary-100 font-body font-weight-400 mr-2"></span>{voie.name}
+            <div class="swiper-slide flex-1 w-auto group cursor-pointer">
+              <div class="flex items-center gap-2 py-1 pr-2 pl-4 whitespace-nowrap border border-primary/30 transition-colors duration-300 group-[.swiper-slide-thumb-active]:border-primary/60 group-[.swiper-slide-thumb-active]:bg-primary/8 border-panel bg-background-300 ">
+
+              <CornerOrnament size={34} corner="top-left" class="opacity-40" />
+                <span class="w-full font-display text-base uppercase text-foreground-100 transition-colors duration-300 group-[.swiper-slide-thumb-active]:text-primary-100">
+                  {voie.name}
                 </span>
-                <span class="voie-chip__thumb">
-                  <img src={voie.art} alt="" loading="lazy" />
+                <span class="w-12 h-9 shrink-0 overflow-hidden grayscale opacity-70 transition duration-300 group-[.swiper-slide-thumb-active]:grayscale-0 group-[.swiper-slide-thumb-active]:opacity-100">
+                  <img src={voie.art} alt="" loading="lazy" class="w-full h-full object-cover" />
                 </span>
               </div>
             </div>
@@ -161,71 +159,49 @@ const voies = [
       </div>
 
       <div class="flex gap-2 shrink-0 items-center">
-        <button type="button" class="voies-prev voie-nav" aria-label="Voie précédente"><Icon name="lucide:chevron-left" class="w-5 h-5" /></button>
-        <button type="button" class="voies-next voie-nav" aria-label="Voie suivante"><Icon name="lucide:chevron-right" class="w-5 h-5" /></button>
+        <button type="button" class="voies-prev inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 leading-none transition duration-300 hover:bg-primary/12 [&.swiper-button-disabled]:opacity-[0.35] [&.swiper-button-disabled]:cursor-default" aria-label="Voie précédente"><Icon name="lucide:chevron-left" class="w-5 h-5" /></button>
+        <button type="button" class="voies-next inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 leading-none transition duration-300 hover:bg-primary/12 [&.swiper-button-disabled]:opacity-[0.35] [&.swiper-button-disabled]:cursor-default" aria-label="Voie suivante"><Icon name="lucide:chevron-right" class="w-5 h-5" /></button>
       </div>
     </div>
 
 
 
-    <!-- Slider principal : panneaux détail (piloté par les chips + flèches) -->
-    <div class="voies-main swiper">
+  
+    <div class="voies-main swiper ">
       <div class="swiper-wrapper">
         {voies.map((voie) => (
           <div class="swiper-slide">
             <div class="flex flex-col lg:flex-row gap-6 lg:gap-12 items-start pt-10">
 
-              <!-- Gauche : nom + description -->
+              
               <div class="space-y-6 lg:grow-5 lg:basis-0 lg:min-w-0">
                 <div>
-                  <p class="section-label mb-2">{voie.role}</p>
+                  <p class="section-label-ghost mb-4">{voie.role}</p>
                   <h3 class="title-2 text-primary-100">{voie.name}</h3>
                 </div>
-                <div class="flex flex-wrap gap-2">
+                {/* <div class="flex flex-wrap gap-2">
                   {voie.tags.map((tag) => (
                     <span class="badge badge--primary">{tag}</span>
                   ))}
-                </div>
+                </div> */}
                 <DividerH />
                 <p class="text-foreground-300 font-body text-base leading-relaxed">
                   {voie.description}
                 </p>
               </div>
 
-              <!-- Centre : art -->
-              <div class="lg:grow-4 lg:basis-0 lg:min-w-0">
-                <ArchFrame>
-                  <img src={voie.art} alt={voie.name} class="w-full h-full object-cover" loading="lazy" />
-                </ArchFrame>
+           
+              <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[350px] mx-auto">
+                <ClassCard tilt name={voie.name} tagline={voie.role} art={voie.art} />
               </div>
 
-              <!-- Droite : capacités + sous-voies -->
-              <div class="space-y-8 lg:grow-5 lg:basis-0 lg:min-w-0">
-                <div>
-                  <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Capacités signatures</p>
-                  <div class="space-y-3">
-                    {voie.abilities.map((ability) => (
-                      <div class="flex gap-3">
-                        <span class="text-primary text-sm shrink-0 mt-0.5">◆</span>
-                        <div>
-                          <p class="font-display text-sm text-primary-100 uppercase">{ability.name}</p>
-                          <p class="text-foreground-500 font-body text-sm leading-relaxed">{ability.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {/* <DividerH /> */}
-                <div>
-                  <p class="font-display text-xs tracking-widest text-primary-300 uppercase mb-4">Sous-voies</p>
-                  <div class="flex flex-col gap-4">
-                    {voie.subclasses.map((sub) => (
-                      <div class="card-cinematic p-5">
-                        <p class="font-display text-base text-primary-300 uppercase mb-1">{sub.name}</p>
-                        <p class="text-foreground-500 font-body text-sm leading-relaxed">{sub.description}</p>
-                      </div>
-                    ))}
-                  </div>
+ 
+              <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0">
+                <p class="font-display text-md uppercase  text-foreground-300  ">Sorts principaux</p>
+                <div class="grid grid-cols-1   gap-2">
+                  {voie.spells.map((spell) => (
+                    <SpellCard image={spell.image} alt={spell.name} name={spell.name} description={spell.description} />
+                  ))}
                 </div>
               </div>
 
@@ -243,62 +219,4 @@ const voies = [
   import '../../scripts/voies-swiper.js';
 </script>
 
-<style is:global>
-  /* Chips de la bande thumbs — largeur au contenu (slidesPerView:'auto'). */
-  .voies-thumbs .swiper-slide { width: auto; }
-
-  .voie-chip {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    border: 1px solid rgba(173, 141, 89, 0.18);
-    background: var(--color-background-500);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: border-color 0.3s, background-color 0.3s;
-  }
-  .voie-chip__label {
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-foreground-500);
-    transition: color 0.3s;
-  }
-  .voie-chip__thumb {
-    width: 3rem;
-    height: 2.25rem;
-    flex-shrink: 0;
-    overflow: hidden;
-    filter: grayscale(1);
-    opacity: 0.7;
-    transition: filter 0.3s, opacity 0.3s;
-  }
-  .voie-chip__thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-  /* Chip active (classe ajoutée par le module Thumbs de Swiper). */
-  .voies-thumbs .swiper-slide-thumb-active .voie-chip {
-    border-color: rgba(173, 141, 89, 0.6);
-    background: rgba(173, 141, 89, 0.08);
-  }
-  .voies-thumbs .swiper-slide-thumb-active .voie-chip__label { color: var(--color-primary-100); }
-  .voies-thumbs .swiper-slide-thumb-active .voie-chip__thumb { filter: none; opacity: 1; }
-
-  /* Flèches de navigation. */
-  .voie-nav {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 9999px;
-    border: 1px solid rgba(173, 141, 89, 0.4);
-    color: var(--color-primary-100);
-    font-size: 1.25rem;
-    line-height: 1;
-    transition: background-color 0.3s, border-color 0.3s, opacity 0.3s;
-  }
-  .voie-nav:hover { background: rgba(173, 141, 89, 0.12); }
-  .voie-nav.swiper-button-disabled { opacity: 0.35; cursor: default; }
-</style>
+ 

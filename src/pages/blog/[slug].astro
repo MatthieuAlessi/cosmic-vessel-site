@@ -1,73 +1,297 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Nav from '@components/ui/Nav.astro';
-import Footer from '@components/ui/Footer.astro';
-import { getCollection, render } from 'astro:content';
+import Layout from "@layouts/Layout.astro"
+import Nav from "@components/ui/Nav.astro"
+import Footer from "@components/ui/Footer.astro"
+import CornerOrnament from "@components/decor/CornerOrnament.astro"
+import { Icon } from "astro-icon/components"
+import { getCollection, render } from "astro:content"
+import BgImage from "@components/decor/BgImage.astro"
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map(post => ({
+  const posts = await getCollection("blog", ({ data }) => !data.draft)
+  return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
-  }));
+  }))
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props
+const { Content } = await render(post)
 
+const cover = post.data.cover ?? `https://picsum.photos/seed/${post.id}/1600/900`
+
+// Autres articles pour la sidebar (les plus récents, hors article courant)
+const related = (await getCollection("blog", ({ data }) => !data.draft))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4)
+
+ 
 function formatDate(date: Date) {
-  return date.toLocaleDateString('fr-FR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
 }
+
+const shareButtons = [
+  { key: "x", icon: "ph:x-logo", label: "Share on X" },
+  { key: "fb", icon: "ph:facebook-logo", label: "Share on Facebook" },
+  { key: "li", icon: "ph:linkedin-logo", label: "Share on LinkedIn" },
+]
 ---
 
-<Layout
-  title={`${post.data.title} — [MOD NAME]`}
-  description={post.data.excerpt}
->
+<Layout title={`${post.data.title} — Cosmic Vessel`} description={post.data.excerpt}>
   <Nav />
 
-  <main class="pt-32 pb-24">
-    <div class="max-w-2xl mx-auto px-6">
+  <main class="relative overflow-clip pt-18 pb-24 bg-background-500">
 
-      <!-- Back -->
-      <a href="/blog" class="inline-flex items-center gap-2 text-foreground-500 hover:text-primary font-ui text-xs tracking-wider uppercase transition-colors duration-300 mb-12">
-        ← Retour aux actus
-      </a>
 
-      <!-- Header article -->
-      <header class="mb-12">
-        <div class="flex gap-3 mb-4">
-          {post.data.tags.map(tag => (
-            <span class="font-ui text-2xs tracking-wider uppercase text-primary border border-primary-700 px-2 py-0.5 rounded">{tag}</span>
-          ))}
+    <BgImage
+      src="/images/galaxy-pitch.jpeg"
+      opacity={0.25}
+      fixedBg
+      position="object-center"
+      size="80%"
+      maskClass="mask-galaxy"
+      class="grayscale"
+    />
+
+    <!-- <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.05}
+      position="object-center"
+       
+      fixedBg
+      size="cover"
+      class=" grayscale  "
+    />   -->
+
+    <BgImage
+      src="/images/smoke1.jpeg"
+      opacity={0.1}
+      position="object-center"
+      fixedBg
+      size="cover"
+    />
+
+    <div class="overlay-top"></div>
+<div class="overlay-bottom"></div>
+
+    <!-- Bannière large : titre + tags en overlay sur l'image -->
+    <div class="relative z-10 px-3 mb-12">
+      <div
+        class="relative h-[58vh] min-h-100 overflow-hidden border border-primary-300/30 border-panel shadow-xl flex flex-col"
+      >
+        <img
+          src={cover}
+          alt={post.data.title}
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+        <div class="overlay-bottom"></div>
+        <CornerOrnament size={34} class="opacity-50 z-20" />
+
+        <!-- Titre (bas-gauche) — seul sur l'image, bien lisible -->
+        <div class="relative z-20 mt-auto p-6 sm:p-10 lg:p-14">
+          <div class="max-w-4xl">
+            <div class="mb-5">
+              <a href="/blog" class="btn btn--primary py-2 px-5 text-xs">
+                <Icon name="ph:arrow-left" class="w-4 h-4" />
+                Back to news
+              </a>
+            </div>
+            <h1 class="title-1 lg:text-6xl text-primary-100 leading-tight">{post.data.title}</h1>
+
+             <div class="flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map((tag) => <span class="badge badge--primary">{tag}</span>)}
         </div>
-        <h1 class="font-display text-4xl md:text-5xl tracking-wider text-primary-100 uppercase leading-tight mb-6">
-          {post.data.title}
-        </h1>
-        <div class="flex items-center gap-4 text-xs font-ui tracking-wider text-foreground-700 uppercase">
-          <span>{formatDate(post.data.date)}</span>
-          <span>·</span>
-          <span>{post.data.author}</span>
+          </div>
         </div>
-      </header>
+      </div>
+    </div>
 
-      <div class="divider-gold mb-12"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <!-- Fil d'ariane + tags (sous l'image, sur fond solide → lisibles) -->
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-3 mb-6">
+        <nav
+          class="flex items-center gap-2 font-ui text-xs capitalize  text-foreground-300"
+        >
+          <a href="/blog" class="hover:text-primary-300 transition-colors">News</a>
+          <Icon name="ph:caret-right" class="w-3 h-3" />
+          <span class="text-primary-300">{post.data.tags[0] ?? "Article"}</span>
+        </nav>
+        <!-- <span class="h-4 w-px bg-primary-700/30"></span>
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => <span class="badge badge--primary">{tag}</span>)}
+        </div> -->
+      </div>
 
-      <!-- Contenu -->
-      <article class="prose max-w-none">
-        <Content />
-      </article>
+      <!-- Ligne auteur + partage -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-4 pb-8 mb-12 border-b border-primary-700/20"
+      >
+        <div class="flex items-center gap-3">
+          <!-- <span
+            class="flex items-center justify-center w-10 aspect-square rounded-full bg-primary/15 text-primary-100 font-display text-sm shrink-0"
+          >
+            {post.data.author[0]}
+          </span> -->
+          <div class="leading-tight">
+            <p class="font-body text-sm text-foreground-100">by {post.data.author}</p>
+            <p class="font-ui text-xs   text-foreground-500   mt-0.5">
+              {formatDate(post.data.date)}   
+            </p>
+          </div>
+        </div>
 
-      <div class="divider-gold mt-16 mb-10"></div>
+        <!-- Partage -->
+        <div class="flex items-center gap-2" data-share data-title={post.data.title}>
+          <span class="font-ui text-2xs tracking-widest uppercase text-foreground-500 mr-1">Share</span>
+          {
+            shareButtons.map((b) => (
+              <a
+                data-share={b.key}
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={b.label}
+                class="flex items-center justify-center w-9 aspect-square rounded-full border border-primary-700/30 text-foreground-500 hover:text-primary-100 hover:border-primary-500/60 transition-colors"
+              >
+                <Icon name={b.icon} class="w-4 h-4" />
+              </a>
+            ))
+          }
+          <button
+            type="button"
+            data-share-copy
+            aria-label="Copy link"
+            class="flex items-center justify-center w-9 aspect-square rounded-full border border-primary-700/30 text-foreground-500 hover:text-primary-100 hover:border-primary-500/60 transition-colors"
+          >
+            <Icon name="ph:link" class="w-4 h-4 js-icon-link" />
+            <Icon name="ph:check" class="w-4 h-4 js-icon-check hidden" />
+          </button>
+        </div>
+      </div>
 
-      <!-- Nav article -->
-      <a href="/blog" class="btn btn--ghost">← Tous les articles</a>
+      <!-- Deux colonnes : article + sidebar (flex, ratio grow 2:1) -->
+      <div class="flex flex-col lg:flex-row gap-8 items-start">
+        <!-- Colonne article -->
+        <div class="min-w-0 lg:grow-2 lg:basis-0">
+          <article class="article-body">
+            <Content />
+          </article>
+
+          <!-- Galerie (placeholder, lightbox) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-12" id="article-gallery-grid">
+            {
+              Array.from({ length: 4 }, (_, i) => (
+                <a
+                  href={`https://picsum.photos/seed/${post.id}-gal-${i}/1600/1600`}
+                  data-pswp-width={1600}
+                  data-pswp-height={1600}
+                  class="gallery-item group relative block aspect-square overflow-hidden border border-primary-300/30 border-panel cursor-pointer"
+                >
+                  <img
+                    src={`https://picsum.photos/seed/${post.id}-gal-${i}/600/600`}
+                    alt=""
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </a>
+              ))
+            }
+          </div>
+
+          <div class="mt-12">
+            <a href="/blog" class="btn btn--outline py-2 px-5 text-xs">
+              <Icon name="ph:arrow-left" class="w-4 h-4" />
+              Back to news
+            </a>
+          </div>
+        </div>
+
+        <!-- Sidebar : autres articles -->
+        <aside class="w-full min-w-0 lg:grow lg:basis-0 lg:sticky lg:top-28 self-start">
+<div class="border-panel border border-primary-700/30 backdrop-blur-xs bg-background-500/40 p-8 ">
+
+ <CornerOrnament size={34} corner="top-left"  class="opacity-40" />
+  <CornerOrnament size={34} corner="top-right"  class="opacity-40" />
+
+          <h2 class="font-ui text-base   text-foreground-100 mb-6 pb-3 border-b border-white/10 ">
+            More news
+          </h2>
+          <div class="flex flex-col gap-6">
+            {
+              related.map((p) => (
+                <a href={`/blog/${p.id}`} class="group flex gap-3 items-start">
+                  <div class="w-20 aspect-square shrink-0 overflow-hidden border border-primary-700/30 ">
+                    <img
+                      src={p.data.cover ?? `https://picsum.photos/seed/${p.id}/300/300`}
+                      alt={p.data.title}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105  "
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="min-w-0 flex flex-col gap-2">
+                    <h3 class="text-base font-body text-foreground-300 line-clamp-2 group-hover:text-primary-100 transition-colors duration-300 leading-tight">
+                      {p.data.title}
+                    </h3>
+                    <div class="flex items-center gap-2 text-2xs font-ui text-foreground-500/50">
+                      <span>{formatDate(p.data.date)}</span>
+                      {/* <span>·</span>
+                      <span>{p.data.author}</span> */}
+                    </div>
+                  </div>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        </aside>
+      </div>
     </div>
   </main>
 
   <Footer />
 </Layout>
+
+<script>
+  // Complète les liens de partage avec l'URL réelle de la page (côté client).
+  const box = document.querySelector<HTMLElement>("[data-share]")
+  if (box) {
+    const url = encodeURIComponent(window.location.href)
+    const title = encodeURIComponent(box.dataset.title || "")
+    const templates: Record<string, string> = {
+      x: `https://x.com/intent/tweet?url=${url}&text=${title}`,
+      fb: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      li: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+    }
+    box.querySelectorAll<HTMLAnchorElement>("a[data-share]").forEach((a) => {
+      const key = a.dataset.share
+      if (key && templates[key]) a.href = templates[key]
+    })
+
+    const copy = box.querySelector<HTMLButtonElement>("[data-share-copy]")
+    copy?.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(window.location.href)
+      copy.querySelector(".js-icon-link")?.classList.add("hidden")
+      copy.querySelector(".js-icon-check")?.classList.remove("hidden")
+      setTimeout(() => {
+        copy.querySelector(".js-icon-link")?.classList.remove("hidden")
+        copy.querySelector(".js-icon-check")?.classList.add("hidden")
+      }, 1500)
+    })
+  }
+</script>
+
+<script>
+  // Lightbox de la galerie d'article (même mécanisme que /gallery et la home)
+  import PhotoSwipeLightbox from "photoswipe/lightbox"
+  import "photoswipe/style.css"
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: "#article-gallery-grid",
+    children: "a.gallery-item",
+    pswpModule: () => import("photoswipe"),
+  })
+  lightbox.init()
+</script>

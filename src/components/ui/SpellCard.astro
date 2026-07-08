@@ -1,0 +1,49 @@
+---
+// Card d'un sort/spell (image + nom + mini-description).
+// Utilisée dans la colonne droite de VoiesSection (grille de sorts par voie).
+interface Props {
+  name: string
+  description: string
+  /** URL de la miniature du sort. */
+  image: string
+  alt?: string
+  class?: string
+  [key: string]: unknown
+}
+
+
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+const { name, description, image, alt = "", class: className = "", ...rest } = Astro.props
+---
+
+<article
+  class:list={[
+    "spell-card group relative flex items-center gap-3 p-4",
+    "border border-primary-700/40  border-panel bg-background-500   ",
+    // "transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-500/40",
+    className,
+  ]}
+  {...rest}
+>
+
+
+<!-- <CornerOrnament size={34} corner="top-left" class="opacity-60" /> -->
+  <CornerOrnament size={34} corner="bottom-right" class="opacity-60" />
+
+  <div
+    class="w-16 aspect-square shrink-0 overflow-hidden border rounded-md border-primary-700/40 bg-background-500"
+  >
+    <img
+      src={image}
+      alt={alt}
+      loading="lazy"
+      class="w-full h-full object-cover  "
+    />
+  </div>
+  <div class="min-w-0">
+    <h4 class="font-body text-sm   text-foreground-100  ">{name}</h4>
+    <div class="border-t w-full border-white/10 my-2"></div>
+    <p class="font-body text-2xs text-foreground-500 leading-relaxed">{description}</p>
+  </div>
+</article>

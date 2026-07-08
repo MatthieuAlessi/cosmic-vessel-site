@@ -157,7 +157,7 @@
   /* ─── Header ───────────────────────────────────────────────────────────────*/
   /* Hauteur visuelle du nav fixe (scrolled ≈ 3.1rem) + marge de respiration.
      Sert d'offset pour les éléments sticky qui doivent se caler sous le nav. */
-  --header-height: 73px;
+  --header-height: 68px;
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────*/
@@ -173,7 +173,7 @@ body {
 .section-hero {
   position: relative;
   width: 100%;
-  min-height: 700px;
+  
 }
 
 .hero__scroll-indicator {
@@ -182,7 +182,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-  display: flex;
+  
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
@@ -345,10 +345,17 @@ body {
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-primary-100);
-     padding: 0.4rem 0.75rem;
+    /* padding réduit sur mobile, restauré à partir de `sm` (voir média ci-dessous) */
+    padding: 0.25rem 0.6rem;
     border-radius: 3px;
     width: fit-content;
     background: var(--color-background-300);
+  }
+  @media (min-width: 640px) {
+    .section-label,
+    .title-label {
+      padding: 0.4rem 0.75rem;
+    }
   }
 
   .section-label-ghost,
@@ -359,11 +366,17 @@ body {
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-primary-100);
-    padding: 0.4rem 0.75rem;
+        padding: 0.25rem 0.6rem;
     border-radius: 3px;
     border: 1px solid color-mix(in srgb, var(--color-primary-300) 20%, transparent);
     width: fit-content;
     background: none;
+  }
+      @media (min-width: 640px) {
+    .section-label-ghost,
+    .title-label-ghost {
+      padding: 0.4rem 0.75rem;
+    }
   }
 
   .title-hero {
@@ -389,16 +402,16 @@ body {
   }
 
   .title-1 {
-    @apply font-display text-6xl tracking-wide  uppercase text-primary-300;
+    @apply font-display text-2xl md:text-4xl lg:text-6xl tracking-wide  uppercase text-primary-300;
     font-weight: 300;
   }
 
   .title-2 {
-    @apply font-display text-4xl tracking-wide  uppercase text-primary-100;
+    @apply font-display text-xl md:text-2xl lg:text-3xl tracking-wide  uppercase text-primary-100;
   }
 
   .title-3 {
-    @apply font-display text-xl   uppercase text-primary-100;
+    @apply font-display text-lg lg:text-xl   uppercase text-primary-100;
     font-weight: 300;
   }
 
@@ -497,13 +510,20 @@ letter-spacing: 0.08em;
     align-items: center;
     gap: 0.3rem;
     font-family: var(--font-ui);
-    font-size: var(--text-2xs);
+    /* Mobile : plus petit (~9px) ; restauré à partir de `sm` (voir média ci-dessous). */
+    font-size: 0.57rem;
     font-weight: 500;
     /* letter-spacing: var(--tracking-wide); */
     text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
+    padding: 0.12rem 0.45rem;
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
+  }
+  @media (max-width: 640px) {
+    .badge {
+      font-size: 8px;
+      padding: 0.1rem 0.4rem;
+    }
   }
 
   .badge--primary {
@@ -535,6 +555,15 @@ letter-spacing: 0.08em;
     color: #fff;
     border-color: rgba(255, 255, 255, 0.25);
   }
+}
+
+/* ─── Formulaires ───────────────────────────────────────────────────────────*/
+/* La liste déroulante native d'un <select> est rendue par l'OS : seuls le fond
+   et la couleur des <option> sont stylables de façon fiable. `.select-dark`
+   (posée sur le <select>) force un fond sombre cohérent avec le thème. */
+.select-dark option {
+  background-color: var(--color-background-500);
+  color: var(--color-foreground-100);
 }
 
 /* ─── Séparateurs ───────────────────────────────────────────────────────────*/
@@ -573,6 +602,79 @@ letter-spacing: 0.08em;
 
 .divider-ornament::after {
   background: linear-gradient(to left, transparent, var(--color-primary-700));
+}
+
+/* ─── Contenu d'article (markdown rendu) ────────────────────────────────────*/
+/* Style le HTML généré par le markdown des posts blog (posé sur le conteneur
+   qui entoure <Content />). Remplace l'ancienne classe `.prose` inexistante. */
+.article-body {
+  font-family: var(--font-body);
+  color: var(--color-foreground-300);
+  line-height: 1.8;
+}
+/* Rythme vertical par défaut entre blocs */
+.article-body > * + * {
+  margin-top: 1.5rem;
+}
+.article-body h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-primary-100);
+  margin-top: 3rem;
+}
+.article-body h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-primary-100);
+  margin-top: 2.25rem;
+}
+.article-body strong {
+  color: var(--color-foreground-100);
+  font-weight: 600;
+}
+.article-body em {
+  color: var(--color-foreground-100);
+}
+.article-body a {
+  color: var(--color-primary-300);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.article-body a:hover {
+  color: var(--color-primary-100);
+}
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5rem;
+}
+.article-body ul {
+  list-style: disc;
+}
+.article-body ol {
+  list-style: decimal;
+}
+.article-body li + li {
+  margin-top: 0.5rem;
+}
+.article-body blockquote {
+  border-left: 2px solid var(--color-primary-700);
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: var(--color-foreground-500);
+}
+.article-body img {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+.article-body hr {
+  border: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  margin: 2.5rem 0;
 }
 
 /* ─── Cards ─────────────────────────────────────────────────────────────────*/
@@ -659,6 +761,13 @@ article:hover .card-expand {
   top: 0.75rem;
   left: 0.75rem;
   right: 0.75rem;
+
+@media (max-width: 640px) {
+top: 0.45rem;
+  left: 0.45rem;
+  right: 0.45rem;
+}
+
   z-index: 99100;
   /* padding: 0.7rem 1.25rem; */
   display: flex;
@@ -668,12 +777,10 @@ article:hover .card-expand {
     padding 400ms var(--ease-cinematic);
 }
 
-/* Au scroll : on intensifie juste le fond (bordure/radius/flou viennent de `panel`). */
-.nav.is-scrolled {
-  background-color: rgba(6, 6, 8, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
+/* Au scroll (desktop) : le fond intensifié + le flou sont désormais gérés en
+   Tailwind sur l'élément `<nav>` (`lg:[&.is-scrolled]:bg-background/40
+   lg:[&.is-scrolled]:backdrop-blur-sm`). La classe `.is-scrolled` reste posée
+   par le JS ; la transition du fond vient de la règle `.nav` ci-dessus. */
 
 .nav__logo {
   font-family: var(--font-display);
@@ -685,13 +792,14 @@ article:hover .card-expand {
   text-decoration: none;
 }
 
+/* NB : le display est piloté par Tailwind sur l'élément (`hidden lg:flex`) pour
+   que la nav bascule en burger sous `lg`. Ne pas remettre `display:flex` ici :
+   étant hors layer, il écraserait l'utilitaire `hidden` et casserait le mobile. */
 .nav__links {
-  display: flex;
   align-items: center;
   gap: 2.5rem;
   list-style: none;
   margin: 0;
- 
 }
 
 .nav__link {
@@ -732,12 +840,7 @@ article:hover .card-expand {
   width: 20px;
 }
 
-
-/* ─── Page Transition ───────────────────────────────────────────────────────*/
-.page-enter {
-  opacity: 0;
-  transform: translateY(12px);
-}
+ 
 
 /* ─── Keyframes ─────────────────────────────────────────────────────────────*/
 @keyframes scroll-bounce {
@@ -812,14 +915,18 @@ article:hover .card-expand {
 }
 
 /* Cartes voisines se rétractent quand une autre est survolée.
-   :has() + :not(:hover) = seules les NON-survolées sont affectées,
-   la carte active n'est jamais touchée → pas de conflit de cascade. */
-.class-cards-grid:has(.card-tilt:hover) .card-tilt:not(:hover) {
-  scale: 0.97;
-  opacity: 0.6;
-  transition:
-    scale 0.55s var(--ease-cinematic),
-    opacity 0.55s var(--ease-cinematic);
+   :has() + :not(:hover) = seules les NON-survolées sont affectées.
+   ⚠️ Uniquement sur les appareils à vrai survol (souris) : sur mobile le :hover
+   reste "collé" après un tap → la 1re carte tapée resterait en avant et les autres
+   (dont la slide active du Swiper) bloquées en opacity 0.6 / scale 0.97. */
+@media (hover: hover) {
+  .class-cards-grid:has(.card-tilt:hover) .card-tilt:not(:hover) {
+    scale: 0.97;
+    opacity: 0.6;
+    transition:
+      scale 0.55s var(--ease-cinematic),
+      opacity 0.55s var(--ease-cinematic);
+  }
 }
 
 /* Label "Discover" — caché par défaut, révélé au hover */
@@ -913,10 +1020,51 @@ article:hover .card-expand {
   stroke: color-mix(in srgb, var(--color-primary-100) 40%, transparent);
 }
 
+/* ─── Carrousel class cards (home, Swiper) ────────────────────────────────── */
+/* Puces de pagination (bulletClass/bulletActiveClass custom du Swiper). */
+.class-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition:
+    width 0.3s var(--ease-cinematic),
+    background-color 0.3s var(--ease-cinematic);
+}
+.class-dot--active {
+  width: 1.5rem;
+  background: var(--color-primary);
+}
+/* Desktop : les 4 cartes sont visibles (grille) → on ne force pas le glow sur la
+   slide active ; le glow reste au hover comme partout. On neutralise donc les
+   règles `.swiper-slide-active` (globales, partagées avec VoiesSection) au-dessus de md. */
+@media (min-width: 768px) {
+  .class-swiper .swiper-slide-active .class-card__frame {
+    border-color: color-mix(in srgb, var(--color-primary-500) 50%, transparent);
+    outline-color: color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+    box-shadow: none;
+  }
+  .class-swiper .swiper-slide-active :is(.class-card__ornament, .class-card__rays) {
+    opacity: 0.35;
+    filter: none;
+  }
+  /* La carte active ne doit pas rester illuminée au repos en desktop. */
+  .class-swiper .swiper-slide-active:not(:hover) .class-card__ornament :is(path, circle),
+  .class-swiper .swiper-slide-active:not(:hover) .class-card__rays line {
+    stroke: initial;
+  }
+}
+
 /* ─── Roadmap — sommaire (scroll-spy) ─────────────────────────────────────── */
 .roadmap-toc__link:hover .roadmap-toc__label,
 .roadmap-toc__link.is-active .roadmap-toc__label {
   color: var(--color-primary-100);
+}
+.roadmap-toc__link:hover .roadmap-toc__bullet,
+.roadmap-toc__link.is-active .roadmap-toc__bullet {
+  color: var(--color-primary);
 }
  
  
@@ -937,16 +1085,15 @@ article:hover .card-expand {
     left: 0;
     right: 0;
     margin: auto;
-    bottom: 0;
-    height: 97%;
-    /* width: 50%; */
-    min-width: 680px;
+    /* Base (mobile → grand écran) : perso ancré en HAUT, plus court et atténué. */
+    top: 0;
+    bottom: unset;
+    height: 500px;
+    min-width: 280px;
     max-width: 1800px;
+    opacity: 0.6;
     mix-blend-mode: lighten;
     filter: contrast(1.2) saturate(0.8) brightness(0.85);
-    
-    /* mix-blend-mode: screen;
-    filter: contrast(1.3) saturate(1.0); */
 
     img {
       position: absolute;
@@ -956,7 +1103,24 @@ article:hover .card-expand {
       object-fit: contain;
       object-position: bottom center;
     }
+}
 
+/* À partir de `lg` (64rem = 1024px, breakpoint Tailwind par défaut) : version
+   d'origine — perso ancré en bas, plein. En dessous, la base (petit écran) s'applique. */
+@media (min-width: 64rem) {
+  .char {
+    top: unset;
+    bottom: 0;
+    height: 97%;
+    min-width: 680px;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  .char {
+max-width: 800px;
+  }
 }
 
 .char.v2 {
@@ -966,3 +1130,36 @@ pointer-events: none;
  
 
 }
+
+
+/* Section « 4 Voies » — les chips (thumbs) et les flèches de navigation sont
+   désormais stylés en Tailwind inline dans VoiesSection.astro. Seul subsiste
+   ici ce qui ne peut pas l'être : le retard du glow, qui cible les éléments
+   INTERNES du composant ClassCard (.class-card__frame/__ornament/__rays) depuis
+   un état ancêtre (.swiper-slide-active). Le glow + l'aspect actif ne s'allument
+   qu'~0.5s APRÈS que la voie devient active (le temps que le fondu se termine) ;
+   on ne fait que retarder la transition — les valeurs « allumées » viennent des
+   règles .swiper-slide-active plus haut dans ce fichier. */
+
+.voies-main {
+  padding: 8px !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+  .voies-main .swiper-slide-active .class-card__frame {
+    transition:
+      box-shadow 0.6s var(--ease-cinematic) 0.5s,
+      border-color 0.5s var(--ease-cinematic) 0.5s,
+      outline-color 0.5s var(--ease-cinematic) 0.5s;
+  }
+  .voies-main .swiper-slide-active .class-card__ornament,
+  .voies-main .swiper-slide-active .class-card__rays {
+    transition:
+      opacity 0.55s var(--ease-cinematic) 0.5s,
+      filter 0.55s var(--ease-cinematic) 0.5s;
+  }
+  .voies-main .swiper-slide-active .class-card__ornament :is(path, circle),
+  .voies-main .swiper-slide-active .class-card__rays line {
+    transition: stroke 0.55s var(--ease-cinematic) 0.5s;
+  }

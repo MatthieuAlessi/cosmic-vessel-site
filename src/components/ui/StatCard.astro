@@ -11,12 +11,12 @@ import CornerOrnament from '@components/decor/CornerOrnament.astro';
 const { value, label, description, icon, class: className = '' } = Astro.props;
 ---
 
-<div class:list={['group relative p-8 lg:p-10 flex flex-col justify-between gap-10 border border-primary-700/30 backdrop-blur-xs border-panel', className]}>
+<div class:list={['group relative p-4 md:p-6  lg:p-10 flex flex-col justify-between gap-10 border border-primary-700/30 backdrop-blur-xs border-panel', className]}>
  <CornerOrnament size={34} corner="top-left" class="opacity-40" />
   <CornerOrnament size={34} corner="bottom-right" class="opacity-40" />
   <!-- Ligne haute : label coloré + index -->
   <div class="flex items-center justify-between">
-    <span class="title-label-ghost">{label}</span>
+    <span class="title-label-ghost text-[8px] md:text-sm">{label}</span>
     {icon && (
       <span class="flex items-center justify-center w-8 aspect-square rounded-full bg-primary text-background shrink-0">
         <Icon name={icon} class="w-5 h-5" />
@@ -26,7 +26,7 @@ const { value, label, description, icon, class: className = '' } = Astro.props;
 
   <!-- Bas : valeur + description -->
   <div>
-    <p class="font-display text-5xl lg:text-6xl text-primary-100 leading-none mb-4">{value}</p>
-    <p class="text-foreground-500 font-body text-sm leading-relaxed">{description}</p>
+    <p class="font-display text-4xl lg:text-6xl text-primary-100 leading-none mb-2 md:mb-4">{value}</p>
+    <p class="text-foreground-500 font-body text-xs xl:text-sm leading-relaxed">{description}</p>
   </div>
 </div>

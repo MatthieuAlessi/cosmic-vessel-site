@@ -1,0 +1,135 @@
+---
+// ⚠️ SAUVEGARDE — nav custom précédente (avec burger vanilla). Non importée.
+// Conservée le temps d'intégrer la nouvelle nav (Tailwind Plus / HyperUI refactorée).
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/character', label: 'Character' },
+  { href: '/team', label: 'Team' },
+  { href: '/roadmap', label: 'Roadmap' },
+  { href: '/blog', label: 'News' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact' },
+];
+
+import Button from '@components/ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav border-panel border border-white/10" id="main-nav">
+
+ <CornerOrnament size={34} corner="top-left" tone="white" class="opacity-20" />
+  <CornerOrnament size={34} corner="top-right" tone="white" class="opacity-20" />
+
+  <div class="flex items-center justify-between lg:grid lg:grid-cols-3 w-full px-6 lg:px-8">
+
+    <!-- Logo -->
+    <a href="/" class="nav__logo">[MOD NAME]</a>
+
+    <!-- Liens centrés (desktop uniquement) -->
+    <ul class="nav__links justify-center hidden lg:flex">
+      {navLinks.map(link => (
+        <li class=" ">
+          <a
+            href={link.href}
+            class:list={['nav__link', { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- CTA (desktop uniquement) -->
+    <div class="hidden lg:flex justify-end items-center gap-2">
+      <button type="button" data-trailer-open class="btn btn--ghost-white py-1 px-3 text-xs">
+        <Icon name="ph:play" class="w-4 h-4" />
+        Watch Trailer
+      </button>
+      <Button href="/blog" variant="ghost-white" size="xs">Follow Dev</Button>
+    </div>
+
+    <!-- Burger (tablette + téléphone) -->
+    <button
+      type="button"
+      data-nav-toggle
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      class="lg:hidden flex items-center justify-center w-10 h-10 -mr-2 text-white/90 hover:text-white transition-colors"
+    >
+      <Icon name="ph:list" class="icon-menu w-6 h-6" />
+      <Icon name="ph:x" class="icon-close w-6 h-6 hidden" />
+    </button>
+
+  </div>
+
+  <!-- Panneau mobile (déroulant sous la barre) -->
+  <div
+    id="mobile-menu"
+    data-nav-panel
+    class="lg:hidden absolute top-full inset-x-0 mt-2 origin-top border-panel border border-white/10 bg-background-500/95 backdrop-blur-md shadow-xl px-6 py-5 opacity-0 -translate-y-2 pointer-events-none transition-all duration-300 data-open:opacity-100 data-open:translate-y-0 data-open:pointer-events-auto"
+  >
+    <ul class="flex flex-col">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav__link', { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-white/10">
+      <button type="button" data-trailer-open class="btn btn--ghost-white py-2 px-3 text-xs justify-center">
+        <Icon name="ph:play" class="w-4 h-4" />
+        Watch Trailer
+      </button>
+      <Button href="/blog" variant="ghost-white" size="sm">Follow Dev</Button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    // Fond intensifié au scroll
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Menu burger (tablette + téléphone)
+    const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+    const panel = nav.querySelector<HTMLElement>('[data-nav-panel]');
+    const iconMenu = toggle?.querySelector('.icon-menu');
+    const iconClose = toggle?.querySelector('.icon-close');
+
+    if (toggle && panel) {
+      const setOpen = (open: boolean) => {
+        panel.toggleAttribute('data-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        iconMenu?.classList.toggle('hidden', open);
+        iconClose?.classList.toggle('hidden', !open);
+      };
+
+      toggle.addEventListener('click', () => setOpen(!panel.hasAttribute('data-open')));
+
+      // Fermer : clic sur un lien, Échap, clic en dehors de la nav
+      panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+      document.addEventListener('click', (e) => {
+        if (panel.hasAttribute('data-open') && !nav.contains(e.target as Node)) setOpen(false);
+      });
+    }
+  }
+</script>

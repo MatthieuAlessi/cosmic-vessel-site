@@ -18,7 +18,7 @@ function initVoiesSwiper() {
   // Bande de miniatures (chips) : largeur au contenu, défilable.
   const thumbs = new Swiper(thumbsEl, {
     slidesPerView: 'auto',
-    spaceBetween: 12,
+    spaceBetween: 8,
     watchSlidesProgress: true, // requis pour le module Thumbs
     slideToClickedSlide: true, // recentre la chip cliquée
   });

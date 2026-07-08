@@ -1,0 +1,113 @@
+---
+// Sous-nav de chapitres : barre horizontale sticky (sous le nav principal) avec
+// scroll-spy. Même logique que RoadmapToc mais en disposition horizontale, pensée
+// pour les pages full-bleed (ex. /character). Les entrées ciblent les sections
+// portant `id` + `data-toc-section` (même slug) + un `scroll-mt-*` de sécurité.
+interface Item {
+  label: string
+  slug: string
+}
+interface Props {
+  items: Item[]
+  /** Slug d'une section qui a son PROPRE sous-menu sticky (ex. "paths" / VoiesSection).
+      Quand cette section est active, la barre se replie pour éviter deux sticky en conflit. */
+  hideOnSection?: string
+  class?: string
+}
+
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+
+const { items, hideOnSection, class: className = "" } = Astro.props
+---
+
+<nav
+  class:list={["chapter-nav sticky-header w-fit mt-2 mx-auto z-100", className]}
+  data-hide-on-section={hideOnSection}
+  aria-label="Chapitres de la page"
+>
+  <div class="border-panel border border-white/10 bg-background-500/40 backdrop-blur-md">
+
+ <CornerOrnament size={34} corner="top-left" tone="white" class="opacity-20" />
+  <CornerOrnament size={34} corner="top-right" tone="white" class="opacity-20" />
+
+
+    <div class="max-w-7xl mx-auto px-6">
+      <ul class="flex items-center gap-1 overflow-x-auto [scrollbar-width:none]">
+        {
+          items.map((it) => (
+            <li class="shrink-0">
+              <a
+                href={`#${it.slug}`}
+                data-toc={it.slug}
+                class="roadmap-toc__link group flex items-center gap-2 py-3 px-3 transition-colors"
+              >
+                <span class="roadmap-toc__bullet text-foreground-300 transition-colors">✦</span>
+                <span class="roadmap-toc__label font-body text-xs text-white/90 whitespace-nowrap transition-all transition-duration-300  ">
+                  {it.label}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Scroll-spy : surligne le chapitre de la section visible (identique à RoadmapToc,
+  // rootMargin ajusté pour la bande sous le nav + la barre sticky elle-même).
+  const nav = document.querySelector<HTMLElement>(".chapter-nav")
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".chapter-nav .roadmap-toc__link"))
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-toc-section]"))
+  // Section qui possède son propre sous-menu sticky : on replie la barre quand elle est active.
+  const hideOn = nav?.dataset.hideOnSection || ""
+
+  if (links.length && sections.length) {
+    const setActive = (slug: string) => {
+      links.forEach((l) => l.classList.toggle("is-active", l.dataset.toc === slug))
+      if (nav && hideOn) nav.classList.toggle("is-collapsed", slug === hideOn)
+    }
+
+    // Défilement animé au clic (le href reste le fallback si le JS ne tourne pas).
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const slug = link.dataset.toc
+        const target = slug ? document.getElementById(slug) : null
+        if (!target) return
+        e.preventDefault()
+        target.scrollIntoView({ behavior: "smooth", block: "start" })
+        setActive(slug!)
+      })
+    })
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActive((visible[0].target as HTMLElement).dataset.tocSection || "")
+      },
+      { rootMargin: "-25% 0px -65% 0px", threshold: 0 },
+    )
+
+    sections.forEach((s) => observer.observe(s))
+    setActive(sections[0].dataset.tocSection || "")
+  }
+</script>
+
+<style>
+  /* Swap : la barre se replie (slide up + fondu) quand la section qui a son propre
+     sous-menu sticky est active — évite deux barres sticky au même endroit. */
+  .chapter-nav {
+    transition:
+      transform 0.4s var(--ease-cinematic),
+      opacity 0.4s var(--ease-cinematic);
+  }
+  .chapter-nav.is-collapsed {
+    transform: translateY(-160%);
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>

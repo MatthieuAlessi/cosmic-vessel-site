@@ -1,31 +1,45 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'ghost-white';
   size?: 'xs' | 'sm' | 'md' | 'lg';
+  /** Nom d'icône Phosphor rendue AVANT le texte (ex. "ph:discord-logo"). */
+  icon?: string;
+  /** Classe de taille de l'icône (défaut responsive). */
+  iconsize?: string;
   href?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   class?: string;
   transform?: 'uppercase' | 'capitalize';
+  /** Tout autre attribut (target, rel, aria-*, data-*, download…) est passé-plat sur le <a>/<button>. */
+  [key: string]: unknown;
 }
 
 const {
   variant = 'primary',
   size = 'sm',
+  icon,
+  iconsize = "w-4 h-4 lg:w-5 lg:h-5",
   href,
   disabled = false,
   type = 'button',
   class: className,
   transform,
+  ...rest
 } = Astro.props;
 
 const Tag = href ? 'a' : 'button';
 
+// Lien externe en nouvel onglet : rel de sécurité par défaut si non fourni ajoute noopener noreferrer si target blank.
+if (rest.target === '_blank' && rest.rel == null) rest.rel = 'noopener noreferrer';
+
 const sizeClasses = {
   xs: 'py-1 px-3 text-xs ',
-  sm: 'py-2 px-5 text-sm ',
-  md: 'py-3 px-8 text-sm ',
-  lg: 'py-4 px-10 text-base ',
+  sm: 'py-1 px-3 lg:py-2 lg:px-5 text-xs lg:text-sm ',
+  md: 'py-2 px-4 lg:py-3 lg:px-8 text-xs lg:text-base ',
+  lg: 'py-3 px-6 lg:py-4 lg:px-10 text-sm lg:text-base ',
 }[size];
 ---
 
@@ -35,6 +49,8 @@ const sizeClasses = {
   disabled={!href ? disabled : undefined}
   aria-disabled={href && disabled ? 'true' : undefined}
   type={!href ? type : undefined}
+  {...rest}
 >
+  {icon && <Icon name={icon} class={iconsize} />}
   <slot />
 </Tag>

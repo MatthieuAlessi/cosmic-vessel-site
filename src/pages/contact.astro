@@ -22,9 +22,9 @@ const socials = [
 const subjects = ["General question", "Join the team", "Press & media", "Bug report", "Other"]
 
 const fieldClass =
-  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary px-2 py-2 font-body text-white/40 text-sm transition-all duration-300 placeholder:text-foreground-700"
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary px-2 py-2 font-body text-white/60 text-sm transition-all duration-300 placeholder:text-foreground-700"
 const fieldClassSelect =
-  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary py-4 px-2 font-body text-white/40 text-sm transition-all duration-300 placeholder:text-foreground-700"
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary py-4 px-2 font-body text-white/60 text-sm transition-all duration-300 placeholder:text-foreground-700"
 const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 ---
 
@@ -38,9 +38,11 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
     <div class="px-3 mx-auto  lg:px-3">
       <!-- Bloc image encadrée : titre en bas-gauche + formulaire flottant à droite -->
       <div class="relative lg:min-h-160 p-4 sm:p-8 lg:p-12">
-        <!-- Image de fond encadrée (border + corner, comme les bandes de la home) -->
+        <!-- Image de fond encadrée (border + corner, comme les bandes de la home).
+             Masquée en mobile : le titre passe alors sur le fond sombre du body →
+             meilleure lisibilité (le formulaire a déjà son propre fond solide). -->
         <div
-          class="absolute inset-0 shadow-xl border-panel overflow-hidden border border-primary-300/30"
+          class="hidden lg:block absolute inset-0 shadow-xl border-panel overflow-hidden border border-primary-300/30"
         >
           <BgImage src="/images/bg1.jpeg" opacity={1} position="object-center" class="z-0" />
           <div class="overlay-vignette2 z-0"></div>
@@ -50,9 +52,9 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
         <!-- Contenu par-dessus l'image -->
         <div class="relative z-10 grid lg:grid-cols-7 gap-8 lg:gap-6 items-end">
           <!-- Titre (bas-gauche) -->
-          <div class="lg:pb-8 col-span-4">
+          <div class="lg:pb-8 lg:col-span-4">
             <p class="section-label mb-4">Contact</p>
-            <h1 class="title-hero">Get in touch</h1>
+            <h1 class="title-section">Get in touch</h1>
             <p class="text-foreground-300 font-body text-lg mt-6 max-w-sm">
               Questions, feedback, or want to join the team? We're listening.
             </p>
@@ -60,7 +62,7 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 
           <!-- Formulaire flottant (dark, gardé tel quel) -->
           <div
-            class="relative col-span-3 border-panel border border-primary-500/20 bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
+            class="relative lg:col-span-3 border-panel border border-primary-500/20 bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
           >
             <CornerOrnament size={28} corner="top-left" class="opacity-40" />
             <CornerOrnament size={28} corner="bottom-right" class="opacity-40" />
@@ -90,7 +92,7 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
               <!-- Sujet -->
               <div>
                 <label for="subject" class={labelClass}>Subject</label>
-                <select id="subject" name="subject" class={fieldClassSelect}>
+                <select id="subject" name="subject" class:list={[fieldClassSelect, "select-dark"]}>
                   {subjects.map((s) => <option value={s}>{s}</option>)}
                 </select>
               </div>
@@ -136,3 +138,13 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 
   <Footer />
 </Layout>
+
+<style>
+  /* La liste déroulante du <select> est rendue par l'OS : seuls le fond et la
+     couleur des <option> sont stylables de façon fiable (le reste du chrome ne
+     l'est pas). On force donc un fond sombre cohérent avec le thème. */
+  select option {
+    background-color: var(--color-background-500);
+    color: var(--color-foreground-100);
+  }
+</style>

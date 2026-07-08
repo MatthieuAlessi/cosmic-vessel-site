@@ -4,12 +4,29 @@ import Nav from '@components/ui/Nav.astro';
 import Footer from '@components/ui/Footer.astro';
 import BgImage from '@components/decor/BgImage.astro';
 import DividerH from '@components/decor/DividerH.astro';
-import StarMarks from '@components/decor/StarMarks.astro';
-import ArchFrame from '@components/decor/ArchFrame.astro';
+import DividerV from '@components/decor/DividerV.astro';
 import Divider from '@components/decor/Divider.astro';
+import StarMarks from '@components/decor/StarMarks.astro';
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
 import VoiesSection from '@components/ui/VoiesSection.astro';
+import CommunityCard from '@components/ui/CommunityCard.astro';
+import ChapterNav from '@components/ui/ChapterNav.astro';
 import Button from '@components/ui/Button.astro';
-import SplitSection from '@components/ui/SplitSection.astro';
+
+// ─── Liens communauté (placeholder, à remplacer) ──────────────────────────
+const discordUrl = "https://discord.gg/your-invite";
+const kofiUrl = "https://ko-fi.com/your-page";
+const socialUrl = "https://x.com/your-handle";
+const trailerYouTubeId = "vEUQxe2uM-w";
+
+// ─── Chapitres (sous-nav sticky + scroll-spy) ─────────────────────────────
+// Chaque slug doit matcher un id + data-toc-section sur la section correspondante.
+const chapters = [
+  { label: "Lore", slug: "lore" },
+  { label: "The Paths", slug: "paths" },
+  { label: "The Vessel", slug: "vessel" },
+  { label: "Join", slug: "join" },
+];
 ---
 
 <Layout
@@ -18,38 +35,59 @@ import SplitSection from '@components/ui/SplitSection.astro';
 >
   <Nav />
 
-  <!-- ─── 1. Hero — portrait arche plein écran ──────────────────────────── -->
-  <section class="section-hero overflow-hidden lg:h-[50vh] h-[70vh] bg-background relative">
-
+  <!-- ─── Hero — showcase perso : texte à gauche, render 3D détouré à droite ── -->
+  <section class="relative overflow-hidden bg-background-700 min-h-[82vh] flex items-center pt-20">
+    <!-- Fond atmosphérique, calé à droite (derrière le render) + masque vignette galaxy -->
     <BgImage
       src="/images/galaxy-pitch2.jpeg"
-      opacity={0.45}
-      position="object-center"
-      fixedBg
+      opacity={0.55}
+      position="object-right"
       size="cover"
-      maskClass="  "
+      maskClass="mask-galaxy--img"
     />
+    
 
+    <!-- Render 3D détouré (char.png), collé à droite, déborde en bas -->
+    <!-- <img
+      src="/images/char.png"
+      alt="[CHARACTER NAME]"
+      class="pointer-events-none select-none absolute right-50 bottom-[-25%]   z-10 h-full w-auto max-w-[80%] object-contain object-bottom"
+    /> -->
 
+    <!-- Voile dégradé gauche→droite pour la lisibilité du texte (reste sombre jusqu'à ~50%) -->
+    <div
+      class="absolute inset-0 z-1 bg-linear-to-r from-background-700 from-15% via-background-700/70 via-50% to-transparent"
+    >
+    </div>
 
+    <!-- Contenu texte à gauche, centré verticalement -->
+    <div class="relative z-30 w-full max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl">
+        <p class="section-label mb-6">Origin Character</p>
+        <h1 class="title-section text-7xl mb-0 text-balance">[CHARACTER]</h1>
 
+        <!-- Filet horizontal + point à gauche (cf. inspi) -->
+     <DividerH width="max-w-lg" class="my-8 ml-1" />
 
-    <div class="cache--gradient2"></div>
+        <p class="text-foreground-300 font-body text-md leading-relaxed max-w-sm">
+          [Class] · [Origin] · [Arcane] — an origin character with a unique class, its own questline
+          and exclusive paths.
+        </p>
 
-    <div class="relative z-10 h-full flex flex-col items-center xl:justify-end  justify-center text-left px-6 py-24 gap-10 max-w-7xl mx-auto">
- 
-      <div class="space-y-4 text-center">
-        <p class="section-label">Origin Character</p>
-        <h1 class="title-hero">[CHARACTER NAME]</h1>
-        <p class="title-4 text-white tracking-display">[Class] · [Origin] · [Arcane]</p>
+        <div class="flex flex-wrap items-center gap-4 mt-10">
+          <Button href="/gallery">View the gallery</Button>
+          <Button variant="outline" href="/blog">Follow the dev</Button>
+        </div>
       </div>
     </div>
 
     <Divider position="bottom" />
   </section>
 
-
-
+  <!-- ─── Sous-nav de chapitres (sticky + scroll-spy) ─────────────────────── -->
+  <!-- hideOnSection="paths" : la barre se replie quand VoiesSection (son propre
+       sélecteur sticky) est active, pour éviter deux barres sticky en conflit. -->
+  <ChapterNav items={chapters} hideOnSection="paths" />
 
 
 
@@ -60,7 +98,11 @@ import SplitSection from '@components/ui/SplitSection.astro';
 
 
   <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
-  <section class="relative bg-background-500 py-24 lg:py-32 overflow-clip">
+  <section
+    id="lore"
+    data-toc-section="lore"
+    class="relative bg-background-500 py-24 lg:py-32 overflow-clip scroll-mt-32"
+  >
 
 
 
@@ -83,52 +125,71 @@ import SplitSection from '@components/ui/SplitSection.astro';
  
  
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col gap-24 lg:gap-24">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col gap-12 lg:gap-20">
 
-      <!-- Bloc 1 : texte gauche / image droite -->
-      <div class="flex items-start lg:flex-row-reverse flex-col  gap-8 lg:gap-24 xl:gap-24 ">
-
-        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
-         
-             <p class="section-label mb-4">Lore</p>
-      <h2 class="title-1 mb-6">[Lore Heading]</h2>
-
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts grow more ravenous, and the children of the void become visible. In this nightmare, the world reveals the eldritch truths it had long kept hidden.
-          </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            As a result, everything turns darker, and the character begins to see the world as it would if they had gathered enough insight. By following the call, you usher in the coming of the Red Moon.
-          </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Whether it brings salvation or ruin, no one can say. The cosmos is a towering, labyrinthine cathedral — and you are the key turning in its lock.
-          </p>
-          <StarMarks class="pt-2" />
+      <!-- Bloc 1 : image à gauche / texte à droite (style Lore de index) -->
+      <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative">
+        <div class="col-span-1 lg:col-span-4">
+          <div
+            class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
+          >
+            <img
+              src="https://picsum.photos/seed/lore-1/640/800"
+              alt=""
+              class="w-full aspect-3/2 object-cover"
+              loading="lazy"
+            />
+          </div>
         </div>
 
-        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
-          <img src="https://picsum.photos/seed/lore-1/640/800" alt="" class="w-full aspect-square object-cover" loading="lazy" />
+        <div class="col-span-1 lg:col-span-2">
+          <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
         </div>
 
+        <div class="col-span-1 lg:col-span-4 lg:py-10">
+          <p class="section-label mb-6 mx-auto lg:mx-0">Lore</p>
+          <h3 class="title-3 text-foreground-100 mb-4">The Red Moon</h3>
+          <p class="text-foreground-500 font-body text-base leading-relaxed">
+            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts
+            grow more ravenous, and the children of the void become visible. In this nightmare, the
+            world reveals the eldritch truths it had long kept hidden. By following the call, you
+            usher in its coming — salvation or ruin, no one can say.
+          </p>
+          <StarMarks class="pt-6" />
+        </div>
       </div>
 
-      <!-- Bloc 2 : image gauche / texte droite -->
-       <div class="flex items-start lg:flex-row flex-col  gap-8 lg:gap-24 xl:gap-36 ">
+         <div class="  w-full mx-auto border-t border-primary-300/10 my-8"></div>
 
-        <div class="py-5 space-y-5 lg:grow-4 lg:basis-0 lg:min-w-0 lg:sticky-header">
-          <p class="section-label">Chapter II — The Ashen Blood</p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Eventually, the old sanctuary was founded — but it was brought low by an affliction known as the Ashen Blood, a slow and merciless corruption that spread through every living thing it touched.
+      <!-- Bloc 2 : texte à gauche / image à droite (alternance) -->
+      <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative   ">
+        <div class="col-span-1 lg:col-span-4 lg:py-10 lg:order-1 order-2">
+          <p class="section-label mb-6 mx-auto lg:mx-0">Chapter II</p>
+          <h3 class="title-3 text-foreground-100 mb-4">The Ashen Blood</h3>
+          <p class="text-foreground-500 font-body text-base leading-relaxed">
+            The old sanctuary was brought low by an affliction known as the Ashen Blood — a slow and
+            merciless corruption that spread through every living thing it touched. With the physical
+            transformation comes a mental unraveling, until nothing of who they were remains.
           </p>
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Along with the physical transformation comes a mental unraveling. At first the afflicted assume that all they do not know is hostile, and they strike on sight — until nothing of who they were remains.
-          </p>
-          <StarMarks class="pt-2" />
+          <StarMarks class="pt-6" />
         </div>
 
-        <div class="relative lg:grow-4 lg:basis-0 outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift">
-          <img src="https://picsum.photos/seed/lore-2/640/800" alt="" class="w-full aspect-square object-cover" loading="lazy" />
+        <div class="col-span-1 lg:col-span-2 lg:order-2 order-3">
+          <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
         </div>
 
+        <div class="col-span-1 lg:col-span-4 lg:order-3 order-1">
+          <div
+            class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
+          >
+            <img
+              src="https://picsum.photos/seed/lore-2/640/800"
+              alt=""
+              class="w-full aspect-3/2 object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
 
     </div>
@@ -147,8 +208,19 @@ import SplitSection from '@components/ui/SplitSection.astro';
 
 
 
+  <!-- ─── Les 4 Voies — sélecteur (section propre à character) ───────────── -->
+  <div id="paths" data-toc-section="paths" class="scroll-mt-32">
+    <VoiesSection />
+  </div>
+
   <!-- ─── 1b. Flavour éditorial ───────────────────────────────────────── -->
-  <section class="relative bg-background-700 pt-32 pb-24 overflow-hidden">
+  <section
+    id="vessel"
+    data-toc-section="vessel"
+    class="relative bg-background-700 pt-32 pb-24 overflow-hidden scroll-mt-32 border-b border-primary-700/30"
+  >
+
+ <Divider position="top" />
 
     <!-- Overlay lignes de grille (12 colonnes, motif décoratif) -->
     <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
@@ -179,9 +251,9 @@ import SplitSection from '@components/ui/SplitSection.astro';
     />
 
 
-<div class="char v2 mask-galaxy--img">  
+<!-- <div class="char v2 mask-galaxy--img">  
     <img src="/images/char_placeholder.png" alt="">
-  </div>
+  </div> -->
 
     <div class="cache--gradient2"></div>
 
@@ -223,29 +295,47 @@ import SplitSection from '@components/ui/SplitSection.astro';
     <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
 
       <div class="absolute top-0 right-6 text-right">
-        <p class="font-display text-xs text-primary tracking-widest">CHAPITRE II</p>
-        <p class="font-display text-xs text-foreground-500 tracking-widest">L'ÉVEIL</p>
+        <p class="font-display text-xs text-primary tracking-widest">CHAPITRE I</p>
+        <p class="font-display text-xs text-foreground-500 tracking-widest">VOYAGE COSMIQUE</p>
       </div>
       <StarMarks class="absolute top-1 left-6" />
 
-      <!-- Composition character : Born of / the void / A soul / unbound -->
-      <div class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_auto_auto] gap-4 pt-16">
+      <!-- Composition : Beyond / the stars / A vessel / cosmic (reprise de index) -->
+      <div class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] gap-4 pt-16">
 
-        <h2 class="editorial-word col-span-7 col-start-1 row-start-1 self-start whitespace-nowrap">Born of</h2>
-        <h2 class="editorial-word col-span-8 col-start-1 row-start-2 self-start whitespace-nowrap text-primary-300">the void</h2>
+        <h2 class="editorial-word col-span-7 col-start-1 row-start-1 self-start">Beyond</h2>
+        <h2 class="editorial-word col-span-7 col-start-5 row-start-2 whitespace-nowrap text-primary-300">
+          the stars
+        </h2>
 
-        <div class="col-span-4 col-start-9 row-start-4 mt-8">
+        <div class="col-span-4 col-start-8 row-start-3 mt-8">
           <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Forged in the collapse of a dying star, the vessel carries a fragment of the cosmos within. Its origin is neither mortal nor divine — something older. No chain of fate holds what was never meant to exist. Every step rewrites a destiny that was never written.
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a
+            call that crosses ages and forgotten realms. Every destiny is a star, and every star
+            awaits its bearer. You are not alone — you never were.
           </p>
         </div>
 
-        <h2 class="editorial-word col-start-1 col-end-13 text-right row-start-7 self-start whitespace-nowrap">A soul</h2>
-        <h2 class="editorial-word col-start-1 col-end-13 text-right row-start-8 self-start text-primary-300">unbound</h2>
+        <h2 class="editorial-word col-span-8 col-start-1 row-start-6 self-start whitespace-nowrap">
+          A vessel
+        </h2>
+        <h2 class="editorial-word col-span-9 col-start-1 row-start-7 self-start text-primary-300">
+          cosmic
+        </h2>
 
-        <div class="col-span-4 col-start-1 row-start-6 row-end-8 mt-4">
+        <div class="col-span-4 col-start-10 row-start-6 mt-4">
           <p class="text-foreground-500 font-body text-xs uppercase leading-relaxed tracking-wide">
-            No chain of fate holds what was never meant to exist. Every step rewrites a destiny that was never written. Forged in the collapse of a dying star, the vessel carries a fragment of the cosmos within. Its origin is neither mortal nor divine — something older.
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a
+            call that crosses ages and forgotten realms. Every destiny is a star, and every star
+            awaits its bearer.
+          </p>
+        </div>
+
+        <div class="col-span-4 col-start-1 row-start-8 mt-8">
+          <p class="text-foreground-500 font-body text-sm leading-relaxed">
+            When the light of constellations awakens, a voice whispers through the cosmic silence — a
+            call that crosses ages and forgotten realms. Every destiny is a star, and every star
+            awaits its bearer. You are not alone — you never were.
           </p>
         </div>
 
@@ -253,115 +343,89 @@ import SplitSection from '@components/ui/SplitSection.astro';
 
       <StarMarks class="justify-center mt-8" />
     </div>
-
-    <Divider position="top" />
+<div class="overlay-bottom"></div>
+    <!-- <Divider position="top" /> -->
   </section>
 
 
 
 
 
-<div class="relative   h-[60vh] min-h-[300px]">
-
-    <BgImage
-      src="/images/bg1.jpeg"
-      opacity={1}  
-      fixedBg
-      position="object-center"
-       
-      
-      class="z-10"
-    />
- 
-</div>
-
-
-  <!-- ─── 2. Lore — art à gauche, texte à droite (sticky plus tard) ──────── -->
-  <!-- <section class="bg-background-500 py-16 lg:py-24 relative overflow-clip">
-    <SplitSection
-      imageSrc="https://picsum.photos/seed/character-lore/800/1000"
-      imageAlt="[CHARACTER NAME]"
-      imagePosition="left"
+  <!-- ─── Image seule encadrée (bande image de index) ───────────────────── -->
+  <!-- <div class="relative h-[60vh] min-h-75">
+    <div
+      class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30"
     >
-      <p class="section-label mb-4">Lore</p>
-      <h2 class="title-1 mb-6">[Lore Heading]</h2>
-      <p class="text-foreground-300 font-body text-base leading-relaxed mb-5">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-      </p>
-      <p class="text-foreground-500 font-body text-sm leading-relaxed">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.
-      </p>
-      <StarMarks class="pt-8" />
-    </SplitSection>
-  </section> -->
-
-  <!-- ─── 3. Questline — rangée de 4 actes (aperçu placeholder) ─────────── -->
-  <!-- <section class="bg-background py-24 lg:py-32 relative overflow-hidden">
-    <div class="text-center relative z-20 mb-12">
-      <p class="section-label mb-6">Questline</p>
-      <h2 class="title-1 text-primary-100">The Four Acts</h2>
-      <DividerH class="my-8" />
+      <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
+      <div class="overlay-vignette z-10"></div>
+      <CornerOrnament size={34} class="opacity-50 z-50" />
     </div>
+  </div> -->
 
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {[1, 2, 3, 4].map((n) => (
-        <article class="card-cinematic p-6 flex flex-col gap-3">
-          <p class="font-display text-xs tracking-widest text-primary-700 uppercase">Act {n}</p>
-          <h3 class="title-3 text-primary-100">[Act {n} title]</h3>
-          <DividerH class="my-1" />
-          <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder preview of this act.
-          </p>
-        </article>
-      ))}
-    </div>
-
-
-<Divider position="top" />
-
-  </section> -->
-
-  <!-- ─── 4. Les 4 Voies — sélecteur (statique, TODO toggle JS) ──────────── -->
-  <VoiesSection />
-
-  <!-- ─── 5. CTA — teaser galerie + suivre le projet ────────────────────── -->
-  <section class="bg-background-500 py-24 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-
-      <!-- Teaser galerie -->
-      <div>
-        <p class="section-label mb-6">Gallery</p>
-        <div class="grid grid-cols-3 gap-3">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div class="img-overlay">
-              <img src={`https://picsum.photos/seed/char-gal-${i}/400/400`} alt="" class="w-full h-full object-cover aspect-square" loading="lazy" />
-            </div>
-          ))}
+  <!-- ─── Community / Join the Journey (repris de index) ────────────────── -->
+  <section
+    id="join"
+    data-toc-section="join"
+    class="relative py-4 border-background-100 overflow-hidden scroll-mt-32"
+  >
+    <div
+      class="relative mx-3 shadow-xl border-panel overflow-hidden border border-primary-300/30 px-6 py-20 lg:py-28"
+    >
+      <div class="relative z-50 pointer-events-none">
+        <Divider position="unset" class="top-1/2" />
+        <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
+          <div class="aspect-square border border-primary-300 rounded-full opacity-20"></div>
         </div>
-        <div class="mt-8">
-          <Button variant="outline" href="/gallery">Explore the gallery</Button>
+        <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
+          <div class="aspect-square border border-primary-300 rounded-full opacity-10"></div>
         </div>
       </div>
 
-      <!-- Suivre le projet -->
-      <div class="text-center lg:text-left">
-        <p class="section-label mb-6">Follow the project</p>
-        <h2 class="title-1 mb-6 text-primary-100">[Join the journey]</h2>
-        <p class="text-foreground-500 font-body text-base leading-relaxed mb-10 max-w-md mx-auto lg:mx-0">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder pour inciter à suivre le développement du mod.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
-          <Button href="/blog">Follow Development</Button>
-          <Button variant="outline" href="/contact">Join the Discord</Button>
-        </div>
-        <StarMarks class="justify-center lg:justify-start mt-12" />
+      <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
+      <div class="overlay-vignette2 backdrop-blur-sm z-10"></div>
+      <div class="absolute w-full h-full inset-0 bg-black/70 z-10 pointer-events-none"></div>
+      <CornerOrnament size={34} class="opacity-50 z-50 pointer-events-none" />
+
+      <div class="relative z-30 text-center mb-14">
+        <p class="section-label mb-6 mx-auto mt-4">Get Involved</p>
+        <h2 class="title-section mb-8">Join the Journey</h2>
+        <DividerH class="my-8 mx-auto max-w-lg" />
       </div>
 
+      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-100">
+        <CommunityCard
+          icon="ph:discord-logo"
+          title="Join the community"
+          description="Hang out, get sneak peeks and help shape the mod on Discord."
+          cta="Join Discord"
+          href={discordUrl}
+        />
+        <CommunityCard
+          icon="ph:play-circle"
+          title="Watch the trailer"
+          description="Get a first glimpse of the Cosmic Vessel in motion."
+          cta="Watch now"
+          trailerId={trailerYouTubeId}
+        />
+        <CommunityCard
+          icon="ph:share-network"
+          title="Follow the updates"
+          description="Devlogs, art reveals and announcements across our socials."
+          cta="Follow us"
+          href={socialUrl}
+        />
+        <CommunityCard
+          icon="ph:coffee"
+          title="Support the project"
+          description="The mod is free and made by volunteers. A coffee keeps us going."
+          cta="Support on Ko-fi"
+          href={kofiUrl}
+          primary
+        />
+      </div>
+
+      <Divider position="bottom" />
     </div>
-
-
-<Divider position="top" />
-
   </section>
 
   <Footer />
