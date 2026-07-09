@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
+import Button from "@components/ui/Button.astro"
 
 interface Props {
   /** Icône de la carte (nom Phosphor). */
@@ -15,17 +16,28 @@ interface Props {
   trailerId?: string
   /** Bouton en style primaire (plein) plutôt qu'outline. */
   primary?: boolean
+  /** Taille du bouton (transmise à Button). */
+  size?: "xs" | "sm" | "md" | "lg"
   class?: string
 }
-const { icon, title, description, cta, href, trailerId, primary = false, class: className = "" } =
-  Astro.props
+const {
+  icon,
+  title,
+  description,
+  cta,
+  href,
+  trailerId,
+  primary = false,
+  size = "md",
+  class: className = "",
+} = Astro.props
 
-const btnClass = ["btn py-2 px-5 text-sm mt-auto", primary ? "btn--primary" : "btn--outline"]
+const variant = primary ? "primary" : "outline"
 ---
 
 <div
   class:list={[
-    "group relative flex flex-col items-center text-center gap-4 p-6 border border-primary-700/30 backdrop-blur-xs border-panel shadow-img-lift/35 bg-background-100/10",
+    "group relative flex flex-col items-center text-center gap-4 p-4 md:p-6 border border-primary-700/30 backdrop-blur-xs border-panel shadow-img-lift/35 bg-background-100/10",
     className,
   ]}
 >
@@ -43,13 +55,13 @@ const btnClass = ["btn py-2 px-5 text-sm mt-auto", primary ? "btn--primary" : "b
 
   {
     trailerId ? (
-      <button type="button" data-trailer-open data-video-id={trailerId} class:list={btnClass}>
+      <Button variant={variant} size={size} class="mt-auto" data-trailer-open data-video-id={trailerId}>
         {cta}
-      </button>
+      </Button>
     ) : (
-      <a href={href} target="_blank" rel="noopener noreferrer" class:list={btnClass}>
+      <Button variant={variant} size={size} href={href} target="_blank" class="mt-auto">
         {cta}
-      </a>
+      </Button>
     )
   }
 </div>

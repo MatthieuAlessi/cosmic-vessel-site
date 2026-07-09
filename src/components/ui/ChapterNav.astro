@@ -22,7 +22,7 @@ const { items, hideOnSection, class: className = "" } = Astro.props
 ---
 
 <nav
-  class:list={["chapter-nav sticky-header w-fit mt-2 mx-auto z-100", className]}
+  class:list={["chapter-nav sticky-header w-auto sm:w-fit  mt-2 mx-2 lg:mx-auto   z-100", className]}
   data-hide-on-section={hideOnSection}
   aria-label="Chapitres de la page"
 >
@@ -33,17 +33,17 @@ const { items, hideOnSection, class: className = "" } = Astro.props
 
 
     <div class="max-w-7xl mx-auto px-6">
-      <ul class="flex items-center gap-1 overflow-x-auto [scrollbar-width:none]">
+      <ul class="flex items-center justify-center gap-1 overflow-x-auto [scrollbar-width:none]">
         {
           items.map((it) => (
             <li class="shrink-0">
               <a
                 href={`#${it.slug}`}
                 data-toc={it.slug}
-                class="roadmap-toc__link group flex items-center gap-2 py-3 px-3 transition-colors"
+                class="roadmap-toc__link group flex items-center gap-2 p-1 md:p-3 transition-colors"
               >
-                <span class="roadmap-toc__bullet text-foreground-300 transition-colors">✦</span>
-                <span class="roadmap-toc__label font-body text-xs text-white/90 whitespace-nowrap transition-all transition-duration-300  ">
+                <span class="roadmap-toc__bullet text-foreground-300 transition-colors text-2xs md:text-xs">✦</span>
+                <span class="roadmap-toc__label font-body text-sm sm:text-xs text-white/90 whitespace-nowrap transition-all transition-duration-300  ">
                   {it.label}
                 </span>
               </a>

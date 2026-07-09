@@ -1,35 +1,59 @@
 ---
-const year = new Date().getFullYear();
+import { Icon } from "astro-icon/components"
+import { navLinks } from "@data/navigation"
+import Divider from "@components/decor/Divider.astro"
+import DividerH from "@components/decor/DividerH.astro"
+const year = new Date().getFullYear()
 
-const links = [
-  { href: '/', label: 'Accueil' },
-  { href: '/character', label: 'Personnage' },
-  { href: '/gallery', label: 'Galerie' },
-  { href: '/blog', label: 'Actus' },
-  { href: '/contact', label: 'Contact' },
-];
+// Réseaux (placeholder — à remplacer par les vrais liens, cf. /contact).
+const socials = [
+  { icon: "ph:discord-logo", href: "https://discord.gg/your-invite", label: "Discord" },
+  { icon: "ph:x-logo", href: "https://x.com/your-handle", label: "X" },
+  { icon: "ph:youtube-logo", href: "https://youtube.com/@your-channel", label: "YouTube" },
+  { icon: "ph:coffee", href: "https://ko-fi.com/your-page", label: "Ko-fi" },
+]
+
+const currentPath = Astro.url.pathname
 ---
 
-<footer class="border-t border-white/8 bg-background">
-  <div class="max-w-5xl mx-auto px-6 py-section-sm flex flex-col items-center gap-6 text-center">
+<footer class="border-t border-white/10 bg-background">
+  <div class="max-w-6xl mx-auto px-6 py-section-sm flex flex-col items-center gap-6 text-center">
 
+    <!-- Marque -->
     <a href="/" class="font-display text-sm tracking-display text-primary-100 uppercase">
       [MOD NAME]
     </a>
 
-    <nav class="flex flex-wrap justify-center gap-6">
-      {links.map(link => (
-        <a href={link.href} class="nav__link">{link.label}</a>
+    <!-- Liens (mêmes que la nav — source partagée @data/navigation) -->
+    <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+      {navLinks.map((link) => (
+        <a href={link.href} class:list={["nav__link", { active: currentPath === link.href }]}>
+          {link.label}
+        </a>
       ))}
     </nav>
 
-    <div>
-      <p class="text-xs tracking-wider text-foreground-700 font-ui uppercase mb-3">
-        Un mod non-officiel pour Baldur's Gate 3
-      </p>
-      <div class="divider-gold w-48 mx-auto opacity-30 mb-4"></div>
-      <p class="text-2xs text-foreground-700 font-ui">
-        © {year} Cosmic Vessel Team — Projet bénévole, non affilié à Larian Studios.
+    <!-- Réseaux -->
+    <div class="flex items-center gap-3">
+      {socials.map((s) => (
+        <a
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          class="flex items-center justify-center w-9 aspect-square rounded-full border border-primary-700/30 text-foreground-500 hover:text-primary-100 hover:border-primary-500/60 transition-colors"
+        >
+          <Icon name={s.icon} class="w-4 h-4" />
+        </a>
+      ))}
+    </div>
+
+    <!-- Mentions -->
+    <div class="pt-2">
+       <DividerH width="max-w-lg" class="mb-8" />
+      <p class="text-2xs text-foreground-700 font-ui leading-relaxed">
+        © {year} Cosmic Vessel — A volunteer, unofficial mod for Baldur's Gate 3.<br />
+        Not affiliated with Larian Studios.
       </p>
     </div>
 

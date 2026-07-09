@@ -75,7 +75,7 @@ const voies = [
 ];
 ---
 
-<section class="bg-background-300 px-6 pt-24 pb-32 lg:pt-32 relative overflow-clip">
+<section class="bg-background-300 px-2 lg:px-6 pt-12 pb-32 lg:pt-32 relative overflow-clip">
 
   <!-- Décor : cercles (identique à la section Classes home) -->
   <div class="relative z-1">
@@ -137,30 +137,43 @@ const voies = [
    
     </div>
 
-    <!-- Bande de chips (thumbs Swiper) + flèches de navigation -->
-    <div class="flex items-stretch gap-4 mt-12 sticky-header p-2 bg-background-500/50  backdrop-blur-xs  border border-white/10  border-panel z-20 shadow-img-lift">
-      <div class="voies-thumbs swiper flex-1 min-w-0">
-        <div class="swiper-wrapper">
-          {voies.map((voie) => (
-            <div class="swiper-slide flex-1 w-auto group cursor-pointer">
-              <div class="flex items-center gap-2 py-1 pr-2 pl-4 whitespace-nowrap border border-primary/30 transition-colors duration-300 group-[.swiper-slide-thumb-active]:border-primary/60 group-[.swiper-slide-thumb-active]:bg-primary/8 border-panel bg-background-300 ">
-
-              <CornerOrnament size={34} corner="top-left" class="opacity-40" />
-                <span class="w-full font-display text-base uppercase text-foreground-100 transition-colors duration-300 group-[.swiper-slide-thumb-active]:text-primary-100">
-                  {voie.name}
-                </span>
-                <span class="w-12 h-9 shrink-0 overflow-hidden grayscale opacity-70 transition duration-300 group-[.swiper-slide-thumb-active]:grayscale-0 group-[.swiper-slide-thumb-active]:opacity-100">
-                  <img src={voie.art} alt="" loading="lazy" class="w-full h-full object-cover" />
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+    <!-- Sélecteur de voies : 4 boutons (2×2 mobile, rangée en desktop). Sticky.
+         Pilote le slider `.voies-main` (voir voies-swiper.js). -->
+    <div class="sticky-header z-20 mt-8 lg:mt-12 flex items-stretch gap-3 p-2 bg-background-500/50 backdrop-blur-xs border border-white/10 border-panel shadow-img-lift">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 flex-1 min-w-0">
+        {voies.map((voie, i) => (
+          <button
+            type="button"
+            data-voie={i}
+            aria-label={`Voir ${voie.name}`}
+            class="voie-tab group flex items-center gap-2 py-1.5 pl-3 pr-2 cursor-pointer border border-primary/30 border-panel bg-background-300 transition-colors duration-300 [&.is-active]:border-primary/60 [&.is-active]:bg-primary/8"
+          >
+            <span class="flex-1 min-w-0 text-left font-display text-sm lg:text-base uppercase text-foreground-100 transition-colors group-[.is-active]:text-primary-100 truncate">
+              {voie.name}
+            </span>
+            <span class="w-10 h-8 shrink-0 overflow-hidden rounded-sm grayscale opacity-70 transition duration-300 group-[.is-active]:grayscale-0 group-[.is-active]:opacity-100">
+              <img src={voie.art} alt="" loading="lazy" class="w-full h-full object-cover" />
+            </span>
+          </button>
+        ))}
       </div>
 
-      <div class="flex gap-2 shrink-0 items-center">
-        <button type="button" class="voies-prev inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 leading-none transition duration-300 hover:bg-primary/12 [&.swiper-button-disabled]:opacity-[0.35] [&.swiper-button-disabled]:cursor-default" aria-label="Voie précédente"><Icon name="lucide:chevron-left" class="w-5 h-5" /></button>
-        <button type="button" class="voies-next inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 leading-none transition duration-300 hover:bg-primary/12 [&.swiper-button-disabled]:opacity-[0.35] [&.swiper-button-disabled]:cursor-default" aria-label="Voie suivante"><Icon name="lucide:chevron-right" class="w-5 h-5" /></button>
+      <!-- Flèches — desktop : à côté du sélecteur (en mobile elles sont en bas) -->
+      <div class="hidden lg:flex gap-2 shrink-0 items-center">
+        <button
+          type="button"
+          class="voies-prev inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 transition-colors duration-300 hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30 [&.swiper-button-disabled]:cursor-default"
+          aria-label="Voie précédente"
+        >
+          <Icon name="lucide:chevron-left" class="w-5 h-5" />
+        </button>
+        <button
+          type="button"
+          class="voies-next inline-flex items-center justify-center w-11 h-11 rounded-full border border-primary/40 text-primary-100 transition-colors duration-300 hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30 [&.swiper-button-disabled]:cursor-default"
+          aria-label="Voie suivante"
+        >
+          <Icon name="lucide:chevron-right" class="w-5 h-5" />
+        </button>
       </div>
     </div>
 
@@ -191,12 +204,12 @@ const voies = [
               </div>
 
            
-              <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[350px] mx-auto">
+              <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[190px] lg:max-w-[350px] mx-auto">
                 <ClassCard tilt name={voie.name} tagline={voie.role} art={voie.art} />
               </div>
 
  
-              <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0">
+              <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0 mt-4 lg:mt-0">
                 <p class="font-display text-md uppercase  text-foreground-300  ">Sorts principaux</p>
                 <div class="grid grid-cols-1   gap-2">
                   {voie.spells.map((spell) => (
@@ -211,6 +224,24 @@ const voies = [
       </div>
     </div>
 
+    <!-- Navigation du panneau : dots (toujours) + flèches (mobile only, desktop = à côté du sélecteur) -->
+    <div class="mt-8 flex items-center justify-center gap-4">
+      <button
+        type="button"
+        class="voies-prev lg:hidden inline-flex items-center justify-center w-10 h-10 shrink-0 rounded-full border border-primary/40 text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30"
+        aria-label="Voie précédente"
+      >
+        <Icon name="lucide:chevron-left" class="w-5 h-5" />
+      </button>
+      <div class="voies-dots flex items-center gap-2"></div>
+      <button
+        type="button"
+        class="voies-next lg:hidden inline-flex items-center justify-center w-10 h-10 shrink-0 rounded-full border border-primary/40 text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30"
+        aria-label="Voie suivante"
+      >
+        <Icon name="lucide:chevron-right" class="w-5 h-5" />
+      </button>
+    </div>
 
   </div>
 </section>

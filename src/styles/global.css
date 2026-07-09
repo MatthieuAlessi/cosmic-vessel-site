@@ -1022,7 +1022,10 @@ top: 0.45rem;
 
 /* ─── Carrousel class cards (home, Swiper) ────────────────────────────────── */
 /* Puces de pagination (bulletClass/bulletActiveClass custom du Swiper). */
-.class-dot {
+/* Puces de pagination — partagées par le carrousel Classes (home) et le
+   sélecteur de Voies (/character). */
+.class-dot,
+.voie-dot {
   display: inline-block;
   width: 0.5rem;
   height: 0.5rem;
@@ -1033,7 +1036,8 @@ top: 0.45rem;
     width 0.3s var(--ease-cinematic),
     background-color 0.3s var(--ease-cinematic);
 }
-.class-dot--active {
+.class-dot--active,
+.voie-dot--active {
   width: 1.5rem;
   background: var(--color-primary);
 }

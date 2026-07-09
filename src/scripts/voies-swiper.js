@@ -1,41 +1,58 @@
-// Configuration Swiper de la section "Les 4 Voies" (/character).
-// Pattern main + thumbs : le slider principal (panneau détail) est piloté par
-// la bande de miniatures du bas (les chips) + flèches de navigation.
-// Doc : https://swiperjs.com/swiper-api#thumbs
+// Swiper de la section "Les 4 Voies" (/character).
+// Le panneau détail (.voies-main) est piloté par :
+//  - 4 boutons-onglets (.voie-tab, grille 2×2 en mobile) → slideTo,
+//  - les flèches (.voies-prev/.voies-next) — DEUX paires (desktop à côté du
+//    sélecteur, mobile en bas) → câblées à la main car Swiper Navigation ne
+//    prend qu'un seul élément par direction,
+//  - les dots (pagination .voies-dots),
+//  - le swipe tactile natif de Swiper.
+// Doc : https://swiperjs.com/swiper-api
 
 import Swiper from 'swiper';
-import { Navigation, Thumbs, EffectFade } from 'swiper/modules';
+import { Pagination, EffectFade } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
 import 'swiper/css/effect-fade';
 
 function initVoiesSwiper() {
   const mainEl = document.querySelector('.voies-main');
-  const thumbsEl = document.querySelector('.voies-thumbs');
-  if (!mainEl || !thumbsEl) return;
+  if (!mainEl) return;
 
-  // Bande de miniatures (chips) : largeur au contenu, défilable.
-  const thumbs = new Swiper(thumbsEl, {
-    slidesPerView: 'auto',
-    spaceBetween: 8,
-    watchSlidesProgress: true, // requis pour le module Thumbs
-    slideToClickedSlide: true, // recentre la chip cliquée
-  });
+  const tabs = Array.from(document.querySelectorAll('.voie-tab'));
+  const prevs = Array.from(document.querySelectorAll('.voies-prev'));
+  const nexts = Array.from(document.querySelectorAll('.voies-next'));
 
-  // Slider principal (panneaux détail) piloté par les chips + flèches.
-  new Swiper(mainEl, {
-    modules: [Navigation, Thumbs, EffectFade],
+  const swiper = new Swiper(mainEl, {
+    modules: [Pagination, EffectFade],
     effect: 'fade',
     fadeEffect: { crossFade: true },
     slidesPerView: 1,
     autoHeight: true, // ajuste la hauteur selon le panneau actif
-    navigation: {
-      nextEl: '.voies-next',
-      prevEl: '.voies-prev',
+    pagination: {
+      el: '.voies-dots',
+      clickable: true,
+      bulletClass: 'voie-dot',
+      bulletActiveClass: 'voie-dot--active',
     },
-    thumbs: { swiper: thumbs },
   });
+
+  // Onglet actif = voie affichée.
+  const setActiveTab = (i) => tabs.forEach((t, ti) => t.classList.toggle('is-active', ti === i));
+  // État désactivé des flèches aux extrémités (les deux paires).
+  const updateNav = () => {
+    prevs.forEach((b) => b.classList.toggle('swiper-button-disabled', swiper.isBeginning));
+    nexts.forEach((b) => b.classList.toggle('swiper-button-disabled', swiper.isEnd));
+  };
+
+  tabs.forEach((t, i) => t.addEventListener('click', () => swiper.slideTo(i)));
+  prevs.forEach((b) => b.addEventListener('click', () => swiper.slidePrev()));
+  nexts.forEach((b) => b.addEventListener('click', () => swiper.slideNext()));
+
+  swiper.on('slideChange', () => {
+    setActiveTab(swiper.activeIndex);
+    updateNav();
+  });
+  setActiveTab(swiper.activeIndex);
+  updateNav();
 }
 
 initVoiesSwiper();

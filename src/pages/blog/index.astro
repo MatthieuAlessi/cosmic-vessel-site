@@ -27,7 +27,7 @@ function formatDate(date: Date) {
         <h1 class="title-section text-center lg:text-left">News</h1>
       </header>
 
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-4 md:gap-6">
         {posts.map(post => (
           <Card variant="horizontal" cta="Read more" href={`/blog/${post.id}`}>
             <img

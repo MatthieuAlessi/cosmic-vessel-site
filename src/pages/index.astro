@@ -17,7 +17,7 @@ import RoadmapDigest from "@components/ui/RoadmapDigest.astro"
 import StatCard from "@components/ui/StatCard.astro"
 import TrailerCard from "@components/ui/TrailerCard.astro"
 import ClassCard from "@components/ui/ClassCard.astro"
-import CommunityCard from "@components/ui/CommunityCard.astro"
+import SectionPrefooter from "@components/ui/SectionPrefooter.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
 
@@ -1015,85 +1015,13 @@ const teamRoles = [
   )
 }
 
-<!-- ─── Community / Join the Journey ──────────────────────────────────── -->
-<!-- Bande image encadrée. Décor aux positions d'origine ; pointer-events-none
-     ajouté aux couches décoratives pour ne pas bloquer le clic des cartes (z-30). -->
-<section class="relative py-4 border-background-100 overflow-hidden">
-  <div
-    class="relative mx-3 shadow-xl border-panel overflow-hidden border border-primary-300/30 px-6 py-20 lg:py-28"
-  >
-    <div class="relative z-50 pointer-events-none">
-      <Divider position="unset" class="top-1/2" />
-
-      <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-primary-300 rounded-full opacity-20"></div>
-      </div>
-
-      <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-primary-300 rounded-full opacity-10"></div>
-      </div>
-    </div>
-
-    <div class="relative z-20 pointer-events-none">
-      <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
-        <div class="aspect-square border border-primary-300 rounded-full opacity-20"></div>
-        <div
-          class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"
-        >
-        </div>
-        <div
-          class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"
-        >
-        </div>
-      </div>
-    </div>
-
-    <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
-    <div class="overlay-vignette2 backdrop-blur-sm z-10"></div>
-    <div class="absolute w-full h-full inset-0 bg-black/70 z-10 pointer-events-none"></div>
-    <CornerOrnament size={34} class="opacity-50 z-50 pointer-events-none" />
-
-    <div class="relative z-30 text-center mb-14">
-      <p class="section-label mb-6 mx-auto mt-4">Get Involved</p>
-      <h2 class="title-section mb-8">Join the Journey</h2>
-      <DividerH class="my-8 mx-auto max-w-lg" />
-    </div>
-
-    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-100">
-        <CommunityCard
-          icon="ph:discord-logo"
-          title="Join the community"
-          description="Hang out, get sneak peeks and help shape the mod on Discord."
-          cta="Join Discord"
-          href={discordUrl}
-        />
-        <CommunityCard
-          icon="ph:play-circle"
-          title="Watch the trailer"
-          description="Get a first glimpse of the Cosmic Vessel in motion."
-          cta="Watch now"
-          trailerId={trailerYouTubeId}
-        />
-        <CommunityCard
-          icon="ph:share-network"
-          title="Follow the updates"
-          description="Devlogs, art reveals and announcements across our socials."
-          cta="Follow us"
-          href={socialUrl}
-        />
-        <CommunityCard
-          icon="ph:coffee"
-          title="Support the project"
-          description="The mod is free and made by volunteers. A coffee keeps us going."
-          cta="Support on Ko-fi"
-          href={kofiUrl}
-          primary
-        />
-      </div>
-
-    <Divider position="bottom" />
-  </div>
-</section>
+<!-- ─── Community / Join the Journey (pré-footer, composant partagé) ──── -->
+<SectionPrefooter
+  discordUrl={discordUrl}
+  kofiUrl={kofiUrl}
+  socialUrl={socialUrl}
+  trailerId={trailerYouTubeId}
+/>
 
 <Footer />
 </Layout>
