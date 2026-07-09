@@ -32,5 +32,5 @@ synthese.md
 #  photos stock
 stock photos/
 
-# Placeholders stock — à retirer quand les vrais assets arrivent
-public/images/
+# Anciennes versions d'images conservées en local, pas utilisées par le code
+public/images/old/
