@@ -1,0 +1,59 @@
+{
+  "categorie": "World & Content",
+  "features": [
+    {
+      "name": "New NPCs",
+      "description": "Meet original characters throughout the world.",
+      "icon": "ph:user-plus",
+      "status": "in-progress"
+    },
+    {
+      "name": "Lore & Worldbuilding",
+      "description": "Expand the mythology of the Cosmic Vessel story.",
+      "icon": "ph:globe-hemisphere-west",
+      "status": "in-progress"
+    },
+    {
+      "name": "Exploration Content",
+      "description": "Discover hidden secrets and rewards.",
+      "icon": "ph:compass",
+      "status": "in-progress"
+    },
+    {
+      "name": "Environmental Storytelling",
+      "description": "Combine existing locations and lore with new experiences.",
+      "icon": "ph:tree",
+      "status": "in-progress"
+    },
+    {
+      "name": "New Explorable Locations",
+      "description": "New locations tied strongly to the narrative.",
+      "icon": "ph:map-trifold",
+      "status": "planned"
+    },
+    {
+      "name": "New Dynamic Encounters",
+      "description": "Develop alongside your subclass selection.",
+      "icon": "ph:lightning",
+      "status": "planned"
+    },
+    {
+      "name": "New Boss Encounters",
+      "description": "Exciting and challenging boss and mini-boss encounters.",
+      "icon": "ph:skull",
+      "status": "planned"
+    },
+    {
+      "name": "Collectibles & Artefacts",
+      "description": "Unique artefacts to enhance immersion and storytelling.",
+      "icon": "ph:crown-simple",
+      "status": "planned"
+    },
+    {
+      "name": "Companion Interactability",
+      "description": "Dialogue between the Cosmic Vessel and existing Origins.",
+      "icon": "ph:handshake",
+      "status": "planned"
+    }
+  ]
+}

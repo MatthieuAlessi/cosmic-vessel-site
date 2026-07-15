@@ -1,0 +1,59 @@
+{
+  "categorie": "Narrative & Writing",
+  "features": [
+    {
+      "name": "Narrative Design",
+      "description": "Research and develop a new story to fit within BG3 and D&D.",
+      "icon": "ph:book-open",
+      "status": "completed"
+    },
+    {
+      "name": "Character Design",
+      "description": "Memorable characters with distinct personalities.",
+      "icon": "ph:users",
+      "status": "in-progress"
+    },
+    {
+      "name": "Unique Interactions",
+      "description": "Unique conversations, reactions and narrative roles.",
+      "icon": "ph:chats-circle",
+      "status": "in-progress"
+    },
+    {
+      "name": "Dialogue & Choice System",
+      "description": "Varied-outcome conversations that shape the adventure.",
+      "icon": "ph:arrows-split",
+      "status": "in-progress"
+    },
+    {
+      "name": "Narrative Questlines",
+      "description": "Original stories woven into the world of BG3.",
+      "icon": "ph:scroll",
+      "status": "in-progress"
+    },
+    {
+      "name": "Subclass Reactivity",
+      "description": "New interactions based on your subclass selection.",
+      "icon": "ph:git-branch",
+      "status": "planned"
+    },
+    {
+      "name": "Fully Voiced Characters",
+      "description": "All new characters to be fully voiced.",
+      "icon": "ph:microphone",
+      "status": "planned"
+    },
+    {
+      "name": "Cinematic Storytelling",
+      "description": "Story moments brought to life through custom cinematics.",
+      "icon": "ph:film-slate",
+      "status": "planned"
+    },
+    {
+      "name": "Unique Inspiration",
+      "description": "A new thematic way to gain Inspiration.",
+      "icon": "ph:lightbulb",
+      "status": "planned"
+    }
+  ]
+}

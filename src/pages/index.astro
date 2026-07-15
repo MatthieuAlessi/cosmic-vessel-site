@@ -20,55 +20,23 @@ import ClassCard from "@components/ui/ClassCard.astro"
 import SectionPrefooter from "@components/ui/SectionPrefooter.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
+import { settings } from "@data/settings"
 
-// ─── Liens communauté + trailer (à remplacer par les vrais) ───────────────
-const discordUrl = "https://discord.gg/your-invite"
-const kofiUrl = "https://ko-fi.com/your-page"
-const socialUrl = "https://x.com/your-handle"
-const joinTeamUrl = "/contact"
-const trailerYouTubeId = "vEUQxe2uM-w"
+import { homepageData } from "@data/homepage";
 
-// ─── Classe Origin + ses 4 sous-classes (section home, placeholder) ────────
-const originClass = {
-  label: "The Class",
-  name: "[Class Name]",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Une classe pensée pour incarner pleinement la nature cosmique du personnage, déclinée en quatre voies.",
-  subclasses: [
-    {
-      name: "Subclass I",
-      tagline: "Voie du combat",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      abilities: ["Capacité signature A", "Capacité signature B"],
-      art: "https://picsum.photos/seed/cv-sub1/500/750",
-    },
-    {
-      name: "Subclass II",
-      tagline: "Voie arcanique",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      abilities: ["Capacité signature A", "Capacité signature B"],
-      art: "https://picsum.photos/seed/cv-sub2/500/750",
-    },
-    {
-      name: "Subclass III",
-      tagline: "Voie de l'ombre",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      abilities: ["Capacité signature A", "Capacité signature B"],
-      art: "https://picsum.photos/seed/cv-sub3/500/750",
-    },
-    {
-      name: "Subclass IV",
-      tagline: "Voie cosmique",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.",
-      abilities: ["Capacité signature A", "Capacité signature B"],
-      art: "https://picsum.photos/seed/cv-sub4/500/750",
-    },
-  ],
-}
+ 
+const {
+  discordUrl, kofiUrl,
+  youtubevideoID: trailerYouTubeId } = settings
+
+ const { hero, section1, section2, sectioncharacter, sectionclass, gallery, roadmap, team: teamSection, news } = homepageData;
+
+const joinTeamUrl = settings.joinformUrl
+
+ 
+ 
+
+const subclasses = await getCollection("classes")
 
 const recentPosts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -83,12 +51,7 @@ const teamAvatars = Array.from({ length: 8 }, (_, i) => ({
   avatar: team[i]?.data.avatar ?? `https://i.pravatar.cc/200?img=${Math.ceil(Math.random() * 70)}`,
 }))
 const teamTotal = 30
-const teamRoles = [
-  { label: "Artists", count: 12 },
-  { label: "Developers", count: 8 },
-  { label: "Writers", count: 6 },
-  { label: "Composers", count: 4 },
-]
+ 
 ---
 
 <Layout title="[MOD NAME] — Origin Mod for Baldur's Gate 3">
@@ -123,13 +86,13 @@ const teamRoles = [
         <TrailerCard videoId={trailerYouTubeId} class="max-w-md lg:max-w-md mx-auto mb-8" />
 
 
-        <div class="title-label text-center mb-3 lg:mb-6 mx-auto">Baldur's Gate 3 — Mod</div>
-        <h1 class="title-hero mb-2 lg:mb-4">Cosmic Vessel</h1>
+        <div class="title-label text-center mb-3 lg:mb-6 mx-auto">{hero?.label}</div>
+        <h1 class="title-hero mb-2 lg:mb-4">{hero?.title} </h1>
 
         <p
           class="text-foreground-100 font-body text-sm lg:text-lg leading-relaxed max-w-xl mx-auto mb-8"
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+         {hero?.text} 
         </p>
 
     
@@ -204,9 +167,9 @@ const teamRoles = [
         <div class="grid grid-cols-1 lg:grid-cols-10 gap-4 lg:gap-8 items-center">
           <div class="col-span-1 lg:col-span-4">
             <p class="title-label text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
-             A questline. A destiny.
+             {section1?.label} 
             </p>
-            <h2 class="title-1 text-left lg:text-left">Origin Character</h2>
+            <h2 class="title-1 text-left lg:text-left">{section1?.title} </h2>
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" /> -->
           </div>
 
@@ -216,15 +179,10 @@ const teamRoles = [
 
           <div class="col-span-1 lg:col-span-4 lg:py-10">
             <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4 lg:w-2/3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              {section1?.subtitle}
             </h3>
             <p class="text-foreground-500 font-body text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
+              {section1?.text}
             </p>
             <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
           </div>
@@ -234,36 +192,17 @@ const teamRoles = [
 
     <!-- ─── numbers:stats ───────────────────────────────────────── -->
     <div class="max-w-7xl mx-auto pt-8 lg:pt-24 z-20 relative">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
-        <StatCard
-          icon="ph:sword"
-          value="200+"
-          label="New Items"
-          description="Weapons, armor and unique items"
-          class="lg:aspect-3/4"
-        />
-        <StatCard
-          icon="ph:sparkle"
-          value="80+"
-          label="New Spells"
-          description="Exclusive spells and abilities"
-          class="lg:aspect-3/4"
-        />
-        <StatCard
-          icon="ph:users-three"
-          value="3"
-          label="New Classes"
-          description="Original playable subclasses"
-          class="lg:aspect-3/4"
-        />
-        <StatCard
-          icon="ph:hourglass"
-          value="10h+"
-          label="New Gameplay"
-          description="Narrative content and quests"
-          class="lg:aspect-3/4"
-        />
-      </div>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+    {section1?.numbers?.map((n) => (
+      <StatCard
+        icon={n.icon}
+        value={n.number}
+        label={n.label}
+        description={n.text}
+        class="lg:aspect-3/4"
+      />
+    ))}
+  </div>
     </div>
 
   </div>
@@ -320,7 +259,7 @@ const teamRoles = [
             class="relative outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift border-panel overflow-hidden"
           >
             <img
-              src="https://picsum.photos/seed/lore-1/640/800"
+              src={section2?.block1?.image ?? "https://picsum.photos/seed/lore-1/640/800"}
               alt=""
               class="w-full aspect-3/2 object-cover"
               loading="lazy"
@@ -334,20 +273,15 @@ const teamRoles = [
 
         <div class="col-span-1 lg:col-span-4 lg:py-10">
           <p class="title-label text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
-            An origin character. A questline.
+            {section2?.block1?.label}
           </p>
 
    
           <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4 lg:w-2/3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            {section2?.block1?.title}
           </h3>
           <p class="text-foreground-500 font-body text-base">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+            {section2?.block1?.text}
           </p>
           <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
         </div>
@@ -362,11 +296,10 @@ const teamRoles = [
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-center relative">
           <div class="col-span-1 lg:col-span-2">
             <div class="text-left lg:text-left relative z-20">
-              <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">Game System</p>
-              <!-- <h2 class="title-1 mb-10 text-primary-100">Lore & story</h2> -->
+              <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">{section2?.block2?.label}</p>
 
               <h3 class="title-2 text-foreground-100 mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                {section2?.block2?.title}
               </h3>
             </div>
           </div>
@@ -375,26 +308,25 @@ const teamRoles = [
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 relative">
           <div class="col-span-1 hidden lg:block"></div>
 
-          <div class="col-span-1 lg:col-span-1 lg:py-10">
+          <div class="col-span-1 lg:col-span-2 lg:py-10">
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" />   -->
 
             <p class="text-foreground-500 font-body text-base">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
+              {section2?.block2?.text}
             </p>
+             <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
           </div>
-
+<!-- 
           <div class="col-span-1 lg:col-span-1 lg:py-10">
-            <!-- <DividerH class="my-8 lg:my-12 xl:my-20" />   -->
+           
 
             <p class="text-foreground-500 font-body text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              {section2?.block2?.image}
+            </p>
               exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </p>
-            <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
-          </div>
+           
+          </div> -->
         </div>
       </div>
 
@@ -454,8 +386,8 @@ const teamRoles = [
  
   <div class="relative z-50 max-w-4xl mx-auto p-4 lg:p-6 lg:mt-42 mt-24">
     <!-- <CornerOrnament size={34} /> -->
-     <div class="title-label text-center mb-6 lg:mb-8 mx-auto">Baldur's Gate 3 — Mod</div>
-  <h2 class="title-section text-center">[NOM DU PERSO]</h2>
+     <div class="title-label text-center mb-6 lg:mb-8 mx-auto">{sectioncharacter?.label}</div>
+  <h2 class="title-section text-center">Origin Character</h2>
 
     <DividerH class="my-6 lg:my-12" width="max-w-lg" />
 
@@ -464,11 +396,11 @@ const teamRoles = [
       <div class="text-center ">
 
           <h3 class="title-3 text-foreground-100 mb-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                {sectioncharacter?.title}
               </h3>
 
         <p class="text-foreground-300 font-body text-base leading-relaxed">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+         {sectioncharacter?.text}
         </p>
         
       
@@ -546,28 +478,28 @@ const teamRoles = [
 
   <div class="max-w-8xl mx-auto px-0 lg:px-6 relative z-20">
     <div class="text-center mb-12 px-6">
-      <p class="title-label-ghost mb-4 lg:mb-6 mt-4 mx-auto">{originClass.label}</p>
-      <h2 class="title-1 mb-6 text-primary-100">{originClass.name}</h2>
+      <p class="title-label-ghost mb-4 lg:mb-6 mt-4 mx-auto">{sectionclass?.label}</p>
+      <h2 class="title-1 mb-6 text-primary-100">{sectionclass?.title}</h2>
 
    <DividerH width="max-w-lg" class="my-8" />
 
       <p class="text-foreground-300 font-body text-md md:text-lg leading-relaxed max-w-2xl mx-auto">
-        {originClass.description}
+        {sectionclass?.text}
       </p>
    
     </div>
 
     <div class="class-swiper swiper py-4 md:py-0 md:overflow-visible!">
       <div class="class-cards-grid swiper-wrapper md:grid! md:grid-cols-4 md:gap-10">
-        {originClass.subclasses.map((sub, i) => (
+        {subclasses.map((sub, i) => (
           <div class="swiper-slide h-auto md:w-auto!">
             <ClassCard
               tilt
               href="/character"
               data-index={i}
-              name={sub.name}
-              tagline={sub.tagline}
-              art={sub.art}
+              name={sub.data.name}
+              tagline={sub.data.tagline}
+              art={sub.data.image}
             />
           </div>
         ))}
@@ -787,8 +719,8 @@ const teamRoles = [
 
 <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between lg:items-end mb-6">
     <div class="text-center lg:text-left relative z-20">
-      <p class="section-label  mb-4 lg:mb-6 mx-auto lg:mx-0 ">Concept Art & Screenshots</p>
-      <h2 class="title-1   text-primary-100">Gallery</h2>
+      <p class="section-label  mb-4 lg:mb-6 mx-auto lg:mx-0 ">{gallery?.label}</p>
+      <h2 class="title-1   text-primary-100">{gallery?.title}</h2>
        
     </div>
 
@@ -846,10 +778,10 @@ const teamRoles = [
  
 <div class="mx-4 lg:mx-0">
   <div class="text-center relative z-20 ">
-    <p class="title-label-ghost mb-4 lg:mb-6 mx-auto">Where we stand</p>
-    <h2 class="title-1 mb-4 lg:mb-8 text-primary-100">Roadmap</h2>
+    <p class="title-label-ghost mb-4 lg:mb-6 mx-auto">{roadmap?.label}</p>
+    <h2 class="title-1 mb-4 lg:mb-8 text-primary-100">{roadmap?.title}</h2>
     <p class="text-foreground-300 font-body max-w-xl mx-auto mb-8">
-      What's already in the game, what we're building right now, and what's still to come.
+      {roadmap?.text}
     </p>
     <DividerH width="max-w-lg" class="my-8" />
   </div>
@@ -876,9 +808,9 @@ const teamRoles = [
       <div class="col-span-1 lg:col-span-4">
 
   <p class="title-label-ghost text-center lg:text-left mb-4 lg:mb-6 mx-auto lg:mx-0">
-              Discover the team
+              {teamSection?.label}
             </p>
-            <h2 class="title-1 mb-4 lg:mb-8 text-center lg:text-left">The team behind it</h2>
+            <h2 class="title-1 mb-4 lg:mb-8 text-center lg:text-left">{teamSection?.title}</h2>
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" /> -->
 
         <!-- <div
@@ -903,8 +835,7 @@ const teamRoles = [
         <div class="text-center lg:text-left">
 
           <p class="text-foreground-300 font-body text-md md:text-lg mb-10">
-            Around thirty volunteers — artists, developers, writers and composers — united by their
-            love of the game.
+            {teamSection?.text}
           </p>
 
           <!-- Cluster d'avatars → funnel vers /team -->
@@ -972,8 +903,8 @@ const teamRoles = [
 
 <div class="flex justify-between items-end mb-6">
     <div class="text-left relative z-20">
-      <p class="section-label mb-4 lg:mb-6">News</p>
-      <h2 class="title-1   text-primary-100">Latest news</h2>
+      <p class="section-label mb-4 lg:mb-6">{news?.label}</p>
+      <h2 class="title-1   text-primary-100">{news?.title}</h2>
        
     </div>
 
@@ -1016,12 +947,7 @@ const teamRoles = [
 }
 
 <!-- ─── Community / Join the Journey (pré-footer, composant partagé) ──── -->
-<SectionPrefooter
-  discordUrl={discordUrl}
-  kofiUrl={kofiUrl}
-  socialUrl={socialUrl}
-  trailerId={trailerYouTubeId}
-/>
+<SectionPrefooter />
 
 <Footer />
 </Layout>

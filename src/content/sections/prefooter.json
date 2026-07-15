@@ -1,0 +1,14 @@
+{
+  "label": "test",
+  "title": "test",
+  "cards": [
+    {
+      "icon": "ph:sparkle",
+      "title": "test",
+      "description": "test",
+      "cta": "test",
+      "primary": true,
+      "isTrailer": false
+    }
+  ]
+}

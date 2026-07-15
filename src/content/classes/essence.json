@@ -1,0 +1,15 @@
+{
+  "name": "Essence",
+  "tagline": "Path of life",
+  "description": "Essence is the embodiment of sacrifice, vitality, and raw life force. Rather than drawing power from external sources, these Vessels willingly offer pieces of themselves, converting their own life essence into devastating magical power.\n\nThrough blood, vitality, and force, an Essence Vessel can unleash destructive attacks, empower their abilities beyond normal limits, and manipulate the life force of those around them. Their magic is dangerous, often demanding a personal cost, but few can rival the sheer destructive potential they wield when they choose to push beyond their limits.\n\nPlayers who choose Essence will find themselves balancing risk against reward, making meaningful decisions about when to spend their own vitality in pursuit of greater power. It is a subclass for those who embrace sacrifice, aggression, and the idea that true strength often comes at a price.",
+  "spells": [
+    {
+      "name": "Spell 1",
+      "description": "A signature ability of this path — placeholder description."
+    },
+    {
+      "name": "Spell 2",
+      "description": "Another key spell — placeholder description."
+    }
+  ]
+}

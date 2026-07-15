@@ -1,0 +1,15 @@
+{
+  "name": "Astral Archivist",
+  "tagline": "Path of Knowledge",
+  "description": "Astral Archivists devote themselves to the hidden records that exist beyond mortal perception. They study memories, fate, knowledge, and the countless stories woven throughout existence, treating reality itself as an archive waiting to be explored.\n\nRather than relying solely on direct power, Archivists gather information, mark their enemies, and exploit the patterns hidden within every action. To an Archivist, every choice leaves a trace, every event becomes a record, and every future contains clues waiting to be uncovered.\n\nTheir abilities revolve around understanding, prediction, and inevitability. Through careful observation and manipulation of fate, they can turn an enemy's actions against them and guide events toward outcomes that seem almost preordained. This subclass is ideal for players who enjoy strategic planning, clever interactions, and the feeling of always being several steps ahead.",
+  "spells": [
+    {
+      "name": "Spell 1",
+      "description": "A signature ability of this path — placeholder description."
+    },
+    {
+      "name": "Spell 2",
+      "description": "Another key spell — placeholder description."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "label": "A fan-made Baldur's gate 3 mod",
+    "title": "Cosmic Vessel",
+    "text": "Explore fan-made new content centered around a mysterious new Origin character, an ancient cosmic power, and a story that spans forgotten histories, hidden realms, and the consequences of wielding forces beyond mortal understanding."
+  },
+  "section1": {
+    "label": "About us",
+    "title": "The Cosmic Vessel project",
+    "subtitle": "A new voluntary, community-driven expansion mod for Baldur’s Gate 3",
+    "text": "The Cosmic Vessel Project is a voluntary, community-driven expansion mod for Baldur’s Gate 3, created by a global team of passionate developers, artists, writers, composers, designers, and creatives from a wide range of backgrounds and experience levels. United by a shared love for storytelling, game development, and collaborative creation, we are building rich new content, immersive narratives, and fresh experiences within Faerûn for players to explore and enjoy.\n\nFor many of us, this project is also an opportunity to gain hands-on experience working within a structured development environment, learn collaborative pipelines, strengthen our portfolios, and grow our skills by learning from one another. From hobbyists taking their first steps into development to experienced industry professionals sharing their knowledge, Cosmic Vessel is built on creativity, collaboration, and a desire to keep improving together.",
+    "numbers": [
+      {
+        "label": "Contributors",
+        "icon": "ph:users-three",
+        "number": "34",
+        "text": "Writers, artists, coders and creators. A volunteer team built over time."
+      },
+      {
+        "label": "New ways to fight",
+        "icon": "ph:flame",
+        "number": "200+",
+        "text": "Spells, passives and feats. A fully realized new class."
+      },
+      {
+        "label": "New items",
+        "icon": "ph:sword",
+        "number": "40",
+        "text": "New weapons, armours and other items"
+      },
+      {
+        "label": "New quests",
+        "icon": "ph:scroll",
+        "number": "5",
+        "text": "A complete questline, woven into the campaign."
+      }
+    ]
+  },
+  "section2": {
+    "block1": {
+      "label": "The team behind it",
+      "title": "From a shared love for storytelling, game development, and collaborative creation",
+      "text": "For many of us, this project is also an opportunity to gain hands-on experience working within a structured development environment, learn collaborative pipelines, strengthen our portfolios, and grow our skills by learning from one another. From hobbyists taking their first steps into development to experienced industry professionals sharing their knowledge, Cosmic Vessel is built on creativity, collaboration, and a desire to keep improving together.\n\nAbove all else, we want this project to be something exciting, meaningful, and fun, both for the community experiencing it and for the team bringing it to life. While our immediate focus is delivering a memorable expansion for Baldur’s Gate 3, we also hope this journey helps open doors for future opportunities, original creations, and continued growth as developers and creatives."
+    },
+    "block2": {
+      "label": "The Cosmic Vessel Project",
+      "title": "A fully voiced Origin character, and a brand-new playable class",
+      "text": "The Cosmic Vessel Project is an upcoming fan-made expansion mod for Baldur's Gate 3 that aims to introduce a fully voiced Origin character, a brand-new playable class with four unique subclasses, original quests, new spells and abilities, custom equipment, new locations, companions, narrative content, and much more.\nWhat makes Cosmic Vessel different is that these features are not being created as isolated additions. They are being designed to support a larger story and a unified player experience.\n\nMany mods focus on adding new mechanics, items, or encounters. While Cosmic Vessel certainly includes those things, our goal is to go further by creating a narrative-driven adventure where gameplay, worldbuilding, progression, and storytelling all reinforce one another. New powers have origins. New equipment has history. New locations exist for a reason. Every major addition is intended to contribute to the wider themes, characters, and mysteries at the heart of the project.\n\nAs development continues, many details are still being explored and refined. Some features may evolve, and certain elements may find different places within the story as the narrative develops. However, our philosophy remains unchanged: every addition should feel purposeful, immersive, and naturally connected to the world around it.\n\nWe want Cosmic Vessel to feel like more than a collection of new content. We want it to feel like stepping into a new chapter of Baldur's Gate 3; one filled with discovery, mystery, meaningful choices, memorable characters, and a story that gives players a reason to keep exploring what lies beyond the next horizon."
+    }
+  },
+  "sectioncharacter": {
+    "label": "A new fully-voiced Origin character",
+    "title": "Saira",
+    "text": "Before the Nautiloid, she was not a warrior, nor someone destined for legend. She was a scholar, a newly inducted member of Society of Brilliance whose work lay not in politics, faith, or warfare, but in observation: the patient study of the heavens and the hidden forces that moved beyond mortal sight."
+  },
+  "sectionclass": {
+    "label": "The class & its 4 subclasses",
+    "title": "Choose your path",
+    "text": "The Cosmic Vessel is a brand-new playable class for Baldur’s Gate 3, built around cosmic power, fractured identity, and the struggle between mortal will and something far older within. Rather than drawing strength from a god, patron, oath, or bloodline, the Cosmic Vessel channels the power of an eternal entity that exists beyond time and space."
+  },
+  "gallery": {
+    "label": "Artworks and concept arts",
+    "title": "Gallery"
+  },
+  "roadmap": {
+    "label": "Upcoming features",
+    "title": "The Roadmap",
+    "text": "The grid below highlights many of the major features, systems and areas of development currently planned for the Cosmic Vessel Project. It is intended to provide an overview of the project's direction and scope, while giving the community visibility into what is being worked on and what is planned for the future."
+  },
+  "team": {
+    "label": "The members behind the project",
+    "title": "The team",
+    "text": "Cosmic Vessel is built by a growing, international team of volunteers and collaborators, each bringing their own expertise to the project. From programming and writing, to art, audio, and much more, every contribution matters. This page exists to recognise that work.\n\nWhether you are an experienced developer, artist, writer, designer, voice actor, composer, tester, or simply someone who wants to help where they can, we would love to hear from you. Large or small, every contribution helps move the project forward and all contributors receive full credit for their work on the website and in the final credits of the project."
+  },
+  "news": {
+    "label": "Latest articles about the project",
+    "title": "Latest News"
+  }
+}

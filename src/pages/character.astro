@@ -11,12 +11,9 @@ import VoiesSection from '@components/ui/VoiesSection.astro';
 import SectionPrefooter from '@components/ui/SectionPrefooter.astro';
 import ChapterNav from '@components/ui/ChapterNav.astro';
 import Button from '@components/ui/Button.astro';
+import { characterData } from '@data/character';
 
-// ─── Liens communauté (placeholder, à remplacer) ──────────────────────────
-const discordUrl = "https://discord.gg/your-invite";
-const kofiUrl = "https://ko-fi.com/your-page";
-const socialUrl = "https://x.com/your-handle";
-const trailerYouTubeId = "vEUQxe2uM-w";
+const { hero, section1, section2, sectionclass, section3 } = characterData;
 
 // ─── Chapitres (sous-nav sticky + scroll-spy) ─────────────────────────────
 // Chaque slug doit matcher un id + data-toc-section sur la section correspondante.
@@ -55,15 +52,14 @@ const chapters = [
     <!-- Contenu texte à gauche, centré verticalement -->
     <div class="relative z-30 w-full max-w-7xl mx-auto px-4 lg:px-6">
       <div class="max-w-2xl">
-        <p class="section-label mb-6">Origin Character</p>
-        <h1 class="title-section mb-0 text-balance">[CHARACTER]</h1>
+        <p class="section-label mb-6">{hero?.label}</p>
+        <h1 class="title-section mb-0 text-balance">{hero?.title}</h1>
 
         <!-- Filet horizontal + point à gauche (cf. inspi) -->
      <DividerH width="max-w-lg" class="my-8 ml-1" />
 
         <p class="text-foreground-300 font-body text-md leading-relaxed max-w-sm">
-          [Class] · [Origin] · [Arcane] — an origin character with a unique class, its own questline
-          and exclusive paths.
+          {hero?.description}
         </p>
 
         <div class="flex flex-wrap items-center gap-4 mt-10">
@@ -126,7 +122,7 @@ const chapters = [
             class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
           >
             <img
-              src="https://picsum.photos/seed/lore-1/640/800"
+              src={section1?.block1?.image ?? "https://picsum.photos/seed/lore-1/640/800"}
               alt=""
               class="w-full aspect-3/2 object-cover"
               loading="lazy"
@@ -139,13 +135,10 @@ const chapters = [
         </div>
 
         <div class="col-span-1 lg:col-span-4 lg:py-10">
-          <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">Lore</p>
-          <h3 class="title-3 text-foreground-100 mb-4">The Red Moon</h3>
+          <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">{section1?.block1?.label}</p>
+          <h3 class="title-3 text-foreground-100 mb-4">{section1?.block1?.title}</h3>
           <p class="text-foreground-500 font-body text-base leading-relaxed">
-            The Red Moon is a nightmare. The servants of the Vessel are fully awakened, the beasts
-            grow more ravenous, and the children of the void become visible. In this nightmare, the
-            world reveals the eldritch truths it had long kept hidden. By following the call, you
-            usher in its coming — salvation or ruin, no one can say.
+            {section1?.block1?.text}
           </p>
           <StarMarks class="pt-6" />
         </div>
@@ -156,12 +149,10 @@ const chapters = [
       <!-- Bloc 2 : texte à gauche / image à droite (alternance) -->
       <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-8 items-center relative   ">
         <div class="col-span-1 lg:col-span-4 lg:py-10 lg:order-1 order-2">
-          <p class="section-label  mb-4 lg:mb-6 mx-0 lg:mx-0">Chapter II</p>
-          <h3 class="title-3 text-foreground-100 mb-4">The Ashen Blood</h3>
+          <p class="section-label  mb-4 lg:mb-6 mx-0 lg:mx-0">{section1?.block2?.label}</p>
+          <h3 class="title-3 text-foreground-100 mb-4">{section1?.block2?.title}</h3>
           <p class="text-foreground-500 font-body text-base leading-relaxed">
-            The old sanctuary was brought low by an affliction known as the Ashen Blood — a slow and
-            merciless corruption that spread through every living thing it touched. With the physical
-            transformation comes a mental unraveling, until nothing of who they were remains.
+            {section1?.block2?.text}
           </p>
           <StarMarks class="pt-6" />
         </div>
@@ -175,7 +166,7 @@ const chapters = [
             class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
           >
             <img
-              src="https://picsum.photos/seed/lore-2/640/800"
+              src={section1?.block2?.image ?? "https://picsum.photos/seed/lore-2/640/800"}
               alt=""
               class="w-full aspect-3/2 object-cover"
               loading="lazy"
@@ -200,9 +191,49 @@ const chapters = [
 
 
 
+  <!-- ─── Story — lore narratif (blocs de texte répétables via le CMS) ──── -->
+  <section
+    id="story"
+    class="relative bg-background-700 py-16 lg:py-28 overflow-clip scroll-mt-32"
+  >
+    <BgImage
+      src="/images/bg1.jpeg"
+      opacity={0.05}
+      position="object-center"
+      fixedBg
+      size="cover"
+    />
+    <div class="overlay-top"></div>
+    <div class="overlay-bottom"></div>
+    <Divider position="top" opacity={0.6} />
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4 lg:px-6">
+      {(section2?.label || section2?.title) && (
+        <div class="text-center mb-12 lg:mb-16">
+          <p class="section-label mb-4 lg:mb-6 mx-auto">{section2?.label}</p>
+          <h2 class="title-1 text-primary-100">{section2?.title}</h2>
+          <DividerH width="max-w-lg" class="my-8 mx-auto" />
+        </div>
+      )}
+
+      <div class="flex flex-col gap-10 lg:gap-14">
+        {section2?.blocks?.map((b) => (
+          <div>
+            {b.title && <h3 class="title-3 text-foreground-100 mb-4">{b.title}</h3>}
+            <div class="space-y-4 text-foreground-500 font-body text-base leading-relaxed">
+              {b.text?.split("\n\n").map((para) => (para.trim() ? <p>{para.trim()}</p> : null))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <Divider position="bottom" />
+  </section>
+
   <!-- ─── Les 4 Voies — sélecteur (section propre à character) ───────────── -->
   <div id="paths" data-toc-section="paths" class="scroll-mt-32">
-    <VoiesSection />
+    <VoiesSection heading={sectionclass} />
   </div>
 
   <!-- ─── 1b. Flavour éditorial ───────────────────────────────────────── -->
@@ -287,7 +318,7 @@ const chapters = [
     <div class="max-w-7xl mx-auto px-4 lg:px-6 relative z-40 mt-4">
 
       <div class="absolute top-0 right-6 text-right">
-        <p class="font-display text-xs text-primary tracking-widest">CHAPITRE I</p>
+        <p class="font-display text-xs text-primary tracking-widest">{section3?.label}</p>
         <p class="font-display text-xs text-foreground-500 tracking-widest">VOYAGE COSMIQUE</p>
       </div>
       <StarMarks class="absolute top-1 left-6" />
@@ -302,9 +333,7 @@ const chapters = [
 
         <div class="lg:col-span-4 lg:col-start-8 lg:row-start-3 lg:mt-8 mb-3 lg:mb-0">
           <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            When the light of constellations awakens, a voice whispers through the cosmic silence — a
-            call that crosses ages and forgotten realms. Every destiny is a star, and every star
-            awaits its bearer. You are not alone — you never were.
+            {section3?.text1}
           </p>
         </div>
 
@@ -317,17 +346,13 @@ const chapters = [
 
         <div class="lg:col-span-4 lg:col-start-10 lg:row-start-6 lg:mt-4">
           <p class="text-foreground-500 font-body text-xs uppercase leading-relaxed tracking-wide">
-            When the light of constellations awakens, a voice whispers through the cosmic silence — a
-            call that crosses ages and forgotten realms. Every destiny is a star, and every star
-            awaits its bearer.
+            {section3?.text2}
           </p>
         </div>
 
         <div class="lg:col-span-4 lg:col-start-1 lg:row-start-8 lg:mt-8">
           <p class="text-foreground-500 font-body text-sm leading-relaxed">
-            When the light of constellations awakens, a voice whispers through the cosmic silence — a
-            call that crosses ages and forgotten realms. Every destiny is a star, and every star
-            awaits its bearer. You are not alone — you never were.
+            {section3?.text3}
           </p>
         </div>
 
@@ -355,15 +380,7 @@ const chapters = [
   </div> -->
 
   <!-- ─── Community / Join the Journey (pré-footer, composant partagé) ──── -->
-  <SectionPrefooter
-    id="join"
-    data-toc-section="join"
-    class="scroll-mt-32"
-    discordUrl={discordUrl}
-    kofiUrl={kofiUrl}
-    socialUrl={socialUrl}
-    trailerId={trailerYouTubeId}
-  />
+  <SectionPrefooter id="join" data-toc-section="join" class="scroll-mt-32" />
 
   <Footer />
 </Layout>

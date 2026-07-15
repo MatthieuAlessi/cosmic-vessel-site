@@ -1,0 +1,59 @@
+{
+  "categorie": "Gameplay & Class",
+  "features": [
+    {
+      "name": "Cosmic Vessel Class Design",
+      "description": "Playable custom class with four subclasses.",
+      "icon": "ph:sparkle",
+      "status": "completed"
+    },
+    {
+      "name": "Unique Subclass Design",
+      "description": "Time, Stars, Knowledge, Life.",
+      "icon": "ph:tree-structure",
+      "status": "completed"
+    },
+    {
+      "name": "New Origin Character",
+      "description": "Experience an entirely new playable Origin story.",
+      "icon": "ph:user-focus",
+      "status": "completed"
+    },
+    {
+      "name": "Transformation Systems",
+      "description": "Unlock powerful transformation forms and new abilities.",
+      "icon": "ph:butterfly",
+      "status": "completed"
+    },
+    {
+      "name": "Spell Implementation",
+      "description": "Over 100 spells, abilities and custom mechanics.",
+      "icon": "ph:magic-wand",
+      "status": "in-progress"
+    },
+    {
+      "name": "Feats & Passives",
+      "description": "Custom progression options and character-defining traits.",
+      "icon": "ph:medal",
+      "status": "in-progress"
+    },
+    {
+      "name": "Custom Weapons",
+      "description": "Unique weapon designs and themes.",
+      "icon": "ph:sword",
+      "status": "in-progress"
+    },
+    {
+      "name": "Custom Armour Sets",
+      "description": "An experimental approach to armour design.",
+      "icon": "ph:shield",
+      "status": "in-progress"
+    },
+    {
+      "name": "Custom Accessories",
+      "description": "New rings, amulets, capes and magical equipment.",
+      "icon": "ph:diamond",
+      "status": "in-progress"
+    }
+  ]
+}

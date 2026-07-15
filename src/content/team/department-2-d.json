@@ -1,0 +1,23 @@
+{
+  "department": "Department 2D",
+  "members": [
+    {
+      "name": "member 1",
+      "socials": {}
+    },
+    {
+      "name": "member 2",
+      "socials": {}
+    },
+    {
+      "name": "member 3",
+      "role": "special role",
+      "socials": {
+        "linkedin": "link1"
+      }
+    }
+  ],
+  "openroles": [
+    "artist"
+  ]
+}

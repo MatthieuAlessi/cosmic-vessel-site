@@ -1,0 +1,59 @@
+{
+  "categorie": "Art & Audio",
+  "features": [
+    {
+      "name": "Visual Effects",
+      "description": "Custom spells, transformations and environment effects.",
+      "icon": "ph:sparkle",
+      "status": "in-progress"
+    },
+    {
+      "name": "Spell Icons",
+      "description": "Handcrafted icons for spells and abilities.",
+      "icon": "ph:palette",
+      "status": "in-progress"
+    },
+    {
+      "name": "Original Soundtrack",
+      "description": "Custom soundtrack to accompany the project.",
+      "icon": "ph:music-notes",
+      "status": "in-progress"
+    },
+    {
+      "name": "Concept Art",
+      "description": "Original artwork to bring design to life.",
+      "icon": "ph:pen-nib",
+      "status": "in-progress"
+    },
+    {
+      "name": "Character Illustration",
+      "description": "Artwork depicting key characters in the narrative.",
+      "icon": "ph:paint-brush",
+      "status": "in-progress"
+    },
+    {
+      "name": "Sound Production",
+      "description": "New SFX and sound designed specifically for the project.",
+      "icon": "ph:speaker-high",
+      "status": "planned"
+    },
+    {
+      "name": "Equipment Icons",
+      "description": "Custom icons for weapons, armour and items.",
+      "icon": "ph:squares-four",
+      "status": "planned"
+    },
+    {
+      "name": "Environmental Assets",
+      "description": "Unique props, scenery and world assets.",
+      "icon": "ph:mountains",
+      "status": "planned"
+    },
+    {
+      "name": "Custom UI Elements",
+      "description": "New interface elements designed for the project.",
+      "icon": "ph:layout",
+      "status": "planned"
+    }
+  ]
+}

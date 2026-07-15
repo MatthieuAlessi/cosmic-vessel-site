@@ -7,72 +7,30 @@ import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
 import Divider from '@components/decor/Divider.astro';
 import { Icon } from 'astro-icon/components';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import { getCollection } from 'astro:content';
 
-// Données placeholder des 4 voies (boucle interne — pas 1 composant par voie).
-// `spells` = sorts principaux de la voie, assignés MANUELLEMENT ici (image +
-// nom + mini-description). Remplace les `image` par tes propres visuels.
-const voies = [
-  {
-    icon: '⚔',
-    name: 'Voie 1',
-    role: 'Lame cosmique',
-    tags: ['Mêlée', 'Burst', 'Mobilité'],
-    art: 'https://picsum.photos/seed/voie-1/800/1200',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la première voie, son rôle en combat et ce qui la rend unique.',
-    spells: [
-      { image: 'https://picsum.photos/seed/spell-1a/200', name: 'Fendoir stellaire', description: 'Une entaille qui déchire l\'espace et inflige des dégâts de force en cône.' },
-      { image: 'https://picsum.photos/seed/spell-1b/200', name: 'Ruée fulgurante', description: 'Se téléporte derrière la cible et frappe avant qu\'elle ne réagisse.' },
-      { image: 'https://picsum.photos/seed/spell-1c/200', name: 'Impact gravitationnel', description: 'Écrase le sol : les ennemis proches sont projetés et étourdis.' },
-      { image: 'https://picsum.photos/seed/spell-1d/200', name: 'Éclat rémanent', description: 'Chaque coup critique laisse une marque qui explose au coup suivant.' },
-    ],
-  },
-  {
-    icon: '✦',
-    name: 'Voie 2',
-    role: 'Tisseur d\'arcanes',
-    tags: ['Distance', 'Contrôle', 'Invocation'],
-    art: 'https://picsum.photos/seed/voie-2/800/1200',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la deuxième voie, son rôle en combat et ce qui la rend unique.',
-    spells: [
-      { image: 'https://picsum.photos/seed/spell-2a/200', name: 'Trait arcanique', description: 'Un projectile d\'énergie pure qui traverse les boucliers magiques.' },
-      { image: 'https://picsum.photos/seed/spell-2b/200', name: 'Prison de givre', description: 'Immobilise une zone dans une gangue de glace astrale.' },
-      { image: 'https://picsum.photos/seed/spell-2c/200', name: 'Œil du néant', description: 'Invoque une sentinelle qui révèle et marque les ennemis dissimulés.' },
-      { image: 'https://picsum.photos/seed/spell-2d/200', name: 'Rappel dimensionnel', description: 'Aspire les ennemis vers un point unique avant de les disperser.' },
-    ],
-  },
-  {
-    icon: '◈',
-    name: 'Voie 3',
-    role: 'Gardien des éclipses',
-    tags: ['Soutien', 'Protection', 'Soin'],
-    art: 'https://picsum.photos/seed/voie-3/800/1200',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la troisième voie, son rôle en combat et ce qui la rend unique.',
-    spells: [
-      { image: 'https://picsum.photos/seed/spell-3a/200', name: 'Voile d\'éclipse', description: 'Érige une barrière qui absorbe les dégâts des alliés proches.' },
-      { image: 'https://picsum.photos/seed/spell-3b/200', name: 'Lumière régénérante', description: 'Restaure les points de vie et purge une affliction.' },
-      { image: 'https://picsum.photos/seed/spell-3c/200', name: 'Aube protectrice', description: 'Bénit le groupe : résistance accrue pendant quelques tours.' },
-      { image: 'https://picsum.photos/seed/spell-3d/200', name: 'Répit lunaire', description: 'Zone de calme qui régénère les ressources des alliés.' },
-    ],
-  },
-  {
-    icon: '❂',
-    name: 'Voie 4',
-    role: 'Héraut du néant',
-    tags: ['Hybride', 'Sacrifice', 'Channeling'],
-    art: 'https://picsum.photos/seed/voie-4/800/1200',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder décrivant le fantasy de la quatrième voie, son rôle en combat et ce qui la rend unique.',
-    spells: [
-      { image: 'https://picsum.photos/seed/spell-4a/200', name: 'Pacte du vide', description: 'Sacrifie des points de vie pour libérer une vague d\'énergie corrompue.' },
-      { image: 'https://picsum.photos/seed/spell-4b/200', name: 'Canalisation abyssale', description: 'Canalise un rayon dévastateur qui gagne en puissance dans le temps.' },
-      { image: 'https://picsum.photos/seed/spell-4c/200', name: 'Dîme de sang', description: 'Draine la vie des ennemis touchés pour se soigner en retour.' },
-      { image: 'https://picsum.photos/seed/spell-4d/200', name: 'Communion finale', description: 'Ultime : invoque une éclipse qui frappe tout le champ de bataille.' },
-    ],
-  },
-];
+// Les 4 voies viennent de la collection `classes` (partagée avec la section
+// Classes de la home). On reshape chaque entrée vers la forme attendue par le
+// markup (name/role/art/description/spells) pour ne rien changer au rendu.
+// `art` / `spell.image` : fallback picsum tant qu'aucune image n'est uploadée.
+const voies = (await getCollection('classes')).map((entry, i) => ({
+  name: entry.data.name,
+  role: entry.data.tagline,
+  description: entry.data.description,
+  art: entry.data.image ?? `https://picsum.photos/seed/voie-${i + 1}/800/1200`,
+  spells: (entry.data.spells ?? []).map((s, si) => ({
+    image: s.image ?? `https://picsum.photos/seed/voie-${i + 1}-spell-${si}/200`,
+    name: s.name,
+    description: s.description,
+  })),
+}));
+
+// Heading (label/title/text) passé par character.astro depuis le singleton
+// `characterpage.sectionclass`.
+interface Props {
+  heading?: { label?: string; title?: string; text?: string };
+}
+const { heading } = Astro.props;
 ---
 
 <section class="bg-background-300 px-2 lg:px-6 pt-12 pb-32 lg:pt-32 relative overflow-clip">
@@ -123,18 +81,23 @@ const voies = [
   <GalaxyCanvas opacity={0.5} count={180} class="z-20" />
 
   <!-- En-tête -->
- 
+
 
   <div class="max-w-7xl mx-auto relative z-20">
 
     <div class="text-center mb-12">
-      <p class="title-label-ghost mb-8 mt-4 mx-auto">Game System</p>
-      <h2 class="title-1 mb-6 text-primary-100">Game System</h2>
+      <p class="title-label-ghost mb-8 mt-4 mx-auto">{heading?.label}</p>
+      <h2 class="title-1 mb-6 text-primary-100">{heading?.title}</h2>
 
    <DividerH width="max-w-lg" class="my-8" />
 
-     
-   
+             <p
+          class="text-foreground-100 font-body text-sm lg:text-lg leading-relaxed max-w-xl mx-auto mb-8"
+        >
+          {heading?.text}
+        </p>
+
+
     </div>
 
     <!-- Sélecteur de voies : 4 boutons (2×2 mobile, rangée en desktop). Sticky.
@@ -179,36 +142,31 @@ const voies = [
 
 
 
-  
+
     <div class="voies-main swiper ">
       <div class="swiper-wrapper">
         {voies.map((voie) => (
           <div class="swiper-slide">
             <div class="flex flex-col lg:flex-row gap-6 lg:gap-12 items-start pt-10">
 
-              
+
               <div class="space-y-6 lg:grow-5 lg:basis-0 lg:min-w-0">
                 <div>
                   <p class="section-label-ghost mb-4">{voie.role}</p>
                   <h3 class="title-2 text-primary-100">{voie.name}</h3>
                 </div>
-                {/* <div class="flex flex-wrap gap-2">
-                  {voie.tags.map((tag) => (
-                    <span class="badge badge--primary">{tag}</span>
-                  ))}
-                </div> */}
                 <DividerH />
                 <p class="text-foreground-300 font-body text-base leading-relaxed">
                   {voie.description}
                 </p>
               </div>
 
-           
+
               <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[190px] lg:max-w-[350px] mx-auto">
                 <ClassCard tilt name={voie.name} tagline={voie.role} art={voie.art} />
               </div>
 
- 
+
               <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0 mt-4 lg:mt-0">
                 <p class="font-display text-md uppercase  text-foreground-300  ">Sorts principaux</p>
                 <div class="grid grid-cols-1   gap-2">
@@ -249,5 +207,3 @@ const voies = [
 <script>
   import '../../scripts/voies-swiper.js';
 </script>
-
- 

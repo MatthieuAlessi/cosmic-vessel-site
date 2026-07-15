@@ -1,0 +1,15 @@
+{
+  "name": "Chronographer",
+  "tagline": "Path of time",
+  "description": "Chronographers peer beyond the present moment, drawing upon cosmic forces that govern time, gravity, momentum, and probability. To them, time is not a fixed path but a resource that can be manipulated, stretched, accelerated, or fractured.\n\nA Chronographer can alter the pace of battle in remarkable ways, slowing enemies, accelerating allies, manipulating movement, and disrupting the natural flow of combat. Their abilities allow them to create opportunities where none should exist, turning impossible situations into carefully orchestrated victories.\n\nThis subclass rewards tactical thinking and battlefield awareness. Players who enjoy control, positioning, and outmanoeuvring their opponents will find a powerful toolkit capable of reshaping encounters through precision and foresight rather than brute force alone.",
+  "spells": [
+    {
+      "name": "Spell 1",
+      "description": "A signature ability of this path — placeholder description."
+    },
+    {
+      "name": "Spell 2",
+      "description": "Another key spell — placeholder description."
+    }
+  ]
+}

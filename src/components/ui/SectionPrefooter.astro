@@ -1,6 +1,9 @@
 ---
-// Section « Join the Journey » — bande pré-footer commune (home, /character…).
-// Cartes Discord / trailer / socials / Ko-fi. URLs en props (défauts placeholder).
+// Section pré-footer ("Join the Journey") — bande commune (home, /character…).
+// Label, titre et les 4 cartes sont éditables via Keystatic (singleton `prefooter`,
+// lu par @data/prefooter). Chaque carte porte son lien (link), son style (primary)
+// et un flag `isTrailer` : si vrai, le bouton ouvre la modale trailer globale avec
+// l'ID vidéo global (settings.youtubevideoID) au lieu de suivre `link`.
 // Les attributs additionnels (id, data-toc-section…) sont passés-plat sur la <section>
 // — utile pour l'ancre de scroll-spy sur /character (id="join").
 import BgImage from "@components/decor/BgImage.astro"
@@ -8,23 +11,16 @@ import CornerOrnament from "@components/decor/CornerOrnament.astro"
 import Divider from "@components/decor/Divider.astro"
 import DividerH from "@components/decor/DividerH.astro"
 import CommunityCard from "@components/ui/CommunityCard.astro"
+import { prefooter } from "@data/prefooter"
+import { settings } from "@data/settings"
 
 interface Props {
-  discordUrl?: string
-  kofiUrl?: string
-  socialUrl?: string
-  trailerId?: string
   class?: string
   [key: string]: unknown
 }
-const {
-  discordUrl = "https://discord.gg/your-invite",
-  kofiUrl = "https://ko-fi.com/your-page",
-  socialUrl = "https://x.com/your-handle",
-  trailerId = "vEUQxe2uM-w",
-  class: className = "",
-  ...rest
-} = Astro.props
+const { class: className = "", ...rest } = Astro.props
+
+const trailerId = settings.youtubevideoID ?? "vEUQxe2uM-w"
 ---
 
 <!-- ─── Community / Join the Journey (pré-footer) ─────────────────────── -->
@@ -66,41 +62,25 @@ const {
     <CornerOrnament size={34} class="opacity-50 z-50 pointer-events-none" />
 
     <div class="relative z-30 text-center mb-7 md:mb-14">
-      <p class="section-label mb-6 mx-auto mt-4">Get Involved</p>
-      <h2 class="title-section mb-8">Join the Journey</h2>
+      <p class="section-label mb-6 mx-auto mt-4">{prefooter.label}</p>
+      <h2 class="title-section mb-8">{prefooter.title}</h2>
       <DividerH class="my-4 md:my-8 mx-auto max-w-lg" />
     </div>
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 relative z-60">
-      <CommunityCard
-        icon="ph:discord-logo"
-        title="Join the community"
-        description="Hang out, get sneak peeks and help shape the mod on Discord."
-        cta="Join Discord"
-        href={discordUrl}
-      />
-      <CommunityCard
-        icon="ph:play-circle"
-        title="Watch the trailer"
-        description="Get a first glimpse of the Cosmic Vessel in motion."
-        cta="Watch now"
-        trailerId={trailerId}
-      />
-      <CommunityCard
-        icon="ph:share-network"
-        title="Follow the updates"
-        description="Devlogs, art reveals and announcements across our socials."
-        cta="Follow us"
-        href={socialUrl}
-      />
-      <CommunityCard
-        icon="ph:coffee"
-        title="Support the project"
-        description="The mod is free and made by volunteers. A coffee keeps us going."
-        cta="Support on Ko-fi"
-        href={kofiUrl}
-        primary
-      />
+      {
+        prefooter.cards.map((card) => (
+          <CommunityCard
+            icon={card.icon}
+            title={card.title}
+            description={card.description}
+            cta={card.cta}
+            href={card.link ?? undefined}
+            trailerId={card.isTrailer ? trailerId : undefined}
+            primary={card.primary}
+          />
+        ))
+      }
     </div>
 
     <Divider position="bottom" />

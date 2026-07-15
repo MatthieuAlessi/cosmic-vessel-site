@@ -1,0 +1,15 @@
+{
+  "name": "Starcaller",
+  "tagline": "Path of the Wanderer",
+  "description": "Starcallers are wanderers, duelists, and navigators of the sea. Drawing power from distant stars and ancient celestial myths, they manifest a specialised astral scimitar that serves as both a weapon and a conduit for their magic.\n\nUnlike traditional spellcasters who remain distant from the fighting, Starcallers weave blade and spell together into a seamless combat style. Their summoned weapon enables unique combinations of melee attacks and magical abilities, allowing them to flow effortlessly between close-range engagements and ranged spellcasting. Strikes with the scimitar can empower their spells, while their magic can reshape and enhance the capabilities of the blade itself.\n\nDespite their martial appearance, Starcallers remain full spellcasters at heart. They excel at versatility, adaptability, and maintaining momentum throughout combat. For players who enjoy fluid gameplay, stylish combinations, and the fantasy of a cosmic swashbuckler guided by the stars, Starcaller offers a uniquely dynamic experience.",
+  "spells": [
+    {
+      "name": "Spell 1",
+      "description": "A signature ability of this path — placeholder description."
+    },
+    {
+      "name": "Spell 2",
+      "description": "Another key spell — placeholder description."
+    }
+  ]
+}

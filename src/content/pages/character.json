@@ -1,0 +1,33 @@
+{
+  "hero": {
+    "label": "Your New Origin Character",
+    "title": "Saira",
+    "description": "Before the Nautiloid, she was not a warrior, nor someone destined for legend. She was a scholar, a newly inducted member of Society of Brilliance whose work lay not in politics, faith, or warfare, but in observation: the patient study of the heavens and the hidden forces that moved beyond mortal sight."
+  },
+  "section1": {
+    "block1": {
+      "label": "Lore",
+      "title": "A scholar of the heavens",
+      "text": "Her field of study was celestial movement - of the stars of Realmspace, their shifting positions, irregular paths, and the subtle ways in which they were said to influence the world below. Unlike the fixed constellations described in old comparative texts from distant worlds, the stars above Toril did not move with comforting predictability. Their courses drifted. Their alignments changed. Some vanished for years, only to return where they should not have been. Others pulsed with strange irregularity, as though responding to forces no scholar had yet named.\n\nThat uncertainty fascinated her.\n\nThough newly accepted into the Society, she had already previously earned quiet recognition for her precision, her patience, and her ability to see patterns others dismissed too quickly. Where some scholars pursued prestige, she pursued understanding, often forgoing sleep and recognition in pursuit of answers that seemed just beyond reach.\n\n "
+    },
+    "block2": {
+      "label": "Chapter II",
+      "title": "The discovery",
+      "text": "When reports emerged of unusual cosmological disturbances in the wilderness beyond Baldur's Gate, a small expedition was assembled to investigate. She joined as one of its junior researchers, tasked with recording measurements, maintaining observational notes, and assisting in the analysis of any anomalous material discovered on site.\n\nWhat they found should not have existed.\n\nBuried beneath fractured earth and old stone lay a shard unlike any celestial fragment recorded in Society archives: dark, crystalline, and impossibly cold, yet faintly luminous from within. Its surface seemed to contain depth where none should exist, as though tiny distant stars were trapped beneath its skin. Even under daylight it held a dim violet pulse. Subtle, but unmistakable."
+    }
+  },
+  "section2": {
+    "label": "The Story",
+    "title": "How it began",
+    "blocks": [
+      { "title": "A quiet scholar", "text": "First block of narrative text. Replace this in the CMS.\n\nSeparate paragraphs inside one block with a blank line — they render as distinct paragraphs." },
+      { "title": "The discovery", "text": "A second block. Add as many blocks as you need in the CMS to split a long text into readable sections, each with its own subtitle." }
+    ]
+  },
+  "sectionclass": {
+    "label": "The cosmci Vessel",
+    "title": "Choose your patn",
+    "text": "As a Vessel awakens to the truth of what lies within them, they gain access to extraordinary abilities that blur the line between mortal and cosmic. They can reshape reality, manipulate fate, alter the flow of time, channel the power of distant stars, or sacrifice their own life essence to unleash devastating magic."
+  },
+  "section3": {}
+}
