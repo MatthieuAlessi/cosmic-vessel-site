@@ -11,17 +11,16 @@ import RoadmapSummary from "@components/ui/RoadmapSummary.astro"
 import RoadmapDigest from "@components/ui/RoadmapDigest.astro"
 import RoadmapBoard from "@components/ui/RoadmapBoard.astro"
 import RoadmapToc from "@components/ui/RoadmapToc.astro"
+import { roadmapPageData } from "@data/roadmappage"
+
+const { hero } = roadmapPageData
 ---
 
 <Layout title="Roadmap — Cosmic Vessel">
   <Nav />
 
   <!-- ─── Hero + compteur ───────────────────────────────────────────────── -->
-  <PageHero
-    label="The plan"
-    title="Roadmap"
-    description="Where the Cosmic Vessel stands today, what we're building right now, and everything still to come."
-  >
+  <PageHero label={hero?.label} title={hero?.title} description={hero?.description}>
     <div class="mt-10 lg:mt-20">
       <RoadmapSummary />
     </div>

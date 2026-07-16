@@ -1,14 +1,15 @@
 ---
 // Hero de page interne (label + titre + description) : BgImage sombre en fond,
-// paragraphe accroché à un DividerV vertical. Utilisé par /roadmap et /team.
+// paragraphe accroché à un DividerV vertical. Utilisé par /roadmap, /team et /gallery.
+// Props optionnelles : les textes viennent du CMS, qui peut laisser un champ vide.
 import BgImage from "@components/decor/BgImage.astro"
 import Divider from "@components/decor/Divider.astro"
 import DividerV from "@components/decor/DividerV.astro"
 
 interface Props {
-  label: string
-  title: string
-  description: string
+  label?: string
+  title?: string
+  description?: string
 }
 const { label, title, description } = Astro.props
 ---

@@ -10,6 +10,9 @@ import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
 import { departments } from "@data/team"
 import { settings } from "@data/settings"
+import { teamPageData } from "@data/teampage"
+
+const { hero } = teamPageData
 
 const members = await getCollection("team")
 
@@ -17,7 +20,6 @@ const members = await getCollection("team")
 const discordUrl = "https://discord.gg/your-invite"
 // Candidatures : formulaire Google externe (Keystatic `joinformUrl`), pas /contact.
 const joinTeamUrl = settings.joinformUrl
-const teamTotal = 30
 
 const PLACEHOLDERS_PER_DEPT = 8 // cartes placeholder pour visualiser une catégorie remplie
 
@@ -50,11 +52,7 @@ const roster = departments.map((dept, di) => {
   <Nav />
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
-  <PageHero
-    label="Behind the mod"
-    title="The Team"
-    description={`Around ${teamTotal} volunteers — artists, writers, composers and developers — united by their love of Baldur's Gate 3, building the Cosmic Vessel together.`}
-  />
+  <PageHero label={hero?.label} title={hero?.title} description={hero?.description} />
 
   <!-- ─── Roster par catégorie ──────────────────────────────────────────── -->
   <section class="relative bg-background-500 py-12 lg:py-24 overflow-hidden">
