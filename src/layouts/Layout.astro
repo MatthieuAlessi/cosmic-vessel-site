@@ -1,6 +1,7 @@
 ---
 import '@styles/global.css';
 import { Icon } from 'astro-icon/components';
+import { trailerVideoId } from '@data/settings';
 
 interface Props {
   title: string;
@@ -15,7 +16,7 @@ const {
 } = Astro.props;
 
 // Trailer par défaut, utilisé par tout déclencheur [data-trailer-open] sans data-video-id.
-const trailerYouTubeId = 'vEUQxe2uM-w';
+const trailerYouTubeId = trailerVideoId;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---

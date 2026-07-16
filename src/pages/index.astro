@@ -20,14 +20,12 @@ import ClassCard from "@components/ui/ClassCard.astro"
 import SectionPrefooter from "@components/ui/SectionPrefooter.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
-import { settings } from "@data/settings"
+import { settings, trailerVideoId } from "@data/settings"
 
 import { homepageData } from "@data/homepage";
 
- 
-const {
-  discordUrl, kofiUrl,
-  youtubevideoID: trailerYouTubeId } = settings
+
+const { discordUrl, kofiUrl } = settings
 
  const { hero, section1, section2, sectioncharacter, sectionclass, gallery, roadmap, team: teamSection, news } = homepageData;
 
@@ -83,14 +81,14 @@ const teamTotal = 30
 
 
     <!-- Encart vidéo (ouvre la modal) -->
-        <TrailerCard videoId={trailerYouTubeId} class="max-w-md lg:max-w-md mx-auto mb-8" />
+        <TrailerCard videoId={trailerVideoId} class="max-w-md lg:max-w-md mx-auto mb-8" />
 
 
         <div class="title-label text-center mb-3 lg:mb-6 mx-auto">{hero?.label}</div>
         <h1 class="title-hero mb-2 lg:mb-4">{hero?.title} </h1>
 
         <p
-          class="text-foreground-100 font-body text-sm lg:text-lg leading-relaxed max-w-xl mx-auto mb-8"
+          class="text-foreground-100 font-body text-sm lg:text-base leading-relaxed max-w-2xl mx-auto mb-8"
         >
          {hero?.text} 
         </p>
@@ -164,9 +162,9 @@ const teamTotal = 30
     <!-- ─── pitch text ───────────────────────────────────────── -->
     <div class="mt-6 z-20 relative">
       <div class="mx-auto max-w-7xl">
-        <div class="grid grid-cols-1 lg:grid-cols-10 gap-4 lg:gap-8 items-center">
-          <div class="col-span-1 lg:col-span-4">
-            <p class="title-label text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center">
+          <div class="col-span-1 lg:col-span-5">
+            <p class="title-label-ghost text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
              {section1?.label} 
             </p>
             <h2 class="title-1 text-left lg:text-left">{section1?.title} </h2>
@@ -177,8 +175,8 @@ const teamTotal = 30
             <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
           </div>
 
-          <div class="col-span-1 lg:col-span-4 lg:py-10">
-            <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4 lg:w-2/3">
+          <div class="col-span-1 lg:col-span-5 lg:py-10">
+            <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4  ">
               {section1?.subtitle}
             </h3>
             <p class="text-foreground-500 font-body text-base">
@@ -248,11 +246,11 @@ const teamTotal = 30
     <div class="mx-auto max-w-7xl z-10 relative">
  
 
-      <div class="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative">
-        <div class="col-span-1 lg:col-span-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center relative">
+        <div class="col-span-1 lg:col-span-5">
           <div class="text-center lg:text-left relative z-20">
-            <p class="section-label mb-4 lg:mb-6 mx-auto lg:mx-0">Game System</p>
-            <h2 class="title-1 mb-10 text-primary-300">Lore & story</h2>
+            <p class="section-label mb-4 lg:mb-6 mx-auto lg:mx-0">{section2?.label}</p>
+            <h2 class="title-1 mb-10 text-primary-300">{section2?.subtitle}</h2>
           </div>
 
           <div
@@ -271,16 +269,11 @@ const teamTotal = 30
           <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
         </div>
 
-        <div class="col-span-1 lg:col-span-4 lg:py-10">
-          <p class="title-label text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
-            {section2?.block1?.label}
-          </p>
-
-   
-          <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4 lg:w-2/3">
+        <div class="col-span-1 lg:col-span-5 lg:py-10">
+          <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4  ">
             {section2?.block1?.title}
           </h3>
-          <p class="text-foreground-500 font-body text-base">
+          <p class="text-foreground-500 font-body text-base  ">
             {section2?.block1?.text}
           </p>
           <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
@@ -298,7 +291,7 @@ const teamTotal = 30
             <div class="text-left lg:text-left relative z-20">
               <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">{section2?.block2?.label}</p>
 
-              <h3 class="title-2 text-foreground-100 mb-4">
+              <h3 class="title-2 text-foreground-100 mb-4 ">
                 {section2?.block2?.title}
               </h3>
             </div>
@@ -308,10 +301,10 @@ const teamTotal = 30
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 relative">
           <div class="col-span-1 hidden lg:block"></div>
 
-          <div class="col-span-1 lg:col-span-2 lg:py-10">
+          <div class="col-span-1 lg:col-span-2 lg:py-10 ">
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" />   -->
 
-            <p class="text-foreground-500 font-body text-base">
+            <p class="text-foreground-500 font-body text-base columns-1 lg:columns-2 gap-8  ">
               {section2?.block2?.text}
             </p>
              <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
@@ -483,7 +476,7 @@ const teamTotal = 30
 
    <DividerH width="max-w-lg" class="my-8" />
 
-      <p class="text-foreground-300 font-body text-md md:text-lg leading-relaxed max-w-2xl mx-auto">
+      <p class="text-foreground-300 font-body text-md md:text-lg leading-relaxed max-w-3xl mx-auto">
         {sectionclass?.text}
       </p>
    
@@ -544,7 +537,7 @@ const teamTotal = 30
 
 
 
-  <div class="relative h-[100px] md:h-[200px]lg:h-[60vh] min-h-50 lg:min-h-75 ">
+  <div class="relative h-[100px] md:h-[200px] lg:h-[60vh] min-h-50 lg:min-h-75 ">
     <div class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30 ">
       <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
       <div class="overlay-vignette   z-10"></div>
@@ -553,163 +546,7 @@ const teamTotal = 30
   </div>
 
 
-
-  
-
-<!-- ─── Editorial / Lore — commenté, à déplacer sur /character ──────── -->
-{/* <section class="relative bg-background-700 pt-32 pb-24 overflow-hidden">
-  <!-- Overlay lignes de grille (12 colonnes, motif décoratif) -->
-  <div
-    class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10"
-    aria-hidden="true"
-  >
-    <div class="col-start-1 row-start-1 row-end-10"></div>
-    <div class="col-start-2 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-3 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-4 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-5 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-6 row-start-1 row-end-10 border-primary-700/10"></div>
-    <div class="col-start-7 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-8 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-9 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-10 row-start-1 row-end-10 border-r border-primary-700/10"></div>
-    <div class="col-start-11 row-start-1 row-end-10"></div>
-    <div class="col-start-12 row-start-1 row-end-10"></div>
-    <div class="col-start-1 col-end-13 row-start-5 border-t border-primary-700/10"></div>
-    <div class="col-start-1 col-end-13 row-start-8 border-t border-primary-700/10"></div>
-  </div>
-
-  <BgImage
-    src="/images/bg1.jpeg"
-    opacity={0.5}
-    position="object-center"
-    fixedBg
-    size="cover"
-    maskClass="mask-galaxy--img"
-    class="blur-sm"
-  />
-
-  <div class="cache--gradient2"></div>
-
-  <div class="relative z-1">
-    <Divider position="unset" class="top-1/2" />
-    <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
-      <div class="aspect-square border border-primary-300 rounded-full opacity-30"></div>
-      <div
-        class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"
-      >
-      </div>
-      <div
-        class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"
-      >
-      </div>
-    </div>
-    <div class="cercle z-10 absolute inset-x-0 mx-auto w-full bottom-0 translate-y-[50%]">
-      <div class="aspect-square border border-primary-300 rounded-full opacity-10"></div>
-      <div
-        class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"
-      >
-      </div>
-      <div
-        class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"
-      >
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay-top  z-2"></div>
-
-  <div class="absolute inset-0 pointer-events-none overflow-hidden">
-    <div
-      class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2"
-      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"
-    >
-    </div>
-    <div
-      class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
-      style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"
-    >
-    </div>
-    <div
-      class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2"
-      style="background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,147,58,0.15) 0%, transparent 70%); filter: blur(30px);"
-    >
-    </div>
-  </div>
-
-  <div class="relative z-20">
-    <div class="cercle z-10 absolute inset-x-0 mx-auto w-50 bottom-0 translate-y-[50%]">
-      <div class="aspect-square border border-primary-300 rounded-full opacity-20"></div>
-      <div
-        class="dot absolute top-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-black border-primary-700 border translate-y-[-40%]"
-      >
-      </div>
-      <div
-        class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"
-      >
-      </div>
-    </div>
-  </div>
-
  
-  <div class="border border-l  border-primary-700/20 absolute inset-y-0 left-1/2 -translate-x-1/2 z-50"></div>
-
-  <div class="max-w-7xl mx-auto px-6 relative z-40 mt-4">
-    <div class="absolute top-0 right-6 text-right">
-      <p class="font-display text-xs text-primary tracking-widest">CHAPITRE I</p>
-      <p class="font-display text-xs text-foreground-500 tracking-widest">VOYAGE COSMIQUE</p>
-    </div>
-    <StarMarks class="absolute top-1 left-6" />
-
-    <!-- Composition home : Beyond / the stars / A vessel / cosmic -->
-    <div
-      class="editorial-grid grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] gap-4 pt-16"
-    >
-      <h2 class="editorial-word col-span-7 col-start-1 row-start-1 self-start">Beyond</h2>
-      <h2
-        class="editorial-word col-span-7 col-start-5 row-start-2 whitespace-nowrap text-primary-300"
-      >
-        the stars
-      </h2>
-
-      <div class="col-span-4 col-start-8 row-start-3 mt-8">
-        <p class="text-foreground-500 font-body text-sm leading-relaxed">
-          When the light of constellations awakens, a voice whispers through the cosmic silence — a
-          call that crosses ages and forgotten realms. Every destiny is a star, and every star
-          awaits its bearer. You are not alone — you never were.
-        </p>
-      </div>
-
-      <h2 class="editorial-word col-span-8 col-start-1 row-start-6 self-start whitespace-nowrap">
-        A vessel
-      </h2>
-      <h2 class="editorial-word col-span-9 col-start-1 row-start-7 self-start text-primary-300">
-        cosmic
-      </h2>
-
-      <div class="col-span-4 col-start-10 row-start-6 mt-4">
-        <p class="text-foreground-500 font-body text-xs uppercase leading-relaxed tracking-wide">
-          When the light of constellations awakens, a voice whispers through the cosmic silence — a
-          call that crosses ages and forgotten realms. Every destiny is a star, and every star
-          awaits its bearer.
-        </p>
-      </div>
-
-      <div class="col-span-4 col-start-1 row-start-8 mt-8">
-        <p class="text-foreground-500 font-body text-sm leading-relaxed">
-          When the light of constellations awakens, a voice whispers through the cosmic silence — a
-          call that crosses ages and forgotten realms. Every destiny is a star, and every star
-          awaits its bearer. You are not alone — you never were.
-        </p>
-      </div>
-    </div>
-
-    <StarMarks class="justify-center mt-8" />
-  </div>
-
-  <Divider position="top" />
-</section> */}
-
 <!-- ─── Galerie teaser ───────────────────────────────────────────────── -->
 <section class="relative bg-background-500 py-12 lg:py-24 overflow-hidden">
   <div class="overlay-bottom z-2"></div>
@@ -780,10 +617,11 @@ const teamTotal = 30
   <div class="text-center relative z-20 ">
     <p class="title-label-ghost mb-4 lg:mb-6 mx-auto">{roadmap?.label}</p>
     <h2 class="title-1 mb-4 lg:mb-8 text-primary-100">{roadmap?.title}</h2>
-    <p class="text-foreground-300 font-body max-w-xl mx-auto mb-8">
+    <DividerH width="max-w-lg" class="my-8" />
+    <p class="text-foreground-300 font-body max-w-2xl mx-auto mb-8">
       {roadmap?.text}
     </p>
-    <DividerH width="max-w-lg" class="my-8" />
+    
   </div>
 
   <div class="relative   z-40">
@@ -811,7 +649,10 @@ const teamTotal = 30
               {teamSection?.label}
             </p>
             <h2 class="title-1 mb-4 lg:mb-8 text-center lg:text-left">{teamSection?.title}</h2>
-            <!-- <DividerH class="my-8 lg:my-12 xl:my-20" /> -->
+             <DividerH class="my-8 lg:my-12  " />  
+              <p class="text-foreground-300 font-body text-xs md:text-base mb-10">
+            {teamSection?.text}
+          </p>
 
         <!-- <div
           class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
@@ -834,8 +675,8 @@ const teamTotal = 30
       <div class="col-span-1 lg:col-span-4">
         <div class="text-center lg:text-left">
 
-          <p class="text-foreground-300 font-body text-md md:text-lg mb-10">
-            {teamSection?.text}
+          <p class="text-foreground-300 font-body text-xs md:text-base mb-10">
+            {teamSection?.text2}
           </p>
 
           <!-- Cluster d'avatars → funnel vers /team -->
@@ -870,7 +711,7 @@ const teamTotal = 30
             We're always looking for new talent to join the journey.
           </p>
           <div class="flex flex-wrap   justify-center lg:justify-start gap-2 md:gap-4">
-            <Button href={joinTeamUrl}>
+            <Button href={joinTeamUrl} target="_blank">
               <Icon name="ph:users-three" class="w-5 h-5" />
               Join the team
             </Button>

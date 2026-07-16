@@ -58,7 +58,7 @@ const chapters = [
         <!-- Filet horizontal + point à gauche (cf. inspi) -->
      <DividerH width="max-w-lg" class="my-8 ml-1" />
 
-        <p class="text-foreground-300 font-body text-md leading-relaxed max-w-sm">
+        <p class="text-foreground-300 font-body  text-base   ">
           {hero?.description}
         </p>
 
@@ -194,7 +194,7 @@ const chapters = [
   <!-- ─── Story — lore narratif (blocs de texte répétables via le CMS) ──── -->
   <section
     id="story"
-    class="relative bg-background-700 py-16 lg:py-28 overflow-clip scroll-mt-32"
+    class="relative bg-background-500 py-16 lg:py-28 overflow-clip scroll-mt-32"
   >
     <BgImage
       src="/images/bg1.jpeg"
@@ -203,14 +203,14 @@ const chapters = [
       fixedBg
       size="cover"
     />
-    <div class="overlay-top"></div>
+    <!-- <div class="overlay-top"></div>
     <div class="overlay-bottom"></div>
-    <Divider position="top" opacity={0.6} />
+    <Divider position="top" opacity={0.6} /> -->
 
     <div class="relative z-10 max-w-3xl mx-auto px-4 lg:px-6">
       {(section2?.label || section2?.title) && (
         <div class="text-center mb-12 lg:mb-16">
-          <p class="section-label mb-4 lg:mb-6 mx-auto">{section2?.label}</p>
+          <p class="section-label-ghost mb-4 lg:mb-6 mx-auto ">{section2?.label}</p>
           <h2 class="title-1 text-primary-100">{section2?.title}</h2>
           <DividerH width="max-w-lg" class="my-8 mx-auto" />
         </div>

@@ -9,12 +9,14 @@ import TeamOpenRoleCard from "@components/ui/TeamOpenRoleCard.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
 import { departments } from "@data/team"
+import { settings } from "@data/settings"
 
 const members = await getCollection("team")
 
 // ─── Liens (placeholder, à remplacer) ──────────────────────────────────────
 const discordUrl = "https://discord.gg/your-invite"
-const contactUrl = "/contact"
+// Candidatures : formulaire Google externe (Keystatic `joinformUrl`), pas /contact.
+const joinTeamUrl = settings.joinformUrl
 const teamTotal = 30
 
 const PLACEHOLDERS_PER_DEPT = 8 // cartes placeholder pour visualiser une catégorie remplie
@@ -83,7 +85,7 @@ const roster = departments.map((dept, di) => {
 
               {/* Cartes des rôles recherchés (recrutement) */}
               {dept.openRoles.map((role) => (
-                <TeamOpenRoleCard role={role} href={contactUrl} />
+                <TeamOpenRoleCard role={role} href={joinTeamUrl} target="_blank" />
               ))}
             </div>
           </section>
@@ -103,7 +105,12 @@ const roster = departments.map((dept, di) => {
       </p>
       <DividerH width="max-w-md" class="my-10 mx-auto" />
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href={contactUrl} class="btn btn--primary py-3 px-8 text-sm">
+        <a
+          href={joinTeamUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn--primary py-3 px-8 text-sm"
+        >
           <Icon name="ph:users-three" class="w-5 h-5" />
           Join the team
         </a>

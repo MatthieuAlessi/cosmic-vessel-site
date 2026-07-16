@@ -4,15 +4,19 @@ import { Icon } from "astro-icon/components"
 interface Props {
   /** Intitulé du poste recherché. */
   role: string
-  /** Lien de candidature (contact, formulaire…). */
+  /** Lien de candidature (formulaire de recrutement externe, page interne…). */
   href: string
+  /** "_blank" pour un lien externe (ajoute rel="noopener noreferrer"). */
+  target?: string
   class?: string
 }
-const { role, href, class: className = "" } = Astro.props
+const { role, href, target, class: className = "" } = Astro.props
 ---
 
 <a
   href={href}
+  target={target}
+  rel={target === "_blank" ? "noopener noreferrer" : undefined}
   class:list={[
     "group relative flex flex-col items-center justify-center gap-1 border  border-accent-500/40 border-panel bg-accent/10 p-6 text-center transition-all hover:border-accent-500/70    duration-300 hover:-translate-y-0.5",
     className,

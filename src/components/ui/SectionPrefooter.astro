@@ -3,7 +3,7 @@
 // Label, titre et les 4 cartes sont éditables via Keystatic (singleton `prefooter`,
 // lu par @data/prefooter). Chaque carte porte son lien (link), son style (primary)
 // et un flag `isTrailer` : si vrai, le bouton ouvre la modale trailer globale avec
-// l'ID vidéo global (settings.youtubevideoID) au lieu de suivre `link`.
+// l'ID vidéo global (trailerVideoId, cf. @data/settings) au lieu de suivre `link`.
 // Les attributs additionnels (id, data-toc-section…) sont passés-plat sur la <section>
 // — utile pour l'ancre de scroll-spy sur /character (id="join").
 import BgImage from "@components/decor/BgImage.astro"
@@ -12,15 +12,13 @@ import Divider from "@components/decor/Divider.astro"
 import DividerH from "@components/decor/DividerH.astro"
 import CommunityCard from "@components/ui/CommunityCard.astro"
 import { prefooter } from "@data/prefooter"
-import { settings } from "@data/settings"
+import { trailerVideoId } from "@data/settings"
 
 interface Props {
   class?: string
   [key: string]: unknown
 }
 const { class: className = "", ...rest } = Astro.props
-
-const trailerId = settings.youtubevideoID ?? "vEUQxe2uM-w"
 ---
 
 <!-- ─── Community / Join the Journey (pré-footer) ─────────────────────── -->
@@ -76,7 +74,7 @@ const trailerId = settings.youtubevideoID ?? "vEUQxe2uM-w"
             description={card.description}
             cta={card.cta}
             href={card.link ?? undefined}
-            trailerId={card.isTrailer ? trailerId : undefined}
+            trailerId={card.isTrailer ? trailerVideoId : undefined}
             primary={card.primary}
           />
         ))

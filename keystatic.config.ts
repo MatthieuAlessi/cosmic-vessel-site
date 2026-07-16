@@ -97,9 +97,11 @@ export default config({
 
     section2: fields.object(
       {
+        label: fields.text({ label: "Label" }),
+        subtitle: fields.text({ label: "Subtitle" }),
+
         block1: fields.object(
           {
-            label: fields.text({ label: "Label" }),
             title: fields.text({ label: "Title" }),
             text: fields.text({ label: "Text", multiline: true }),
             image: fields.image({
@@ -174,6 +176,7 @@ export default config({
         label: fields.text({ label: "Label" }),
         title: fields.text({ label: "Title" }),
         text: fields.text({ label: "Text", multiline: true }),
+        text2: fields.text({ label: "Text 2", multiline: true }),
       },
       { label: "Team", description: "Team teaser heading (avatars + total come from the collection)" },
     ),

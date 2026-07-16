@@ -14,5 +14,11 @@ interface SiteSettings {
   joinformUrl?: string;
 }
 
- 
+
 export const settings: SiteSettings = globalLinks;
+
+// Source unique de l'ID vidéo du trailer (vignette TrailerCard, modale globale,
+// carte trailer du prefooter). Fallback sur le trailer actuel : Keystatic omet
+// les champs vides, et un ID absent produirait une vignette YouTube grise.
+// `||` (pas `??`) : un champ vidé dans l'admin est écrit `""`, pas `null`.
+export const trailerVideoId: string = settings.youtubevideoID || 'vEUQxe2uM-w';

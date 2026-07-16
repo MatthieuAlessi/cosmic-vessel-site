@@ -2,13 +2,13 @@
   "hero": {
     "label": "A fan-made Baldur's gate 3 mod",
     "title": "Cosmic Vessel",
-    "text": "Explore fan-made new content centered around a mysterious new Origin character, an ancient cosmic power, and a story that spans forgotten histories, hidden realms, and the consequences of wielding forces beyond mortal understanding."
+    "text": "Discover a new Origin character, an ancient cosmic power, and a story that spans forgotten history, hidden realms, and the consequences of wielding forces beyond mortal understanding."
   },
   "section1": {
-    "label": "About us",
+    "label": "The project",
     "title": "The Cosmic Vessel project",
     "subtitle": "A new voluntary, community-driven expansion mod for Baldur’s Gate 3",
-    "text": "The Cosmic Vessel Project is a voluntary, community-driven expansion mod for Baldur’s Gate 3, created by a global team of passionate developers, artists, writers, composers, designers, and creatives from a wide range of backgrounds and experience levels. United by a shared love for storytelling, game development, and collaborative creation, we are building rich new content, immersive narratives, and fresh experiences within Faerûn for players to explore and enjoy.\n\nFor many of us, this project is also an opportunity to gain hands-on experience working within a structured development environment, learn collaborative pipelines, strengthen our portfolios, and grow our skills by learning from one another. From hobbyists taking their first steps into development to experienced industry professionals sharing their knowledge, Cosmic Vessel is built on creativity, collaboration, and a desire to keep improving together.",
+    "text": "The Cosmic Vessel Project is a voluntary, community-driven expansion mod for Baldur’s Gate 3, created by a global team of passionate developers, artists, writers, composers, designers, and creatives from a wide range of backgrounds and experience levels. United by a shared love for storytelling, game development, and collaborative creation, we are building rich new content, immersive narratives, and fresh experiences within Faerûn for players to explore and enjoy.",
     "numbers": [
       {
         "label": "Contributors",
@@ -37,8 +37,9 @@
     ]
   },
   "section2": {
+    "label": "About us",
+    "subtitle": "The goal of this project",
     "block1": {
-      "label": "The team behind it",
       "title": "From a shared love for storytelling, game development, and collaborative creation",
       "text": "For many of us, this project is also an opportunity to gain hands-on experience working within a structured development environment, learn collaborative pipelines, strengthen our portfolios, and grow our skills by learning from one another. From hobbyists taking their first steps into development to experienced industry professionals sharing their knowledge, Cosmic Vessel is built on creativity, collaboration, and a desire to keep improving together.\n\nAbove all else, we want this project to be something exciting, meaningful, and fun, both for the community experiencing it and for the team bringing it to life. While our immediate focus is delivering a memorable expansion for Baldur’s Gate 3, we also hope this journey helps open doors for future opportunities, original creations, and continued growth as developers and creatives."
     },
@@ -70,7 +71,8 @@
   "team": {
     "label": "The members behind the project",
     "title": "The team",
-    "text": "Cosmic Vessel is built by a growing, international team of volunteers and collaborators, each bringing their own expertise to the project. From programming and writing, to art, audio, and much more, every contribution matters. This page exists to recognise that work.\n\nWhether you are an experienced developer, artist, writer, designer, voice actor, composer, tester, or simply someone who wants to help where they can, we would love to hear from you. Large or small, every contribution helps move the project forward and all contributors receive full credit for their work on the website and in the final credits of the project."
+    "text": "Cosmic Vessel is built by a growing, international team of volunteers and collaborators, each bringing their own expertise to the project. From programming and writing, to art, audio, and much more, every contribution matters. This page exists to recognise that work.\n",
+    "text2": "Whether you are an experienced developer, artist, writer, designer, voice actor, composer, tester, or simply someone who wants to help where they can, we would love to hear from you. Large or small, every contribution helps move the project forward and all contributors receive full credit for their work on the website and in the final credits of the project."
   },
   "news": {
     "label": "Latest articles about the project",

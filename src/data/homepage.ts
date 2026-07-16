@@ -27,8 +27,9 @@ export interface Homepage {
   };
 
   section2?: {
+    label?: string;
+    subtitle?: string;
     block1?: {
-      label?: string;
       title?: string;
       text?: string;
       image?: string;
