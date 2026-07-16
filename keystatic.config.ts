@@ -1,7 +1,14 @@
 import { config, singleton, fields, collection } from "@keystatic/core"
 
 export default config({
-  storage: { kind: "local" },
+  // Édition depuis le site déployé : Keystatic Cloud gère l'auth des éditeurs, qui
+  // n'ont donc besoin d'aucun compte GitHub ni d'accès au repo (contrairement au mode
+  // `github`). Aucune variable d'environnement à configurer.
+  // `project` = slug Keystatic Cloud (équipe/projet), PAS le repo GitHub — le lien vers
+  // le repo vit dans les réglages du projet Cloud, donc un transfert du repo (vers une
+  // orga par ex.) ne demandera aucune modif ici.
+  storage: { kind: "cloud" },
+  cloud: { project: "cosmic-vessel-team/cosmic-vessel-site" },
 
   singletons: {
 

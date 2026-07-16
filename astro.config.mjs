@@ -7,19 +7,26 @@ import icon from 'astro-icon';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 import markdoc from '@astrojs/markdoc';
+import netlify from '@astrojs/netlify';
 
-// L'admin Keystatic est une route rendue à la demande : l'inclure au build de prod
-// exige un adapter, sinon `astro build` échoue en [NoAdapterInstalled]. En
-// `storage: local` il écrit les JSON sur le disque, donc il n'est de toute façon
-// utilisable qu'en dev — on l'exclut du build pour rester 100% statique.
-// ⚠️ TRANSITOIRE : au passage en `storage: github` (édition depuis le site déployé
-// par l'équipe), il faudra réintégrer keystatic() ici + installer @astrojs/netlify.
-const isDev = process.argv.includes('dev');
-
+// L'admin Keystatic (/keystatic) exécute du code serveur : il lui faut un adapter,
+// sinon `astro build` échoue en [NoAdapterInstalled]. L'adapter ne rend PAS le site
+// dynamique : les pages restent prégénérées, seul /keystatic devient une fonction.
+//
+// ⚠️ @astrojs/netlify est épinglé en 7.0.12 : la v8 exige Astro 7, et 7.0.12 comme
+// 7.0.13 déclarent `peer: astro ^6` tout en important `verifyOptions` depuis
+// `astro/assets` — API absente de tout Astro 6 (bug de peer range amont). Sans
+// `imageCDN: false`, ce service d'images entre dans le bundle et casse le build.
+//
+// `imageCDN: false` ne désactive PAS l'optimisation d'images : l'adapter retombe sur
+// le service Sharp intégré à Astro, qui optimise au BUILD (et gère srcset/sizes via
+// la prop `layout` d'<Image>) au lieu de laisser Netlify transformer à chaque requête.
+// Sur un site prégénéré comme celui-ci, c'est le bon compromis.
 // https://astro.build/config
 export default defineConfig({
   site: 'http://localhost:4321',
-  integrations: [icon(), react(), markdoc(), ...(isDev ? [keystatic()] : [])],
+  adapter: netlify({ imageCDN: false }),
+  integrations: [icon(), react(), markdoc(), keystatic()],
   vite: {
     plugins: [tailwindcss()]
   }
