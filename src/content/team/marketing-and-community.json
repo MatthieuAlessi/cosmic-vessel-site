@@ -1,0 +1,8 @@
+{
+  "department": "Marketing & Community",
+  "members": [
+    { "name": "Jess", "role": "Social Media & Email Marketing Coordinator", "socials": { "website": "https://www.marketnut.co.uk" } },
+    { "name": "Emilia", "role": "Social Media & Marketing Coordinator", "socials": {} }
+  ],
+  "openroles": ["Social Media Coordinator", "Community Manager"]
+}

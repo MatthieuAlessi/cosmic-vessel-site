@@ -1,0 +1,8 @@
+{
+  "department": "Music & Sound",
+  "members": [
+    { "name": "Max", "role": "Sound Design", "socials": { "website": "https://www.youtube.com/watch?v=U_20_Hs8i58" } },
+    { "name": "Marco", "role": "Music Producer", "socials": { "website": "https://marcosantosaudio.com/" } }
+  ],
+  "openroles": []
+}

@@ -1,0 +1,14 @@
+{
+  "department": "3D Artists",
+  "members": [
+    { "name": "Hakan", "role": "3D Advisor", "socials": { "website": "https://www.artstation.com/hakankamar" } },
+    { "name": "Cassiano", "role": "3D Artist", "socials": { "website": "https://www.artstation.com/cassiano_art" } },
+    { "name": "Kaitlyn", "role": "3D Artist", "socials": {} },
+    { "name": "Maddy", "role": "3D Artist", "socials": { "website": "https://www.artstation.com/grandaltis" } },
+    { "name": "Mana", "role": "3D Artist", "socials": { "website": "https://www.artstation.com/manaeslami" } },
+    { "name": "Diego", "role": "3D Artist", "socials": { "website": "https://www.artstation.com/ferryworks/albums/5153943" } },
+    { "name": "Norma", "role": "3D Artist", "socials": { "website": "https://norma_the_dreamer.artstation.com/" } },
+    { "name": "Miles", "role": "3D Artist (Contributor)", "socials": {} }
+  ],
+  "openroles": ["Lead 3D Artist"]
+}

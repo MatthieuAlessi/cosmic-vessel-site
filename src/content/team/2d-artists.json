@@ -1,0 +1,16 @@
+{
+  "department": "2D Artists",
+  "members": [
+    { "name": "Steven", "role": "Generalist 2D Artist", "socials": {} },
+    { "name": "Luca", "role": "UI Concept Artist", "socials": { "website": "https://www.artstation.com/callmelucaa" } },
+    { "name": "Iris", "role": "UI Concept Artist", "socials": { "website": "https://www.shortlegsart.com/" } },
+    { "name": "Novter", "role": "Concept Artist", "socials": { "website": "https://www.artstation.com/novter" } },
+    { "name": "Harry", "role": "Concept Artist", "socials": { "website": "https://drive.google.com/file/d/1TwuXWX8Xuw08RrbiirLA1X-D1jWPjdf4/view" } },
+    { "name": "Muller", "role": "Generalist 2D Artist", "socials": { "website": "https://www.instagram.com/mullerartwork" } },
+    { "name": "Paulo", "role": "Senior Concept Artist", "socials": { "website": "https://www.artstation.com/mgt-paulo" } },
+    { "name": "Matthieu", "role": "Concept Artist", "socials": { "website": "https://m-alessi.netlify.app/portfolio/" } },
+    { "name": "Eddie", "role": "Storyboard Artist", "socials": { "website": "https://eddielamar.wixsite.com/portfolio" } },
+    { "name": "Marcus", "role": "Concept Artist", "socials": { "website": "https://www.artstation.com/marcusmiranda9" } }
+  ],
+  "openroles": []
+}

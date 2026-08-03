@@ -1,0 +1,10 @@
+{
+  "department": "Narrative",
+  "members": [
+    { "name": "Alex", "role": "Narrative Advisor", "socials": { "website": "https://funigami.itch.io/" } },
+    { "name": "Tami", "role": "Story Editor", "socials": { "website": "https://www.tamsinsheridan.com/" } },
+    { "name": "Julia", "role": "Narrative Design & Quest Writing", "socials": {} },
+    { "name": "Poth", "role": "Narrative Design & Quest Writing (Contributor)", "socials": {} }
+  ],
+  "openroles": ["Writer"]
+}

@@ -1,0 +1,9 @@
+{
+  "department": "Contributors",
+  "members": [
+    { "name": "James", "role": "Technical Artist", "socials": {} },
+    { "name": "Alex", "role": "Project Manager", "socials": {} },
+    { "name": "Jenn", "role": "Community Manager", "socials": {} }
+  ],
+  "openroles": []
+}

@@ -1,0 +1,9 @@
+{
+  "department": "Visual Effects",
+  "members": [
+    { "name": "Joppe", "role": "VFX Advisor", "socials": { "website": "https://joppemin.artstation.com/" } },
+    { "name": "Kim", "role": "VFX Artist", "socials": { "website": "https://www.artstation.com/cassiano_art" } },
+    { "name": "Brandon", "role": "VFX Artist", "socials": {} }
+  ],
+  "openroles": []
+}

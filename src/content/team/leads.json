@@ -1,0 +1,13 @@
+{
+  "department": "Leads",
+  "members": [
+    { "name": "Ash", "role": "Creative Director & Project Lead", "socials": {} },
+    { "name": "Courtney", "role": "Marketing Director", "socials": { "linkedin": "c-r-moore" } },
+    { "name": "Tino", "role": "Art Director", "socials": { "website": "https://linktr.ee/tinokort" } },
+    { "name": "Lauren", "role": "Lead Narrative Designer", "socials": { "website": "https://www.bakerlauren.com/" } },
+    { "name": "Russell", "role": "Lead Programmer", "socials": {} },
+    { "name": "Aaron", "role": "Lead VFX Artist", "socials": { "website": "https://mod.io/g/baldursgate3/m/prismortalis" } },
+    { "name": "Adam", "role": "Social Event Coordinator", "socials": {} }
+  ],
+  "openroles": []
+}

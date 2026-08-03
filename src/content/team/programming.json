@@ -1,0 +1,9 @@
+{
+  "department": "Programming",
+  "members": [
+    { "name": "Kent", "role": "Programmer", "socials": {} },
+    { "name": "Sylver", "role": "Programmer", "socials": {} },
+    { "name": "John", "role": "Programmer (Contributor)", "socials": {} }
+  ],
+  "openroles": ["Programmer", "Programmer"]
+}
