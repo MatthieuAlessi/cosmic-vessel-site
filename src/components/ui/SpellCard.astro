@@ -13,6 +13,7 @@ interface Props {
 
 
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
+import CmsImage from '@components/ui/CmsImage.astro';
 
 const { name, description, image, alt = "", class: className = "", ...rest } = Astro.props
 ---
@@ -34,10 +35,11 @@ const { name, description, image, alt = "", class: className = "", ...rest } = A
   <div
     class="w-16 aspect-square shrink-0 overflow-hidden border rounded-md border-primary-700/40 bg-background-500"
   >
-    <img
+    <CmsImage
       src={image}
       alt={alt}
-      loading="lazy"
+      width={128}
+      layout="none"
       class="w-full h-full object-cover  "
     />
   </div>

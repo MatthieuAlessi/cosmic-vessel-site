@@ -6,6 +6,7 @@
 import globalLinks from '../content/settings/global-links.json';
 
 interface SiteSettings {
+  modName?: string;
   discordUrl?: string;
   twitterUrl?: string;
   youtubeUrl?: string;
@@ -16,6 +17,11 @@ interface SiteSettings {
 
 
 export const settings: SiteSettings = globalLinks;
+
+// Nom du mod affiché dans le CHROME (titres de page, header, footer) — source unique.
+// N'affecte PAS la prose du contenu (celle-ci reste écrite en contexte dans le CMS).
+// `||` (pas `??`) : un champ vidé dans l'admin est écrit "", pas null.
+export const modName: string = settings.modName || 'Cosmic Vessel';
 
 // Source unique de l'ID vidéo du trailer (vignette TrailerCard, modale globale,
 // carte trailer du prefooter). Fallback sur le trailer actuel : Keystatic omet

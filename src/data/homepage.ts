@@ -11,6 +11,7 @@ export interface Homepage {
     label?: string;
     title?: string;
     text?: string;
+    image?: string;
   };
 
   section1?: {
@@ -38,7 +39,6 @@ export interface Homepage {
       label?: string;
       title?: string;
       text?: string;
-      image?: string;
     };
   };
 
@@ -71,6 +71,7 @@ export interface Homepage {
     label?: string;
     title?: string;
     text?: string;
+    text2?: string;
   };
 
   news?: {

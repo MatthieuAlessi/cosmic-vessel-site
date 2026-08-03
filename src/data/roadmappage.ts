@@ -9,6 +9,7 @@ export interface RoadmapPage {
     label?: string;
     title?: string;
     description?: string;
+    image?: string;
   };
 }
 

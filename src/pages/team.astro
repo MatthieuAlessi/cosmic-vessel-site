@@ -8,41 +8,25 @@ import TeamMemberCard from "@components/ui/TeamMemberCard.astro"
 import TeamOpenRoleCard from "@components/ui/TeamOpenRoleCard.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
-import { departments } from "@data/team"
 import { settings } from "@data/settings"
 import { teamPageData } from "@data/teampage"
 
 const { hero } = teamPageData
 
-const members = await getCollection("team")
+// Roster piloté par le CMS : une entrée de la collection `team` = un département.
+// Le titre affiché vient du champ `department`, les cartes de `members[]` et les
+// postes ouverts de `openroles[]`. Ajouter/éditer une entrée dans Keystatic se
+// répercute directement ici (plus de liste de départements en dur ni de placeholders).
+const roster = (await getCollection("team")).map((entry) => ({
+  name: entry.data.department,
+  people: entry.data.members,
+  openRoles: entry.data.openroles,
+}))
 
-// ─── Liens (placeholder, à remplacer) ──────────────────────────────────────
-const discordUrl = "https://discord.gg/your-invite"
+// ─── Liens ─────────────────────────────────────────────────────────────────
+const discordUrl = "https://discord.gg/your-invite" // placeholder, à remplacer
 // Candidatures : formulaire Google externe (Keystatic `joinformUrl`), pas /contact.
-const joinTeamUrl = settings.joinformUrl
-
-const PLACEHOLDERS_PER_DEPT = 8 // cartes placeholder pour visualiser une catégorie remplie
-
-// Membres réels par catégorie, complétés par des placeholders jusqu'à 8.
-// Avatars placeholder : visages variés via pravatar.cc (index déterministe).
-const roster = departments.map((dept, di) => {
-  const real = members
-    .filter((m) => m.data.department === dept.id)
-    .map((m) => ({ name: m.data.name, role: m.data.role, avatar: m.data.avatar, socials: m.data.socials, placeholder: false }))
-
-  const missing = Math.max(0, PLACEHOLDERS_PER_DEPT - real.length)
-  const placeholders = Array.from({ length: missing }, (_, i) => ({
-    name: "Team Member",
-    // Rôle varié pioché dans dept.sampleRoles (éditable dans @data/team) ;
-    // repli sur le nom du département si la liste est vide.
-    role: dept.sampleRoles[i % dept.sampleRoles.length] ?? dept.name,
-    avatar: `https://i.pravatar.cc/200?img=${((di * PLACEHOLDERS_PER_DEPT + i) % 70) + 1}`,
-    socials: { linkedin: "placeholder", website: "https://example.com", twitter: "@placeholder" },
-    placeholder: true,
-  }))
-
-  return { ...dept, people: [...real, ...placeholders] }
-})
+const joinTeamUrl = settings.joinformUrl ?? "#"
 ---
 
 <Layout
@@ -52,7 +36,7 @@ const roster = departments.map((dept, di) => {
   <Nav />
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
-  <PageHero label={hero?.label} title={hero?.title} description={hero?.description} />
+  <PageHero label={hero?.label} title={hero?.title} description={hero?.description} image={hero?.image} />
 
   <!-- ─── Roster par catégorie ──────────────────────────────────────────── -->
   <section class="relative bg-background-500 py-12 lg:py-24 overflow-hidden">
@@ -74,10 +58,9 @@ const roster = departments.map((dept, di) => {
               {dept.people.map((p) => (
                 <TeamMemberCard
                   name={p.name}
-                  role={p.role}
+                  role={p.role ?? ""}
                   avatar={p.avatar}
                   socials={p.socials}
-                  placeholder={p.placeholder}
                 />
               ))}
 

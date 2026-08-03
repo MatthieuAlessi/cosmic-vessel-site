@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
+import CmsImage from "@components/ui/CmsImage.astro"
 
 interface Socials {
   linkedin?: string
@@ -45,7 +46,7 @@ const socialUrl = (key: string, handle: string) => {
   <div class="w-20 aspect-square mx-auto mb-4 rounded-full overflow-hidden border border-primary-700/50 bg-background-500 flex items-center justify-center">
     {
       avatar ? (
-        <img src={avatar} alt={name} class="w-full h-full object-cover" loading="lazy" />
+        <CmsImage src={avatar} alt={name} width={160} layout="none" class="w-full h-full object-cover" />
       ) : (
         <span class="font-body uppercase text-2xl text-primary-700">{name[0]}</span>
       )

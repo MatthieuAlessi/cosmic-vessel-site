@@ -20,7 +20,7 @@ function create() {
   swiper = new Swiper(el, {
     modules: [Pagination, Navigation],
     slidesPerView: 1.5,
-    spaceBetween: 20,
+    spaceBetween: 12,
     centeredSlides: true, // slide active au centre
     pagination: {
       el: '.class-swiper__dots',

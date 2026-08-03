@@ -26,6 +26,10 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   site: 'http://localhost:4321',
   adapter: netlify({ imageCDN: false }),
+  // Défaut responsive global : chaque <Image> génère srcset + sizes tout seul,
+  // sans répéter `widths`/`layout` à chaque appel. N'affecte que <Image>/<Picture>
+  // (les <img> bruts de la déco ne sont pas concernés).
+  image: { layout: 'constrained' },
   integrations: [icon(), react(), markdoc(), keystatic()],
   vite: {
     plugins: [tailwindcss()]

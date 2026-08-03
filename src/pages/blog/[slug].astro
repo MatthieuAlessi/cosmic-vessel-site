@@ -6,6 +6,7 @@ import CornerOrnament from "@components/decor/CornerOrnament.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection, render } from "astro:content"
 import BgImage from "@components/decor/BgImage.astro"
+import CmsImage from "@components/ui/CmsImage.astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft)
@@ -80,11 +81,13 @@ const shareButtons = [
       <div
         class="relative h-[58vh] min-h-100 overflow-hidden border border-primary-300/30 border-panel shadow-xl flex flex-col"
       >
-        <img
+        <CmsImage
           src={cover}
           alt={post.data.title}
-          class="absolute inset-0 w-full h-full object-cover"
+          width={1600}
+          layout="none"
           loading="eager"
+          class="absolute inset-0 w-full h-full object-cover"
         />
         <div class="overlay-bottom"></div>
         <CornerOrnament size={34} class="opacity-50 z-20" />
@@ -223,11 +226,12 @@ const shareButtons = [
               related.map((p) => (
                 <a href={`/blog/${p.id}`} class="group flex gap-3 items-start">
                   <div class="w-20 aspect-square shrink-0 overflow-hidden border border-primary-700/30 ">
-                    <img
+                    <CmsImage
                       src={p.data.cover ?? `https://picsum.photos/seed/${p.id}/300/300`}
                       alt={p.data.title}
+                      width={160}
+                      layout="none"
                       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105  "
-                      loading="lazy"
                     />
                   </div>
                   <div class="min-w-0 flex flex-col gap-2">

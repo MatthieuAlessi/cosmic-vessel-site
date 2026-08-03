@@ -9,6 +9,7 @@ export interface CharacterPage {
     label?: string;
     title?: string;
     description?: string;
+    image?: string;
   };
 
   section1?: {
@@ -40,10 +41,12 @@ export interface CharacterPage {
 
   section3?: {
     label?: string;
-    title1?: string;
+    word1?: string;
+    word2?: string;
+    word3?: string;
+    word4?: string;
     text1?: string;
     text2?: string;
-    title2?: string;
     text3?: string;
   };
 }

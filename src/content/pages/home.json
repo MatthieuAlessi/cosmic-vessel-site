@@ -40,6 +40,7 @@
     "label": "About us",
     "subtitle": "The goal of this project",
     "block1": {
+      "image": "/src/assets/images/homepage/lore.png",
       "title": "From a shared love for storytelling, game development, and collaborative creation",
       "text": "For many of us, this project is also an opportunity to gain hands-on experience working within a structured development environment, learn collaborative pipelines, strengthen our portfolios, and grow our skills by learning from one another. From hobbyists taking their first steps into development to experienced industry professionals sharing their knowledge, Cosmic Vessel is built on creativity, collaboration, and a desire to keep improving together.\n\nAbove all else, we want this project to be something exciting, meaningful, and fun, both for the community experiencing it and for the team bringing it to life. While our immediate focus is delivering a memorable expansion for Baldur’s Gate 3, we also hope this journey helps open doors for future opportunities, original creations, and continued growth as developers and creatives."
     },

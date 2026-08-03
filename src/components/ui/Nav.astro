@@ -3,6 +3,7 @@
 // restylée avec la charte du site et débarrassée de `@tailwindplus/elements`
 // (toggle en vanilla JS). Bascule en burger sous `lg` (tablette + téléphone).
 import { navLinks } from '@data/navigation';
+import { modName, settings } from '@data/settings';
 import Button from '@components/ui/Button.astro';
 import { Icon } from 'astro-icon/components';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
@@ -16,7 +17,7 @@ const currentPath = Astro.url.pathname;
   <CornerOrnament size={34} corner="top-right" tone="white" class="opacity-20" />
 
   <div class="w-full px-4 sm:px-6 lg:px-8">
-    <div class="relative flex h-12 lg:h-12 items-center justify-between">
+    <div class="relative flex h-12 lg:h-14 items-center justify-between">
 
       <!-- Burger (tablette + téléphone), calé à droite -->
       <div class="absolute inset-y-0 right-0 flex items-center lg:hidden">
@@ -36,11 +37,11 @@ const currentPath = Astro.url.pathname;
 
       <!-- Logo : centré en mobile, à gauche en desktop -->
       <div class="flex flex-1 items-center justify-center lg:justify-start min-w-0">
-        <a href="/" class="nav__logo shrink-0">[MOD NAME]</a>
+        <a href="/" class="nav__logo shrink-0">{modName}</a>
       </div>
 
       <!-- Liens centrés (desktop) — entre deux sections flex-1 égales -->
-      <ul class="hidden lg:flex items-center gap-x-6 shrink-0">
+      <ul class="hidden lg:flex items-center gap-x-5 xl:gap-x-6 shrink-0">
         {navLinks.map(link => (
           <li>
             <a
@@ -55,11 +56,8 @@ const currentPath = Astro.url.pathname;
 
       <!-- CTA (droite, desktop) — section flex-1 = côté droit, symétrique au logo -->
       <div class="hidden lg:flex flex-1 items-center justify-end gap-2">
-        <button type="button" data-trailer-open class="btn btn--ghost-white py-1 px-3  lg:py-2 lg:px-4 text-xs lg:text-sm  ">
-          <Icon name="ph:play" class="w-4 h-4" />
-          Watch Trailer
-        </button>
-        <Button href="/blog" variant="ghost-white"  >Follow Dev</Button>
+        <Button type="button" data-trailer-open variant="ghost-white" icon="ph:play" iconsize="w-4 h-4">Watch Trailer</Button>
+        <Button href={settings.joinformUrl} target="_blank" variant="ghost-white">Join the team</Button>
       </div>
 
     </div>
@@ -89,11 +87,10 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <div class="flex flex-col gap-2 px-3 pt-3 pb-4 mt-1 border-t border-white/10">
-      <button type="button" data-trailer-open class="btn btn--ghost-white py-2 px-3 text-xs justify-center">
-        <Icon name="ph:play" class="w-4 h-4" />
-        Watch Trailer
-      </button>
-      <Button href="/blog" variant="ghost-white" size="sm">Follow Dev</Button>
+
+      <Button type="button" data-trailer-open variant="ghost-white" size="sm" icon="ph:play" iconsize="w-4 h-4" class="justify-center">Watch Trailer</Button>
+
+      <Button href={settings.joinformUrl} target="_blank" variant="ghost-white" size="sm">Join the team</Button>
     </div>
   </div>
 </nav>

@@ -35,11 +35,13 @@ const Tag = href ? 'a' : 'button';
 // Lien externe en nouvel onglet : rel de sécurité par défaut si non fourni ajoute noopener noreferrer si target blank.
 if (rest.target === '_blank' && rest.rel == null) rest.rel = 'noopener noreferrer';
 
+// Source unique des tailles de bouton : ces utilitaires priment toujours sur le
+// padding de `.btn` (layer utilities > components) — le CSS n'est qu'un fallback.
 const sizeClasses = {
-  xs: 'py-1 px-3 text-2xs ',
-  sm: 'py-1 px-3 lg:py-2 lg:px-4 text-xs lg:text-sm ',
-  md: 'py-2 px-4 lg:py-3 lg:px-6 text-xs lg:text-sm ',
-  lg: 'py-3 px-6 lg:py-4 lg:px-9 text-sm lg:text-base ',
+  xs: 'py-0.5 px-2.5 text-2xs ',
+  sm: 'py-1 px-3 lg:py-2 lg:px-4 text-2xs md:text-xs ',
+  md: 'py-1.5 px-3.5 lg:py-2.5 lg:px-5 text-2xs md:text-xs ',
+  lg: 'py-2 px-5 lg:py-3 lg:px-7 text-xs ',
 }[size];
 ---
 

@@ -6,6 +6,7 @@ import PageHero from '@components/ui/PageHero.astro';
 import { Icon } from 'astro-icon/components';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
 import { galleryData } from '@data/gallerypage';
+import { modName } from '@data/settings';
 
 const { hero } = galleryData;
 
@@ -24,7 +25,7 @@ const galleryItems = [
 ---
 
 <Layout
-  title="Galerie — [MOD NAME]"
+  title={`Galerie — ${modName}`}
   description="Concept arts et visuels du mod Baldur's Gate 3."
 >
   <Nav />
@@ -32,7 +33,7 @@ const galleryItems = [
 
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
-  <PageHero label={hero?.label} title={hero?.title} description={hero?.description} />
+  <PageHero label={hero?.label} title={hero?.title} description={hero?.description} image={hero?.image} />
 
 
   <main class="py-20">

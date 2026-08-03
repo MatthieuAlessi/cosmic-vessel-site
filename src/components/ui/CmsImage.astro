@@ -1,0 +1,28 @@
+---
+// Image ÉDITABLE AU CMS, rendue optimisée quand elle vient de src/assets (Sharp au
+// build via <Image> : WebP + srcset), et en <img> brut sinon (chemin public/, URL
+// distante, ou vide) — 100 % rétro-compatible. Point d'entrée UNIQUE pour toute
+// image CMS : remplace les <img> concernés. Les images DÉCO gardent leur <img>.
+import { Image } from "astro:assets";
+import { cmsImage } from "@lib/images";
+
+interface Props {
+  src?: string;
+  alt?: string;
+  width?: number;
+  // "none" pour un conteneur à taille fixe / object-cover (avatars, icônes, covers
+  // pleine bande) ; omis = défaut global "constrained" (images de section réactives).
+  layout?: "constrained" | "full-width" | "fixed" | "none";
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+const { src, alt = "", width = 800, layout, loading = "lazy", class: className = "" } = Astro.props;
+const img = cmsImage(src);
+---
+{
+  img ? (
+    <Image src={img} alt={alt} width={width} layout={layout} loading={loading} class={className} />
+  ) : src ? (
+    <img src={src} alt={alt} loading={loading} class={className} />
+  ) : null
+}

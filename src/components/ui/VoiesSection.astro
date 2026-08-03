@@ -1,6 +1,7 @@
 ---
 import ClassCard from '@components/ui/ClassCard.astro';
 import SpellCard from '@components/ui/SpellCard.astro';
+import CmsImage from '@components/ui/CmsImage.astro';
 import DividerH from '@components/decor/DividerH.astro';
 import BgImage from '@components/decor/BgImage.astro';
 import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
@@ -83,7 +84,7 @@ const { heading } = Astro.props;
   <!-- En-tête -->
 
 
-  <div class="max-w-7xl mx-auto relative z-20">
+  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 
     <div class="text-center mb-12">
       <p class="title-label-ghost mb-8 mt-4 mx-auto">{heading?.label}</p>
@@ -115,7 +116,7 @@ const { heading } = Astro.props;
               {voie.name}
             </span>
             <span class="w-10 h-8 shrink-0 overflow-hidden rounded-sm grayscale opacity-70 transition duration-300 group-[.is-active]:grayscale-0 group-[.is-active]:opacity-100">
-              <img src={voie.art} alt="" loading="lazy" class="w-full h-full object-cover" />
+              <CmsImage src={voie.art} alt="" width={800} layout="none" class="w-full h-full object-cover" />
             </span>
           </button>
         ))}
@@ -163,12 +164,12 @@ const { heading } = Astro.props;
 
 
               <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[190px] lg:max-w-[350px] mx-auto">
-                <ClassCard tilt name={voie.name} tagline={voie.role} art={voie.art} />
+                <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} />
               </div>
 
 
               <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0 mt-4 lg:mt-0">
-                <p class="font-display text-md uppercase  text-foreground-300  ">Sorts principaux</p>
+                <p class="font-display text-md uppercase  text-foreground-300  ">Class Spells</p>
                 <div class="grid grid-cols-1   gap-2">
                   {voie.spells.map((spell) => (
                     <SpellCard image={spell.image} alt={spell.name} name={spell.name} description={spell.description} />

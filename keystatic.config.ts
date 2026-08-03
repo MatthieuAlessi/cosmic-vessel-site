@@ -17,6 +17,7 @@ export default config({
       path: "src/content/settings/global-links",
       format: { data: "json" },
       schema: {
+        modName: fields.text({ label: "Mod name", defaultValue: "Cosmic Vessel" }),
         discordUrl: fields.url({ label: "Discord URL" }),
         twitterUrl: fields.url({ label: "Twitter URL" }),
         youtubeUrl: fields.url({ label: "Youtube URL" }),
@@ -35,6 +36,11 @@ export default config({
           label: fields.text({ label: "Label" }),
           title: fields.text({ label: "Title" }),
           description: fields.text({ label: "Description", multiline: true }),
+          image: fields.image({
+            label: "Background image",
+            directory: "src/assets/images/heroes",
+            publicPath: "/src/assets/images/heroes/",
+          }),
         }),
       },
     }),
@@ -48,6 +54,11 @@ export default config({
           label: fields.text({ label: "Label" }),
           title: fields.text({ label: "Title" }),
           description: fields.text({ label: "Description", multiline: true }),
+          image: fields.image({
+            label: "Background image",
+            directory: "src/assets/images/heroes",
+            publicPath: "/src/assets/images/heroes/",
+          }),
         }),
       },
     }),
@@ -62,6 +73,11 @@ export default config({
           label: fields.text({ label: "Label" }),
           title: fields.text({ label: "Title" }),
           description: fields.text({ label: "Description", multiline: true }),
+          image: fields.image({
+            label: "Background image",
+            directory: "src/assets/images/heroes",
+            publicPath: "/src/assets/images/heroes/",
+          }),
         }),
       },
     }),
@@ -78,6 +94,11 @@ export default config({
         label: fields.text({ label: "Label" }),
         title: fields.text({ label: "Title" }),
         text: fields.text({ label: "Subtext", multiline: true }),
+        image: fields.image({
+          label: "Background image",
+          directory: "src/assets/images/heroes",
+          publicPath: "/src/assets/images/heroes/",
+        }),
       },
       { label: "Hero Section", description: "Website intro" },
     ),
@@ -113,8 +134,8 @@ export default config({
             text: fields.text({ label: "Text", multiline: true }),
             image: fields.image({
               label: "Image",
-              directory: "public/images/homepage",
-              publicPath: "/images/homepage/",
+              directory: "src/assets/images/homepage",
+              publicPath: "/src/assets/images/homepage/",
             }),
           },
           { label: "Bloc 1" },
@@ -125,11 +146,6 @@ export default config({
             label: fields.text({ label: "Label" }),
             title: fields.text({ label: "Title" }),
             text: fields.text({ label: "Text", multiline: true }),
-            image: fields.image({
-              label: "Image",
-              directory: "public/images/homepage",
-              publicPath: "/images/homepage/",
-            }),
           },
           { label: "Bloc 2" },
         ),
@@ -213,6 +229,11 @@ export default config({
             label: fields.text({ label: "Label" }),
             title: fields.text({ label: "Title" }),
             description: fields.text({ label: "Description", multiline: true }),
+            image: fields.image({
+              label: "Background image",
+              directory: "src/assets/images/heroes",
+              publicPath: "/src/assets/images/heroes/",
+            }),
           },
           { label: "Hero", description: "Character page intro" },
         ),
@@ -226,8 +247,8 @@ export default config({
                 text: fields.text({ label: "Text", multiline: true }),
                 image: fields.image({
                   label: "Image",
-                  directory: "public/images/characterpage",
-                  publicPath: "/images/characterpage/",
+                  directory: "src/assets/images/characterpage",
+                  publicPath: "/src/assets/images/characterpage/",
                 }),
               },
               { label: "Bloc 1" },
@@ -240,8 +261,8 @@ export default config({
                 text: fields.text({ label: "Text", multiline: true }),
                 image: fields.image({
                   label: "Image",
-                  directory: "public/images/characterpage",
-                  publicPath: "/images/characterpage/",
+                  directory: "src/assets/images/characterpage",
+                  publicPath: "/src/assets/images/characterpage/",
                 }),
               },
               { label: "Bloc 2" },
@@ -277,10 +298,12 @@ export default config({
         section3: fields.object(
           {
             label: fields.text({ label: "Label" }),
-            title1: fields.text({ label: "Title 1" }),
+            word1: fields.text({ label: "Big title — line 1", defaultValue: "Beyond" }),
+            word2: fields.text({ label: "Big title — line 2 (accent color)", defaultValue: "the stars" }),
+            word3: fields.text({ label: "Big title — line 3", defaultValue: "A vessel" }),
+            word4: fields.text({ label: "Big title — line 4 (accent color)", defaultValue: "cosmic" }),
             text1: fields.text({ label: "Text 1", multiline: true }),
             text2: fields.text({ label: "Text 2", multiline: true }),
-            title2: fields.text({ label: "Title 2" }),
             text3: fields.text({ label: "Text 3", multiline: true }),
           },
           { label: "Section 3", description: "Editorial section (Beyond the stars / A vessel cosmic)" },
@@ -328,8 +351,8 @@ export default config({
         description: fields.text({ label: "Description", multiline: true }),
         image: fields.image({
           label: "Image",
-          directory: "public/images/classes",
-          publicPath: "/images/classes/",
+          directory: "src/assets/images/classes",
+          publicPath: "/src/assets/images/classes/",
         }),
 
         spells: fields.array(
@@ -338,8 +361,8 @@ export default config({
             description: fields.text({ label: "Description", multiline: true }),
             image: fields.image({
               label: "Image",
-              directory: "public/images/classes/spells",
-              publicPath: "/images/classes/spells/",
+              directory: "src/assets/images/classes/spells",
+              publicPath: "/src/assets/images/classes/spells/",
             }),
           }),
           {
@@ -398,8 +421,8 @@ export default config({
             role: fields.text({ label: "Role" }),
             avatar: fields.image({
               label: "Avatar",
-              directory: "public/images/team",
-              publicPath: "/images/team/",
+              directory: "src/assets/images/team",
+              publicPath: "/src/assets/images/team/",
             }),
             socials: fields.object({
               
@@ -440,8 +463,8 @@ export default config({
       excerpt: fields.text({ label: "Excerpt", multiline: true }),
       cover: fields.image({
         label: "Cover",
-        directory: "public/images/blog",
-        publicPath: "/images/blog/",
+        directory: "src/assets/images/blog",
+        publicPath: "/src/assets/images/blog/",
       }),
       tags: fields.array(
         fields.text({ label: "Tag" }),

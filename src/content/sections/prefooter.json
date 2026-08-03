@@ -1,12 +1,40 @@
 {
-  "label": "test",
-  "title": "test",
+  "label": "Get involved",
+  "title": "Join the journey",
   "cards": [
     {
-      "icon": "ph:sparkle",
-      "title": "test",
-      "description": "test",
-      "cta": "test",
+      "icon": "ph:discord-logo",
+      "title": "Join the community",
+      "description": "Hang out with the team, follow development in real time, and help shape the mod on our Discord server.",
+      "cta": "Join Discord",
+      "link": "https://discord.gg/cosmicvessel",
+      "primary": false,
+      "isTrailer": false
+    },
+    {
+      "icon": "ph:play-circle",
+      "title": "Watch the trailer",
+      "description": "Get a first look at the Cosmic Vessel — the Origin character, the new class, and the world you will explore.",
+      "cta": "Watch trailer",
+      "link": "",
+      "primary": false,
+      "isTrailer": true
+    },
+    {
+      "icon": "ph:megaphone",
+      "title": "Follow the development",
+      "description": "Devlogs, previews and announcements as the mod takes shape. Follow us so you never miss an update.",
+      "cta": "Follow us",
+      "link": "https://x.com/cosmicvessel",
+      "primary": false,
+      "isTrailer": false
+    },
+    {
+      "icon": "ph:coffee",
+      "title": "Support the project",
+      "description": "Cosmic Vessel is a free, volunteer-made mod. If you would like to help us keep building, a coffee goes a long way.",
+      "cta": "Support on Ko-fi",
+      "link": "https://ko-fi.com/cosmicvessel",
       "primary": true,
       "isTrailer": false
     }

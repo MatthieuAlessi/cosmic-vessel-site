@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import { cmsImage } from "@lib/images";
+
 interface Props {
   src: string;
   alt?: string;
@@ -31,6 +34,12 @@ const positionMap: Record<string, string> = {
   'object-right': 'right',
 };
 const bgPosition = positionMap[position] ?? 'center';
+
+// Optimisation : si `src` vient de src/assets (image uploadée au CMS), on l'optimise
+// via <Image>. Uniquement pour le variant non-fixed (<img>) ; le fixed utilise
+// background-image en CSS (non optimisable). Sinon (déco en public/) → <img> brut.
+const optimized = !fixedBg ? cmsImage(src) : undefined;
+const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscale'].filter(Boolean).join(' ');
 ---
 
 {fixedBg ? (
@@ -49,11 +58,10 @@ const bgPosition = positionMap[position] ?? 'center';
   />
 ) : (
   <div class:list={['absolute inset-0 z-0 bgimage  ', maskClass, className]}>
-    <img
-      src={src}
-      alt={alt}
-      class:list={['w-full h-full object-cover', position, grayscale && 'grayscale']}
-      style={`opacity: ${opacity}`}
-    />
+    {optimized ? (
+      <Image src={optimized} alt={alt} width={1920} layout="none" class={imgClass} style={`opacity: ${opacity}`} />
+    ) : (
+      <img src={src} alt={alt} class={imgClass} style={`opacity: ${opacity}`} />
+    )}
   </div>
 )}

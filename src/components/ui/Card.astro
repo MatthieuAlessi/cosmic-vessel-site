@@ -70,7 +70,7 @@ const imgZoomClasses =
             <slot name="meta" />
           </div>
           {cta && (
-            <Button variant="ghost" size="xs" href={href} class="hidden sm:inline-flex">
+            <Button variant="primary" size="sm" href={href} class="hidden sm:inline-flex">
               {cta}
             </Button>
           )}
@@ -98,7 +98,7 @@ const imgZoomClasses =
         </div>
       )}
       <div class="p-3 sm:p-6 flex flex-col flex-1 min-w-0">
-        <div class="flex flex-col justify-between h-full">
+        <div class="flex flex-col justify-start h-full">
           <div class="flex flex-wrap gap-1 mb-2 sm:mb-3">
             <slot name="badge" />
           </div>
@@ -121,7 +121,7 @@ const imgZoomClasses =
             <slot name="meta" />
           </div>
           {cta && (
-            <Button variant="ghost" size="xs" href={href}>
+            <Button variant="primary" size="sm" href={href}>
               {cta}
             </Button>
           )}

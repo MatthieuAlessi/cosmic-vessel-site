@@ -1,9 +1,10 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import Nav from '@components/ui/Nav.astro';
+import { modName } from '@data/settings';
 ---
 
-<Layout title="404 — Page introuvable | [MOD NAME]">
+<Layout title={`404 — Page introuvable | ${modName}`}>
   <Nav />
   <main class="min-h-screen flex flex-col items-center justify-center text-center px-6">
     <p class="font-ui text-8xl font-light text-background-100 mb-6">404</p>

@@ -1,6 +1,8 @@
 ---
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
 import CornerRays from '@components/decor/CornerRays.astro';
+import CmsImage from '@components/ui/CmsImage.astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   name: string;
@@ -12,6 +14,8 @@ interface Props {
   tilt?: boolean;
   /** Si fourni, un clic navigue vers cette URL. */
   href?: string;
+  /** Affiche le "Discover" au hover (masqué quand la carte n'est pas cliquable, ex. VoiesSection). */
+  discover?: boolean;
   class?: string;
   [key: string]: unknown;
 }
@@ -22,6 +26,7 @@ const {
   compact = false,
   tilt = false,
   href,
+  discover = true,
   class: className = '',
   ...rest
 } = Astro.props;
@@ -51,17 +56,15 @@ const {
       class="class-card__frame relative aspect-[2/3.3] rounded-t-full overflow-hidden border border-primary-500/50 outline-1 outline-primary-500/20 outline-offset-12"
     >
       {art
-        ? <img src={art} alt={name} class="w-full h-full object-cover" loading="lazy" />
+        ? <CmsImage src={art} alt={name} width={400} layout="none" class="w-full h-full object-cover" />
         : <div class="w-full h-full bg-background-500/60" />
       }
       <div class="overlay-bottom"></div>
 
-      {!compact && (
+      {!compact && discover && (
         <div class="class-card__discover">
           <span class="font-display text-base uppercase">Discover</span>
-          <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
-            <path d="M0 4h11.5M8.5 1L12 4l-3.5 3" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <Icon name="ph:arrow-right" class="w-3.5 h-3.5" />
         </div>
       )}
 
@@ -76,7 +79,7 @@ const {
           {tagline}
         </p>
       )}
-      <h3 class="title-3 text-primary-100">{name}</h3>
+      <h3 class="title-3 text-primary-100 text-base md:text-lg xl:text-xl">{name}</h3>
     </div>
   )}
 </div>
