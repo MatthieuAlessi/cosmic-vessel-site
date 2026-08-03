@@ -1,14 +1,12 @@
 ---
 // ── /roadmap ────────────────────────────────────────────────────────────────
-// Compteur + digest par statut (fait/en cours/à faire), puis board par métier
-// avec sommaire sticky à gauche (scroll-spy). Pas de phases (non chronologique).
+// Compteur, puis board par métier avec sommaire sticky à gauche (scroll-spy).
+// Pas de phases (non chronologique).
 import Layout from "@layouts/Layout.astro"
 import Nav from "@components/ui/Nav.astro"
 import Footer from "@components/ui/Footer.astro"
-import DividerH from "@components/decor/DividerH.astro"
 import PageHero from "@components/ui/PageHero.astro"
 import RoadmapSummary from "@components/ui/RoadmapSummary.astro"
-import RoadmapDigest from "@components/ui/RoadmapDigest.astro"
 import RoadmapBoard from "@components/ui/RoadmapBoard.astro"
 import RoadmapToc from "@components/ui/RoadmapToc.astro"
 import { roadmapPageData } from "@data/roadmappage"
@@ -25,21 +23,6 @@ const { hero } = roadmapPageData
       <RoadmapSummary />
     </div>
   </PageHero>
-
-  <!-- ─── Digest par statut ─────────────────────────────────────────────── -->
-  <!-- <section class="relative bg-background-500 py-24 overflow-hidden">
-
-    <div class="overlay-top"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-14">
-        <p class="section-label mb-6 mx-auto">At a glance</p>
-        <h2 class="title-1 text-primary-100">Done & to come</h2>
-        <DividerH width="max-w-md" class="my-8 mx-auto" />
-      </div>
-      <RoadmapDigest />
-    </div>
-  </section> -->
 
   <!-- ─── Board par métier (sommaire sticky + features) ─────────────────── -->
   <section class="relative bg-background-500 py-12 lg:py-24">
