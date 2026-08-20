@@ -94,11 +94,15 @@ const galleryItems = [
 <script>
   import PhotoSwipeLightbox from 'photoswipe/lightbox';
   import 'photoswipe/style.css';
+  import { lenis } from '@scripts/smooth-scroll.js';
 
   const lightbox = new PhotoSwipeLightbox({
     gallery: '#gallery-grid',
     children: 'a.gallery-item',
     pswpModule: () => import('photoswipe'),
   });
+  // Le lightbox gère son propre lock ; Lenis doit s'arrêter en parallèle.
+  lightbox.on('beforeOpen', () => lenis?.stop());
+  lightbox.on('destroy', () => lenis?.start());
   lightbox.init();
 </script>

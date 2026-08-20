@@ -11,6 +11,13 @@ interface Props {
   maskClass?: string;
   fixedBg?: boolean;
   grayscale?: boolean;
+  /** Amplitude du parallax en % (~10-25), variant non-fixed uniquement.
+   *  L'image défile plus lentement que la page. Ignoré si fixedBg. */
+  parallax?: number;
+  /** Reproduit background-attachment:fixed avec une vraie <img> (compatible iOS).
+   *  Voir bloc "Fixed parallax" de src/scripts/animations.js. Ignoré si fixedBg
+   *  ou parallax. */
+  bgfixedparallax?: boolean;
   class?: string;
 }
 
@@ -23,6 +30,8 @@ const {
   maskClass = '',
   fixedBg = false,
   grayscale = false,
+  parallax = 0,
+  bgfixedparallax = false,
   class: className = '',
 } = Astro.props;
 
@@ -36,10 +45,31 @@ const positionMap: Record<string, string> = {
 const bgPosition = positionMap[position] ?? 'center';
 
 // Optimisation : si `src` vient de src/assets (image uploadée au CMS), on l'optimise
-// via <Image>. Uniquement pour le variant non-fixed (<img>) ; le fixed utilise
-// background-image en CSS (non optimisable). Sinon (déco en public/) → <img> brut.
+// via <Image>. Uniquement pour les variants non-fixed (<img>) ; le fixed legacy
+// utilise background-image en CSS (non optimisable). Sinon (déco en public/) → <img> brut.
 const optimized = !fixedBg ? cmsImage(src) : undefined;
-const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscale'].filter(Boolean).join(' ');
+
+// Parallax (léger) : l'image est agrandie de `margin` % de chaque côté et recentrée,
+// pour que le déplacement au scroll reste toujours dans cette marge — jamais de bord
+// vide découvert. `range` traduit la marge (en % du conteneur) en % de la hauteur
+// propre de l'image agrandie, seule unité que comprend le yPercent de GSAP.
+// Ignoré si bgfixedparallax (mécanisme distinct, voir plus bas).
+const margin = !fixedBg && !bgfixedparallax && parallax ? Math.max(parallax, 8) : 0;
+const range = margin ? Number((margin / (1 + (2 * margin) / 100)).toFixed(2)) : 0;
+
+const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscale', margin && 'absolute inset-x-0']
+  .filter(Boolean)
+  .join(' ');
+const imgStyle = `opacity: ${opacity};${margin ? ` height: ${100 + 2 * margin}%; top: -${margin}%;` : ''}`;
+
+// Fixed parallax : le fallback (no-JS / prefers-reduced-motion) est une image
+// <img> classique en object-cover, plein cadre — correctement cadrée, immobile.
+// C'est le bloc "Fixed parallax" de animations.js qui la redimensionne/translate
+// pour l'effet "fixed" ; voir CLAUDE.md pour le calcul.
+const fixedParallaxImgClass = ['absolute inset-0 w-full h-full object-cover', position, grayscale && 'grayscale']
+  .filter(Boolean)
+  .join(' ');
+const fixedParallaxImgStyle = `opacity: ${opacity};`;
 ---
 
 {fixedBg ? (
@@ -56,12 +86,40 @@ const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscal
     role="img"
     aria-label={alt}
   />
-) : (
-  <div class:list={['absolute inset-0 z-0 bgimage  ', maskClass, className]}>
+) : bgfixedparallax ? (
+  <div class:list={['absolute inset-0 z-0 bgimage overflow-hidden', maskClass, className]}>
     {optimized ? (
-      <Image src={optimized} alt={alt} width={1920} layout="none" class={imgClass} style={`opacity: ${opacity}`} />
+      <Image
+        src={optimized}
+        alt={alt}
+        layout="full-width"
+        class={fixedParallaxImgClass}
+        style={fixedParallaxImgStyle}
+        data-bgfixedparallax={true}
+      />
     ) : (
-      <img src={src} alt={alt} class={imgClass} style={`opacity: ${opacity}`} />
+      <img
+        src={src}
+        alt={alt}
+        class={fixedParallaxImgClass}
+        style={fixedParallaxImgStyle}
+        data-bgfixedparallax={true}
+      />
+    )}
+  </div>
+) : (
+  <div class:list={['absolute inset-0 z-0 bgimage  ', margin && 'overflow-hidden', maskClass, className]}>
+    {optimized ? (
+      <Image
+        src={optimized}
+        alt={alt}
+        layout="full-width"
+        class={imgClass}
+        style={imgStyle}
+        data-parallax={range || undefined}
+      />
+    ) : (
+      <img src={src} alt={alt} class={imgClass} style={imgStyle} data-parallax={range || undefined} />
     )}
   </div>
 )}

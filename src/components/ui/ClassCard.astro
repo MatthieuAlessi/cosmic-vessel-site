@@ -5,84 +5,120 @@ import CmsImage from '@components/ui/CmsImage.astro';
 import { Icon } from 'astro-icon/components';
 
 interface Props {
+  /** `full` = carte complète (ornements, rayons, tagline, "Discover").
+      `compact` = version dense pour les sélecteurs / miniatures : cadre + nom
+      seuls, paddings resserrés. */
+  variant?: 'full' | 'compact';
   name: string;
   tagline?: string;
   art?: string;
-  /** Cadre seul (sans nom ni ornements) — pour les sélecteurs / miniatures. */
-  compact?: boolean;
   /** Active le tilt 3D magnétique au hover (mousemove). */
   tilt?: boolean;
   /** Si fourni, un clic navigue vers cette URL. */
   href?: string;
-  /** Affiche le "Discover" au hover (masqué quand la carte n'est pas cliquable, ex. VoiesSection). */
+  /** Affiche le "Discover" au hover — variant `full` uniquement. Masquer quand
+      la carte n'est pas cliquable (ex. VoiesSection). */
   discover?: boolean;
   class?: string;
   [key: string]: unknown;
 }
+
 const {
+  variant = 'full',
   name,
   tagline,
   art,
-  compact = false,
   tilt = false,
   href,
   discover = true,
   class: className = '',
   ...rest
 } = Astro.props;
+
+// Racine commune aux deux variantes : c'est elle que ciblent le glow
+// (`.class-card.is-active`, global.css), le tilt (`.card-tilt`) et la
+// navigation au clic (`data-href`, script en bas de fichier).
+const rootClasses = [
+  'class-card relative rounded-xl bg-background-300 frame-gilded shadow-img-lift',
+  tilt && 'card-tilt',
+  (tilt || href) && 'cursor-pointer',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+// Cadre en arche : identique dans les deux variantes, seul l'écart du liseré
+// extérieur diffère (un recul de 12px dépasserait la miniature entière).
+const frameClasses =
+  'class-card__frame relative aspect-[2/3.3] rounded-t-full overflow-hidden border border-primary-500/50 outline-1 outline-primary-500/20';
 ---
 
-<div
-  class:list={[
-    'class-card relative rounded-xl border border-white/10 bg-background-300 shadow-img-lift',
-    compact ? 'p-4' : ' ',
-    tilt && 'card-tilt',
-    (tilt || href) && 'cursor-pointer',
-    className,
-  ]}
-  data-href={href || undefined}
-  {...rest}
->
-  {!compact && (
-    <>
-      <CornerOrnament size={34} class="opacity-40" />
+{
+  variant === 'full' && (
+    <div class={rootClasses} data-href={href || undefined} {...rest}>
+      <CornerOrnament size={34} corner="top-left" class="opacity-80" />
+      <CornerOrnament size={34} corner="top-right" class="opacity-40" />
+      <CornerOrnament size={34} corner="bottom-left" class="opacity-40" />
+      <CornerOrnament size={34} corner="bottom-right" class="opacity-80" />
       <CornerRays corner="top-left" class="class-card__rays" />
       <CornerRays corner="top-right" class="class-card__rays" />
-    </>
-  )}
 
-  <div class="p-6 pb-4">
-    <div
-      class="class-card__frame relative aspect-[2/3.3] rounded-t-full overflow-hidden border border-primary-500/50 outline-1 outline-primary-500/20 outline-offset-12"
-    >
-      {art
-        ? <CmsImage src={art} alt={name} width={400} layout="none" class="w-full h-full object-cover" />
-        : <div class="w-full h-full bg-background-500/60" />
-      }
-      <div class="overlay-bottom"></div>
+      <div class="p-4.5 md:p-5 lg:p-6 pb-2 md:pb-4">
+        <div class={`${frameClasses} outline-offset-8 lg:outline-offset-12`}>
+          {art ? (
+            <CmsImage src={art} alt={name} width={400} layout="none" class="w-full h-full object-cover" />
+          ) : (
+            <div class="w-full h-full bg-background-500/60" />
+          )}
+          <div class="overlay-bottom" />
 
-      {!compact && discover && (
-        <div class="class-card__discover">
-          <span class="font-display text-base uppercase">Discover</span>
-          <Icon name="ph:arrow-right" class="w-3.5 h-3.5" />
+          {discover && (
+            <div class="class-card__discover">
+              <span class="font-display text-base uppercase">Discover</span>
+              <Icon name="ph:arrow-right" class="w-3.5 h-3.5" />
+            </div>
+          )}
+
+          <CornerOrnament size={34} class="class-card__ornament" />
         </div>
-      )}
+      </div>
 
-      <CornerOrnament size={34} class="class-card__ornament" />
+      <div class="border-t border-primary-500/20 text-center relative mt-3 p-2 lg:p-4">
+        {tagline && (
+          <p class=" uppercase tracking-wide text-2xs md:text-xs text-center mx-auto text-primary-300 md:mb-1">{tagline}</p>
+        )}
+        <h3 class="title-3 text-primary-100 text-base md:text-lg xl:text-xl">{name}</h3>
+      </div>
     </div>
-  </div>
+  )
+}
 
-  {!compact && (
-    <div class="border-t border-primary-500/20 mt-3 p-4 text-center relative">
-      {tagline && (
-        <p class="font-display text-2xs tracking-widest uppercase text-primary-300 mb-1">
-          {tagline}
-        </p>
-      )}
-      <h3 class="title-3 text-primary-100 text-base md:text-lg xl:text-xl">{name}</h3>
+{
+  variant === 'compact' && (
+    <div class={rootClasses} data-href={href || undefined} {...rest}>
+
+       <CornerOrnament size={34} corner="top-left" class="opacity-80" />
+      <CornerOrnament size={34} corner="top-right" class="opacity-40" />
+      <div class="p-3.5 pb-2">
+        <div class={`${frameClasses} outline-offset-4`}>
+          {art ? (
+            <CmsImage src={art} alt={name} width={400} layout="none" class="w-full h-full object-cover" />
+          ) : (
+            <div class="w-full h-full bg-background-500/60" />
+          )}
+          <div class="overlay-bottom" />
+          <CornerOrnament size={34} class="class-card__ornament" />
+        </div>
+      </div>
+
+      {/* Pas de <h3> ici : la carte sert de bouton dans un sélecteur, ce n'est
+          pas un titre de la hiérarchie du document. */}
+      <div class="  text-center relative   px-1.5 pt-2 pb-3">
+        <p class="title-3 font-ui text-primary-100 text-2xs sm:text-2xs tracking-wide leading-tight">{name}</p>
+      </div>
     </div>
-  )}
-</div>
+  )
+}
 
 <script>
   // --ease-cinematic dupliqué car les custom props CSS ne s'évaluent pas dans style.transition

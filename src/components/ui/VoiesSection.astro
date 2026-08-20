@@ -88,12 +88,12 @@ const { heading } = Astro.props;
 
     <div class="text-center mb-12">
       <p class="title-label-ghost mb-8 mt-4 mx-auto">{heading?.label}</p>
-      <h2 class="title-1 mb-6 text-primary-100">{heading?.title}</h2>
+      <h2 class="title-1 anim-blur w-fit mx-auto mb-6">{heading?.title}</h2>
 
    <DividerH width="max-w-lg" class="my-8" />
 
              <p
-          class="text-foreground-100 font-body text-sm lg:text-lg leading-relaxed max-w-xl mx-auto mb-8"
+          class="text-foreground-100 font-body text-sm lg:text-lg leading-relaxed max-w-3xl mx-auto mb-8"
         >
           {heading?.text}
         </p>
@@ -101,9 +101,9 @@ const { heading } = Astro.props;
 
     </div>
 
-    <!-- Sélecteur de voies : 4 boutons (2×2 mobile, rangée en desktop). Sticky.
+    <!-- Sélecteur de voies : 4 boutons (2×2 mobile, rangée en desktop).
          Pilote le slider `.voies-main` (voir voies-swiper.js). -->
-    <div class="sticky-header z-20 mt-8 lg:mt-12 flex items-stretch gap-3 p-2 bg-background-500/50 backdrop-blur-xs border border-white/10 border-panel shadow-img-lift">
+    <div class="z-20 mt-8 lg:mt-12 flex items-stretch gap-3 p-2 bg-background-500/50 backdrop-blur-xs border border-white/10 border-panel shadow-img-lift">
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 flex-1 min-w-0">
         {voies.map((voie, i) => (
           <button
@@ -157,7 +157,7 @@ const { heading } = Astro.props;
                   <h3 class="title-2 text-primary-100">{voie.name}</h3>
                 </div>
                 <DividerH />
-                <p class="text-foreground-300 font-body text-base leading-relaxed">
+                <p class="text-foreground-300 font-body text-sm md:text-base leading-relaxed">
                   {voie.description}
                 </p>
               </div>
@@ -169,7 +169,7 @@ const { heading } = Astro.props;
 
 
               <div class="space-y-4 lg:grow-5 lg:basis-0 lg:min-w-0 mt-4 lg:mt-0">
-                <p class="font-display text-md uppercase  text-foreground-300  ">Class Spells</p>
+                <p class="font-display text-base uppercase  text-foreground-300  ">Class Spells</p>
                 <div class="grid grid-cols-1   gap-2">
                   {voie.spells.map((spell) => (
                     <SpellCard image={spell.image} alt={spell.name} name={spell.name} description={spell.description} />

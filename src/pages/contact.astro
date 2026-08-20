@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro"
 import Nav from "@components/ui/Nav.astro"
+import Divider from "@components/decor/Divider.astro"
 import Footer from "@components/ui/Footer.astro"
 import BgImage from "@components/decor/BgImage.astro"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
@@ -35,27 +36,27 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 >
   <Nav />
 
-  <main class="pt-18 pb-6">
-    <div class="px-3 mx-auto  lg:px-3">
+  <main class="pt-18 lg:pt-0 pb-6">
+    <div class="  mx-auto   ">
       <!-- Bloc image encadrée : titre en bas-gauche + formulaire flottant à droite -->
-      <div class="relative lg:min-h-160 p-4 sm:p-8 lg:p-12">
+      <div class="relative lg:min-h-[min(90svh,900px)] p-4 sm:p-8 lg:p-12">
         <!-- Image de fond encadrée (border + corner, comme les bandes de la home).
              Masquée en mobile : le titre passe alors sur le fond sombre du body →
              meilleure lisibilité (le formulaire a déjà son propre fond solide). -->
         <div
-          class="hidden lg:block absolute inset-0 shadow-xl border-panel overflow-hidden border border-primary-300/30"
+          class="hidden lg:block absolute inset-0 shadow-xl  overflow-hidden  "
         >
-          <BgImage src="/images/bg1.jpeg" opacity={1} position="object-center" class="z-0" />
+          <BgImage src="/src/assets/images/decor/bg1.jpeg" opacity={1} position="object-center" class="z-0" />
           <div class="overlay-vignette2 z-0"></div>
-          <CornerOrnament size={34} class="opacity-50 z-10" />
+          <!-- <CornerOrnament size={34} class="opacity-50 z-10" /> -->
         </div>
 
         <!-- Contenu par-dessus l'image -->
-        <div class="relative z-10 grid lg:grid-cols-7 gap-8 lg:gap-6 items-end">
+        <div class="relative z-10 grid lg:grid-cols-7 gap-8 lg:gap-6 items-end pt-0 md:pt-10 2xl:pt-16  ">
           <!-- Titre (bas-gauche) -->
           <div class="lg:pb-8 lg:col-span-4">
             <p class="section-label mb-4">Contact</p>
-            <h1 class="title-section">Get in touch</h1>
+            <h1 class="title-section anim-blur w-fit">Get in touch</h1>
             <!-- <p class="text-foreground-300 font-body text-lg mt-6 max-w-sm">
               Questions, feedback, or want to join the team? We're listening.
             </p> -->
@@ -66,11 +67,10 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 
           <!-- Formulaire flottant (dark, gardé tel quel) -->
           <div
-            class="relative lg:col-span-3 border-panel border border-primary-500/20 bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
+            class="relative lg:col-span-3 border-panel frame-gilded bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
           >
-            <CornerOrnament size={28} corner="top-left" class="opacity-40" />
-            <CornerOrnament size={28} corner="bottom-right" class="opacity-40" />
-
+      <CornerOrnament size={34} corner="top-left" class="opacity-80" />
+  <CornerOrnament size={34} corner="bottom-right" class="opacity-80" />
             <h2 class="font-display text-xl tracking-wide uppercase text-primary-100 mb-4">
               Send us a message
             </h2>

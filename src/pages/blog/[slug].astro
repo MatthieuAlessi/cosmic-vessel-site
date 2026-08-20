@@ -69,7 +69,7 @@ const shareButtons = [
       src="/images/smoke1.jpeg"
       opacity={0.1}
       position="object-center"
-      fixedBg
+      parallax={18}
       size="cover"
     />
 
@@ -79,7 +79,7 @@ const shareButtons = [
     <!-- Bannière large : titre + tags en overlay sur l'image -->
     <div class="relative z-10 px-3 mb-12">
       <div
-        class="relative h-[58vh] min-h-100 overflow-hidden border border-primary-300/30 border-panel shadow-xl flex flex-col"
+        class="relative h-[58vh] min-h-100 overflow-hidden frame-gilded  border-panel shadow-xl flex flex-col"
       >
         <CmsImage
           src={cover}
@@ -90,8 +90,8 @@ const shareButtons = [
           class="absolute inset-0 w-full h-full object-cover"
         />
         <div class="overlay-bottom"></div>
-        <CornerOrnament size={34} class="opacity-50 z-20" />
-
+     <CornerOrnament size={34} corner="top-left" class="opacity-80" />
+  <CornerOrnament size={34} corner="bottom-right" class="opacity-80" />
         <!-- Titre (bas-gauche) — seul sur l'image, bien lisible -->
         <div class="relative z-20 mt-auto p-6 sm:p-10 lg:p-14">
           <div class="max-w-4xl">
@@ -101,7 +101,7 @@ const shareButtons = [
                 Back to news
               </a>
             </div>
-            <h1 class="title-1 lg:text-6xl text-primary-100 leading-tight">{post.data.title}</h1>
+            <h1 class="title-1 anim-blur lg:text-6xl leading-tight">{post.data.title}</h1>
 
              <div class="flex flex-wrap gap-2 mt-4">
           {post.data.tags.map((tag) => <span class="badge badge--primary">{tag}</span>)}
@@ -213,7 +213,7 @@ const shareButtons = [
 
         <!-- Sidebar : autres articles -->
         <aside class="w-full min-w-0 lg:grow lg:basis-0 lg:sticky lg:top-28 self-start">
-<div class="border-panel border border-primary-700/30 backdrop-blur-xs bg-background-500/40 p-8 ">
+<div class="relative border-panel frame-gilded backdrop-blur-xs bg-background-500/40 p-8 ">
 
  <CornerOrnament size={34} corner="top-left"  class="opacity-40" />
   <CornerOrnament size={34} corner="top-right"  class="opacity-40" />

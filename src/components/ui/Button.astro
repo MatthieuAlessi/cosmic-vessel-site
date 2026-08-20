@@ -19,7 +19,7 @@ interface Props {
 
 const {
   variant = 'primary',
-  size = 'sm',
+  size = 'md',
   icon,
   iconsize = "w-4 h-4 lg:w-5 lg:h-5",
   href,
@@ -38,10 +38,10 @@ if (rest.target === '_blank' && rest.rel == null) rest.rel = 'noopener noreferre
 // Source unique des tailles de bouton : ces utilitaires priment toujours sur le
 // padding de `.btn` (layer utilities > components) — le CSS n'est qu'un fallback.
 const sizeClasses = {
-  xs: 'py-0.5 px-2.5 text-2xs ',
-  sm: 'py-1 px-3 lg:py-2 lg:px-4 text-2xs md:text-xs ',
-  md: 'py-1.5 px-3.5 lg:py-2.5 lg:px-5 text-2xs md:text-xs ',
-  lg: 'py-2 px-5 lg:py-3 lg:px-7 text-xs ',
+  xs: 'py-0.5 px-2 text-2xs ',
+  sm: 'py-1 px-2.5 lg:py-1.5 lg:px-4 text-[11px] lg:text-[12.5px] ',
+  md: 'py-1.5 px-3 lg:py-1.5 lg:px-4 text-[11px] lg:text-[14.0px] ',
+  lg: 'py-2 px-4 lg:py-2 lg:px-5  text-[17px] ',
 }[size];
 ---
 

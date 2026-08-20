@@ -43,6 +43,8 @@ const items = roadmapCategories.map((c) => ({
 </nav>
 
 <script>
+  import { scrollToTarget } from "@scripts/smooth-scroll.js"
+
   // Scroll-spy : surligne l'entrée du sommaire correspondant à la section visible.
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".roadmap-toc__link"))
   const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-toc-section]"))
@@ -59,7 +61,7 @@ const items = roadmapCategories.map((c) => ({
         const target = slug ? document.getElementById(slug) : null
         if (!target) return // pas de cible → on laisse le saut natif du href
         e.preventDefault() // on prend la main → pas de saut sec, pas de #hash dans l'URL
-        target.scrollIntoView({ behavior: "smooth", block: "start" }) // respecte scroll-mt-28
+        scrollToTarget(target) // respecte scroll-mt-28
         setActive(slug!) // surligne tout de suite, sans attendre le scroll-spy
       })
     })

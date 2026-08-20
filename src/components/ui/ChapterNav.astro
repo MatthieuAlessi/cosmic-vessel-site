@@ -56,6 +56,8 @@ const { items, hideOnSection, class: className = "" } = Astro.props
 </nav>
 
 <script>
+  import { scrollToTarget } from "@scripts/smooth-scroll.js"
+
   // Scroll-spy : surligne le chapitre de la section visible (identique à RoadmapToc,
   // rootMargin ajusté pour la bande sous le nav + la barre sticky elle-même).
   const nav = document.querySelector<HTMLElement>(".chapter-nav")
@@ -77,7 +79,7 @@ const { items, hideOnSection, class: className = "" } = Astro.props
         const target = slug ? document.getElementById(slug) : null
         if (!target) return
         e.preventDefault()
-        target.scrollIntoView({ behavior: "smooth", block: "start" })
+        scrollToTarget(target)
         setActive(slug!)
       })
     })

@@ -17,8 +17,9 @@ const { label, title, description, image } = Astro.props
 
 <section class="relative pt-24 pb-8 lg:pt-40 lg:pb-20 overflow-hidden bg-background-700 md:min-h-[min(70svh,650px)] md:flex md:items-center">
   <BgImage
-    src={image ?? "/images/bg1.jpeg"}
+    src={image ?? "/src/assets/images/decor/bg1.jpeg"}
     opacity={0.1}
+    parallax={18}
     position="object-center"
     size="cover"
     maskClass="mask-galaxy--img"
@@ -28,7 +29,7 @@ const { label, title, description, image } = Astro.props
 
   <div class="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-6 text-left">
     <p class="section-label-ghost mb-6 lg:mb-8">{label}</p>
-    <h1 class="title-section text-4xl md:text-6xl lg:text-8xl">{title}</h1>
+    <h1 class="title-section anim-blur w-fit text-4xl md:text-6xl lg:text-8xl">{title}</h1>
 
     <div class="relative py-2 my-6 lg:py-4 lg:my-8">
       <DividerV dotTop={true} dotBottom={true} position="left" class="z-1" />

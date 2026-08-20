@@ -15,10 +15,13 @@
   --color-primary-500: #c9933a;
   --color-primary-700: #8a6228;
 */
-  --color-primary:     #AD8D59;
+  /* Saturation de la rampe : 71 / 56 / 50 / 44. Le 500 valait S34 — un creux au
+     milieu de la rampe qui rendait l'or beige (et c'est l'alias de --color-primary,
+     donc la valeur la plus utilisée du site). Réaligné sur la courbe. */
+  --color-primary:     #C09144;
   --color-primary-100: #f0d9a8;
   --color-primary-300: #D3AA64;
-  --color-primary-500: #AD8D59;
+  --color-primary-500: #C09144;
   --color-primary-700: #8F6C38;
 
    
@@ -31,7 +34,7 @@
   --color-foreground:     #d8cdb8;
   --color-foreground-100: #EEE8DF;
   --color-foreground-300: #DAD3C6;
-  --color-foreground-500: #9a8f7e;
+  --color-foreground-500: #B1A695;
   --color-foreground-700: #5a5248;
 
   --color-accent:     #4a5a8a;
@@ -41,7 +44,8 @@
   --color-accent-700: #2a3458;
 
   /* ─── Typographie ──────────────────────────────────────────────────────────*/
-  --font-display: 'Cinzel', 'Trajan Pro', serif;
+  --font-display: 'EB Garamond', 'Garamond', serif;
+  --font-hero: 'Cinzel', 'Trajan Pro', serif;
   --font-body: 'Inter', 'Segoe UI', sans-serif;
   --font-ui: 'Inter', 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -131,7 +135,23 @@
   /* Ombre d'image noire prononcée (lisible car les images sont posées sur la
      texture BgImage + cache--gradient2, pas sur du noir pur). Double couche :
      une proche pour l'ancrage, une large et profonde pour l'étalement. */
-  --shadow-img-lift:        0 18px 35px -8px rgba(0, 0, 0, 0.9), 0 50px 90px -20px rgba(0, 0, 0, 0.85);
+  --shadow-img-lift:        0 12px 24px -6px rgba(0, 0, 0, 0.65), 0 32px 60px -20px rgba(0, 0, 0, 0.55);
+
+  /* ─── Dégradé métal ───────────────────────────────────────────────────────*/
+  /* Haute lumière à GAUCHE, l'or s'approfondit vers la droite. La relance à 58%
+     (retour au 300 après le 500) est ce qui lit comme un pli de métal plutôt
+     qu'un fondu. Uniquement des tokens : suit la palette si elle bouge.
+     Source unique de .title-hero / .title-section / .title-1 / .editorial-word. */
+  --gradient-metal: linear-gradient(
+    to right,
+    var(--color-foreground-100) 0%,
+    var(--color-primary-100) 14%,
+    var(--color-primary-300) 32%,
+    var(--color-primary-500) 46%,
+    var(--color-primary-300) 58%,
+    var(--color-primary-500) 76%,
+    var(--color-primary-700) 100%
+  );
 
   /* ─── Easing ───────────────────────────────────────────────────────────────*/
   --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -170,7 +190,27 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-body);
+  /* Texte clair sur fond sombre : le rendu épaissit optiquement.
+     Inter en 300 + lissage en niveaux de gris compensent. */
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+}
+
+/* Lenis : classes posées sur <html> par la lib (voir scripts/smooth-scroll.js). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 /* ─── Hero ──────────────────────────────────────────────────────────────────*/
@@ -212,6 +252,46 @@ body {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ─── Animations (kit) ────────────────────────────────────────────────────── */
+/* Masqué le temps qu'animations.js (différé) découpe et révèle l'élément —
+   évite le flash plein texte avant split. Jamais appliqué sans JS (pas de .js),
+   et c'est au JS de révéler dans tous les cas (y compris prefers-reduced-motion). */
+.js .anim-blur {
+  opacity: 0;
+}
+
+/* Wrapper injecté par animations.js autour de chaque mot : c'est lui qui porte
+   le blur, jamais le mot lui-même. */
+.anim-blur__word {
+  display: inline-block;
+}
+
+/* ⚠️ NE PAS SUPPRIMER — sans cette couche de composition, l'animation est
+   visuellement cassée sur les titres à dégradé (.title-hero, .title-section,
+   .title-1). Dès qu'un ANCÊTRE porte un filter, Chromium applique le
+   background-clip:text au mauvais stade et laisse apparaître la boîte
+   rectangulaire du dégradé en auréole derrière le mot. translateZ(0) force le
+   mot à être rastérisé — clip compris — avant que le blur du parent s'applique.
+   Diagnostiqué par élimination (le blur seul et le drop-shadow seul sont sains,
+   seul le dégradé casse) ; `will-change` marche aussi mais n'est qu'un hint que
+   le navigateur peut ignorer, et `contain:paint` rognerait les glyphes.
+
+   ⚠️ Conditionné à .is-animating (posée/retirée par animations.js) et NON
+   permanent : une couche GPU fait perdre au texte l'antialiasing sous-pixel,
+   qui retombe en grayscale — le titre paraît légèrement crénelé. On ne paie
+   donc ce prix que pendant le blur ; une fois le filter retiré il n'y a plus
+   d'ancêtre flouté, donc plus de bug à contourner. */
+.anim-blur.is-animating .anim-blur__word > * {
+  transform: translateZ(0);
+}
+
+/* ⚠️ TEMPORAIRE — désactive le correctif ci-dessus, uniquement pour garder un
+   témoin « cassé » sur /anim-test. À supprimer avec la page de test.
+   Doit matcher la spécificité de la règle ci-dessus pour l'emporter. */
+.tv-none.is-animating .anim-blur__word > * {
+  transform: none;
 }
 
 @layer utilities {
@@ -355,52 +435,42 @@ body {
     inset 0 0 80px -5px rgba(201, 147, 58, 0.1);
 }
 
+/* Dégradé métal appliqué au texte, extrait de .title-hero / .title-section /
+   .title-1 qui l'embarquent déjà. En utility (et non en composant) pour pouvoir
+   le poser sur un titre qui ne l'a pas — ex. `.title-2 text-metal` — sans
+   toucher la classe de titre elle-même, partagée par d'autres pages.
+   ⚠️ Le split GSAP découpe le texte en lignes : chaque fragment perdrait le
+   dégradé s'il n'était pas repeint par paintSplitGradient (animations.js), qui
+   ne se déclenche que si background-clip vaut bien `text`. */
+@utility text-metal {
+  @apply bg-clip-text text-transparent;
+  background-image: var(--gradient-metal);
+}
+
 /* ─── Textes ─────────────────────────────────────────────────────────────────*/
 @layer components {
+  /* Texte en primary-100. `fit-content` + `mx-auto` pour centrer, `mx-0` pour
+     aligner. Les filets latéraux ont été retirés : plusieurs labels du site sont
+     écrits en utilitaires bruts (StatCard, RoadmapDigest, « Class Spells »…) et
+     ne les avaient pas, donc le traitement était incohérent d'un bloc à l'autre.
+     Les quatre classes sont désormais identiques ; les variantes `-ghost` sont
+     conservées comme alias (~15 usages dans le markup). */
   .section-label,
-  .title-label {
-    font-family: var(--font-body);
-    font-size: var(--text-2xs);
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-primary-100);
-    /* padding réduit sur mobile, restauré à partir de `sm` (voir média ci-dessous) */
-    padding: 0.25rem 0.6rem;
-    border-radius: 3px;
-    width: fit-content;
-    background: var(--color-background-300);
-  }
-  @media (min-width: 640px) {
-    .section-label,
-    .title-label {
-      padding: 0.4rem 0.75rem;
-    }
-  }
-
+  .title-label,
   .section-label-ghost,
   .title-label-ghost {
+    width: fit-content;
     font-family: var(--font-body);
     font-size: var(--text-2xs);
     font-weight: 500;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-primary-100);
-        padding: 0.25rem 0.6rem;
-    border-radius: 3px;
-    border: 1px solid color-mix(in srgb, var(--color-primary-300) 20%, transparent);
-    width: fit-content;
-    background: none;
-  }
-      @media (min-width: 640px) {
-    .section-label-ghost,
-    .title-label-ghost {
-      padding: 0.4rem 0.75rem;
-    }
   }
 
   .title-hero {
-    @apply font-display tracking-wide uppercase bg-gradient-to-b from-foreground-300 via-primary-100 via-primary-300 to-primary-700 bg-clip-text text-transparent;
+    @apply font-hero tracking-[-0.04em] uppercase bg-clip-text text-transparent;
+    background-image: var(--gradient-metal);
     font-size: clamp(2.5rem, 6vw, 6.0rem);
     font-weight: 500;
     line-height: 1;
@@ -417,7 +487,8 @@ body {
   }
 
     .title-section {
-    @apply font-display tracking-wide uppercase bg-gradient-to-b from-foreground-300 via-primary-100 via-primary-300 to-primary-700 bg-clip-text text-transparent;
+    @apply font-hero tracking-[-0.04em]  uppercase bg-clip-text text-transparent;
+    background-image: var(--gradient-metal);
     font-size: clamp(2.3rem, 5vw, 5rem);
     font-weight: 500;
     line-height: 1;
@@ -428,21 +499,22 @@ body {
   }
 
   .title-1 {
-    @apply font-display text-2xl md:text-4xl lg:text-6xl tracking-[0.02em]  uppercase text-primary-300;
+    @apply font-hero text-2xl md:text-4xl lg:text-6xl tracking-[-0.04em] uppercase bg-clip-text text-transparent;
+    background-image: var(--gradient-metal);
     font-weight: 300;
   }
 
   .title-2 {
-    @apply font-display text-xl md:text-2xl lg:text-3xl    uppercase text-primary-100;
+    @apply font-hero text-xl md:text-2xl lg:text-3xl    uppercase text-primary-100;
   }
 
   .title-3 {
-    @apply font-display text-lg lg:text-xl   uppercase text-primary-100;
+    @apply font-hero text-lg lg:text-xl   uppercase text-primary-100;
     font-weight: 300;
   }
 
   .title-4 {
-    @apply font-body text-base tracking-widest uppercase text-primary-100;
+    @apply font-body text-base tracking-wider  uppercase text-primary-100;
     font-weight: 300;
   }
 }
@@ -456,14 +528,16 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+   
     font-family: var(--font-display);
-    font-size:0.9em;
-     border-radius: 0px;
-    font-weight: 700;
-letter-spacing: 0.035em;
-    text-transform: uppercase;
+    font-size:1.1em;
+     border-radius: 4px;
+    font-weight: 500;
+ 
+    letter-spacing: -0.00em;
     text-decoration: none;
-  
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
     padding: 0.375rem 1rem;
     border: 1px solid transparent;
     cursor: pointer;
@@ -475,14 +549,14 @@ letter-spacing: 0.035em;
   }
 
   .btn--primary {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-300);
     color: var(--color-background);
-    border-color: var(--color-primary);
+    border-color: var(--color-primary-300);
   }
 
   .btn--primary:hover {
-    background-color: var(--color-primary-300);
-    border-color: var(--color-primary-300);
+    background-color: var(--color-primary-100);
+    border-color: var(--color-primary-100);
     color: var(--color-background);
     box-shadow: 0 0 30px rgba(201, 147, 58, 0.2);
   }
@@ -782,6 +856,42 @@ article:hover .card-expand {
   border-radius: var(--radius-md);
 }
 
+/* ─── Cadre liseré doré (images encadrées) ──────────────────────────────────
+   Anneau à opacité variable (conic-gradient masqué) plutôt qu'un outline plat :
+   le liseré doré apparaît/disparaît en tournant autour du cadre, au lieu d'un
+   trait uniforme. ⚠️ Ne pose PAS `position` ici (un `position:relative` non
+   layé écraserait `sticky-header`/`absolute` posés par l'appelant, quel que
+   soit l'ordre des classes) — chaque usage doit garder `relative` (ou
+   `sticky-header`, etc.) explicitement dans son propre class:list. */
+.frame-gilded::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  /* Pics sur les coins bas-droit (37.5%) et haut-gauche (87.5%) — ceux que
+     `CornerOrnament` occupe : le liseré y passe par-dessus l'ornement.
+     ⚠️ Atténuation portée par les stops eux-mêmes, PAS par `opacity` : une
+     opacité globale rendait aussi les pics translucides, donc l'ornement
+     transparaissait au travers (double trait délavé). Pics opaques = ils
+     recouvrent proprement l'ornement au croisement. */
+  background: conic-gradient(
+    from 0deg,
+    rgba(211, 170, 100, 0.15) 0%,
+    rgba(211, 170, 100, 0.15) 12.5%,
+    var(--color-primary-300) 37.5%,
+    rgba(211, 170, 100, 0.15) 62.5%,
+    var(--color-primary-300) 87.5%,
+    rgba(211, 170, 100, 0.15) 100%
+  );
+  opacity: 0.7;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 /* ─── Navigation ────────────────────────────────────────────────────────────*/
 /* Barre flottante détachée des bords pour que le radius du `panel` se voie. */
 .nav {
@@ -791,9 +901,9 @@ article:hover .card-expand {
   right: 0.75rem;
 
 @media (max-width: 640px) {
-top: 0.45rem;
-  left: 0.45rem;
-  right: 0.45rem;
+top: 0rem;
+  left: 0rem;
+  right: 0rem;
 }
 
   z-index: 99100;
@@ -812,9 +922,9 @@ top: 0.45rem;
 
 .nav__logo {
   font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--color-primary-100);
   text-decoration: none;
@@ -858,8 +968,8 @@ top: 0.45rem;
   /* border-top-left-radius: 3px;
   border-top-right-radius: 3px; */
   background: white;
-  opacity:0.35;
-  height: 1px;
+  opacity: 0.9;
+  height: 2px;
   transition: width 300ms var(--ease-cinematic);
 }
 
@@ -1069,6 +1179,26 @@ top: 0.45rem;
   width: 1.5rem;
   background: var(--color-primary);
 }
+/* Puces du carrousel Classes (home) : plus petites que le défaut partagé
+   ci-dessus (spécifique à ce carrousel, ne touche pas `.voie-dot`). Restent
+   de vrais petits cercles — seule la couleur change sur l'actif, pas la
+   largeur (contrairement à `.voie-dot--active`). */
+.class-dot {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+.class-dot--active {
+  width: 0.375rem;
+}
+
+/* Sensation d'inertie sur le déplacement des cartes : Swiper pose
+   `transition-duration` en inline JS (voir `speed`, class-cards-swiper.js)
+   mais laisse le timing-function au CSS, par défaut `ease` du navigateur.
+   Courbe plus dynamique que ease-in classique : ralentit au milieu puis
+   réaccélère sur la fin. */
+.class-swiper .swiper-slide {
+  transition-timing-function: cubic-bezier(0.12, 0.45, 0.88, 0.47);
+}
 /* Desktop : les 4 cartes sont visibles (grille) → on ne force pas le glow sur la
    slide active ; le glow reste au hover comme partout. On neutralise donc les
    règles `.swiper-slide-active` (globales, partagées avec VoiesSection) au-dessus de md. */
@@ -1103,13 +1233,19 @@ top: 0.45rem;
 
 /* ─── Editorial / Lore section ────────────────────────────────────────────── */
 .editorial-word {
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
   font-size: clamp(3rem, 9vw, 8.5rem);
   line-height: 0.9;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: var(--color-primary-100);
-  
+  background-image: var(--gradient-metal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(6, 6, 8, 0.9))
+    drop-shadow(0 3px 6px rgba(6, 6, 8, 0.7))
+    drop-shadow(0 0 30px rgba(201, 147, 58, 0.25));
 }
 
 .char {
@@ -1195,3 +1331,87 @@ pointer-events: none;
   .voies-main .swiper-slide-active .class-card__rays line {
     transition: stroke 0.55s var(--ease-cinematic) 0.5s;
   }
+
+/* ─── Section « Voies » — variante pile de cartes (VoiesShowcase) ──────────── */
+/* Le placement (data-pos, posé par voies-showcase.js) est ici car il enchaîne
+   des états impossibles à écrire en Tailwind inline. */
+
+/* Pile : grid-area 1/1 (même principe que .layer-stack) → la hauteur du
+   conteneur suit la plus grande carte, les cartes se superposent.
+   Toutes gardent la même taille (pas de scale) : c'est un vrai jeu de cartes,
+   seuls le décalage et l'inclinaison changent. */
+.voies-deck {
+  display: grid;
+}
+.voies-deck__item {
+  grid-area: 1 / 1;
+  transform-origin: 50% 85%;
+  cursor: pointer;
+  transition:
+    transform 0.35s var(--ease-cinematic),
+    filter 0.35s var(--ease-cinematic);
+}
+/* Cartes en attente : décalées, inclinées et assombries derrière la carte active */
+.voies-deck__item[data-pos] {
+  filter: brightness(0.4) saturate(0.7);
+  pointer-events: none;
+}
+.voies-deck__item[data-pos="0"] {
+  z-index: 40;
+  transform: rotate(-2deg);
+  filter: none;
+  pointer-events: auto;
+}
+.voies-deck__item[data-pos="1"] {
+  z-index: 30;
+  transform: rotate(1.5deg) translate(7%, -4%);
+}
+.voies-deck__item[data-pos="2"] {
+  z-index: 20;
+  transform: rotate(3deg) translate(11.5%, 0);
+}
+.voies-deck__item[data-pos="3"] {
+  z-index: 10;
+  transform: rotate(1deg) translate(15%, 5%);
+}
+
+/* Rangée de cartes étalées (miniatures) — l'inclinaison --rot vient du markup et
+   ne bouge JAMAIS : seules la lueur et la luminosité distinguent la voie active.
+   La rangée occupe toute la largeur de la colonne, sans gap et avec un léger
+   chevauchement ; l'active passe au-dessus (z-index) et reste donc entière. */
+.voie-thumb {
+  min-width: 0;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  filter: brightness(0.45) saturate(0.7);
+  transition: filter 0.4s var(--ease-cinematic);
+}
+/* Rangée sur une seule ligne à partir de lg : largeur en %, chevauchement et
+   inclinaison STATIQUE en éventail (--rot, posé dans le markup). */
+@media (min-width: 64rem) {
+  .voie-thumb {
+    width: 25%;
+    max-width: 170px;
+    transform: rotate(var(--rot, 0deg));
+  }
+  .voie-thumb + .voie-thumb {
+    margin-left: -2%;
+  }
+}
+/* Sous lg, l'éventail statique cède la place au carrousel "grande carte"
+   mobile (.voies-mobile, voies-mobile-swiper.js) — même sensation d'inertie
+   que le carrousel Classes de la home sur le déplacement (voir `.class-swiper
+   .swiper-slide` plus haut). Contrairement à l'ancienne rangée de miniatures
+   (scroller pur), ici la carte centrée EST la voie sélectionnée (synchronisé
+   en JS) : la lueur `.swiper-slide-active` générique peut donc s'appliquer
+   telle quelle, pas besoin de la neutraliser au profit de `.is-active`. */
+.voies-mobile .swiper-slide {
+  transition-timing-function: cubic-bezier(0.12, 0.45, 0.88, 0.47);
+}
+.voie-thumb:hover {
+  filter: brightness(0.75) saturate(0.85);
+}
+.voie-thumb.is-active {
+  z-index: 10;
+  filter: none;
+}

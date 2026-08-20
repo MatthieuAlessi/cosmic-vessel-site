@@ -32,6 +32,10 @@ const { discordUrl, kofiUrl } = settings
 
 const joinTeamUrl = settings.joinformUrl
 
+// Composition du hero, le temps de comparer. Supprimer la branche non retenue.
+// "centered" : axial, trailer après le pitch — "split" : 2 colonnes texte / trailer
+const heroLayout: "centered" | "split" = "centered"
+
  
  
 
@@ -62,6 +66,7 @@ const teamTotal = 30
     <BgImage
       src={hero?.image ?? "/images/galaxy-pitch2.jpeg"}
       opacity={1}
+      parallax={22}
       position="object-center"
       size="cover"
       maskClass="mask-galaxy--img"
@@ -77,54 +82,86 @@ const teamTotal = 30
 
     <CircleSmall position="bottom" width="w-50" dotTop="primary" class="z-1 hidden md:block" />
 
-    <!-- Contenu centré -->
     <div class="hero-content relative z-50 flex items-center justify-center w-full">
-      <div class="mx-auto text-center px-3 pt-20 pb-10 lg:pt-28 lg:pb-28 3xl:pb-20">
+      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10 lg:pt-28 lg:pb-28 3xl:pb-20">
 
+        {heroLayout === "centered" ? (
+          <!-- Axial : le trailer arrive après le pitch, avant les CTA -->
+          <div class="text-center">
+            <div class="title-label mx-auto mb-3 lg:mb-6 xl:mb-4">{hero?.label}</div>
+            <h1 class="title-hero anim-blur w-fit mx-auto mb-2 lg:mb-4 xl:mb-4">{hero?.title} </h1>
 
-    <!-- Encart vidéo (ouvre la modal) -->
-        <TrailerCard videoId={trailerVideoId} class="max-w-md 4xl:max-w-lg mx-auto mb-8" />
+            <p
+              class="text-foreground-100 font-body text-sm md:text-base 2xl:text-lg leading-relaxed max-w-3xl mx-auto"
+            >
+             {hero?.text}
+            </p>
 
+            <div class="mt-8 lg:mt-12">
+              <TrailerCard videoId={trailerVideoId} class="max-w-xs md:max-w-md xl:max-w-lg 4xl:max-w-xl mx-auto" />
+            </div>
 
-        <div class="title-label text-center mb-3 lg:mb-6 mx-auto">{hero?.label}</div>
-        <h1 class="title-hero mb-2 lg:mb-4">{hero?.title} </h1>
+            <div class="flex   flex-wrap lg:flex-wrap lg:items-center justify-center gap-2   mt-6 lg:mt-10">
+              <Button size="md" href="/character">Discover the mod</Button>
 
-        <p
-          class="text-foreground-100 font-body text-sm md:text-base 2xl:text-lg leading-relaxed max-w-3xl mx-auto mb-8"
-        >
-         {hero?.text} 
-        </p>
+              <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
+                Join Discord
+              </Button>
 
-    
-        <!-- CTA principales -->
-        <div class="flex flex-col lg:flex-row flex-nowrap lg:flex-wrap lg:items-center justify-center gap-2 lg:gap-4 mt-8 lg:mt-10">
-          <Button size="md" href="/character">Discover the mod</Button>
+              <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
+                Donate on Ko-fi
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <!-- 2 colonnes : texte à gauche, trailer à droite (empilés sous lg) -->
+          <div class="grid items-center gap-10 lg:grid-cols-2 xl:gap-16">
 
-          <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
-            Join Discord
-          </Button>
+            <div class="text-center lg:text-left">
+              <div class="title-label mx-auto lg:mx-0 mb-3 lg:mb-6 xl:mb-8">{hero?.label}</div>
+              <h1 class="title-hero anim-blur w-fit mx-auto lg:mx-0 mb-2 lg:mb-4 xl:mb-8">{hero?.title} </h1>
 
-          <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
-            Donate on Ko-fi
-          </Button>
+              <p
+                class="text-foreground-100 font-body text-xs md:text-base 2xl:text-lg leading-relaxed max-w-3xl lg:max-w-xl mx-auto lg:mx-0 mb-8"
+              >
+               {hero?.text}
+              </p>
 
-        </div>
+              <div class="flex flex-col lg:flex-row flex-nowrap lg:flex-wrap lg:items-center justify-center lg:justify-start gap-2 lg:gap-4 mt-8 lg:mt-10">
+                <Button size="md" href="/character">Discover the mod</Button>
+
+                <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
+                  Join Discord
+                </Button>
+
+                <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
+                  Donate on Ko-fi
+                </Button>
+              </div>
+            </div>
+
+            <!-- Trailer : au-dessus du texte en mobile, second dans le DOM -->
+            <div class="order-first lg:order-none">
+              <TrailerCard videoId={trailerVideoId} class="max-w-md lg:max-w-none mx-auto" />
+            </div>
+
+          </div>
+        )}
       </div>
     </div>
 
     <div class="hero__scroll-indicator z-40 hidden lg:flex">
       <span>Scroll</span>
-      <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
-        <rect
-          x="1"
-          y="1"
-          width="14"
-          height="22"
-          rx="7"
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
+        <line x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="1" opacity="0.5"></line>
+        <path
+          d="M1 11L7 17L13 11"
           stroke="currentColor"
-          stroke-width="1.5"
-          opacity="0.4"></rect>
-        <circle cx="8" cy="7" r="2" fill="currentColor"></circle>
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          opacity="0.8"
+        ></path>
       </svg>
     </div>
 
@@ -135,8 +172,8 @@ const teamTotal = 30
   <section class="section-pitch mx-auto   py-8 md:py-18 lg:py-36 relative overflow-hidden bg-background">
     <BgImage
       src="/images/galaxy-pitch.jpeg"
-      opacity={0.15}
-      fixedBg
+      opacity={0.25}
+      fixedBg 
       position="object-center"
       size="80%"
       maskClass="mask-galaxy"
@@ -146,15 +183,16 @@ const teamTotal = 30
 
     <BgImage
       src="/images/smoke1.jpeg"
-      opacity={0.05}
+      opacity={0.1}
       position="object-center"
-      fixedBg
+       
       size="cover"
     />
 
-    <div class="overlay-top"></div>
+    <div class="overlay-top opacity-50"></div>
+    <div class="overlay-bottom opacity-50"></div>
 
-    <!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.5} count={180} /> -->
+     <!-- <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.65} count={180} />   -->
 
     <CircleSmall position="top" width="w-50" dotBottom="black" class="z-1 hidden md:block" />
     <CircleSmall position="top" width="w-1/2" borderColor="border-primary-300/40 " class="z-1 hidden md:block" />
@@ -167,9 +205,9 @@ const teamTotal = 30
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center">
           <div class="col-span-1 lg:col-span-5">
             <p class="title-label-ghost text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
-             {section1?.label} 
+             {section1?.label}
             </p>
-            <h2 class="title-1 text-left lg:text-left">{section1?.title} </h2>
+            <h2 class="title-1 anim-blur text-left lg:text-left">{section1?.title} </h2>
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" /> -->
           </div>
 
@@ -192,14 +230,13 @@ const teamTotal = 30
 
     <!-- ─── numbers:stats ───────────────────────────────────────── -->
     <div class="max-w-7xl mx-auto pt-8 lg:pt-24 z-20 relative">
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+  <div class="grid grid-cols-2 lg:grid-cols-4  gap-2 lg:gap-4">
     {section1?.numbers?.map((n) => (
       <StatCard
         icon={n.icon}
         value={n.number}
         label={n.label}
         description={n.text}
-        class="lg:aspect-3/4"
       />
     ))}
   </div>
@@ -207,8 +244,8 @@ const teamTotal = 30
 
   </div>
 
-       <div class="overlay-bottom opacity-30 "></div>
-
+       <!-- <div class="overlay-bottom opacity-30 "></div> -->
+  <Divider position="bottom" />
     <!-- <Divider position="bottom" opacity={0.6} /> -->
   </section>
 
@@ -216,36 +253,45 @@ const teamTotal = 30
 
 
 
-
-  <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
-    <div class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30 ">
-      <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
+ 
+   <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
+    <div class="absolute inset-x-0 shadow-xl top-0 bottom-0   overflow-hidden     ">
+      <BgImage src="/src/assets/images/decor/bg1.jpeg" opacity={1} parallax={22} position="object-center" class="z-10" />
       <div class="overlay-vignette   z-10"></div>
-      <CornerOrnament size={34} class="opacity-50 z-50" />
-    </div>
+      <!-- <CornerOrnament size={34} class="opacity-50 z-50" /> -->
+
+<div class="overlay-vignette-bottom z-10"></div>
+
+<div class="absolute inset-x-0 bottom-0 z-100 px-4 pb-6 md:pb-10 lg:pb-14">
+  <div class="text-center relative z-20">
+    <p class="section-label-ghost mb-4 lg:mb-6 mx-auto">{section2?.label}</p>
+    <h2 class="title-1 anim-blur w-fit mx-auto">{section2?.subtitle}</h2>
   </div>
+</div>
+
+    </div>
+  </div>   
 
  
 
 
   <!-- ─── Lore — texte/image alterné ──────────────────────────────────── -->
-  <section class="section-lore relative bg-background-300 pt-12 pb-12   lg:pt-32 overflow-clip">
+  <section class="section-lore relative bg-background-300 pt-12 pb-12   lg:pt-32 lg:pb-24 overflow-clip">
     <BgImage
-      src="/images/bg1.jpeg"
-      opacity={0.05}
+      src="/src/assets/images/decor/bg1.jpeg"
+      opacity={0.12}
       position="object-center"
-      fixedBg
       size="cover"
       class=""
     />
 
-    <div class="overlay-top   "></div>
+      <!-- <div class="overlay-top   "></div>  -->
 
 <div class="overlay-vignette-bottom"></div>
 
-    <div class="overlay-bottom  "></div>
+    <!-- <div class="overlay-bottom  "></div> -->
 
-  <Divider position="top" opacity={0.6} />
+  <Divider position="top" />  
 
 <div class="px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-7xl z-10 relative">
@@ -253,19 +299,19 @@ const teamTotal = 30
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-4 items-center relative">
         <div class="col-span-1 lg:col-span-5">
-          <div class="text-center lg:text-left relative z-20">
-            <p class="section-label mb-4 lg:mb-6 mx-auto lg:mx-0">{section2?.label}</p>
-            <h2 class="title-1 mb-10 text-primary-300">{section2?.subtitle}</h2>
-          </div>
+          <!-- <div class="text-left relative z-20">
+            <p class="section-label mb-4 lg:mb-6">{section2?.label}</p>
+            <h2 class="title-1 mb-10">{section2?.subtitle}</h2>
+          </div> -->
 
           <div
-            class="relative outline-1 outline-primary-700/50 outline-offset-6 lg:sticky-header shadow-img-lift border-panel overflow-hidden"
+            class="relative frame-gilded lg:sticky-header shadow-img-lift rounded-md overflow-hidden"
           >
             <CmsImage
               src={section2?.block1?.image ?? "https://picsum.photos/seed/lore-1/640/800"}
               alt=""
               width={640}
-              class="w-full aspect-3/2 object-cover"
+              class="w-full aspect-3/3 object-cover"
             />
           </div>
         </div>
@@ -275,7 +321,7 @@ const teamTotal = 30
         </div>
 
         <div class="col-span-1 lg:col-span-5 lg:py-10">
-          <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4  ">
+          <h3 class="title-2 text-left lg:text-left text-foreground-100 mb-4  ">
             {section2?.block1?.title}
           </h3>
           <p class="text-foreground-500 font-body text-base  ">
@@ -291,35 +337,32 @@ const teamTotal = 30
 
           <div class="absolute top-0 inset-0 mx-auto border-t border-primary-300/10"></div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-center relative">
-          <div class="col-span-1 lg:col-span-2">
-            <div class="text-left lg:text-left relative z-20">
-              <p class="section-label mb-4 lg:mb-6 mx-0 lg:mx-0">{section2?.block2?.label}</p>
-
-              <h3 class="title-2 text-foreground-100 mb-4 ">
-                {section2?.block2?.title}
-              </h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 relative">
-          <div class="col-span-1 hidden lg:block"></div>
-
-          <div class="col-span-1 lg:col-span-2 lg:py-10 ">
-            <!-- <DividerH class="my-8 lg:my-12 xl:my-20" />   -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start relative">
+          <!-- Colonne gauche 60% : titre, label en dessous, puis texte sur 2 colonnes -->
+          <div class="lg:col-span-3">
+              <p class="section-label mb-6">{section2?.block2?.label}</p>
+            <h3 class="title-2 text-foreground-100 mb-4">
+              {section2?.block2?.title}
+            </h3>
+          
 
             <p class="text-foreground-500 font-body text-base columns-1 lg:columns-2 gap-8  ">
               {section2?.block2?.text}
             </p>
-             <StarMarks class="pt-6 mx-auto lg:mx-0 flex justify-center lg:justify-start" />
+            <StarMarks class="pt-6 flex justify-start" />
           </div>
-<!-- 
-          <div class="col-span-1 lg:col-span-1 lg:py-10">
-           
 
-           
-          </div> -->
+          <!-- Colonne droite 40% : image ratio 3/2 -->
+          <div class="lg:col-span-2 lg:ml-6">
+            <div class="relative frame-gilded shadow-img-lift rounded-md overflow-hidden">
+              <CmsImage
+                src={section2?.block2?.image ?? "https://picsum.photos/seed/lore-2/800/533"}
+                alt=""
+                width={800}
+                class="w-full aspect-2.5/3 object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -338,14 +381,16 @@ const teamTotal = 30
 
 
       <BgImage
-      src="/images/bg1.jpeg"
+      src="/src/assets/images/decor/bg1.jpeg"
       opacity={0.05}
+      parallax={22}
       position="object-center"
-      fixedBg
       size="cover"
       class=""
       maskClass="mask-galaxy--img"
     />
+
+ 
 
   <BgImage
     src="/images/smoke1.jpeg"
@@ -356,20 +401,23 @@ const teamTotal = 30
   />
 
 
-  <div class="overlay-top   "></div>
-   <div class="overlay-bottom  "></div>
+  <Divider position="top" />
 
-  <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.5} count={200} />  
+  <div class="overlay-top   "></div>
+    <div class="overlay-bottom  "></div>  
+
+
+  <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.65} count={200} />  
  
   <!-- Lueurs primaires décoratives -->
-   <div class="absolute inset-0  pointer-events-none overflow-x-clip z-10 opacity-60">
+   <!-- <div class="absolute inset-0  pointer-events-none overflow-x-clip z-10 opacity-60">
     <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2 bg-primary"
       style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
     <div class="absolute right-0 top-1/3 aspect-square w-1/2 translate-x-1/2"
       style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
       <div class="absolute right-0 top-[-25%] aspect-square w-1/2 translate-x-1/2"
       style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
-  </div> 
+  </div>  -->
 
  
   <div class="char mask-galaxy--img">
@@ -380,19 +428,24 @@ const teamTotal = 30
   <div class="relative z-50 max-w-4xl mx-auto p-4 lg:p-6 lg:mt-42 mt-24">
     <!-- <CornerOrnament size={34} /> -->
      <div class="title-label text-center mb-6 lg:mb-8 mx-auto">{sectioncharacter?.label}</div>
-  <h2 class="title-section text-center">Saira, the Cosmic vessel</h2>
+  <h2 class="title-section anim-blur text-center w-fit mx-auto">Saira, the Cosmic vessel</h2>
 
     <DividerH class="my-6 lg:my-12" width="max-w-lg" />
 
-    <div class="bg-background/40 backdrop-blur-sm p-6 lg:p-12 lg:m-4 relative border-panel border-primary/20 border">
-    <CornerOrnament size={34} class="opacity-40" />
+    <div class="bg-background/40 backdrop-blur-sm p-6 lg:p-12 lg:m-4 relative border-panel frame-gilded">
+ 
+        <CornerOrnament size={34} corner="top-left"   class="opacity-80" />
+  <CornerOrnament size={34} corner="top-right"   class="opacity-40" />
+    <CornerOrnament size={34} corner="bottom-left"   class="opacity-40" />
+  <CornerOrnament size={34} corner="bottom-right"  class="opacity-80" />
+
       <div class="text-center ">
 
           <h3 class="title-2 text-foreground-100 mb-6">
                 {sectioncharacter?.title}
               </h3>
 
-        <p class="text-foreground-300 font-body text-base leading-relaxed">
+        <p class="text-foreground-300 font-body text-sm md:text-base leading-relaxed">
          {sectioncharacter?.text}
         </p>
         
@@ -402,7 +455,9 @@ const teamTotal = 30
       <div class="my-4 lg:my-8 border-t border-primary/10"></div>
 
       <div class="flex justify-center  ">
-        <Button href="/character">Character Sheet</Button>
+
+        
+        <Button size="md" href="/character">Character Sheet</Button>
       </div>
     </div>
   </div>
@@ -453,7 +508,7 @@ const teamTotal = 30
     class="mix-blend-hard-light z-1"
   />
 
-  <div class="overlay-top z-1  "></div>
+  <div class="overlay-top z-1 opacity-50 "></div> 
   <div class="overlay-bottom z-1  "></div>
 
   <BgImage
@@ -470,55 +525,60 @@ const teamTotal = 30
   <GalaxyCanvas opacity={0.5} count={180} class="z-20" />
 
   <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-    <div class="text-center mb-12 px-6">
+    <div class="text-center mb-12 px-2 md:px-6">
       <p class="title-label-ghost mb-4 lg:mb-6 mt-4 mx-auto">{sectionclass?.label}</p>
-      <h2 class="title-1 mb-6 text-primary-100">{sectionclass?.title}</h2>
+      <h2 class="title-1 anim-blur w-fit mx-auto mb-6">{sectionclass?.title}</h2>
 
    <DividerH width="max-w-lg" class="my-8" />
 
-      <p class="text-foreground-300 font-body text-md md:text-lg leading-relaxed max-w-3xl mx-auto">
+      <p class="text-foreground-300 font-body text-base md:text-lg leading-relaxed max-w-4xl mx-auto">
         {sectionclass?.text}
       </p>
    
     </div>
 
-    <div class="class-swiper swiper py-4 md:py-0 md:overflow-visible!">
-      <div class="class-cards-grid swiper-wrapper md:grid! md:grid-cols-4 md:gap-4 xl:gap-10">
-        {subclasses.map((sub, i) => (
-          <div class="swiper-slide h-auto md:w-auto!">
-            <ClassCard
-              tilt
-              href="/character"
-              data-index={i}
-              name={sub.data.name}
-              tagline={sub.data.tagline}
-              art={sub.data.image}
-            />
-          </div>
-        ))}
+    {/* -mx-* + md:mx-0 : casse le px-4 sm:px-6 du conteneur parent sur mobile
+        uniquement, pour que le swiper (et les cartes voisines qu'il laisse
+        déborder) touche vraiment le bord de l'écran, comme la référence. */}
+    <div class="relative -mx-4 sm:-mx-6 md:mx-0">
+      <div class="class-swiper swiper py-4 md:py-0 md:overflow-visible!">
+        <div class="class-cards-grid swiper-wrapper md:grid! md:grid-cols-4 md:gap-4 lg:gap-8 2xl:gap-10">
+          {subclasses.map((sub, i) => (
+            <div class="swiper-slide h-auto md:w-auto!">
+              <ClassCard
+                tilt
+                href="/character"
+                data-index={i}
+                name={sub.data.name}
+                tagline={sub.data.tagline}
+                art={sub.data.image}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Dots + flèches — mobile uniquement (desktop = 4 cartes) */}
-      <div class="mt-6 flex items-center justify-center gap-4 md:hidden">
-        <button
-          type="button"
-          aria-label="Carte précédente"
-          class="class-swiper__prev flex items-center justify-center w-9 h-9 shrink-0 rounded-full border border-primary/40 text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30"
-        >
-          <Icon name="ph:caret-left" class="w-4 h-4" />
-        </button>
+      {/* Flèches sur les bords, à mi-hauteur des cartes — mobile uniquement (desktop = 4 cartes).
+          Hors du conteneur `.class-swiper` (overflow: hidden du Swiper) pour ne pas être rognées. */}
+      <button
+        type="button"
+        aria-label="Carte précédente"
+        class="class-swiper__prev absolute left-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-7 h-7 shrink-0 rounded-full border border-primary/40 bg-background-500/40 backdrop-blur-sm text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30 md:hidden"
+      >
+        <Icon name="ph:caret-left" class="w-3.5 h-3.5" />
+      </button>
 
-        <div class="class-swiper__dots flex items-center gap-2"></div>
-
-        <button
-          type="button"
-          aria-label="Carte suivante"
-          class="class-swiper__next flex items-center justify-center w-9 h-9 shrink-0 rounded-full border border-primary/40 text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30"
-        >
-          <Icon name="ph:caret-right" class="w-4 h-4" />
-        </button>
-      </div>
+      <button
+        type="button"
+        aria-label="Carte suivante"
+        class="class-swiper__next absolute right-6 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-7 h-7 shrink-0 rounded-full border border-primary/40 bg-background-500/40 backdrop-blur-sm text-primary-100 transition-colors hover:bg-primary/10 [&.swiper-button-disabled]:opacity-30 md:hidden"
+      >
+        <Icon name="ph:caret-right" class="w-3.5 h-3.5" />
+      </button>
     </div>
+
+    {/* Dots — mobile uniquement */}
+    <div class="class-swiper__dots mt-6 flex items-center justify-center gap-2 md:hidden"></div>
 
     <script>
       import "../scripts/class-cards-swiper.js"
@@ -537,13 +597,36 @@ const teamTotal = 30
 
 
 
-  <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
+  <!-- <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
     <div class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30 ">
       <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
       <div class="overlay-vignette   z-10"></div>
       <CornerOrnament size={34} class="opacity-50 z-50" />
     </div>
+  </div> -->
+
+
+  
+
+
+
+   <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
+    <div class="absolute inset-x-0 shadow-xl top-0 bottom-0   overflow-hidden     ">
+      <BgImage src="/src/assets/images/decor/bg1.jpeg" opacity={1} parallax={22} position="object-center" class="z-10" />
+      <div class="overlay-vignette   z-10"></div>
+      <!-- <CornerOrnament size={34} class="opacity-50 z-50" /> -->
+
+<div class="overlay-vignette-bottom z-10"></div>
+
+<div class="absolute inset-x-0 bottom-0 z-100 px-4 pb-6 md:pb-10 lg:pb-14">
+  <div class="text-center relative z-20">
+    <p class="section-label-ghost mb-4 lg:mb-6 mx-auto">About the project</p>
+    <h2 class="title-1 anim-blur w-fit mx-auto">Follow our progress</h2>
   </div>
+</div>
+
+    </div>
+  </div>   
 
 
  
@@ -557,7 +640,7 @@ const teamTotal = 30
 <div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between lg:items-end mb-6">
     <div class="text-center lg:text-left relative z-20">
       <p class="section-label  mb-4 lg:mb-6 mx-auto lg:mx-0 ">{gallery?.label}</p>
-      <h2 class="title-1   text-primary-100">{gallery?.title}</h2>
+      <h2 class="title-1 anim-blur w-fit mx-auto ">{gallery?.title}</h2>
        
     </div>
 
@@ -590,33 +673,32 @@ const teamTotal = 30
 
  
   </div>
-  <!-- <Divider position="bottom" /> -->
+   <Divider position="top" />  
 </section>
 
 <!-- ─── Roadmap ───────────────────────────────────────────────────────── -->
 
-<section class="relative bg-background-300 py-12 md:py-24 lg:py-32 overflow-clip">
+<section class="section-roadmap relative bg-background-300 py-12 md:py-24 lg:py-32 overflow-clip">
 
   
     <BgImage
-      src="/images/bg1.jpeg"
-      opacity={0.05}
+      src="/src/assets/images/decor/bg1.jpeg"
+      opacity={0.12}
       position="object-center"
-      fixedBg
       size="cover"
       class=""
     />
 
-    <div class="overlay-top   "></div>
+  <div class="overlay-top   "></div>
     <div class="overlay-bottom  "></div>
 
-  <Divider position="top" opacity={0.6} />
+  <Divider position="top" />
 
 
 <div class="px-4 sm:px-6 lg:px-8">
   <div class="text-center relative z-20 ">
     <p class="title-label-ghost mb-4 lg:mb-6 mx-auto">{roadmap?.label}</p>
-    <h2 class="title-1 mb-4 lg:mb-8 text-primary-100">{roadmap?.title}</h2>
+    <h2 class="title-1 anim-blur w-fit mx-auto mb-4 lg:mb-8">{roadmap?.title}</h2>
     <DividerH width="max-w-lg" class="my-8" />
     <p class="text-foreground-300 font-body max-w-2xl mx-auto mb-8">
       {roadmap?.text}
@@ -648,14 +730,14 @@ const teamTotal = 30
   <p class="title-label-ghost text-center lg:text-left mb-4 lg:mb-6 mx-auto lg:mx-0">
               {teamSection?.label}
             </p>
-            <h2 class="title-1 mb-4 lg:mb-8 text-center lg:text-left">{teamSection?.title}</h2>
+            <h2 class="title-1 anim-blur mb-4 lg:mb-8 text-center lg:text-left w-fit mx-auto lg:mx-0 ">{teamSection?.title}</h2>
              <DividerH class="my-8 lg:my-12  " />  
-              <p class="text-foreground-300 font-body text-xs md:text-base mb-10">
+              <p class="text-foreground-300 text-center lg:text-left font-body text-xs md:text-base mb-2 lg:mb-10">
             {teamSection?.text}
           </p>
 
         <!-- <div
-          class="relative outline-1 outline-primary-700/50 outline-offset-6 shadow-img-lift border-panel overflow-hidden"
+          class="relative frame-gilded shadow-img-lift rounded-md overflow-hidden"
         >
           <img
             src="https://picsum.photos/seed/team-hero/640/800"
@@ -712,7 +794,7 @@ const teamTotal = 30
           <p class="text-foreground-300 font-body mb-6">
             We're always looking for new talent to join the journey.
           </p>
-          <div class="flex flex-wrap   justify-center lg:justify-start gap-2 md:gap-4">
+          <div class="flex flex-wrap   justify-center lg:justify-start gap-2 md:gap-2">
             <Button href={joinTeamUrl} target="_blank">
               <Icon name="ph:users-three" class="w-5 h-5" />
               Join the team
@@ -744,21 +826,21 @@ const teamTotal = 30
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 border-t border-background-100">
 
 
-<div class="flex justify-between items-end mb-6">
-    <div class="text-left relative z-20">
-      <p class="section-label mb-4 lg:mb-6">{news?.label}</p>
-      <h2 class="title-1   text-primary-100">{news?.title}</h2>
+<div class="flex flex-col lg:flex-row items-center justify-center lg:justify-between lg:items-end mb-6">
+    <div class="text-center lg:text-left relative  z-20">
+      <p class="section-label  mb-4 lg:mb-6 mx-auto lg:mx-0">{news?.label}</p>
+      <h2 class="title-1 anim-blur w-fit mx-auto">{news?.title}</h2>
        
     </div>
 
   
-    <div>
+    <div class="mt-4 lg:mt-0" >
        <Button variant="outline" href="/gallery">See all</Button>
     </div>
 </div>
 
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-4">
         {recentPosts.map((post) => (
           <Card variant="article" cta="Read more" href={`/blog/${post.id}`}>
             <CmsImage

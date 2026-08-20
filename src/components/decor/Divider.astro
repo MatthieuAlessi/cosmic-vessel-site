@@ -15,7 +15,7 @@ const {
   position = 'bottom',
   width = 'w-full',
   gradient = true,
-  opacity = 0.5,
+  opacity = '0.4',
   class: className = '',
 } = Astro.props;
 
@@ -27,7 +27,7 @@ const positionClass: Record<'top' | 'bottom' | 'unset', string> = {
 
 // Dégradé doré verrouillé (non configurable) — reprend exactement l'ancien `.line`.
 const background = gradient
-  ? 'linear-gradient(90deg, transparent, var(--color-primary-500) 30%, var(--color-primary) 50%, var(--color-primary-500) 70%, transparent)'
+  ? 'linear-gradient(90deg, transparent, var(--color-primary-500) 30%, var(--color-primary-100) 50%, var(--color-primary-500) 70%, transparent)'
   : 'var(--color-primary)';
 ---
 

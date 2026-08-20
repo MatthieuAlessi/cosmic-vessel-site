@@ -1,0 +1,62 @@
+---
+// ⚠️ PAGE TEMPORAIRE — banc de vérification cross-navigateur du blur mot par mot.
+// À SUPPRIMER une fois la validation faite (ainsi que la règle `.tv-none` de
+// global.css, qui n'existe que pour cette page).
+//
+// Historique du diagnostic (par élimination) :
+//   texte nu + blur ............ OK
+//   texte + drop-shadow + blur .. OK
+//   dégradé + blur .............. CASSÉ  ← background-clip:text est le coupable
+// Dès qu'un ancêtre porte un filter, Chromium applique le clip au mauvais stade
+// et laisse apparaître la boîte du dégradé en auréole. Correctif retenu :
+// translateZ(0) sur le mot clippé (cf. global.css).
+import Layout from "@layouts/Layout.astro"
+---
+
+<Layout title="Anim test">
+  <main class="max-w-5xl mx-auto px-6 py-24">
+    <p class="font-body text-sm text-foreground-500 mb-2">
+      Recharger (F5) pour rejouer. Chaque bloc se déclenche à l'entrée dans le viewport.
+    </p>
+    <p class="font-body text-sm text-foreground-500 mb-24">
+      À vérifier sur chaque navigateur : <strong>B et C doivent être aussi propres que A</strong>.
+      Seul le témoin T (correctif désactivé) doit montrer l'auréole.
+    </p>
+
+    <section class="min-h-[60vh]">
+      <p class="font-body text-xs text-primary-300 mb-4">A — texte nu (référence : le blur seul, sans dégradé)</p>
+      <h2 class="anim-blur test-plain">Cosmic Vessel Origin</h2>
+    </section>
+
+    <section class="min-h-[60vh]">
+      <p class="font-body text-xs text-primary-300 mb-4">B — dégradé métal, avec le correctif (= .title-1 du site)</p>
+      <h2 class="anim-blur title-1">Cosmic Vessel Origin</h2>
+    </section>
+
+    <section class="min-h-[60vh]">
+      <p class="font-body text-xs text-primary-300 mb-4">
+        C — dégradé + drop-shadow, avec le correctif (= .title-section / .title-hero du site)
+      </p>
+      <h2 class="anim-blur title-section">Cosmic Vessel Origin</h2>
+    </section>
+
+    <section class="min-h-[60vh]">
+      <p class="font-body text-xs text-secondary-300 mb-4">
+        T — TÉMOIN, correctif désactivé : doit être visiblement cassé (auréole).
+        S'il est propre, c'est que ce navigateur n'a pas le bug.
+      </p>
+      <h2 class="anim-blur title-1 tv-none">Cosmic Vessel Origin</h2>
+    </section>
+  </main>
+</Layout>
+
+<style is:global>
+  .test-plain {
+    font-family: var(--font-hero);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #d8cdb8;
+  }
+</style>
