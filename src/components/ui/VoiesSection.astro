@@ -58,7 +58,7 @@ const { heading } = Astro.props;
   <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l border-primary-300 opacity-30 z-1"></div>
 
   <BgImage
-    src="/images/smoke1.jpeg"
+    src="/src/assets/images/decor/smoke1.jpeg"
     opacity={0.15}
     position="object-bottom"
     size="cover"
@@ -69,10 +69,10 @@ const { heading } = Astro.props;
   <div class="overlay-bottom z-1 opacity-90"></div>
 
   <BgImage
-    src="/images/galaxy-pitch.jpeg"
+    src="/images/galaxy-texture.webp"
     opacity={0.25}
     grayscale
-    fixedBg
+    bgfixedparallax
     position="object-center"
     size="80%"
     maskClass="mask-galaxy"

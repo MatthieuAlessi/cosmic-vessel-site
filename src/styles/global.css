@@ -364,8 +364,8 @@ html.lenis body {
 }
 
 @utility mask-galaxy--img {
-  mask-image: url('/images/masktest.png');
-  -webkit-mask-image: url('/images/masktest.png');
+  mask-image: url('/images/mask-galaxy.webp');
+  -webkit-mask-image: url('/images/mask-galaxy.webp');
   mask-size: cover;
   mask-repeat: no-repeat;
   mask-position: center;

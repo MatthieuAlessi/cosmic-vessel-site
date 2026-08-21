@@ -54,6 +54,11 @@ function wrapWords(words) {
 // ─── Parallax : image de fond qui défile moins vite que la page ────────────
 // data-parallax est posé par BgImage.astro (variant non-fixed), qui a déjà
 // agrandi l'image pour que l'amplitude reste dans sa marge.
+//
+// Le trigger est TOUJOURS le wrapper (parentElement) : BgImage rend l'image dans un
+// `absolute inset-0` qui épouse exactement la boîte à animer. Ne pas remonter à un
+// closest("section") — sur un calque niché dans un div plus petit que sa section,
+// le trigger ne serait plus aligné sur l'image et le calcul tomberait à côté.
 if (!reduced) {
   document.querySelectorAll('[data-parallax]').forEach((img) => {
     const range = Number(img.dataset.parallax);
@@ -66,7 +71,7 @@ if (!reduced) {
         yPercent: range,
         ease: 'none',
         scrollTrigger: {
-          trigger: img.closest('section') || img.parentElement,
+          trigger: img.parentElement,
           start: 'top bottom',
           end: 'bottom top',
           scrub: true,
@@ -77,33 +82,41 @@ if (!reduced) {
 }
 
 // ─── Fixed parallax : reproduit background-attachment:fixed avec une vraie <img> ──
-// (compatible iOS, où background-attachment:fixed est ignoré). posé par BgImage.astro
-// (prop bgfixedparallax) sur [data-bgfixedparallax]. L'image est dimensionnée à
-// (hauteur viewport + 2 × hauteur section) et translatée exactement à l'inverse du
-// scroll de la section, pour paraître immobile dans le viewport pendant que la
-// section défile devant. Piste retenue après calcul (cf. CLAUDE.md) : un pur
-// position:sticky ne fonctionne pas ici — la section (le "cadre") est plus courte
-// que l'image, donc plus courte que l'élément sticky, ce qui ne laisse aucune marge
-// de "collage" (le sticky reste toujours en position statique). En reduced-motion,
-// l'image reste telle quelle : object-cover plein cadre, immobile, correctement cadrée.
+// (compatible iOS, où background-attachment:fixed est ignoré). Posé par BgImage.astro
+// (prop bgfixedparallax) sur [data-bgfixedparallax].
+//
+// L'aire de référence d'un fond fixe EST le viewport, pas la boîte : l'image fait
+// donc exactement une hauteur de viewport (cadrage identique à background-size:cover),
+// et on la translate à l'inverse du scroll pour qu'elle paraisse immobile.
+// Soit S le haut de la boîte dans le viewport, H sa hauteur, vh le viewport :
+// l'image est en absolute inset-0 de cette boîte, son haut non translaté vaut donc S.
+// On veut ce haut à 0 → y = -S, linéaire en S :
+//   au départ (top bottom)  S = vh → y = -vh
+//   à la fin  (bottom top)  S = -H → y = H
+// ⚠️ Ne pas sur-dimensionner l'image (une version précédente la mettait à vh + 2H) :
+// l'effet fixe restait juste, mais object-cover devait l'agrandir plusieurs fois pour
+// remplir la boîte et on n'en voyait plus qu'une bande. Marche aussi si H < vh.
+//
+// Un pur position:sticky ne fonctionne pas ici : la boîte (le "cadre") est plus
+// courte que l'élément collant, ce qui ne laisse aucune marge de collage.
+// En reduced-motion, l'image reste telle quelle : object-cover plein cadre, immobile.
 if (!reduced) {
   document.querySelectorAll('[data-bgfixedparallax]').forEach((img) => {
-    const section = img.closest('section') || img.parentElement;
+    const box = img.parentElement;
 
     gsap.fromTo(
       img,
-      { y: () => -(window.innerHeight + section.getBoundingClientRect().height) },
+      { y: () => -window.innerHeight },
       {
-        y: 0,
+        y: () => box.getBoundingClientRect().height,
         ease: 'none',
         scrollTrigger: {
-          trigger: section,
+          trigger: box,
           start: 'top bottom',
           end: 'bottom top',
           scrub: true,
           invalidateOnRefresh: true,
-          onRefreshInit: () =>
-            gsap.set(img, { height: window.innerHeight + 2 * section.getBoundingClientRect().height }),
+          onRefreshInit: () => gsap.set(img, { height: window.innerHeight }),
         },
       }
     );

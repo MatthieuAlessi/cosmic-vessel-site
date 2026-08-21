@@ -9,15 +9,17 @@ interface Props {
   position?: string;
   size?: string;
   maskClass?: string;
-  fixedBg?: boolean;
   grayscale?: boolean;
-  /** Amplitude du parallax en % (~10-25), variant non-fixed uniquement.
-   *  L'image défile plus lentement que la page. Ignoré si fixedBg. */
+  /** Amplitude du parallax en % (~10-30) : l'image défile moins vite que la page.
+   *  Ignoré si bgfixedparallax. */
   parallax?: number;
-  /** Reproduit background-attachment:fixed avec une vraie <img> (compatible iOS).
-   *  Voir bloc "Fixed parallax" de src/scripts/animations.js. Ignoré si fixedBg
-   *  ou parallax. */
+  /** L'image paraît immobile dans le viewport — équivalent de
+   *  background-attachment:fixed, mais fonctionnel sur iOS et sans repaint.
+   *  Prioritaire sur parallax. Voir bloc "Fixed parallax" de scripts/animations.js. */
   bgfixedparallax?: boolean;
+  /** Fond au-dessus de la ligne de flottaison (hero) : chargé en priorité au lieu
+   *  d'être lazy. Sans ça <Image> retombe sur loading="lazy" et retarde le LCP. */
+  eager?: boolean;
   class?: string;
 }
 
@@ -28,12 +30,16 @@ const {
   position = 'object-top',
   size = 'cover',
   maskClass = '',
-  fixedBg = false,
   grayscale = false,
   parallax = 0,
   bgfixedparallax = false,
+  eager = false,
   class: className = '',
 } = Astro.props;
+
+const loadingAttrs = eager
+  ? { loading: 'eager' as const, fetchpriority: 'high' as const }
+  : { loading: 'lazy' as const };
 
 const positionMap: Record<string, string> = {
   'object-top': 'top',
@@ -45,16 +51,15 @@ const positionMap: Record<string, string> = {
 const bgPosition = positionMap[position] ?? 'center';
 
 // Optimisation : si `src` vient de src/assets (image uploadée au CMS), on l'optimise
-// via <Image>. Uniquement pour les variants non-fixed (<img>) ; le fixed legacy
-// utilise background-image en CSS (non optimisable). Sinon (déco en public/) → <img> brut.
-const optimized = !fixedBg ? cmsImage(src) : undefined;
+// via <Image>. Sinon (déco en public/) → <img> brut.
+const optimized = cmsImage(src);
 
 // Parallax (léger) : l'image est agrandie de `margin` % de chaque côté et recentrée,
 // pour que le déplacement au scroll reste toujours dans cette marge — jamais de bord
 // vide découvert. `range` traduit la marge (en % du conteneur) en % de la hauteur
 // propre de l'image agrandie, seule unité que comprend le yPercent de GSAP.
 // Ignoré si bgfixedparallax (mécanisme distinct, voir plus bas).
-const margin = !fixedBg && !bgfixedparallax && parallax ? Math.max(parallax, 8) : 0;
+const margin = !bgfixedparallax && parallax ? Math.max(parallax, 8) : 0;
 const range = margin ? Number((margin / (1 + (2 * margin) / 100)).toFixed(2)) : 0;
 
 const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscale', margin && 'absolute inset-x-0']
@@ -65,30 +70,39 @@ const imgStyle = `opacity: ${opacity};${margin ? ` height: ${100 + 2 * margin}%;
 // Fixed parallax : le fallback (no-JS / prefers-reduced-motion) est une image
 // <img> classique en object-cover, plein cadre — correctement cadrée, immobile.
 // C'est le bloc "Fixed parallax" de animations.js qui la redimensionne/translate
-// pour l'effet "fixed" ; voir CLAUDE.md pour le calcul.
+// pour l'effet "fixed" (image = 1 hauteur de viewport, translatée à l'inverse du
+// scroll ; le calcul est détaillé dans ce bloc).
 const fixedParallaxImgClass = ['absolute inset-0 w-full h-full object-cover', position, grayscale && 'grayscale']
   .filter(Boolean)
   .join(' ');
 const fixedParallaxImgStyle = `opacity: ${opacity};`;
+
+// `size` autre que "cover" (ex. "80%", + le tuilage par défaut) n'a aucun équivalent
+// en object-cover : ces calques gardent un background-image, que le MÊME script
+// dimensionne et translate (le JS ne regarde que l'attribut, pas le type d'élément).
+// Contrepartie : pas d'optimisation d'image, comme tout background-image.
+const fixedParallaxBg = bgfixedparallax && size !== 'cover';
+const fixedParallaxBgStyle = `
+  background-image: url('${src}');
+  background-size: ${size};
+  background-position: ${bgPosition};
+  opacity: ${opacity};
+  ${grayscale ? 'filter: grayscale(1);' : ''}
+`;
 ---
 
-{fixedBg ? (
-  <div
-    class:list={['absolute inset-0 z-0 bgimage', maskClass, className]}
-    style={`
-      background-image: url('${src}');
-      background-attachment: fixed;
-      background-size: ${size};
-      background-position: ${bgPosition};
-      opacity: ${opacity};
-      ${grayscale ? 'filter: grayscale(1);' : ''}
-    `}
-    role="img"
-    aria-label={alt}
-  />
-) : bgfixedparallax ? (
+{bgfixedparallax ? (
   <div class:list={['absolute inset-0 z-0 bgimage overflow-hidden', maskClass, className]}>
-    {optimized ? (
+    {fixedParallaxBg ? (
+      <div
+        class="absolute inset-x-0 top-0 h-full"
+        style={fixedParallaxBgStyle}
+        role={alt ? 'img' : undefined}
+        aria-label={alt || undefined}
+        aria-hidden={alt ? undefined : 'true'}
+        data-bgfixedparallax={true}
+      />
+    ) : optimized ? (
       <Image
         src={optimized}
         alt={alt}
@@ -96,6 +110,7 @@ const fixedParallaxImgStyle = `opacity: ${opacity};`;
         class={fixedParallaxImgClass}
         style={fixedParallaxImgStyle}
         data-bgfixedparallax={true}
+        {...loadingAttrs}
       />
     ) : (
       <img
@@ -104,6 +119,7 @@ const fixedParallaxImgStyle = `opacity: ${opacity};`;
         class={fixedParallaxImgClass}
         style={fixedParallaxImgStyle}
         data-bgfixedparallax={true}
+        {...loadingAttrs}
       />
     )}
   </div>
@@ -117,9 +133,10 @@ const fixedParallaxImgStyle = `opacity: ${opacity};`;
         class={imgClass}
         style={imgStyle}
         data-parallax={range || undefined}
+        {...loadingAttrs}
       />
     ) : (
-      <img src={src} alt={alt} class={imgClass} style={imgStyle} data-parallax={range || undefined} />
+      <img src={src} alt={alt} class={imgClass} style={imgStyle} data-parallax={range || undefined} {...loadingAttrs} />
     )}
   </div>
 )}

@@ -29,7 +29,8 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
   <section class="relative overflow-hidden bg-background-700 pt-24 pb-12 lg:pt-40 lg:pb-20 md:min-h-[min(70svh,650px)] md:flex md:items-center">
     <!-- Fond atmosphérique, calé à droite (derrière le render) + masque vignette galaxy -->
     <BgImage
-      src={hero?.image ?? "/images/galaxy-pitch2.jpeg"}
+      src={hero?.image ?? "/src/assets/images/decor/galaxy-pitch2.jpeg"}
+      eager
       opacity={0.55}
       parallax={18}
       position="object-right"
@@ -84,6 +85,7 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
 
     <BgImage
       src="/src/assets/images/decor/bg1.jpeg"
+      bgfixedparallax
       opacity={0.12}
       position="object-center"
       size="cover"
@@ -241,6 +243,7 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
     <BgImage
       src="/src/assets/images/decor/bg1.jpeg"
       opacity={0.5}
+      parallax={30} 
       position="object-center"
       size="cover"
       maskClass="mask-galaxy--img"
@@ -436,17 +439,7 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
 
 
 
-
-  <!-- ─── Image seule encadrée (bande image de index) ───────────────────── -->
-  <!-- <div class="relative h-[60vh] min-h-75">
-    <div
-      class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30"
-    >
-      <BgImage src="/images/bg1.jpeg" opacity={1} parallax={18} position="object-center" class="z-10" />
-      <div class="overlay-vignette z-10"></div>
-      <CornerOrnament size={34} class="opacity-50 z-50" />
-    </div>
-  </div> -->
+ 
 
   <!-- ─── Community / Join the Journey (pré-footer, composant partagé) ──── -->
   <SectionPrefooter id="join" data-toc-section="join" class="scroll-mt-32" />

@@ -22,6 +22,8 @@ import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
 import { settings, trailerVideoId, modName } from "@data/settings"
 import CmsImage from "@components/ui/CmsImage.astro"
+import { Image } from "astro:assets"
+import charRender from "../assets/images/decor/char.png"
 
 import { homepageData } from "@data/homepage";
 
@@ -64,7 +66,8 @@ const teamTotal = 30
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
   <section class="section-hero overflow-hidden bg-background">
     <BgImage
-      src={hero?.image ?? "/images/galaxy-pitch2.jpeg"}
+      src={hero?.image ?? "/src/assets/images/decor/galaxy-pitch2.jpeg"}
+      eager
       opacity={1}
       parallax={22}
       position="object-center"
@@ -171,9 +174,9 @@ const teamTotal = 30
   <!-- ─── Pitch ─────────────────────────────────────────────────────────── -->
   <section class="section-pitch mx-auto   py-8 md:py-18 lg:py-36 relative overflow-hidden bg-background">
     <BgImage
-      src="/images/galaxy-pitch.jpeg"
+      src="/images/galaxy-texture.webp"
       opacity={0.25}
-      fixedBg 
+      bgfixedparallax 
       position="object-center"
       size="80%"
       maskClass="mask-galaxy"
@@ -182,7 +185,7 @@ const teamTotal = 30
 
 
     <BgImage
-      src="/images/smoke1.jpeg"
+      src="/src/assets/images/decor/smoke1.jpeg"
       opacity={0.1}
       position="object-center"
        
@@ -207,7 +210,7 @@ const teamTotal = 30
             <p class="title-label-ghost text-left lg:text-left mb-4 lg:mb-6 mx-0 lg:mx-0">
              {section1?.label}
             </p>
-            <h2 class="title-1 anim-blur text-left lg:text-left">{section1?.title} </h2>
+            <h2 class="title-1 anim-blur text-left lg:text-left ">{section1?.title} </h2>
             <!-- <DividerH class="my-8 lg:my-12 xl:my-20" /> -->
           </div>
 
@@ -215,8 +218,8 @@ const teamTotal = 30
             <DividerV dotTop={true} dotBottom={true} position="center" class="z-1" />
           </div>
 
-          <div class="col-span-1 lg:col-span-5 lg:py-10">
-            <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4  ">
+          <div class="col-span-1 lg:col-span-5 lg:py-10 ">
+            <h3 class="title-3 text-left lg:text-left text-foreground-100 mb-4   ">
               {section1?.subtitle}
             </h3>
             <p class="text-foreground-500 font-body text-base">
@@ -280,6 +283,7 @@ const teamTotal = 30
     <BgImage
       src="/src/assets/images/decor/bg1.jpeg"
       opacity={0.12}
+      bgfixedparallax
       position="object-center"
       size="cover"
       class=""
@@ -321,7 +325,7 @@ const teamTotal = 30
         </div>
 
         <div class="col-span-1 lg:col-span-5 lg:py-10">
-          <h3 class="title-2 text-left lg:text-left text-foreground-100 mb-4  ">
+          <h3 class="title-2 text-left lg:text-left text-foreground-100 mb-4  mt-2 lg:mt-0">
             {section2?.block1?.title}
           </h3>
           <p class="text-foreground-500 font-body text-base  ">
@@ -393,7 +397,7 @@ const teamTotal = 30
  
 
   <BgImage
-    src="/images/smoke1.jpeg"
+    src="/src/assets/images/decor/smoke1.jpeg"
     opacity={0.1}
     position="object-center"
     size="cover"
@@ -421,7 +425,7 @@ const teamTotal = 30
 
  
   <div class="char mask-galaxy--img">
-    <img src="/images/char.png" alt="" />
+    <Image src={charRender} alt="" layout="none" widths={[600, 800, 1100, 1400]} sizes="(min-width: 1024px) 700px, 400px" />
   </div>
 
  
@@ -501,7 +505,7 @@ const teamTotal = 30
   </div>
 
   <BgImage
-    src="/images/smoke1.jpeg"
+    src="/src/assets/images/decor/smoke1.jpeg"
     opacity={0.15}
     position="object-bottom"
     size="cover"
@@ -512,10 +516,10 @@ const teamTotal = 30
   <div class="overlay-bottom z-1  "></div>
 
   <BgImage
-    src="/images/galaxy-pitch.jpeg"
+    src="/images/galaxy-texture.webp"
     opacity={0.25}
     grayscale
-    fixedBg
+    bgfixedparallax
     position="object-center"
     size="80%"
     maskClass="mask-galaxy"
@@ -587,27 +591,6 @@ const teamTotal = 30
 
   <Divider position="bottom" />
 </section>
-
-
-
-
-
-
-
-
-
-
-  <!-- <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
-    <div class="absolute inset-x-3 shadow-xl top-0 bottom-0 border-panel overflow-hidden border border-primary-300/30 ">
-      <BgImage src="/images/bg1.jpeg" opacity={1} fixedBg position="object-center" class="z-10" />
-      <div class="overlay-vignette   z-10"></div>
-      <CornerOrnament size={34} class="opacity-50 z-50" />
-    </div>
-  </div> -->
-
-
-  
-
 
 
    <div class="relative h-[100px] md:h-[200px] lg:h-[min(60vh,550px)] min-h-50 lg:min-h-75 ">
@@ -684,6 +667,7 @@ const teamTotal = 30
     <BgImage
       src="/src/assets/images/decor/bg1.jpeg"
       opacity={0.12}
+      bgfixedparallax
       position="object-center"
       size="cover"
       class=""
