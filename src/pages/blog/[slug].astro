@@ -279,14 +279,7 @@ const shareButtons = [
 </script>
 
 <script>
-  // Lightbox de la galerie d'article (même mécanisme que /gallery et la home)
-  import PhotoSwipeLightbox from "photoswipe/lightbox"
-  import "photoswipe/style.css"
+  import { initLightbox } from "@scripts/lightbox.js"
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: "#article-gallery-grid",
-    children: "a.gallery-item",
-    pswpModule: () => import("photoswipe"),
-  })
-  lightbox.init()
+  initLightbox("#article-gallery-grid")
 </script>

@@ -32,6 +32,17 @@ export default defineConfig({
   image: { layout: 'constrained' },
   integrations: [icon(), react(), markdoc(), keystatic()],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    // Swiper et PhotoSwipe sont importés de DEUX façons dans le projet : en
+    // statique (voies-*-swiper.js) et en dynamique (class-cards-swiper.js,
+    // lightbox.js — chargés à la demande). En dev, l'optimiseur de Vite
+    // découvre la seconde forme en cours de requête, re-bundle, et les URLs
+    // déjà servies partent en 504 "Outdated Optimize Dep" — le script échoue,
+    // et par ricochet tout ce qui est importé à côté (la pile de cartes de
+    // /character ne se rendait plus). Les déclarer ici les fait pré-bundler
+    // une fois pour toutes, avec un hash stable. Sans effet sur le build.
+    optimizeDeps: {
+      include: ['swiper', 'swiper/modules', 'photoswipe', 'photoswipe/lightbox'],
+    },
   }
 });

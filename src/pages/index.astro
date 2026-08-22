@@ -411,7 +411,7 @@ const teamTotal = 30
     <div class="overlay-bottom  "></div>  
 
 
-  <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.65} count={200} />  
+  <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.8} count={200} />
  
   <!-- Lueurs primaires décoratives -->
    <!-- <div class="absolute inset-0  pointer-events-none overflow-x-clip z-10 opacity-60">
@@ -526,7 +526,7 @@ const teamTotal = 30
     class="z-10"
   />
 
-  <GalaxyCanvas opacity={0.5} count={180} class="z-20" />
+  <GalaxyCanvas opacity={0.7} count={180} class="z-20" />
 
   <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
     <div class="text-center mb-12 px-2 md:px-6">
@@ -863,14 +863,7 @@ const teamTotal = 30
 </Layout>
 
 <script>
-  // Lightbox de la galerie teaser (même mécanisme que /gallery)
-  import PhotoSwipeLightbox from "photoswipe/lightbox"
-  import "photoswipe/style.css"
+  import { initLightbox } from "@scripts/lightbox.js"
 
-  const lightbox = new PhotoSwipeLightbox({
-    gallery: "#home-gallery-grid",
-    children: "a.gallery-item",
-    pswpModule: () => import("photoswipe"),
-  })
-  lightbox.init()
+  initLightbox("#home-gallery-grid")
 </script>

@@ -8,55 +8,37 @@
 // forcée en desktop, glow au hover comme partout. Le glow de la slide active
 // (mobile) vient des règles `.swiper-slide-active .class-card__*` de global.css.
 // Doc : https://swiperjs.com/swiper-api
-
-import Swiper from 'swiper';
-import { Pagination, Navigation, EffectCoverflow } from 'swiper/modules';
+//
+// Ce fichier n'est que le GATE : il ne charge l'implémentation (et donc Swiper,
+// ~84 ko) que si le média correspond. En import statique, Swiper partait aussi
+// en desktop, où il est détruit aussitôt et ne sert jamais.
+//
+// ⚠️ Le CSS reste importé ICI, statiquement. Astro remonte le CSS de tout le
+// graphe de modules d'une page dans le <head>, imports dynamiques compris — le
+// passer en dynamique ne l'en enlève pas, mais fait générer par Vite un preload
+// vers un nom de fichier qu'Astro n'émet pas : 404, promesse rejetée, et le
+// swiper ne s'initialise jamais.
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 
 const mq = window.matchMedia('(max-width: 767px)');
 let swiper = null;
+let loading = false;
 
-function create() {
+async function create() {
   const el = document.querySelector('.class-swiper');
-  if (!el || swiper) return;
+  // `loading` : un second appel pendant le await créerait une 2e instance.
+  if (!el || swiper || loading) return;
+  loading = true;
 
-  swiper = new Swiper(el, {
-    modules: [Pagination, Navigation, EffectCoverflow],
-    effect: 'coverflow',
-    slidesPerView: 1.65, // carte active un peu plus petite
-    // La carte voisine ne doit apparaître qu'en fin liseré au bord de l'écran
-    // (espace vide entre la carte active et ce liseré), sans coller à la
-    // carte active ni trop s'en éloigner.
-    spaceBetween: 52,
-    centeredSlides: true, // slide active au centre
-    // Assez long pour que la courbe d'accélération (global.css) ait le temps
-    // de se voir — un `speed` par défaut (300ms) la rendrait imperceptible.
-    speed: 450,
-    coverflowEffect: {
-      // `spaceBetween` étant grand par rapport à la largeur de carte (cf. plus
-      // haut), l'inclinaison réellement rendue sur la carte voisine est ~1.25x
-      // ce paramètre (proportionnel à l'écart entre centres de slides) — 14
-      // donne ~17-18° effectifs (fourchette demandée : 15-20°).
-      rotate: 14,
-      stretch: 0,
-      // `depth` recule la carte en Z — combiné à la perspective, ça la fait
-      // aussi paraître plus petite. Avec la réaccélération en fin de course de
-      // la courbe ci-dessus (global.css), une valeur haute rendait ce
-      // rétrécissement trop brutal sur la fin ("effet scale violent") — abaissé
-      // pour un rendu plus doux, la carte recule sans sembler "rétrécir vite".
-      depth: 45,
-      modifier: 1,
-      slideShadows: false,
-    },
-    pagination: {
-      el: '.class-swiper__dots',
-      clickable: true,
-      bulletClass: 'class-dot',
-      bulletActiveClass: 'class-dot--active',
-    },
-    navigation: { prevEl: '.class-swiper__prev', nextEl: '.class-swiper__next' },
-  });
+  try {
+    const { createClassSwiper } = await import('./class-cards-swiper-impl.js');
+    // Repassé en desktop pendant le chargement : ne rien instancier.
+    if (!mq.matches || swiper) return;
+    swiper = createClassSwiper(el);
+  } finally {
+    loading = false;
+  }
 }
 
 function destroy() {

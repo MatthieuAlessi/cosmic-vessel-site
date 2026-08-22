@@ -19,6 +19,10 @@ const {
 const trailerYouTubeId = trailerVideoId;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
+
+// Cloudflare Web Analytics : token public, défini en variable d'env Netlify.
+// Absent en local => pas de beacon en dev, le trafic de dev ne pollue pas les stats.
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 ---
 
 <!doctype html>
@@ -57,9 +61,35 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Analytics (Cloudflare Web Analytics — sans cookie, sans bannière) -->
+    {
+      import.meta.env.PROD && cfBeaconToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+        />
+      )
+    }
+
     <title>{title}</title>
   </head>
   <body>
+    <!-- Rideau de transition de page (brouillard noir). Démarre couvert => sert
+         aussi de loader d'intro ; révélé au load par le script is:inline ci-dessous.
+         5 splats grunge (union = 100% du viewport) en cascade + fond noir de
+         sécurité (comble tout trou). --tf = transform de répartition, --i = rang cascade. -->
+    <div id="page-fade" data-covered aria-hidden="true">
+      <div class="page-fade__layer page-fade__splat" style="--i:0; --tf:translate(0,-20%) scale(0.85)"></div>
+      <div class="page-fade__layer page-fade__splat" style="--i:1; --tf:translate(24%,0) scale(-1.28,1.28)"></div>
+      <div class="page-fade__layer page-fade__splat" style="--i:2; --tf:translate(-24%,-5%) rotate(180deg) scale(1.28)"></div>
+      <div class="page-fade__layer page-fade__splat" style="--i:3; --tf:translate(16%,12%) rotate(90deg) scale(1.4)"></div>
+      <div class="page-fade__layer page-fade__splat" style="--i:4; --tf:translate(-16%,10%) rotate(270deg) scale(-1.5,1.5)"></div>
+      <!-- Solide EN DERNIER = au-dessus : scelle en noir pur. -->
+      <div class="page-fade__layer page-fade__solid"></div>
+    </div>
+
     <slot />
 
     <!-- ─── Trailer modal (YouTube, lazy, global) ──────────────────────── -->
@@ -118,6 +148,66 @@ const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null
           if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal()
         })
       }
+    </script>
+
+    <!-- ─── Transition de page : rideau brouillard noir (hard-nav) ──────────
+         is:inline pour tourner au premier paint, indépendamment du bundle. -->
+    <script is:inline>
+      ;(() => {
+        const fade = document.getElementById("page-fade")
+        if (!fade) return
+
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        // Délai avant navigation = temps pour atteindre le noir plein (--page-fade-cover, CSS).
+        const raw = getComputedStyle(document.documentElement).getPropertyValue("--page-fade-cover")
+        const COVER = parseFloat(raw) * (raw.includes("ms") ? 1 : 1000) || 1100
+
+        // reduced-motion : aucun rideau, navigation native.
+        if (reduced) {
+          fade.removeAttribute("data-covered")
+          return
+        }
+
+        // Révélation à l'arrivée (le rideau démarre couvert).
+        const reveal = () => {
+          requestAnimationFrame(() => {
+            fade.removeAttribute("data-covered")
+            window.lenis?.start()
+          })
+        }
+        if (document.readyState === "complete") reveal()
+        else window.addEventListener("load", reveal, { once: true })
+
+        // Retour arrière / bfcache : ne jamais laisser la page bloquée sous le rideau.
+        window.addEventListener("pageshow", (e) => {
+          if (e.persisted) fade.removeAttribute("data-covered")
+        })
+
+        // Interception des clics sur liens internes éligibles.
+        document.addEventListener("click", (e) => {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+          const a = e.target.closest("a[href]")
+          if (!a) return
+          if (a.target === "_blank" || a.hasAttribute("download")) return
+
+          const href = a.getAttribute("href")
+          if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return
+
+          const url = new URL(href, location.href)
+          if (url.origin !== location.origin) return            // lien externe
+          if (url.pathname.startsWith("/keystatic")) return      // admin CMS
+          if (url.pathname === location.pathname && url.hash) return // ancre même page
+
+          e.preventDefault()
+          // Pas de lenis.stop() ici : on navigue en <1s, et le stop retirerait la
+          // scrollbar (=> gouttière noire visible + décalage). Le scroll résiduel est
+          // invisible sous le rideau.
+          fade.setAttribute("data-covered", "")
+
+          // Navigue une fois le noir plein atteint (cascade de splats + fond de sécurité).
+          setTimeout(() => { window.location.href = url.href }, COVER)
+        })
+      })()
     </script>
 
     <script>
