@@ -1,8 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro"
 import Nav from "@components/ui/Nav.astro"
-import Divider from "@components/decor/Divider.astro"
-import Footer from "@components/ui/Footer.astro"
 import BgImage from "@components/decor/BgImage.astro"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
 import { Icon } from "astro-icon/components"
@@ -24,10 +22,10 @@ const socials = [
 const subjects = ["General question", "Press & media", "Bug report", "Other"]
 
 const fieldClass =
-  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary px-2 py-2 font-body text-white/60 text-sm transition-all duration-300 placeholder:text-foreground-700"
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary px-3 py-2.5 font-body text-white/70 text-sm transition-all duration-300 placeholder:text-foreground-700"
 const fieldClassSelect =
-  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary py-4 px-2 font-body text-white/60 text-sm transition-all duration-300 placeholder:text-foreground-700"
-const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
+  "w-full bg-background-300/50 border-panel border border-white/10 focus:border-primary py-3 px-3 font-body text-white/70 text-sm transition-all duration-300 placeholder:text-foreground-700"
+const labelClass = "block font-ui text-sm text-foreground-100 mb-1.5"
 ---
 
 <Layout
@@ -36,111 +34,105 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1"
 >
   <Nav />
 
-  <main class="pt-18 lg:pt-0 pb-6">
-    <div class="  mx-auto   ">
-      <!-- Bloc image encadrée : titre en bas-gauche + formulaire flottant à droite -->
-      <div class="relative lg:min-h-[min(90svh,900px)] p-4 sm:p-8 lg:p-12">
-        <!-- Image de fond encadrée (border + corner, comme les bandes de la home).
-             Masquée en mobile : le titre passe alors sur le fond sombre du body →
-             meilleure lisibilité (le formulaire a déjà son propre fond solide). -->
-        <div
-          class="hidden lg:block absolute inset-0 shadow-xl  overflow-hidden  "
-        >
-          <BgImage src="/src/assets/images/decor/bg1.jpeg" opacity={1} position="object-center" class="z-0" />
-          <div class="overlay-vignette2 z-0"></div>
-          <!-- <CornerOrnament size={34} class="opacity-50 z-10" /> -->
+  {/* Split plein écran : image + texte à gauche, formulaire à droite.
+      Desktop (lg+) : chaque colonne = 100svh, la page ne scrolle pas.
+      Mobile : les deux colonnes s'empilent et la page scrolle normalement. */}
+  <main class="lg:h-[100svh] lg:overflow-hidden">
+    <div class="grid lg:grid-cols-2 lg:h-full">
+
+      <!-- ─── Colonne gauche : image + texte (panneau "marque") ─────────────── -->
+      <section
+        class="relative flex flex-col justify-end gap-8 overflow-hidden min-h-[44svh] lg:min-h-0 lg:h-full
+               px-6 sm:px-10 lg:px-14 pt-24 pb-10 lg:pt-28 lg:pb-14"
+      >
+        <BgImage src="/src/assets/images/decor/bg1.jpeg" opacity={1} position="object-center" eager class="z-0" />
+        <div class="overlay-vignette2 z-0"></div>
+        <CornerOrnament size={34} corner="bottom-left" tone="white" class="opacity-50 z-10" />
+
+        <!-- Réseaux -->
+        <div class="relative z-10 flex items-center gap-3">
+          {
+            socials.map((s) => (
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                class="flex items-center justify-center w-10 aspect-square rounded-full border border-white/25 text-foreground-100 hover:text-primary-100 hover:border-primary-500/60 transition-colors backdrop-blur-sm"
+              >
+                <Icon name={s.icon} class="w-5 h-5" />
+              </a>
+            ))
+          }
         </div>
 
-        <!-- Contenu par-dessus l'image -->
-        <div class="relative z-10 grid lg:grid-cols-7 gap-8 lg:gap-6 items-end pt-0 md:pt-10 2xl:pt-16  ">
-          <!-- Titre (bas-gauche) -->
-          <div class="lg:pb-8 lg:col-span-4">
-            <p class="section-label mb-4">Contact</p>
-            <h1 class="title-section anim-blur w-fit">Get in touch</h1>
-            <!-- <p class="text-foreground-300 font-body text-lg mt-6 max-w-sm">
-              Questions, feedback, or want to join the team? We're listening.
-            </p> -->
-            <p class="text-foreground-300 font-body text-lg mt-6 max-w-sm">
-              Questions, feedback, or press inquiries? We're listening.
-            </p>
-          </div>
+        <!-- Accroche (bas de colonne, pleine largeur) -->
+        <div class="relative z-10 w-full">
+          <p class="section-label mb-4">Contact</p>
+          <h1 class="title-section anim-blur text-5xl sm:text-6xl lg:text-7xl xl:text-8xl">Get in touch</h1>
+          <p class="text-foreground-300 font-body text-lg mt-6 max-w-lg">
+            Questions, feedback, or press inquiries? We're listening.
+          </p>
+        </div>
+      </section>
 
-          <!-- Formulaire flottant (dark, gardé tel quel) -->
-          <div
-            class="relative lg:col-span-3 border-panel frame-gilded bg-background-500 shadow-xl p-6 sm:p-8 lg:p-14"
-          >
-      <CornerOrnament size={34} corner="top-left" class="opacity-80" />
-  <CornerOrnament size={34} corner="bottom-right" class="opacity-80" />
-            <h2 class="font-display text-xl tracking-wide uppercase text-primary-100 mb-4">
-              Send us a message
-            </h2>
-            <!-- <p class="text-foreground-500 font-body text-sm mb-8">
-              We usually reply within a few days — on Discord for anything quicker.
-            </p> -->
+      <!-- ─── Colonne droite : formulaire ──────────────────────────────────── -->
+      <section
+        class="relative flex items-center justify-center bg-background-500
+               px-6 sm:px-10 lg:px-14 py-12 lg:py-10 lg:h-full lg:overflow-y-auto"
+      >
+        <div class="w-full max-w-md">
+          <h2 class="font-display text-2xl tracking-wide uppercase text-primary-100 mb-1">
+            Send us a message
+          </h2>
+          <p class="text-foreground-500 font-body text-sm mb-6">
+            We usually reply within a few days.
+          </p>
 
-            <form class="flex flex-col gap-4" method="POST" data-netlify="true" name="contact">
-              <input type="hidden" name="form-name" value="contact" />
+          <form class="flex flex-col gap-4" method="POST" data-netlify="true" name="contact">
+            <input type="hidden" name="form-name" value="contact" />
 
-              <!-- Nom / Email -->
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label for="name" class={labelClass}>Full name</label>
-                  <input type="text" id="name" name="name" required class={fieldClass} />
-                </div>
-                <div>
-                  <label for="email" class={labelClass}>Email</label>
-                  <input type="email" id="email" name="email" required class={fieldClass} />
-                </div>
-              </div>
-
-              <!-- Sujet -->
+            <!-- Nom / Email -->
+            <div class="grid sm:grid-cols-2 gap-4">
               <div>
-                <label for="subject" class={labelClass}>Subject</label>
-                <select id="subject" name="subject" class:list={[fieldClassSelect, "select-dark"]}>
-                  {subjects.map((s) => <option value={s}>{s}</option>)}
-                </select>
+                <label for="name" class={labelClass}>Full name</label>
+                <input type="text" id="name" name="name" required class={fieldClass} />
               </div>
-
-              <!-- Message -->
               <div>
-                <label for="message" class={labelClass}>Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows="4"
-                  class={`${fieldClass} resize-y`}></textarea>
+                <label for="email" class={labelClass}>Email</label>
+                <input type="email" id="email" name="email" required class={fieldClass} />
               </div>
-
-              <button type="submit" class="btn btn--primary w-full py-3 mt-2">
-                <Icon name="ph:paper-plane-tilt" class="w-5 h-5" />
-                Send message
-              </button>
-            </form>
-
-            <!-- Réseaux -->
-            <div class="flex items-center gap-3 mt-8 pt-6 border-t border-primary-700/20">
-              {
-                socials.map((s) => (
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    class="flex items-center justify-center w-10 aspect-square rounded-full border border-primary-700/30 text-foreground-500 hover:text-primary-100 hover:border-primary-500/60 transition-colors"
-                  >
-                    <Icon name={s.icon} class="w-5 h-5" />
-                  </a>
-                ))
-              }
             </div>
-          </div>
+
+            <!-- Sujet -->
+            <div>
+              <label for="subject" class={labelClass}>Subject</label>
+              <select id="subject" name="subject" class:list={[fieldClassSelect, "select-dark"]}>
+                {subjects.map((s) => <option value={s}>{s}</option>)}
+              </select>
+            </div>
+
+            <!-- Message -->
+            <div>
+              <label for="message" class={labelClass}>Message</label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="4"
+                class={`${fieldClass} resize-none`}></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary w-full py-3 mt-1">
+              <Icon name="ph:paper-plane-tilt" class="w-5 h-5" />
+              Send message
+            </button>
+          </form>
         </div>
-      </div>
+      </section>
+
     </div>
   </main>
-
-  <Footer />
 </Layout>
 
 <style>

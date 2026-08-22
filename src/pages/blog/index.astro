@@ -29,12 +29,12 @@ function formatDate(date: Date) {
         <h1 class="title-section anim-blur w-fit mx-auto lg:mx-0 text-center lg:text-left">News</h1>
       </header>
 
-      <div class="flex flex-col gap-4 md:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-4">
         {posts.map(post => (
-          <Card variant="horizontal" cta="Read more" href={`/blog/${post.id}`}>
+          <Card variant="article" cta="Read more" href={`/blog/${post.id}`}>
             <CmsImage
               slot="image"
-              src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/400/300`}
+              src={post.data.cover ?? `https://picsum.photos/seed/${post.id}/800/450`}
               alt={post.data.title}
               width={600}
               layout="none"
@@ -54,7 +54,7 @@ function formatDate(date: Date) {
         ))}
 
         {posts.length === 0 && (
-          <div class="card-cinematic p-16 text-center">
+          <div class="card-cinematic p-16 text-center col-span-full">
             <p class="font-display text-primary-700 tracking-wider uppercase">Aucun article pour le moment</p>
             <p class="text-foreground-700 font-body mt-3 text-sm">Revenez bientôt pour les premiers devlogs.</p>
           </div>

@@ -379,7 +379,7 @@ html.lenis body {
 }
 
 /* ─── Transition de page : rideau « brouillard noir » (hard-nav) ───────────
-   Overlay plein écran, fond noir masqué par masktest.png. Couvre vite au clic
+   Overlay plein écran, taches noires via masktest-black.png. Couvre vite au clic
    (data-covered), se dissipe à l'arrivée. Piloté par le script is:inline du
    Layout. Curseurs = les 3 variables ci-dessous. */
 :root {
@@ -395,27 +395,30 @@ html.lenis body {
   z-index: 100000; /* au-dessus de TOUT, nav incluse (nav = 99100) : le rideau doit couvrir la nav */
   pointer-events: none;
 }
-/* Calque de base : noir plein, invisible au repos. La transition par défaut
-   (opacity → 0) est celle de la DISSIPATION ; l'apparition (cover) surcharge
-   durée/délai via les règles [data-covered] plus bas. */
+/* Calque de base plein écran, invisible au repos. */
 .page-fade__layer {
   position: absolute;
   inset: 0;
-  background: var(--color-background);
   opacity: 0;
   transition: opacity var(--page-fade-reveal) var(--page-fade-ease);
-  will-change: opacity;
 }
-/* Splats : NOIRS (héritent background du calque de base), découpés par la texture
-   grunge. La transform (var --tf, inline) répartit chaque splat sur le viewport
+/* Splats : le PNG noir affiché DIRECTEMENT (background-image), PAS en masque.
+   Pur affichage d'image → aucun traitement graphique, donc pas de bug de
+   compositing Firefox. La transform (var --tf, inline) répartit chaque tache
    pour que leur union couvre 100 %. */
 .page-fade__splat {
   transform: var(--tf, none);
   transform-origin: center;
-  mask: url('/images/masktest.png') center / cover no-repeat;
-  -webkit-mask: url('/images/masktest.png') center / cover no-repeat;
+  background-image: url('/images/masktest-black.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
-/* ── Recouvrement : les splats noirs apparaissent en cascade, le fond plein comble ── */
+/* Fond de sécurité : noir plein (seul calque avec un fond uni). */
+.page-fade__solid {
+  background: var(--color-background);
+}
+/* ── Recouvrement : les taches apparaissent en cascade, le fond plein comble ── */
 #page-fade[data-covered] .page-fade__layer {
   opacity: 1;
 }
@@ -423,8 +426,7 @@ html.lenis body {
   transition-duration: var(--page-fade-splat-dur);
   transition-delay: calc(var(--i, 0) * var(--page-fade-stagger)); /* cascade, --i posé en inline */
 }
-/* Fond de sécurité : monte 0→100 en fin de cascade, garantit zéro trou au pic
-   (les splats jouent d'abord, puis le noir plein scelle juste avant la navigation). */
+/* Fond de sécurité : monte 0→100 en fin de cascade, garantit zéro trou au pic. */
 #page-fade[data-covered] .page-fade__solid {
   transition-duration: 340ms;
   transition-delay: 740ms;
