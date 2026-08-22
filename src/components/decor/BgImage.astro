@@ -54,11 +54,9 @@ const bgPosition = positionMap[position] ?? 'center';
 // via <Image>. Sinon (déco en public/) → <img> brut.
 const optimized = cmsImage(src);
 
-// Parallax (léger) : l'image est agrandie de `margin` % de chaque côté et recentrée,
-// pour que le déplacement au scroll reste toujours dans cette marge — jamais de bord
-// vide découvert. `range` traduit la marge (en % du conteneur) en % de la hauteur
-// propre de l'image agrandie, seule unité que comprend le yPercent de GSAP.
-// Ignoré si bgfixedparallax (mécanisme distinct, voir plus bas).
+// Parallax léger : l'image est agrandie de `margin` % de chaque côté et recentrée pour
+// que le scroll reste toujours dans cette marge (pas de bord vide découvert). `range`
+// traduit cette marge en % de la hauteur de l'image agrandie (unité attendue par yPercent GSAP).
 const margin = !bgfixedparallax && parallax ? Math.max(parallax, 8) : 0;
 const range = margin ? Number((margin / (1 + (2 * margin) / 100)).toFixed(2)) : 0;
 
@@ -67,20 +65,17 @@ const imgClass = ['w-full h-full object-cover', position, grayscale && 'grayscal
   .join(' ');
 const imgStyle = `opacity: ${opacity};${margin ? ` height: ${100 + 2 * margin}%; top: -${margin}%;` : ''}`;
 
-// Fixed parallax : le fallback (no-JS / prefers-reduced-motion) est une image
-// <img> classique en object-cover, plein cadre — correctement cadrée, immobile.
-// C'est le bloc "Fixed parallax" de animations.js qui la redimensionne/translate
-// pour l'effet "fixed" (image = 1 hauteur de viewport, translatée à l'inverse du
-// scroll ; le calcul est détaillé dans ce bloc).
+// Fixed parallax : fallback (no-JS / reduced-motion) = <img> object-cover normale, immobile.
+// Le bloc "Fixed parallax" de animations.js la redimensionne/translate ensuite pour l'effet
+// (image = 1 hauteur de viewport, translatée à l'inverse du scroll — calcul détaillé là-bas).
 const fixedParallaxImgClass = ['absolute inset-0 w-full h-full object-cover', position, grayscale && 'grayscale']
   .filter(Boolean)
   .join(' ');
 const fixedParallaxImgStyle = `opacity: ${opacity};`;
 
-// `size` autre que "cover" (ex. "80%", + le tuilage par défaut) n'a aucun équivalent
-// en object-cover : ces calques gardent un background-image, que le MÊME script
-// dimensionne et translate (le JS ne regarde que l'attribut, pas le type d'élément).
-// Contrepartie : pas d'optimisation d'image, comme tout background-image.
+// `size` ≠ "cover" (ex. "80%" + tuilage) n'a pas d'équivalent en object-cover : ces calques
+// gardent un background-image (même script, il ne regarde que l'attribut). Contrepartie :
+// pas d'optimisation d'image.
 const fixedParallaxBg = bgfixedparallax && size !== 'cover';
 const fixedParallaxBgStyle = `
   background-image: url('${src}');

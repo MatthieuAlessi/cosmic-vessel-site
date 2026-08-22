@@ -1,15 +1,9 @@
 ---
-// ⚠️ PAGE TEMPORAIRE — banc de vérification cross-navigateur du blur mot par mot.
-// À SUPPRIMER une fois la validation faite (ainsi que la règle `.tv-none` de
-// global.css, qui n'existe que pour cette page).
-//
-// Historique du diagnostic (par élimination) :
-//   texte nu + blur ............ OK
-//   texte + drop-shadow + blur .. OK
-//   dégradé + blur .............. CASSÉ  ← background-clip:text est le coupable
-// Dès qu'un ancêtre porte un filter, Chromium applique le clip au mauvais stade
-// et laisse apparaître la boîte du dégradé en auréole. Correctif retenu :
-// translateZ(0) sur le mot clippé (cf. global.css).
+// ⚠️ PAGE TEMPORAIRE — banc de vérif cross-navigateur du blur mot par mot.
+// À supprimer après validation (+ la règle `.tv-none` de global.css, qui n'existe que pour ce test).
+// Diagnostic par élimination : texte nu+blur OK, +drop-shadow OK, +dégradé CASSÉ
+// (background-clip:text + filter sur un ancêtre = bug Chromium, auréole visible).
+// Correctif : translateZ(0) sur le mot clippé (cf. global.css).
 import Layout from "@layouts/Layout.astro"
 ---
 

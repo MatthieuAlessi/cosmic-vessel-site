@@ -8,23 +8,20 @@
   --color-background-500: #0d0d12;
   --color-background-700: #060608;
 
-  /* 
+  /*
   --color-primary:     #c9933a;
   --color-primary-100: #f0d9a8;
   --color-primary-300: #e8b96a;
   --color-primary-500: #c9933a;
   --color-primary-700: #8a6228;
 */
-  /* Saturation de la rampe : 71 / 56 / 50 / 44. Le 500 valait S34 — un creux au
-     milieu de la rampe qui rendait l'or beige (et c'est l'alias de --color-primary,
-     donc la valeur la plus utilisée du site). Réaligné sur la courbe. */
   --color-primary:     #C09144;
   --color-primary-100: #f0d9a8;
   --color-primary-300: #D3AA64;
   --color-primary-500: #C09144;
   --color-primary-700: #8F6C38;
 
-   
+
 
   --color-secondary:     #b84c1e;
   --color-secondary-300: #d96b3a;
@@ -132,16 +129,10 @@
   --shadow-glow-secondary:  0 0 20px 4px rgba(184, 76, 30, 0.3);
   --shadow-inner-dark:      inset 0 2px 20px rgba(6, 6, 8, 0.8);
   --shadow-cinematic:       0 25px 80px rgba(6, 6, 8, 0.9);
-  /* Ombre d'image noire prononcée (lisible car les images sont posées sur la
-     texture BgImage + cache--gradient2, pas sur du noir pur). Double couche :
-     une proche pour l'ancrage, une large et profonde pour l'étalement. */
   --shadow-img-lift:        0 12px 24px -6px rgba(0, 0, 0, 0.65), 0 32px 60px -20px rgba(0, 0, 0, 0.55);
 
   /* ─── Dégradé métal ───────────────────────────────────────────────────────*/
-  /* Haute lumière à GAUCHE, l'or s'approfondit vers la droite. La relance à 58%
-     (retour au 300 après le 500) est ce qui lit comme un pli de métal plutôt
-     qu'un fondu. Uniquement des tokens : suit la palette si elle bouge.
-     Source unique de .title-hero / .title-section / .title-1 / .editorial-word. */
+  /* Source unique : .title-hero / .title-section / .title-1 / .editorial-word. */
   --gradient-metal: linear-gradient(
     to right,
     var(--color-foreground-100) 0%,
@@ -179,8 +170,7 @@
   --z-100:      100;
 
   /* ─── Header ───────────────────────────────────────────────────────────────*/
-  /* Hauteur visuelle du nav fixe (scrolled ≈ 3.1rem) + marge de respiration.
-     Sert d'offset pour les éléments sticky qui doivent se caler sous le nav. */
+  /* Offset pour les éléments sticky sous le nav fixe. */
   --header-height: 80px;
 }
 
@@ -190,17 +180,13 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-body);
-  /* Texte clair sur fond sombre : le rendu épaissit optiquement.
-     Inter en 300 + lissage en niveaux de gris compensent. */
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
 
-/* Réserve en permanence la gouttière de scrollbar : évite le décalage horizontal
-   quand Lenis pose overflow:hidden (.lenis-stopped) pendant la transition de page
-   ou la modale trailer. */
+/* Évite le décalage horizontal quand Lenis pose overflow:hidden (transition de page, modale). */
 html {
   scrollbar-gutter: stable;
 }
@@ -249,7 +235,7 @@ html.lenis body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-  
+
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
@@ -262,9 +248,8 @@ html.lenis body {
 }
 
 /* ─── Animations (kit) ────────────────────────────────────────────────────── */
-/* Masqué le temps qu'animations.js (différé) découpe et révèle l'élément —
-   évite le flash plein texte avant split. Jamais appliqué sans JS (pas de .js),
-   et c'est au JS de révéler dans tous les cas (y compris prefers-reduced-motion). */
+/* Masqué le temps qu'animations.js découpe et révèle (évite le flash plein texte).
+   Conditionné à .js — c'est au JS de révéler dans tous les cas, reduced-motion compris. */
 .js .anim-blur {
   opacity: 0;
 }
@@ -275,28 +260,17 @@ html.lenis body {
   display: inline-block;
 }
 
-/* ⚠️ NE PAS SUPPRIMER — sans cette couche de composition, l'animation est
-   visuellement cassée sur les titres à dégradé (.title-hero, .title-section,
-   .title-1). Dès qu'un ANCÊTRE porte un filter, Chromium applique le
-   background-clip:text au mauvais stade et laisse apparaître la boîte
-   rectangulaire du dégradé en auréole derrière le mot. translateZ(0) force le
-   mot à être rastérisé — clip compris — avant que le blur du parent s'applique.
-   Diagnostiqué par élimination (le blur seul et le drop-shadow seul sont sains,
-   seul le dégradé casse) ; `will-change` marche aussi mais n'est qu'un hint que
-   le navigateur peut ignorer, et `contain:paint` rognerait les glyphes.
-
-   ⚠️ Conditionné à .is-animating (posée/retirée par animations.js) et NON
-   permanent : une couche GPU fait perdre au texte l'antialiasing sous-pixel,
-   qui retombe en grayscale — le titre paraît légèrement crénelé. On ne paie
-   donc ce prix que pendant le blur ; une fois le filter retiré il n'y a plus
-   d'ancêtre flouté, donc plus de bug à contourner. */
+/* ⚠️ NE PAS SUPPRIMER — sans ce translateZ(0), un ancêtre flouté fait ressortir
+   la boîte rectangulaire du dégradé en auréole derrière chaque mot (bug Chromium
+   sur background-clip:text). will-change ne suffit pas, contain:paint rogne les glyphes.
+   ⚠️ Conditionné à .is-animating (pas permanent) : la couche GPU casse l'antialiasing
+   sous-pixel du texte, donc on ne paie ce prix que pendant le blur. */
 .anim-blur.is-animating .anim-blur__word > * {
   transform: translateZ(0);
 }
 
-/* ⚠️ TEMPORAIRE — désactive le correctif ci-dessus, uniquement pour garder un
-   témoin « cassé » sur /anim-test. À supprimer avec la page de test.
-   Doit matcher la spécificité de la règle ci-dessus pour l'emporter. */
+/* ⚠️ TEMPORAIRE — désactive le correctif ci-dessus pour garder un témoin "cassé"
+   sur /anim-test. À supprimer avec la page de test (spécificité doit matcher). */
 .tv-none.is-animating .anim-blur__word > * {
   transform: none;
 }
@@ -315,7 +289,6 @@ html.lenis body {
     background-color: var(--color-background);
   }
 }
-
 
 
 
@@ -359,7 +332,7 @@ html.lenis body {
   inset: 0;
   z-index: 1;
   background:
-    
+
     linear-gradient(180deg, rgba(6, 6, 8, 0.2) 0%,    rgba(6, 6, 8, 0.98) 100%);
   pointer-events: none;
 }
@@ -378,10 +351,8 @@ html.lenis body {
   mask-position: center;
 }
 
-/* ─── Transition de page : rideau « brouillard noir » (hard-nav) ───────────
-   Overlay plein écran, taches noires via masktest-black.png. Couvre vite au clic
-   (data-covered), se dissipe à l'arrivée. Piloté par le script is:inline du
-   Layout. Curseurs = les 3 variables ci-dessous. */
+/* ─── Transition de page : rideau « brouillard noir » (hard-nav) ─────────── */
+/* Piloté par le script is:inline du Layout. */
 :root {
   --page-fade-cover: 1100ms;     /* temps pour atteindre le noir plein (= délai avant navigation) */
   --page-fade-reveal: 460ms;     /* vitesse de dissipation à l'arrivée */
@@ -395,17 +366,14 @@ html.lenis body {
   z-index: 100000; /* au-dessus de TOUT, nav incluse (nav = 99100) : le rideau doit couvrir la nav */
   pointer-events: none;
 }
-/* Calque de base plein écran, invisible au repos. */
 .page-fade__layer {
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity var(--page-fade-reveal) var(--page-fade-ease);
 }
-/* Splats : le PNG noir affiché DIRECTEMENT (background-image), PAS en masque.
-   Pur affichage d'image → aucun traitement graphique, donc pas de bug de
-   compositing Firefox. La transform (var --tf, inline) répartit chaque tache
-   pour que leur union couvre 100 %. */
+/* Splats en background-image direct (pas en masque) : évite un bug de compositing Firefox.
+   transform (var --tf, inline) répartit chaque tache pour couvrir 100%. */
 .page-fade__splat {
   transform: var(--tf, none);
   transform-origin: center;
@@ -414,7 +382,6 @@ html.lenis body {
   background-position: center;
   background-size: cover;
 }
-/* Fond de sécurité : noir plein (seul calque avec un fond uni). */
 .page-fade__solid {
   background: var(--color-background);
 }
@@ -503,13 +470,10 @@ html.lenis body {
     inset 0 0 80px -5px rgba(201, 147, 58, 0.1);
 }
 
-/* Dégradé métal appliqué au texte, extrait de .title-hero / .title-section /
-   .title-1 qui l'embarquent déjà. En utility (et non en composant) pour pouvoir
-   le poser sur un titre qui ne l'a pas — ex. `.title-2 text-metal` — sans
-   toucher la classe de titre elle-même, partagée par d'autres pages.
-   ⚠️ Le split GSAP découpe le texte en lignes : chaque fragment perdrait le
-   dégradé s'il n'était pas repeint par paintSplitGradient (animations.js), qui
-   ne se déclenche que si background-clip vaut bien `text`. */
+/* Utility (pas composant) pour poser le dégradé sur un titre qui ne l'a pas nativement
+   (ex. .title-2 text-metal) sans toucher la classe de titre partagée.
+   ⚠️ Le split GSAP redécoupe le texte en lignes : paintSplitGradient (animations.js) doit
+   repeindre chaque fragment, et ne se déclenche que si background-clip vaut `text`. */
 @utility text-metal {
   @apply bg-clip-text text-transparent;
   background-image: var(--gradient-metal);
@@ -517,12 +481,7 @@ html.lenis body {
 
 /* ─── Textes ─────────────────────────────────────────────────────────────────*/
 @layer components {
-  /* Texte en primary-100. `fit-content` + `mx-auto` pour centrer, `mx-0` pour
-     aligner. Les filets latéraux ont été retirés : plusieurs labels du site sont
-     écrits en utilitaires bruts (StatCard, RoadmapDigest, « Class Spells »…) et
-     ne les avaient pas, donc le traitement était incohérent d'un bloc à l'autre.
-     Les quatre classes sont désormais identiques ; les variantes `-ghost` sont
-     conservées comme alias (~15 usages dans le markup). */
+  /* `-ghost` gardées comme alias des classes ci-dessous (~15 usages dans le markup). */
   .section-label,
   .title-label,
   .section-label-ghost,
@@ -590,18 +549,17 @@ html.lenis body {
 /* ─── Boutons ───────────────────────────────────────────────────────────────*/
 @layer components {
   .btn {
-    /* Opacité des bordures colorées visibles (outline). Régler ici. */
     --btn-border-alpha: 40%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-   
+
     font-family: var(--font-display);
     font-size:1.1em;
      border-radius: 4px;
     font-weight: 500;
- 
+
     letter-spacing: -0.00em;
     text-decoration: none;
   text-transform: uppercase;
@@ -680,7 +638,6 @@ html.lenis body {
     align-items: center;
     gap: 0.3rem;
     font-family: var(--font-ui);
-    /* Mobile : plus petit (~9px) ; restauré à partir de `sm` (voir média ci-dessous). */
     font-size: 0.57rem;
     font-weight: 500;
     /* letter-spacing: var(--tracking-wide); */
@@ -728,9 +685,8 @@ html.lenis body {
 }
 
 /* ─── Formulaires ───────────────────────────────────────────────────────────*/
-/* La liste déroulante native d'un <select> est rendue par l'OS : seuls le fond
-   et la couleur des <option> sont stylables de façon fiable. `.select-dark`
-   (posée sur le <select>) force un fond sombre cohérent avec le thème. */
+/* Un <select> natif est rendu par l'OS : seuls fond/couleur des <option> sont stylables.
+   `.select-dark` force un fond sombre cohérent avec le thème. */
 .select-dark option {
   background-color: var(--color-background-500);
   color: var(--color-foreground-100);
@@ -775,14 +731,12 @@ html.lenis body {
 }
 
 /* ─── Contenu d'article (markdown rendu) ────────────────────────────────────*/
-/* Style le HTML généré par le markdown des posts blog (posé sur le conteneur
-   qui entoure <Content />). Remplace l'ancienne classe `.prose` inexistante. */
+/* Style le HTML généré par le markdown (conteneur autour de <Content />). */
 .article-body {
   font-family: var(--font-body);
   color: var(--color-foreground-300);
   line-height: 1.8;
 }
-/* Rythme vertical par défaut entre blocs */
 .article-body > * + * {
   margin-top: 1.5rem;
 }
@@ -908,29 +862,22 @@ article:hover .card-expand {
 }
 
 /* ─── Sticky sous le header ─────────────────────────────────────────────────*/
-/* Colonne qui se fige sous le nav fixe. `align-self: start` empêche l'étirement
-   en pleine hauteur (sinon le sticky n'a pas de marge pour bouger dans sa row). */
+/* align-self:start empêche l'étirement pleine hauteur (sinon pas de marge pour bouger). */
 @utility sticky-header {
   position: sticky;
   top: var(--header-height);
   align-self: flex-start;
 }
 
-/* ─── Surface "panel" ───────────────────────────────────────────────────────
-   Look partagé entre les cards (StatCard) et le nav : bordure + radius + flou.
-   SOURCE UNIQUE — modifier ici met à jour les deux. Porté en classe `panel`
-   sur le markup (StatCard) et sur le nav (`.nav panel`). */
+/* ─── Surface "panel" ─────────────────────────────────────────────────────── */
+/* Source unique du look bordure+radius+flou partagé par StatCard et le nav. */
 @utility border-panel {
   border-radius: var(--radius-md);
 }
 
-/* ─── Cadre liseré doré (images encadrées) ──────────────────────────────────
-   Anneau à opacité variable (conic-gradient masqué) plutôt qu'un outline plat :
-   le liseré doré apparaît/disparaît en tournant autour du cadre, au lieu d'un
-   trait uniforme. ⚠️ Ne pose PAS `position` ici (un `position:relative` non
-   layé écraserait `sticky-header`/`absolute` posés par l'appelant, quel que
-   soit l'ordre des classes) — chaque usage doit garder `relative` (ou
-   `sticky-header`, etc.) explicitement dans son propre class:list. */
+/* ─── Cadre liseré doré (images encadrées) ────────────────────────────────── */
+/* ⚠️ Ne pose pas `position` ici — écraserait `relative`/`sticky-header` posés par
+   l'appelant (hors layer, gagne quel que soit l'ordre des classes). */
 .frame-gilded::after {
   content: '';
   position: absolute;
@@ -938,12 +885,9 @@ article:hover .card-expand {
   z-index: 2;
   border-radius: inherit;
   padding: 1px;
-  /* Pics sur les coins bas-droit (37.5%) et haut-gauche (87.5%) — ceux que
-     `CornerOrnament` occupe : le liseré y passe par-dessus l'ornement.
-     ⚠️ Atténuation portée par les stops eux-mêmes, PAS par `opacity` : une
-     opacité globale rendait aussi les pics translucides, donc l'ornement
-     transparaissait au travers (double trait délavé). Pics opaques = ils
-     recouvrent proprement l'ornement au croisement. */
+  /* Pics à 37.5%/87.5% = coins occupés par CornerOrnament (le liseré passe par-dessus).
+     ⚠️ Atténuation dans les stops, pas via `opacity` globale (rendrait les pics
+     translucides, laissant transparaître l'ornement en double trait délavé). */
   background: conic-gradient(
     from 0deg,
     rgba(211, 170, 100, 0.15) 0%,
@@ -961,7 +905,6 @@ article:hover .card-expand {
 }
 
 /* ─── Navigation ────────────────────────────────────────────────────────────*/
-/* Barre flottante détachée des bords pour que le radius du `panel` se voie. */
 .nav {
   position: fixed;
   top: 0.75rem;
@@ -983,10 +926,7 @@ top: 0rem;
     padding 400ms var(--ease-cinematic);
 }
 
-/* Au scroll (desktop) : le fond intensifié + le flou sont désormais gérés en
-   Tailwind sur l'élément `<nav>` (`lg:[&.is-scrolled]:bg-background/40
-   lg:[&.is-scrolled]:backdrop-blur-sm`). La classe `.is-scrolled` reste posée
-   par le JS ; la transition du fond vient de la règle `.nav` ci-dessus. */
+/* Fond+flou au scroll (desktop) gérés en Tailwind sur `<nav>` ; `.is-scrolled` posée par JS. */
 
 .nav__logo {
   font-family: var(--font-display);
@@ -998,9 +938,7 @@ top: 0rem;
   text-decoration: none;
 }
 
-/* NB : le display est piloté par Tailwind sur l'élément (`hidden lg:flex`) pour
-   que la nav bascule en burger sous `lg`. Ne pas remettre `display:flex` ici :
-   étant hors layer, il écraserait l'utilitaire `hidden` et casserait le mobile. */
+/* Ne pas remettre `display:flex` ici : hors layer, écraserait `hidden lg:flex` (burger mobile). */
 .nav__links {
   align-items: center;
   gap: 2.5rem;
@@ -1046,7 +984,7 @@ top: 0rem;
   width: 20px;
 }
 
- 
+
 
 /* ─── Keyframes ─────────────────────────────────────────────────────────────*/
 @keyframes scroll-bounce {
@@ -1090,9 +1028,8 @@ top: 0rem;
   color: var(--color-primary-100);
   background: rgba(173, 141, 89, 0.05);
 }
-/* Pile de calques superposés (grid-area 1/1) : un seul visible (.is-active),
-   les autres masqués en attente d'un toggle JS. Réutilisé par le sélecteur de
-   classes (home) et la section Voies (character). */
+/* Pile de calques (grid-area 1/1) : un seul visible (.is-active) via toggle JS.
+   Réutilisé par le sélecteur de classes (home) et Voies (character). */
 .layer-stack { display: grid; }
 .layer-stack > .layer {
   grid-area: 1 / 1;
@@ -1120,11 +1057,9 @@ top: 0rem;
     opacity 0.55s var(--ease-cinematic);
 }
 
-/* Cartes voisines se rétractent quand une autre est survolée.
-   :has() + :not(:hover) = seules les NON-survolées sont affectées.
-   ⚠️ Uniquement sur les appareils à vrai survol (souris) : sur mobile le :hover
-   reste "collé" après un tap → la 1re carte tapée resterait en avant et les autres
-   (dont la slide active du Swiper) bloquées en opacity 0.6 / scale 0.97. */
+/* Cartes voisines se rétractent au survol d'une autre (:has()+:not(:hover)).
+   ⚠️ Desktop only (hover:hover) : sur mobile le :hover reste "collé" après un tap
+   et bloquerait les autres cartes en opacity 0.6/scale 0.97. */
 @media (hover: hover) {
   .class-cards-grid:has(.card-tilt:hover) .card-tilt:not(:hover) {
     scale: 0.97;
@@ -1135,7 +1070,6 @@ top: 0rem;
   }
 }
 
-/* Label "Discover" — caché par défaut, révélé au hover */
 .class-card__discover {
   position: absolute;
   bottom: 0;
@@ -1165,8 +1099,7 @@ top: 0rem;
     box-shadow 0.45s var(--ease-cinematic),
     border-color 0.45s var(--ease-cinematic);
 }
-/* Actif via JS (.is-active) ou via Swiper (.swiper-slide-active).
-   Le glow s'allume avec un léger délai (s'active "après coup"). */
+/* Délai intentionnel (0.25s) — distinct du hover immédiat ci-dessous, ne pas fusionner les deux blocs. */
 .class-card.is-active .class-card__frame,
 .voie-card.is-active .class-card__frame,
 .swiper-slide-active .class-card__frame,
@@ -1179,14 +1112,12 @@ top: 0rem;
     border-color 0.5s var(--ease-cinematic) 0.25s,
     outline-color 0.5s var(--ease-cinematic) 0.25s;
 }
-/* Glow au survol (immédiat, sans délai) */
 .class-card:hover .class-card__frame {
   border-color: var(--color-primary-100);
   outline-color: color-mix(in srgb, var(--color-primary-100) 30%, transparent);
   box-shadow: 0 0 38px rgba(173, 141, 89, 0.35);
 }
 
-/* Ornement + rayons de coin : éteints par défaut, s'illuminent avec la carte */
 .class-card__ornament,
 .class-card__rays {
   opacity: 0.35;
@@ -1212,7 +1143,6 @@ top: 0rem;
   opacity: 1;
   filter: drop-shadow(0 0 7px rgba(201, 147, 58, 0.95));
 }
-/* Traits qui passent en or clair quand ça s'allume */
 .class-card.is-active .class-card__ornament :is(path, circle),
 .voie-card.is-active .class-card__ornament :is(path, circle),
 .swiper-slide-active .class-card__ornament :is(path, circle),
@@ -1227,9 +1157,7 @@ top: 0rem;
 }
 
 /* ─── Carrousel class cards (home, Swiper) ────────────────────────────────── */
-/* Puces de pagination (bulletClass/bulletActiveClass custom du Swiper). */
-/* Puces de pagination — partagées par le carrousel Classes (home) et le
-   sélecteur de Voies (/character). */
+/* Puces de pagination (bulletClass/bulletActiveClass Swiper) — partagées avec Voies (/character). */
 .class-dot,
 .voie-dot {
   display: inline-block;
@@ -1247,10 +1175,7 @@ top: 0rem;
   width: 1.5rem;
   background: var(--color-primary);
 }
-/* Puces du carrousel Classes (home) : plus petites que le défaut partagé
-   ci-dessus (spécifique à ce carrousel, ne touche pas `.voie-dot`). Restent
-   de vrais petits cercles — seule la couleur change sur l'actif, pas la
-   largeur (contrairement à `.voie-dot--active`). */
+/* Puces plus petites, spécifiques à ce carrousel (ne touche pas .voie-dot). */
 .class-dot {
   width: 0.375rem;
   height: 0.375rem;
@@ -1259,17 +1184,13 @@ top: 0rem;
   width: 0.375rem;
 }
 
-/* Sensation d'inertie sur le déplacement des cartes : Swiper pose
-   `transition-duration` en inline JS (voir `speed`, class-cards-swiper.js)
-   mais laisse le timing-function au CSS, par défaut `ease` du navigateur.
-   Courbe plus dynamique que ease-in classique : ralentit au milieu puis
-   réaccélère sur la fin. */
+/* Swiper pose `transition-duration` en JS (speed, class-cards-swiper.js) mais laisse
+   le timing-function au CSS — courbe custom plus dynamique que le `ease` par défaut. */
 .class-swiper .swiper-slide {
   transition-timing-function: cubic-bezier(0.12, 0.45, 0.88, 0.47);
 }
-/* Desktop : les 4 cartes sont visibles (grille) → on ne force pas le glow sur la
-   slide active ; le glow reste au hover comme partout. On neutralise donc les
-   règles `.swiper-slide-active` (globales, partagées avec VoiesSection) au-dessus de md. */
+/* Desktop : les 4 cartes sont visibles (grille), le glow reste au hover comme partout —
+   on neutralise les règles `.swiper-slide-active` (partagées avec VoiesSection) au-dessus de md. */
 @media (min-width: 768px) {
   .class-swiper .swiper-slide-active .class-card__frame {
     border-color: color-mix(in srgb, var(--color-primary-500) 50%, transparent);
@@ -1280,7 +1201,6 @@ top: 0rem;
     opacity: 0.35;
     filter: none;
   }
-  /* La carte active ne doit pas rester illuminée au repos en desktop. */
   .class-swiper .swiper-slide-active:not(:hover) .class-card__ornament :is(path, circle),
   .class-swiper .swiper-slide-active:not(:hover) .class-card__rays line {
     stroke: initial;
@@ -1296,8 +1216,8 @@ top: 0rem;
 .roadmap-toc__link.is-active .roadmap-toc__bullet {
   color: var(--color-primary);
 }
- 
- 
+
+
 
 /* ─── Editorial / Lore section ────────────────────────────────────────────── */
 .editorial-word {
@@ -1321,7 +1241,7 @@ top: 0rem;
     left: 0;
     right: 0;
     margin: auto;
-    /* Base (mobile → grand écran) : perso ancré en HAUT, plus court et atténué. */
+    /* Base mobile — voir @media plus bas pour desktop. */
     top: 0;
     bottom: unset;
     height: 500px;
@@ -1341,8 +1261,7 @@ top: 0rem;
     }
 }
 
-/* À partir de `lg` (64rem = 1024px, breakpoint Tailwind par défaut) : version
-   d'origine — perso ancré en bas, plein. En dessous, la base (petit écran) s'applique. */
+/* À partir de `lg` (1024px) : version d'origine (perso ancré en bas). */
 @media (min-width: 64rem) {
   .char {
     top: unset;
@@ -1361,21 +1280,16 @@ max-width: 800px;
 
 .char.v2 {
 max-width: 1100px;
- 
+
 pointer-events: none;
- 
+
 
 }
 
 
-/* Section « 4 Voies » — les chips (thumbs) et les flèches de navigation sont
-   désormais stylés en Tailwind inline dans VoiesSection.astro. Seul subsiste
-   ici ce qui ne peut pas l'être : le retard du glow, qui cible les éléments
-   INTERNES du composant ClassCard (.class-card__frame/__ornament/__rays) depuis
-   un état ancêtre (.swiper-slide-active). Le glow + l'aspect actif ne s'allument
-   qu'~0.5s APRÈS que la voie devient active (le temps que le fondu se termine) ;
-   on ne fait que retarder la transition — les valeurs « allumées » viennent des
-   règles .swiper-slide-active plus haut dans ce fichier. */
+/* Section « 4 Voies » — chips/flèches stylés en Tailwind inline dans VoiesSection.astro.
+   Ne reste ici que ce qui cible l'intérieur de ClassCard depuis un ancêtre
+   (.swiper-slide-active) : retarde le glow de ~0.5s après que la voie devient active. */
 
 .voies-main {
   padding: 8px !important;
@@ -1401,13 +1315,9 @@ pointer-events: none;
   }
 
 /* ─── Section « Voies » — variante pile de cartes (VoiesShowcase) ──────────── */
-/* Le placement (data-pos, posé par voies-showcase.js) est ici car il enchaîne
-   des états impossibles à écrire en Tailwind inline. */
+/* Placement (data-pos, posé par voies-showcase.js) : états enchaînés impossibles en Tailwind inline. */
 
-/* Pile : grid-area 1/1 (même principe que .layer-stack) → la hauteur du
-   conteneur suit la plus grande carte, les cartes se superposent.
-   Toutes gardent la même taille (pas de scale) : c'est un vrai jeu de cartes,
-   seuls le décalage et l'inclinaison changent. */
+/* Pile (grid-area 1/1, même principe que .layer-stack) — pas de scale, seuls décalage/inclinaison changent. */
 .voies-deck {
   display: grid;
 }
@@ -1419,7 +1329,6 @@ pointer-events: none;
     transform 0.35s var(--ease-cinematic),
     filter 0.35s var(--ease-cinematic);
 }
-/* Cartes en attente : décalées, inclinées et assombries derrière la carte active */
 .voies-deck__item[data-pos] {
   filter: brightness(0.4) saturate(0.7);
   pointer-events: none;
@@ -1443,10 +1352,8 @@ pointer-events: none;
   transform: rotate(1deg) translate(15%, 5%);
 }
 
-/* Rangée de cartes étalées (miniatures) — l'inclinaison --rot vient du markup et
-   ne bouge JAMAIS : seules la lueur et la luminosité distinguent la voie active.
-   La rangée occupe toute la largeur de la colonne, sans gap et avec un léger
-   chevauchement ; l'active passe au-dessus (z-index) et reste donc entière. */
+/* Rangée de miniatures — inclinaison --rot (markup) fixe, seules lueur/luminosité
+   distinguent la voie active (z-index la fait passer entière au-dessus). */
 .voie-thumb {
   min-width: 0;
   cursor: pointer;
@@ -1454,8 +1361,6 @@ pointer-events: none;
   filter: brightness(0.45) saturate(0.7);
   transition: filter 0.4s var(--ease-cinematic);
 }
-/* Rangée sur une seule ligne à partir de lg : largeur en %, chevauchement et
-   inclinaison STATIQUE en éventail (--rot, posé dans le markup). */
 @media (min-width: 64rem) {
   .voie-thumb {
     width: 25%;
@@ -1466,13 +1371,9 @@ pointer-events: none;
     margin-left: -2%;
   }
 }
-/* Sous lg, l'éventail statique cède la place au carrousel "grande carte"
-   mobile (.voies-mobile, voies-mobile-swiper.js) — même sensation d'inertie
-   que le carrousel Classes de la home sur le déplacement (voir `.class-swiper
-   .swiper-slide` plus haut). Contrairement à l'ancienne rangée de miniatures
-   (scroller pur), ici la carte centrée EST la voie sélectionnée (synchronisé
-   en JS) : la lueur `.swiper-slide-active` générique peut donc s'appliquer
-   telle quelle, pas besoin de la neutraliser au profit de `.is-active`. */
+/* Sous lg : carrousel "grande carte" mobile (.voies-mobile, voies-mobile-swiper.js),
+   même inertie que le carrousel Classes. Carte centrée = voie sélectionnée (sync JS),
+   donc `.swiper-slide-active` s'applique telle quelle. */
 .voies-mobile .swiper-slide {
   transition-timing-function: cubic-bezier(0.12, 0.45, 0.88, 0.47);
 }

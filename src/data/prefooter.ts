@@ -1,7 +1,5 @@
-// Contenu de la section pré-footer ("Join the Journey") édité via Keystatic
-// (singleton `prefooter`, src/content/sections/prefooter.json).
-// Import JSON direct (pas une content collection) : un singleton n'est pas
-// une liste d'entrées — même pattern que src/data/settings.ts.
+// Contenu du prefooter ("Join the Journey", singleton `prefooter`, src/content/sections/prefooter.json).
+// Import JSON direct — même pattern que settings.ts.
 import prefooterData from '../content/sections/prefooter.json';
 
 export interface PrefooterCard {

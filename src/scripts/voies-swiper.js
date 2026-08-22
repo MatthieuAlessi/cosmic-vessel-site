@@ -26,7 +26,7 @@ function initVoiesSwiper() {
     effect: 'fade',
     fadeEffect: { crossFade: true },
     slidesPerView: 1,
-    autoHeight: true, // ajuste la hauteur selon le panneau actif
+    autoHeight: true,
     pagination: {
       el: '.voies-dots',
       clickable: true,
@@ -35,7 +35,6 @@ function initVoiesSwiper() {
     },
   });
 
-  // Onglet actif = voie affichée.
   const setActiveTab = (i) => tabs.forEach((t, ti) => t.classList.toggle('is-active', ti === i));
   // État désactivé des flèches aux extrémités (les deux paires).
   const updateNav = () => {

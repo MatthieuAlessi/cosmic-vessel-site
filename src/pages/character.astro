@@ -27,7 +27,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
 
   <!-- ─── Hero — showcase perso (texte à gauche) ── -->
   <section class="relative overflow-hidden bg-background-700 pt-24 pb-12 lg:pt-40 lg:pb-20 md:min-h-[min(70svh,650px)] md:flex md:items-center">
-    <!-- Fond atmosphérique, calé à droite (derrière le render) + masque vignette galaxy -->
     <BgImage
       src={hero?.image ?? "/src/assets/images/decor/galaxy-pitch2.jpeg"}
       eager
@@ -39,7 +38,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
     />
     
 
-    <!-- Voile dégradé gauche→droite pour la lisibilité du texte (reste sombre jusqu'à ~50%) -->
     <div
       class="absolute inset-0 z-1 bg-linear-to-r from-background-700 from-15% via-background-700/70 via-50% to-transparent"
     >
@@ -51,7 +49,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
         <p class="section-label mb-6">{hero?.label}</p>
         <h1 class="title-section anim-blur w-fit mb-0 text-balance text-4xl md:text-6xl lg:text-8xl">{hero?.title}</h1>
 
-        <!-- Filet horizontal + point à gauche (cf. inspi) -->
      <DividerH width="max-w-lg" class="my-8 ml-1" />
 
         <p class="text-foreground-300 font-body text-base md:text-lg leading-relaxed">
@@ -100,7 +97,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-6 md:gap-12 lg:gap-20">
 
-      <!-- Bloc 1 : image à gauche / texte à droite (style Lore de index) -->
       <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-8 items-center relative">
         <div class="col-span-1 lg:col-span-4">
           <div
@@ -131,7 +127,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
 
          <div class="  w-full mx-auto border-t border-primary-300/10 my-8"></div>
 
-      <!-- Bloc 2 : texte à gauche / image à droite (alternance) -->
       <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 lg:gap-8 items-center relative   ">
         <div class="col-span-1 lg:col-span-4 lg:py-6 lg:order-1 order-2">
           <p class="section-label  mb-4 lg:mb-6 mx-0 lg:mx-0">{section1?.block2?.label}</p>
@@ -222,7 +217,6 @@ const { hero, section1, section2, sectionclass, section3 } = characterData;
   >
     <!-- <Divider position="top" /> -->
 
-    <!-- Overlay lignes de grille (12 colonnes, motif décoratif) -->
     <div class="absolute inset-0 grid grid-cols-12 grid-rows-[auto_auto_6rem_auto_4rem_auto_auto_6rem_auto] pointer-events-none z-10" aria-hidden="true">
       <div class="col-start-1  row-start-1 row-end-10"></div>
       <div class="col-start-2  row-start-1 row-end-10 border-r border-primary-700/10"></div>

@@ -85,21 +85,13 @@ if (!reduced) {
 // (compatible iOS, où background-attachment:fixed est ignoré). Posé par BgImage.astro
 // (prop bgfixedparallax) sur [data-bgfixedparallax].
 //
-// L'aire de référence d'un fond fixe EST le viewport, pas la boîte : l'image fait
-// donc exactement une hauteur de viewport (cadrage identique à background-size:cover),
-// et on la translate à l'inverse du scroll pour qu'elle paraisse immobile.
-// Soit S le haut de la boîte dans le viewport, H sa hauteur, vh le viewport :
-// l'image est en absolute inset-0 de cette boîte, son haut non translaté vaut donc S.
-// On veut ce haut à 0 → y = -S, linéaire en S :
-//   au départ (top bottom)  S = vh → y = -vh
-//   à la fin  (bottom top)  S = -H → y = H
-// ⚠️ Ne pas sur-dimensionner l'image (une version précédente la mettait à vh + 2H) :
-// l'effet fixe restait juste, mais object-cover devait l'agrandir plusieurs fois pour
-// remplir la boîte et on n'en voyait plus qu'une bande. Marche aussi si H < vh.
-//
-// Un pur position:sticky ne fonctionne pas ici : la boîte (le "cadre") est plus
-// courte que l'élément collant, ce qui ne laisse aucune marge de collage.
-// En reduced-motion, l'image reste telle quelle : object-cover plein cadre, immobile.
+// L'image fait une hauteur de viewport (cadrage = background-size:cover) et se
+// translate à l'inverse du scroll : y = -S où S = haut de la boîte dans le viewport
+// (fromTo -vh → +H sur le scrub top-bottom → bottom-top).
+// ⚠️ Ne pas sur-dimensionner l'image (vh + 2H rendait le cadrage plusieurs fois trop
+// zoomé) — l'aire de référence d'un fond fixe est le viewport, pas la boîte.
+// position:sticky ne marche pas ici : la boîte est plus courte que l'élément collant,
+// aucune marge de collage. En reduced-motion l'image reste immobile, cover plein cadre.
 if (!reduced) {
   document.querySelectorAll('[data-bgfixedparallax]').forEach((img) => {
     const box = img.parentElement;
@@ -174,11 +166,10 @@ if (blurEls.length) {
               duration: BLUR_DURATION,
               stagger: BLUR_STAGGER,
               ease: BLUR_EASE,
-              // Les deux doivent tomber dans le MÊME tick : le filter (un
-              // blur(0) résiduel garde une couche de compo inutile) et la
-              // classe qui porte le translateZ(0). Retirer la couche avant le
-              // filter rouvrirait une frame d'auréole ; la garder après coup
-              // laisserait le texte crénelé (pas d'antialiasing sous-pixel).
+              // Les deux doivent tomber dans le MÊME tick : retirer la classe
+              // (translateZ) avant le filter rouvrirait une frame d'auréole (bug
+              // clip:text) ; la garder après laisserait le texte crénelé (perte
+              // d'antialiasing sous-pixel).
               onComplete: () => {
                 gsap.set(targets, { clearProps: 'filter' });
                 el.classList.remove('is-animating');

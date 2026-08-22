@@ -1,7 +1,5 @@
-// Contenu textuel de la page /character édité via Keystatic
-// (singleton `characterpage`, src/content/pages/character.json).
-// Import JSON direct — même pattern que src/data/homepage.ts.
-// Tous les champs optionnels : le CMS peut laisser vide → fallbacks au rendu.
+// Contenu textuel de la page /character (singleton `characterpage`, src/content/pages/character.json).
+// Import JSON direct — même pattern que homepage.ts. Champs optionnels → fallbacks au rendu.
 import characterpage from '../content/pages/character.json';
 
 export interface CharacterPage {

@@ -1,11 +1,8 @@
 ---
-// Section pré-footer ("Join the Journey") — bande commune (home, /character…).
-// Label, titre et les 4 cartes sont éditables via Keystatic (singleton `prefooter`,
-// lu par @data/prefooter). Chaque carte porte son lien (link), son style (primary)
-// et un flag `isTrailer` : si vrai, le bouton ouvre la modale trailer globale avec
-// l'ID vidéo global (trailerVideoId, cf. @data/settings) au lieu de suivre `link`.
-// Les attributs additionnels (id, data-toc-section…) sont passés-plat sur la <section>
-// — utile pour l'ancre de scroll-spy sur /character (id="join").
+// Section pré-footer ("Join the Journey", home + /character). Contenu piloté par Keystatic
+// (singleton `prefooter`) ; une carte avec `isTrailer` ouvre la modale trailer globale
+// (trailerVideoId, @data/settings) au lieu de suivre son `link`. {...rest} passé-plat sur
+// la <section> (ex: ancre scroll-spy `id="join"` sur /character).
 import BgImage from "@components/decor/BgImage.astro"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
 import Divider from "@components/decor/Divider.astro"

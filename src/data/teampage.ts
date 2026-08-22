@@ -1,7 +1,5 @@
-// Contenu textuel de la page /team édité via Keystatic
-// (singleton `teampage`, src/content/pages/team.json).
-// ⚠️ À ne pas confondre avec src/data/team.ts (départements/openRoles, legacy) ni
-// avec la collection `team` (les membres) : ici, uniquement les textes de la page.
+// Contenu textuel de la page /team (singleton `teampage`, src/content/pages/team.json).
+// ⚠️ À ne pas confondre avec la collection `team` (les membres) : ici, uniquement les textes de la page.
 import teampage from '../content/pages/team.json';
 
 export interface TeamPage {

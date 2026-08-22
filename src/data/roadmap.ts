@@ -1,9 +1,7 @@
 // ─── Données du feature board roadmap (source : collection Keystatic) ───────
-// Lit la collection `roadmapCategories` (src/content/roadmap-categories/*.json,
-// éditée via l'admin) et la reshape vers la forme historique attendue par les
-// composants (name / features[{ title, description, icon, status }]) + dérivés
-// (comptes, progression, slugify). Remplace l'ancien module en dur
-// `roadmapFeatures.ts`. Les composants n'ont eu qu'à changer le chemin d'import.
+// Lit `roadmapCategories` (src/content/roadmap-categories/*.json) et la reshape vers la
+// forme attendue par les composants (name / features[{ title, description, icon, status }])
+// + dérivés (comptes, progression, slugify). Remplace l'ancien roadmapFeatures.ts en dur.
 import { getCollection } from 'astro:content';
 
 export type FeatureStatus = "completed" | "in-progress" | "planned";

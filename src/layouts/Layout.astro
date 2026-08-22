@@ -76,10 +76,9 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <title>{title}</title>
   </head>
   <body>
-    <!-- Rideau de transition de page (brouillard noir). Démarre couvert => sert
-         aussi de loader d'intro ; révélé au load par le script is:inline ci-dessous.
-         5 splats grunge (union = 100% du viewport) en cascade + fond noir de
-         sécurité (comble tout trou). --tf = transform de répartition, --i = rang cascade. -->
+    <!-- Rideau de transition de page (brouillard noir) : démarre couvert (sert aussi de
+         loader d'intro), révélé au load par le script is:inline plus bas. --tf = transform
+         de répartition, --i = rang cascade (lus par le CSS). -->
     <div id="page-fade" data-covered aria-hidden="true">
       <div class="page-fade__layer page-fade__splat" style="--i:0; --tf:translate(0,-20%) scale(0.85)"></div>
       <div class="page-fade__layer page-fade__splat" style="--i:1; --tf:translate(24%,0) scale(-1.28,1.28)"></div>
@@ -162,7 +161,6 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
         const raw = getComputedStyle(document.documentElement).getPropertyValue("--page-fade-cover")
         const COVER = parseFloat(raw) * (raw.includes("ms") ? 1 : 1000) || 1100
 
-        // reduced-motion : aucun rideau, navigation native.
         if (reduced) {
           fade.removeAttribute("data-covered")
           return
@@ -199,9 +197,8 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
           if (url.pathname === location.pathname && url.hash) return // ancre même page
 
           e.preventDefault()
-          // Pas de lenis.stop() ici : on navigue en <1s, et le stop retirerait la
-          // scrollbar (=> gouttière noire visible + décalage). Le scroll résiduel est
-          // invisible sous le rideau.
+          // Pas de lenis.stop() ici : sur une nav <1s ça retire la scrollbar (gouttière
+          // noire + décalage) ; le scroll résiduel reste invisible sous le rideau.
           fade.setAttribute("data-covered", "")
 
           // Navigue une fois le noir plein atteint (cascade de splats + fond de sécurité).

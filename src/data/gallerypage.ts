@@ -1,7 +1,5 @@
-// Contenu textuel de la page /gallery édité via Keystatic
-// (singleton `gallerypage`, src/content/pages/gallery.json).
-// Import JSON direct — même pattern que src/data/homepage.ts / character.ts.
-// Tous les champs optionnels : le CMS peut laisser vide → fallbacks au rendu.
+// Contenu textuel de la page /gallery (singleton `gallerypage`, src/content/pages/gallery.json).
+// Import JSON direct — même pattern que homepage.ts/character.ts. Champs optionnels → fallbacks au rendu.
 import gallerypage from '../content/pages/gallery.json';
 
 export interface GalleryPage {

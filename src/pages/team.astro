@@ -13,10 +13,8 @@ import { teamPageData } from "@data/teampage"
 
 const { hero } = teamPageData
 
-// Roster piloté par le CMS : une entrée de la collection `team` = un département.
-// Le titre affiché vient du champ `department`, les cartes de `members[]` et les
-// postes ouverts de `openroles[]`. Ajouter/éditer une entrée dans Keystatic se
-// répercute directement ici (plus de liste de départements en dur ni de placeholders).
+// 1 entrée `team` = 1 département (department/members[]/openroles[]) ; plus de liste
+// de départements en dur, tout vient de Keystatic.
 const roster = (await getCollection("team")).map((entry) => ({
   name: entry.data.department,
   people: entry.data.members,
@@ -64,7 +62,6 @@ const joinTeamUrl = settings.joinformUrl ?? "#"
                 />
               ))}
 
-              {/* Cartes des rôles recherchés (recrutement) */}
               {dept.openRoles.map((role) => (
                 <TeamOpenRoleCard role={role} href={joinTeamUrl} target="_blank" />
               ))}

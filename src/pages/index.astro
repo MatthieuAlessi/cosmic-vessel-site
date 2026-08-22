@@ -77,7 +77,6 @@ const teamTotal = 30
 
     <div class="overlay-vignette-bottom"></div>
 
-    <!-- Eclipse décorative -->
     <div
       class="z-40 absolute pointer-events-none aspect-square w-1/2 rounded-full border border-primary-100/30 opacity-40 glow-eclipse bottom-0 translate-y-1/2 inset-x-0 mx-auto  hidden lg:block"
     >
@@ -89,7 +88,6 @@ const teamTotal = 30
       <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10 lg:pt-28 lg:pb-28 3xl:pb-20">
 
         {heroLayout === "centered" ? (
-          <!-- Axial : le trailer arrive après le pitch, avant les CTA -->
           <div class="text-center">
             <div class="title-label mx-auto mb-3 lg:mb-6 xl:mb-4">{hero?.label}</div>
             <h1 class="title-hero anim-blur w-fit mx-auto mb-2 lg:mb-4 xl:mb-4">{hero?.title} </h1>
@@ -117,7 +115,6 @@ const teamTotal = 30
             </div>
           </div>
         ) : (
-          <!-- 2 colonnes : texte à gauche, trailer à droite (empilés sous lg) -->
           <div class="grid items-center gap-10 lg:grid-cols-2 xl:gap-16">
 
             <div class="text-center lg:text-left">
@@ -342,7 +339,6 @@ const teamTotal = 30
           <div class="absolute top-0 inset-0 mx-auto border-t border-primary-300/10"></div>
 
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start relative">
-          <!-- Colonne gauche 60% : titre, label en dessous, puis texte sur 2 colonnes -->
           <div class="lg:col-span-3">
               <p class="section-label mb-6">{section2?.block2?.label}</p>
             <h3 class="title-2 text-foreground-100 mb-4">
@@ -356,7 +352,6 @@ const teamTotal = 30
             <StarMarks class="pt-6 flex justify-start" />
           </div>
 
-          <!-- Colonne droite 40% : image ratio 3/2 -->
           <div class="lg:col-span-2 lg:ml-6">
             <div class="relative frame-gilded shadow-img-lift rounded-md overflow-hidden">
               <CmsImage
@@ -413,7 +408,6 @@ const teamTotal = 30
 
   <GalaxyCanvas maskClass="mask-galaxy--img" opacity={0.8} count={200} />
  
-  <!-- Lueurs primaires décoratives -->
    <!-- <div class="absolute inset-0  pointer-events-none overflow-x-clip z-10 opacity-60">
     <div class="absolute left-0 top-0 aspect-square w-1/2 -translate-x-1/2 bg-primary"
       style="background: radial-gradient(ellipse at center, rgba(201,147,58,0.2) 0%, transparent 70%); filter: blur(40px);"></div>
@@ -541,9 +535,8 @@ const teamTotal = 30
    
     </div>
 
-    {/* -mx-* + md:mx-0 : casse le px-4 sm:px-6 du conteneur parent sur mobile
-        uniquement, pour que le swiper (et les cartes voisines qu'il laisse
-        déborder) touche vraiment le bord de l'écran, comme la référence. */}
+    {/* -mx-* + md:mx-0 : casse le padding du conteneur sur mobile uniquement, pour que le swiper
+        (et les cartes voisines qu'il laisse déborder) touche le bord de l'écran. */}
     <div class="relative -mx-4 sm:-mx-6 md:mx-0">
       <div class="class-swiper swiper py-4 md:py-0 md:overflow-visible!">
         <div class="class-cards-grid swiper-wrapper md:grid! md:grid-cols-4 md:gap-4 lg:gap-8 2xl:gap-10">
@@ -562,8 +555,7 @@ const teamTotal = 30
         </div>
       </div>
 
-      {/* Flèches sur les bords, à mi-hauteur des cartes — mobile uniquement (desktop = 4 cartes).
-          Hors du conteneur `.class-swiper` (overflow: hidden du Swiper) pour ne pas être rognées. */}
+      {/* Hors du conteneur `.class-swiper` (overflow:hidden du Swiper) pour ne pas être rognées. */}
       <button
         type="button"
         aria-label="Carte précédente"
@@ -581,7 +573,6 @@ const teamTotal = 30
       </button>
     </div>
 
-    {/* Dots — mobile uniquement */}
     <div class="class-swiper__dots mt-6 flex items-center justify-center gap-2 md:hidden"></div>
 
     <script>
@@ -745,7 +736,6 @@ const teamTotal = 30
             {teamSection?.text2}
           </p>
 
-          <!-- Cluster d'avatars → funnel vers /team -->
           <a href="/team" class="group inline-flex flex-col items-center lg:items-start gap-4 mb-0">
             <ul class="flex items-center -space-x-3">
               {teamAvatars.map((m) => (

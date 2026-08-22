@@ -1,10 +1,8 @@
 import type { ImageMetadata } from "astro";
 
-// Toutes les images ÉDITABLES AU CMS vivent dans src/assets/images/** (≠ public/,
-// qui n'est jamais optimisé par Astro). import.meta.glob (eager, résolu au build)
-// construit une table { "/src/assets/images/...": module } que l'on interroge avec
-// la string stockée par Keystatic. Les images DÉCO restent dans public/ et n'utilisent
-// PAS ce helper (elles gardent leur <img>/background-image).
+// Images éditables CMS vivent dans src/assets/images/** (public/ n'est jamais optimisé
+// par Astro). import.meta.glob (eager) construit une table chemin → module, interrogée
+// avec la string stockée par Keystatic. Images déco : restent en public/, n'utilisent pas ce helper.
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/**/*.{png,jpg,jpeg,webp,avif}",
   { eager: true },

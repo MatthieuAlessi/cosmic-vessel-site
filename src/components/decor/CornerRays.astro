@@ -21,10 +21,8 @@ const flip = corner === 'top-right';
   aria-hidden="true"
   class:list={['absolute top-1.5 pointer-events-none', flip ? 'right-1.5 -scale-x-100' : 'left-1.5', className]}
 >
-  <!-- Pointes plus longues sur les bords, plus courtes en diagonale :
-       elles tracent un arc concave qui suit le border arrondi de l'image. -->
-  <!-- Arc concave : extrêmes à dist≈85, diagonale à dist≈39 → creux marqué
-       qui suit la courbe intérieure du rounded-t-full vue depuis le coin. -->
+  <!-- Pointes plus longues sur les bords, courtes en diagonale (dist≈85 → 39) :
+       arc concave calé sur la courbe du rounded-t-full. -->
   <g stroke="var(--color-primary-500)" stroke-width="1" stroke-linecap="round">
     <line x1="22"   y1="8"    x2="93" y2="8"  />
     <line x1="21.7" y1="11.1" x2="76" y2="24" />

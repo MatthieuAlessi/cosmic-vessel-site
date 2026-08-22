@@ -1,15 +1,7 @@
-// Champ d'étoiles animé des <GalaxyCanvas />.
-//
-// UNE seule boucle requestAnimationFrame pour TOUTES les instances de la page.
-// Avant, le script vivait dans le composant avec `define:vars`, ce qui le
-// forçait en `is:inline` : recopié en entier dans le HTML (non minifié) et
-// relancé — une boucle rAF de plus — à chaque instance. La home en a deux, la
-// section Voies une autre.
-//
-// Et une instance ne dessine que si elle est À L'ÉCRAN. L'ancienne version ne
-// s'arrêtait que sur `visibilitychange` (onglet en arrière-plan) : sur une page
-// de ~12 800 px de haut, les canvas hors champ dessinaient dans le vide en
-// permanence.
+// Champ d'étoiles animé des <GalaxyCanvas /> — UNE seule boucle rAF pour toutes
+// les instances (avant : chaque canvas relançait sa propre boucle via `define:vars`/
+// `is:inline`). Chaque instance ne dessine que si elle est visible (IntersectionObserver) —
+// sinon les canvas hors champ, sur une page de ~12 800px, dessinaient dans le vide en permanence.
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const small = window.matchMedia('(max-width: 767px)').matches;
@@ -26,10 +18,10 @@ function makeStar(W, H) {
     x: Math.random() * W,
     y: Math.random() * H,
     phase: Math.random() * Math.PI * 2,
-    color: `rgb(${r},205,${b})`, // string pré-baked, jamais recréée
+    color: `rgb(${r},205,${b})`,
     baseAlpha: 0.12 + z * 0.85,
     size: 0.3 + z * 0.9,
-    drift: 0.04 * z, // vitesse horizontale pré-calculée
+    drift: 0.04 * z,
     phaseSpeed: 0.008 + z * 0.005,
   };
 }

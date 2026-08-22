@@ -22,10 +22,9 @@ const {
   class: className = '',
 } = Astro.props;
 
-// ⚠️ Trait de 1px : ne PAS l'atténuer via `opacity`. Le div tombe souvent à une
-// position verticale fractionnaire, donc le 1px est réparti sur deux lignes de
-// pixels physiques (~50% d'intensité chacune) ; une opacité < 1 se cumule à ça et
-// le trait disparaît. L'estompage vit dans le dégradé, qui reste franc au centre.
+// ⚠️ Trait de 1px sensible à `opacity` : à une position fractionnaire, le pixel est déjà
+// réparti sur 2 lignes physiques (~50% chacune) — une opacité < 1 s'y cumule et le trait
+// disparaît. L'estompage doit rester porté par le dégradé, pas par l'opacité globale.
 const background = gradient
   ? 'linear-gradient(90deg, transparent, var(--color-primary-500) 30%, var(--color-primary-100) 50%, var(--color-primary-500) 70%, transparent)'
   : 'var(--color-primary)';

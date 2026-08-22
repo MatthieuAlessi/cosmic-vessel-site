@@ -1,8 +1,7 @@
 ---
-// Sous-nav de chapitres : barre horizontale sticky (sous le nav principal) avec
-// scroll-spy. Même logique que RoadmapToc mais en disposition horizontale, pensée
-// pour les pages full-bleed (ex. /character). Les entrées ciblent les sections
-// portant `id` + `data-toc-section` (même slug) + un `scroll-mt-*` de sécurité.
+// Sous-nav horizontale sticky avec scroll-spy — même logique que RoadmapToc, pensée
+// pour les pages full-bleed (ex. /character). Entrées liées aux sections portant
+// `id` + `data-toc-section` (même slug) + `scroll-mt-*`.
 interface Item {
   label: string
   slug: string
@@ -63,7 +62,6 @@ const { items, hideOnSection, class: className = "" } = Astro.props
   const nav = document.querySelector<HTMLElement>(".chapter-nav")
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".chapter-nav .roadmap-toc__link"))
   const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-toc-section]"))
-  // Section qui possède son propre sous-menu sticky : on replie la barre quand elle est active.
   const hideOn = nav?.dataset.hideOnSection || ""
 
   if (links.length && sections.length) {
@@ -100,8 +98,7 @@ const { items, hideOnSection, class: className = "" } = Astro.props
 </script>
 
 <style>
-  /* Swap : la barre se replie (slide up + fondu) quand la section qui a son propre
-     sous-menu sticky est active — évite deux barres sticky au même endroit. */
+  /* Repli (slide up + fondu) quand hideOnSection est actif — évite deux sticky superposées. */
   .chapter-nav {
     transition:
       transform 0.4s var(--ease-cinematic),

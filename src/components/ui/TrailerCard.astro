@@ -4,13 +4,10 @@ import { Icon } from 'astro-icon/components';
 interface Props {
   /** ID YouTube — sert à construire la vignette (et est lu par la modal page). */
   videoId: string;
-  /** Texte sous le bouton play. Vide = pas de caption. */
   caption?: string;
-  /** Qualité de la vignette YouTube. maxres = HD (pas garanti sur toutes les vidéos). */
+  /** maxres = HD, non garanti sur toutes les vidéos. */
   quality?: 'hqdefault' | 'sddefault' | 'maxresdefault';
-  /** Override complet de l'URL de la vignette. */
   thumbnail?: string;
-  /** Largeur / overrides (ex: "max-w-lg mx-auto"). */
   class?: string;
 }
 

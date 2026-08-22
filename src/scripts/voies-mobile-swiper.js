@@ -1,16 +1,11 @@
 // Swiper "grande carte" mobile (< lg) de la section Voies (/character,
-// VoiesShowcase) — même traitement que le carrousel Classes de la home
-// (class-cards-swiper.js) : cartes qui débordent au bord de l'écran, coverflow
-// à inclinaison légère + inertie sur le déplacement. Remplace la rangée de
-// miniatures compactes sur mobile (celle-ci reste desktop uniquement, `hidden
-// lg:block`, voir VoiesShowcase.astro).
+// VoiesShowcase) — même traitement que class-cards-swiper.js. Remplace la
+// rangée de miniatures compactes desktop (`hidden lg:block`, voir VoiesShowcase.astro).
 //
-// Chaque carte est un `.voie-thumb`, comme les miniatures desktop — la
-// sélection (mise en avant + panneau texte) reste centralisée dans
-// voies-showcase.js, indexée par `data-index` (pas la position dans le DOM :
-// il existe deux groupes de `.voie-thumb` en parallèle, desktop + mobile).
-// Le tap sur une carte la centre ET la sélectionne ; le swipe jusqu'à une
-// carte la sélectionne une fois arrivée au centre.
+// Chaque carte est un `.voie-thumb`, comme les miniatures desktop — la sélection
+// reste centralisée dans voies-showcase.js, indexée par `data-index` (pas la
+// position DOM : deux groupes de `.voie-thumb` existent en parallèle, desktop +
+// mobile). Le tap centre ET sélectionne ; le swipe sélectionne une fois au centre.
 // Doc : https://swiperjs.com/swiper-api
 
 import Swiper from 'swiper';
@@ -48,14 +43,13 @@ function create() {
     navigation: { prevEl: '.voies-mobile__prev', nextEl: '.voies-mobile__next' },
   });
 
-  // Le swipe jusqu'à une carte la sélectionne (comme un tap) — réutilise le
-  // clic déjà branché par voies-showcase.js plutôt que de dupliquer sa logique.
+  // Réutilise le clic déjà branché par voies-showcase.js plutôt que de dupliquer sa logique.
   swiper.on('slideChange', () => {
     swiper.slides[swiper.activeIndex]?.click();
   });
 
-  // Taper une carte non centrée (peek) la centre en plus de la sélectionner —
-  // sinon la voie sélectionnée (surlignée) pourrait ne pas être celle au centre.
+  // Une carte non centrée (peek) tapée est aussi centrée — sinon la voie surlignée
+  // pourrait ne pas être celle au centre.
   Array.from(el.querySelectorAll('.voie-thumb')).forEach((slide, i) => {
     slide.addEventListener('click', () => swiper.slideTo(i));
   });

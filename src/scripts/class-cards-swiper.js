@@ -1,23 +1,16 @@
 // Swiper de la section "Classes" (home) — carrousel des 4 ClassCard.
-// Mobile : slide active CENTRÉE (`centeredSlides`) + effet coverflow (rotate
-// ~11° — inclinaison 3D légère des cartes voisines/en mouvement, PAS un flip
-// complet). Le déplacement a en plus une sensation d'inertie via `speed` +
-// `transition-timing-function` (voir `.class-swiper .swiper-slide` dans
-// global.css). Desktop (≥ md) : on DÉTRUIT le Swiper → les slides retombent en
-// grille de 4 (via les overrides `md:` sur le markup) → pas de slide "active"
-// forcée en desktop, glow au hover comme partout. Le glow de la slide active
-// (mobile) vient des règles `.swiper-slide-active .class-card__*` de global.css.
+// Mobile : slide active centrée + effet coverflow (styles dans `.class-swiper
+// .swiper-slide` de global.css). Desktop (≥ md) : Swiper détruit, les slides
+// retombent en grille de 4 via les overrides `md:` du markup.
 // Doc : https://swiperjs.com/swiper-api
 //
 // Ce fichier n'est que le GATE : il ne charge l'implémentation (et donc Swiper,
-// ~84 ko) que si le média correspond. En import statique, Swiper partait aussi
-// en desktop, où il est détruit aussitôt et ne sert jamais.
+// ~84 ko) que si le média correspond — en import statique, Swiper partait aussi
+// en desktop pour être détruit aussitôt.
 //
-// ⚠️ Le CSS reste importé ICI, statiquement. Astro remonte le CSS de tout le
-// graphe de modules d'une page dans le <head>, imports dynamiques compris — le
-// passer en dynamique ne l'en enlève pas, mais fait générer par Vite un preload
-// vers un nom de fichier qu'Astro n'émet pas : 404, promesse rejetée, et le
-// swiper ne s'initialise jamais.
+// ⚠️ Le CSS reste importé ICI, statiquement : en dynamique, Astro le remonte quand
+// même dans le <head> mais Vite génère un preload vers un nom qu'il n'émet pas
+// → 404, promesse rejetée, swiper jamais initialisé.
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 

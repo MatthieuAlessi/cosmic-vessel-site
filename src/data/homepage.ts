@@ -1,9 +1,6 @@
-// Contenu textuel de la home édité via Keystatic
-// (singleton `homepage`, src/content/pages/home.json).
-// Import JSON direct (pas une content collection) : un singleton n'est pas
-// une liste d'entrées — même pattern que src/data/settings.ts / prefooter.ts.
-// Tous les champs sont optionnels : le CMS peut laisser un champ vide,
-// donc on prévoit des fallbacks au rendu ({x && ...} ou ?? "…").
+// Contenu textuel de la home (singleton `homepage`, src/content/pages/home.json).
+// Import JSON direct (pas de content collection pour un singleton) — même pattern que settings.ts/prefooter.ts.
+// Champs optionnels : le CMS peut les laisser vides → prévoir fallback au rendu.
 import homepage from '../content/pages/home.json';
 
 export interface Homepage {

@@ -1,14 +1,11 @@
 // Lightbox PhotoSwipe, partagée par la home, /gallery et les articles.
 //
-// Chargée au PREMIER CLIC, jamais avant : tant que personne n'ouvre une image,
-// le wrapper (~16 ko) et sa feuille de style ne servent à rien. En import
-// statique, Vite sortait cette feuille en <link> dans le <head> — donc
-// render-blocking sur trois pages pour une fonctionnalité que la plupart des
-// visiteurs ne déclenchent jamais.
+// Chargée au PREMIER CLIC, jamais avant : en import statique, Vite sortait la
+// feuille de style (~16 ko) en <link> dans le <head> — render-blocking sur trois
+// pages pour une fonctionnalité que la plupart des visiteurs ne déclenchent jamais.
 import { lenis } from './smooth-scroll.js';
-// Statique volontairement : Astro remonte de toute façon ce CSS dans le <head>,
-// et en import() dynamique Vite génère un preload vers un nom qu'il n'émet pas
-// (404 → promesse rejetée → lightbox jamais initialisée).
+// Statique volontairement : en import() dynamique, Vite génère un preload vers
+// un nom qu'il n'émet pas (404 → promesse rejetée → lightbox jamais initialisée).
 import 'photoswipe/style.css';
 
 export function initLightbox(gallerySelector, childSelector = 'a.gallery-item') {

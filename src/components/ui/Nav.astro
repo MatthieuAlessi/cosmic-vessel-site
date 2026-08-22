@@ -1,6 +1,5 @@
 ---
-// Nav adaptée d'un modèle Tailwind Plus (structure burger-gauche + disclosure),
-// restylée avec la charte du site et débarrassée de `@tailwindplus/elements`
+// Nav adaptée d'un modèle Tailwind Plus, restylée et débarrassée de `@tailwindplus/elements`
 // (toggle en vanilla JS). Bascule en burger sous `lg` (tablette + téléphone).
 import { navLinks } from '@data/navigation';
 import { modName, settings } from '@data/settings';
@@ -98,14 +97,14 @@ const currentPath = Astro.url.pathname;
 <script>
   const nav = document.getElementById('main-nav');
   if (nav) {
-    // Fond intensifié au scroll (inchangé)
+    // Fond intensifié au scroll
     const onScroll = () => {
       nav.classList.toggle('is-scrolled', window.scrollY > 60);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Menu burger (vanilla — remplace @tailwindplus/elements)
+    // Menu burger
     const toggle = nav.querySelector<HTMLButtonElement>('[data-nav-toggle]');
     const panel = nav.querySelector<HTMLElement>('[data-nav-panel]');
     const iconMenu = toggle?.querySelector('.icon-menu');

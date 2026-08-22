@@ -32,7 +32,6 @@ const {
 
 const Tag = href ? 'a' : 'button';
 
-// Lien externe en nouvel onglet : rel de sécurité par défaut si non fourni ajoute noopener noreferrer si target blank.
 if (rest.target === '_blank' && rest.rel == null) rest.rel = 'noopener noreferrer';
 
 // Source unique des tailles de bouton : ces utilitaires priment toujours sur le

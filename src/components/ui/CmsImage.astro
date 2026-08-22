@@ -1,8 +1,7 @@
 ---
-// Image ÉDITABLE AU CMS, rendue optimisée quand elle vient de src/assets (Sharp au
-// build via <Image> : WebP + srcset), et en <img> brut sinon (chemin public/, URL
-// distante, ou vide) — 100 % rétro-compatible. Point d'entrée UNIQUE pour toute
-// image CMS : remplace les <img> concernés. Les images DÉCO gardent leur <img>.
+// Point d'entrée UNIQUE pour toute image CMS : optimisée via <Image> (Sharp, WebP+srcset)
+// si `src` vient de src/assets, sinon <img> brut (public/, URL distante, ou vide) —
+// 100% rétro-compatible. Les images déco gardent leur <img> propre.
 import { Image } from "astro:assets";
 import { cmsImage } from "@lib/images";
 

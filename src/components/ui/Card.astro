@@ -22,9 +22,8 @@ const classes = [
   .filter(Boolean)
   .join(" ")
 
-// Zoom léger de l'image au hover (comme la galerie), via la variante Tailwind
-// "*" (enfants directs) — appliqué au conteneur, pas besoin de toucher les
-// <img slot="image"> des appelants. Nécessite "group" sur l'<article>.
+// Zoom hover via Tailwind "*" (enfants directs), appliqué au conteneur pour ne pas
+// toucher les <img slot="image"> des appelants. Nécessite "group" sur l'<article>.
 const imgZoomClasses =
   "xs:rounded-lg sm:rounded-0 overflow-hidden *:transition-transform *:duration-500 group-hover:*:scale-105"
 ---

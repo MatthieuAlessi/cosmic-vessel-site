@@ -8,9 +8,6 @@ import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
 
-// Même source que VoiesSection (collection `classes`) — cette section en est une
-// variante de mise en page : pile de cartes à gauche, rangée de cartes étalées
-// puis détail de la voie (texte + sorts) à droite.
 const voies = (await getCollection('classes')).map((entry, i) => ({
   name: entry.data.name,
   role: entry.data.tagline,
@@ -30,14 +27,8 @@ interface Props {
 }
 const { heading, class: className = '', ...rest } = Astro.props;
 
-// Étalement de la rangée de miniatures : inclinaison STATIQUE répartie autour du
-// centre (aucune animation dessus — seule la lueur distingue la voie active).
 const spread = (i: number) => (i - (voies.length - 1) / 2) * 4;
 
-// Flèches en pastille, à cheval sur les bords de la pile (centrées verticalement).
-// La colonne fait désormais la largeur exacte de l'empilement : il n'y a plus de
-// place à côté, elles se posent donc par-dessus. Fond opaque + blur pour rester
-// lisibles sur l'illustration.
 const arrowClass =
   'absolute top-1/2 -translate-y-1/2 z-50 inline-flex items-center justify-center w-10 h-10 rounded-full border border-primary/50 bg-background-700/85 backdrop-blur-sm text-primary-100 shadow-img-lift transition-colors duration-300 hover:bg-primary/25 hover:border-primary cursor-pointer';
 ---
@@ -48,7 +39,6 @@ const arrowClass =
 >
 
 
-      <!-- Décor : cercles (identique à la section Classes home) -->
   <div class="relative z-1">
     <Divider position="unset" class="top-1/2" />
     <div class="cercle z-10 absolute inset-x-0 mx-auto w-1/2 bottom-0 translate-y-[50%]">
@@ -66,8 +56,6 @@ const arrowClass =
       <div class="dot absolute bottom-0 inset-x-0 m-auto w-1.5 aspect-square rounded-full bg-primary translate-y-[40%]"></div>
     </div>
   </div>
-
-  <!-- <div class="absolute inset-0 m-auto left-1/2 top-0 h-full border-l border-primary-300 opacity-20 z-1"></div> -->
 
   <BgImage
     src="/src/assets/images/decor/smoke1.jpeg"
@@ -96,7 +84,6 @@ const arrowClass =
 
   <div class="relative z-20 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <!-- En-tête : label + titre à gauche, paragraphe à droite -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16 items-end mb-8 lg:mb-20">
       <div>
         <p class="section-label mb-4">{heading?.label}</p>
@@ -110,11 +97,6 @@ const arrowClass =
 
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-32 items-start">
 
-      <!-- Colonne gauche : pile de cartes alignée au bord du container.
-           `w-[84%]` (et non 100%) parce que l'empilement déborde vers la droite :
-           c'est la marge qu'il lui faut pour rester dans la colonne. Les flèches
-           sont ancrées au wrapper (pleine colonne), donc à cheval sur les bords
-           de l'empilement complet — pas sur ceux de la seule carte de devant. -->
       <div class="hidden lg:block relative w-full">
         <div class="voies-deck w-full lg:w-[84%] mr-auto pb-10">
           {voies.map((voie) => (
@@ -132,14 +114,7 @@ const arrowClass =
         </button>
       </div>
 
-      <!-- Colonne droite : rangée de cartes étalées (desktop) ou carrousel
-           grande carte (mobile) + texte de la voie -->
       <div>
-        <!-- Desktop (≥ lg) uniquement : rangée de miniatures compactes en éventail
-             statique (--rot). Remplacée sous lg par le carrousel juste en dessous. -->
-        <!-- hidden!/lg:block! : la classe `.swiper` de la lib pose `display: block`
-             en dehors des layers Tailwind et l'emporte sur un simple `hidden`
-             (même spécificité, mais après dans la cascade) — d'où l'important. -->
         <div class="voies-spread swiper py-2 lg:mx-0! lg:ml-8 lg:overflow-visible! hidden! lg:block!">
           <div class="swiper-wrapper items-end" role="tablist" aria-label="Choisir une voie">
           {voies.map((voie, i) => (
@@ -150,13 +125,6 @@ const arrowClass =
           </div>
         </div>
 
-        <!-- Mobile (< lg) uniquement : même carrousel "grande carte" que la home
-             (Classes) — cartes qui débordent au bord de l'écran, inclinaison 3D
-             légère + inertie sur le déplacement (voies-mobile-swiper.js). Chaque
-             carte EST un `.voie-thumb` comme les miniatures desktop ci-dessus : le
-             swipe/tap sélectionne la voie via la logique centralisée de
-             voies-showcase.js (indexée par `data-index`, pas la position dans le
-             DOM — il existe donc deux groupes de `.voie-thumb` en parallèle). -->
         <div class="relative -mx-4 sm:-mx-6 lg:hidden">
           <div class="voies-mobile swiper py-4">
             <div class="swiper-wrapper" role="tablist" aria-label="Choisir une voie">
@@ -190,7 +158,7 @@ const arrowClass =
             <div class="layer" data-voie-panel={i}>
               <p class="section-label mb-4">{voie.role}</p>
               <h3 class="title-2 text-metal">{voie.name}</h3>
-         
+
           <div class="  w-full mx-auto border-t border-primary-300/10 my-6"></div>
 
 
@@ -219,7 +187,6 @@ const arrowClass =
 
   </div>
 
-  <!-- <Divider position="bottom" /> -->
 </section>
 
 <script>

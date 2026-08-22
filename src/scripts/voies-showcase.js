@@ -1,15 +1,11 @@
 // Sélecteur de la section "Voies — variante pile de cartes" (/character).
-// Un seul index actif pilote trois vues synchronisées :
-//  - la pile de gauche (.voies-deck__item) : data-pos = rang depuis la carte
-//    active (0 = devant), les transforms/z-index sont dans global.css,
-//  - les miniatures (.voie-thumb) — DEUX groupes en parallèle (rangée compacte
-//    desktop + carrousel grande carte mobile, voir VoiesShowcase.astro) : donc
-//    indexées par `data-index` (la voie qu'elles représentent), jamais par leur
-//    position dans le DOM — celle-ci ne correspond plus à l'index de la voie
-//    une fois les deux groupes concaténés par `querySelectorAll`,
-//  - les panneaux [data-voie-panel] (mécanisme .layer-stack/.layer) — il y en a
-//    PLUSIEURS piles (texte à droite, sorts à gauche), toutes indexées pareil.
-// Navigation cyclique (pas d'extrémité) : c'est une pile, pas un slider.
+// Un seul index actif pilote trois vues synchronisées : la pile (.voies-deck__item,
+// data-pos = rang depuis la carte active, transforms/z-index dans global.css), les
+// miniatures (.voie-thumb — deux groupes en parallèle desktop/mobile, voir
+// VoiesShowcase.astro : indexées par `data-index`, jamais par position DOM, qui ne
+// correspond plus à l'index une fois les deux groupes concaténés), et les panneaux
+// [data-voie-panel] (.layer-stack/.layer, plusieurs piles indexées pareil).
+// Navigation cyclique (pile, pas un slider).
 
 function initVoiesShowcase() {
   document.querySelectorAll('.voies-showcase').forEach((root) => {
@@ -47,7 +43,6 @@ function initVoiesShowcase() {
     thumbs.forEach((thumb) => thumb.addEventListener('click', () => go(Number(thumb.dataset.index))));
     root.querySelector('.voies-showcase__prev')?.addEventListener('click', () => go(active - 1));
     root.querySelector('.voies-showcase__next')?.addEventListener('click', () => go(active + 1));
-    // Clic sur la pile = on passe la carte du dessus.
     deck.forEach((item) => item.addEventListener('click', () => go(active + 1)));
 
     render();
