@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* CSS de Swiper importé ICI et pas depuis les modules JS : `swiper/css/effect-*`
+   est un fichier vide qui produisait un chunk JS homonyme de
+   `swiper/modules/effect-*`. Selon l'environnement de build, Rollup supprimait la
+   collision comme chunk vide en laissant l'import — 404, swiper jamais initialisé
+   (slider des voies de /character mort en prod, OK en local, où le dev ne bundle
+   pas du tout). */
+@import "swiper/css";
+@import "swiper/css/effect-coverflow";
+@import "swiper/css/effect-fade";
+
 @theme {
   /* ─── Couleurs ─────────────────────────────────────────────────────────────*/
   --color-background:     #060608;

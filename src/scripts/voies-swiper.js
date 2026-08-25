@@ -10,8 +10,6 @@
 
 import Swiper from 'swiper';
 import { Pagination, EffectFade } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
 
 function initVoiesSwiper() {
   const mainEl = document.querySelector('.voies-main');

@@ -10,8 +10,6 @@
 
 import Swiper from 'swiper';
 import { Pagination, Navigation, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
 
 const mq = window.matchMedia('(max-width: 1023px)');
 let swiper = null;

@@ -8,11 +8,9 @@
 // ~84 ko) que si le média correspond — en import statique, Swiper partait aussi
 // en desktop pour être détruit aussitôt.
 //
-// ⚠️ Le CSS reste importé ICI, statiquement : en dynamique, Astro le remonte quand
-// même dans le <head> mais Vite génère un preload vers un nom qu'il n'émet pas
-// → 404, promesse rejetée, swiper jamais initialisé.
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
+// ⚠️ Le CSS de Swiper n'est PAS importé ici : il vit dans global.css. Importé
+// depuis un module JS, il génère un chunk homonyme du module d'effet et Vite
+// finit par référencer un fichier qu'il n'émet pas → 404 et swiper mort.
 
 const mq = window.matchMedia('(max-width: 767px)');
 let swiper = null;
