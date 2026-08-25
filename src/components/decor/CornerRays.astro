@@ -2,35 +2,41 @@
 interface Props {
   /** Coin où ancrer les rayons (l'autre est obtenu par symétrie). */
   corner?: 'top-left' | 'top-right';
-  size?: number;
+  /** Nombre → px. String → valeur CSS brute (ex. clamp() pour un dimensionnement
+      proportionnel à un container query, voir ClassCard.astro). */
+  size?: number | string;
   class?: string;
 }
 const { corner = 'top-left', size = 100, class: className = '' } = Astro.props;
 const flip = corner === 'top-right';
+const sizeValue = typeof size === 'number' ? `${size}px` : size;
 ---
 
 <!--
-  Rayons en line-art convergeant vers le dot du coin (sans le toucher : écart laissé
-  près du foyer ~ (9,9)). Le coin droit est obtenu par symétrie horizontale.
+  Import direct de stock photos/cornerrays.svg (retouché à la main dans Illustrator) :
+  deux éventails de rayons + une courbe reliant les deux, calée sur l'arche du
+  rounded-t-full. Coordonnées et viewBox inchangées ; seule la couleur passe en
+  var() (le fichier source avait #ad8d59 en dur) pour rester pilotable par le thème.
+  Le coin droit est obtenu par symétrie horizontale.
 -->
 <svg
   viewBox="0 0 100 100"
-  width={size}
-  height={size}
+  style={`width:${sizeValue};height:${sizeValue};`}
   fill="none"
   aria-hidden="true"
   class:list={['absolute top-1.5 pointer-events-none', flip ? 'right-1.5 -scale-x-100' : 'left-1.5', className]}
 >
-  <!-- Pointes plus longues sur les bords, courtes en diagonale (dist≈85 → 39) :
-       arc concave calé sur la courbe du rounded-t-full. -->
   <g stroke="var(--color-primary-500)" stroke-width="1" stroke-linecap="round">
-    <line x1="22"   y1="8"    x2="93" y2="8"  />
-    <line x1="21.7" y1="11.1" x2="76" y2="24" />
-    <line x1="20.6" y1="14.1" x2="53" y2="30" />
-    <line x1="18.9" y1="16.7" x2="38" y2="33" />
-    <line x1="16.7" y1="18.9" x2="33" y2="38" />
-    <line x1="14.1" y1="20.6" x2="30" y2="53" />
-    <line x1="11.1" y1="21.7" x2="24" y2="76" />
-    <line x1="8"    y1="22"   x2="8"  y2="93" />
+    <line x1="18.41" y1="19.49" x2="35.87" y2="46.19" />
+    <line x1="16.38" y1="20.94" x2="29.03" y2="54.35" />
+    <line x1="13.74" y1="21.7"  x2="22.6"  y2="63.12" />
+    <line x1="11.13" y1="22"   x2="15.29" y2="75.87" />
+    <line x1="8"     y1="22"   x2="8"     y2="93.81" />
+    <line x1="46.61" y1="35.56" x2="20.07" y2="17.47" />
+    <line x1="54.87" y1="28.75" x2="21.45" y2="15.61" />
+    <line x1="63.87" y1="22.42" x2="22.16" y2="13.39" />
+    <line x1="75.17" y1="15.58" x2="22.46" y2="10.8"  />
+    <line x1="94.08" y1="7.6"   x2="21.68" y2="7.6"   />
+    <path d="M8.22,93S23.91,33.95,93.22,7.6" />
   </g>
 </svg>

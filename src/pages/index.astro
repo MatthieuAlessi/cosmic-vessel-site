@@ -24,6 +24,7 @@ import { settings, trailerVideoId, modName } from "@data/settings"
 import CmsImage from "@components/ui/CmsImage.astro"
 import { Image } from "astro:assets"
 import charRender from "../assets/images/decor/char.png"
+import { classLineArt, classGem } from "@lib/images"
 
 import { homepageData } from "@data/homepage";
 
@@ -549,6 +550,8 @@ const teamTotal = 30
                 name={sub.data.name}
                 tagline={sub.data.tagline}
                 art={sub.data.image}
+                lineart={classLineArt(sub.data.name)}
+                gem={classGem(sub.data.name)}
               />
             </div>
           ))}

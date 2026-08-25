@@ -7,12 +7,15 @@ import Divider from '@components/decor/Divider.astro';
 import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 import GalaxyCanvas from '@components/decor/GalaxyCanvas.astro';
+import { classLineArt, classGem } from '@lib/images';
 
 const voies = (await getCollection('classes')).map((entry, i) => ({
   name: entry.data.name,
   role: entry.data.tagline,
   description: entry.data.description,
   art: entry.data.image ?? `https://picsum.photos/seed/voie-${i + 1}/800/1200`,
+  lineart: classLineArt(entry.data.name),
+  gem: classGem(entry.data.name),
   spells: (entry.data.spells ?? []).map((s, si) => ({
     image: s.image ?? `https://picsum.photos/seed/voie-${i + 1}-spell-${si}/200`,
     name: s.name,
@@ -101,7 +104,7 @@ const arrowClass =
         <div class="voies-deck w-full lg:w-[84%] mr-auto pb-10">
           {voies.map((voie) => (
             <div class="voies-deck__item">
-              <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} />
+              <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} lineart={voie.lineart} gem={voie.gem} />
             </div>
           ))}
         </div>
@@ -119,7 +122,7 @@ const arrowClass =
           <div class="swiper-wrapper items-end" role="tablist" aria-label="Choisir une voie">
           {voies.map((voie, i) => (
             <button type="button" role="tab" aria-selected="false" data-index={i} class="voie-thumb swiper-slide" style={`--rot: ${spread(i)}deg`}>
-              <ClassCard variant="compact" name={voie.name} art={voie.art} />
+              <ClassCard variant="compact" name={voie.name} art={voie.art} lineart={voie.lineart} gem={voie.gem} />
               </button>
             ))}
           </div>
@@ -130,7 +133,7 @@ const arrowClass =
             <div class="swiper-wrapper" role="tablist" aria-label="Choisir une voie">
               {voies.map((voie, i) => (
                 <button type="button" role="tab" aria-selected="false" data-index={i} class="voie-thumb swiper-slide">
-                  <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} />
+                  <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} lineart={voie.lineart} gem={voie.gem} />
                 </button>
               ))}
             </div>

@@ -9,12 +9,15 @@ import Divider from '@components/decor/Divider.astro';
 import { Icon } from 'astro-icon/components';
 import CornerOrnament from '@components/decor/CornerOrnament.astro';
 import { getCollection } from 'astro:content';
+import { classLineArt, classGem } from '@lib/images';
 
 const voies = (await getCollection('classes')).map((entry, i) => ({
   name: entry.data.name,
   role: entry.data.tagline,
   description: entry.data.description,
   art: entry.data.image ?? `https://picsum.photos/seed/voie-${i + 1}/800/1200`,
+  lineart: classLineArt(entry.data.name),
+  gem: classGem(entry.data.name),
   spells: (entry.data.spells ?? []).map((s, si) => ({
     image: s.image ?? `https://picsum.photos/seed/voie-${i + 1}-spell-${si}/200`,
     name: s.name,
@@ -152,7 +155,7 @@ const { heading } = Astro.props;
 
 
               <div class="lg:grow-5 lg:basis-0 lg:min-w-0 w-full max-w-[190px] lg:max-w-[350px] mx-auto">
-                <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} />
+                <ClassCard tilt discover={false} name={voie.name} tagline={voie.role} art={voie.art} lineart={voie.lineart} gem={voie.gem} />
               </div>
 
 
