@@ -4,8 +4,35 @@
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 4321
+    },
+    {
+      "name": "dist-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4399",
+        "--directory",
+        "dist"
+      ],
+      "port": 4399
+    },
+    {
+      "name": "dev-alt",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "4322"
+      ],
+      "port": 4322
     }
   ]
 }
