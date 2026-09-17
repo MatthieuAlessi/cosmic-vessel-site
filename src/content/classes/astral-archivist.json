@@ -10,6 +10,10 @@
     {
       "name": "Spell 2",
       "description": "Another key spell — placeholder description."
+    },
+    {
+      "name": "spell 3",
+      "description": "test"
     }
   ]
 }
