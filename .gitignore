@@ -35,3 +35,11 @@ stock photos/
 
 # Anciennes versions d'images conservées en local, pas utilisées par le code
 public/images/old/
+# Masters d'images (sources locales converties vers public/, non lues par le code)
+src/assets/masters/
+
+# Archives d'assets livrées par le graphiste (décompressées à la main)
+src/assets/images/*.zip
+
+# Rapports d'audit Lighthouse
+lighthouse*.pdf

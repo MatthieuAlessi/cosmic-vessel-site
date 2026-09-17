@@ -23,9 +23,13 @@ function paintSplitGradient(el, fragments) {
   const cs = getComputedStyle(el);
   if ((cs.webkitBackgroundClip || cs.backgroundClip) !== 'text') return;
 
+  // Toutes les lectures d'abord, toutes les ecritures ensuite : lire un rect apres
+  // avoir ecrit un style force un reflow synchrone a chaque mot (layout thrashing).
   const box = el.getBoundingClientRect();
-  fragments.forEach((frag) => {
-    const r = frag.getBoundingClientRect();
+  const rects = fragments.map((frag) => frag.getBoundingClientRect());
+
+  fragments.forEach((frag, i) => {
+    const r = rects[i];
     frag.style.backgroundImage = cs.backgroundImage;
     frag.style.backgroundSize = `${box.width}px ${box.height}px`;
     frag.style.backgroundPosition = `${box.left - r.left}px ${box.top - r.top}px`;

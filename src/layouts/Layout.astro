@@ -40,7 +40,11 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<!-- Feuille Google Fonts NON bloquante : preload (fetch prioritaire immédiat) puis
+     media="print" -> "all" au load. En stylesheet nue elle bloquait le rendu ~220 ms. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"></noscript>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
@@ -173,8 +177,11 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
             window.lenis?.start()
           })
         }
-        if (document.readyState === "complete") reveal()
-        else window.addEventListener("load", reveal, { once: true })
+        // DOMContentLoaded et non load : attendre `load`, c'est garder l'écran noir
+        // jusqu'a ce que TOUTES les images soient la (Speed Index a terre). Le CSS,
+        // lui, est deja applique a ce stade — les feuilles bloquent le parsing.
+        if (document.readyState !== "loading") reveal()
+        else document.addEventListener("DOMContentLoaded", reveal, { once: true })
 
         // Retour arrière / bfcache : ne jamais laisser la page bloquée sous le rideau.
         window.addEventListener("pageshow", (e) => {

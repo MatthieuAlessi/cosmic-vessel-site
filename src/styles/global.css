@@ -387,7 +387,7 @@ html.lenis body {
 .page-fade__splat {
   transform: var(--tf, none);
   transform-origin: center;
-  background-image: url('/images/masktest-black.png');
+  background-image: url('/images/masktest-black.webp');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
