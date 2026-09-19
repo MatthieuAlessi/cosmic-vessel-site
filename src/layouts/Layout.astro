@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title,
-  description = 'Un mod Origin pour Baldur\'s Gate 3 — Nouveau personnage, classe inédite, questline complète.',
+  description = "An Origin mod for Baldur's Gate 3 — a new character, an original class and a full questline.",
   image = '/og-default.jpg',
 } = Astro.props;
 
@@ -26,7 +26,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
 
 
@@ -126,7 +126,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 
         const openModal = (id) => {
           const videoId = id || trailerYouTubeId
-          frame.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
+          frame.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`
           modal.classList.remove("hidden")
           modal.classList.add("flex")
           modal.setAttribute("aria-hidden", "false")
