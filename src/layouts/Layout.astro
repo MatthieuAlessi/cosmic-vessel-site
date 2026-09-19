@@ -20,6 +20,10 @@ const trailerYouTubeId = trailerVideoId;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 
+// og:image / twitter:image doivent etre absolues : Discord, X et Reddit ne resolvent pas
+// un chemin relatif. Une URL deja absolue (image de couverture externe) passe telle quelle.
+const ogImageURL = Astro.site ? new URL(image, Astro.site).href : image;
+
 // Cloudflare Web Analytics : token public, défini en variable d'env Netlify.
 // Absent en local => pas de beacon en dev, le trafic de dev ne pollue pas les stats.
 const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
@@ -52,7 +56,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImageURL} />
     {canonicalURL && <meta property="og:url" content={canonicalURL} />}
     <meta property="og:type" content="website" />
 
@@ -60,7 +64,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -8,6 +8,7 @@ import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 import markdoc from '@astrojs/markdoc';
 import netlify from '@astrojs/netlify';
+import sitemap from '@astrojs/sitemap';
 
 // L'admin Keystatic (/keystatic) exécute du code serveur : il lui faut un adapter,
 // sinon `astro build` échoue en [NoAdapterInstalled]. L'adapter ne rend PAS le site
@@ -24,13 +25,16 @@ import netlify from '@astrojs/netlify';
 // Sur un site prégénéré comme celui-ci, c'est le bon compromis.
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:4321',
+  // URL est injectee par Netlify au build : l'adresse .netlify.app tant qu'il n'y a pas
+  // de domaine, puis le domaine principal des qu'il est branche (rebuild requis).
+  // Canonicals, og:url, sitemap et robots.txt en derivent — rien a changer au lancement.
+  site: process.env.URL || 'http://localhost:4321',
   adapter: netlify({ imageCDN: false }),
   // Défaut responsive global : chaque <Image> génère srcset + sizes tout seul,
   // sans répéter `widths`/`layout` à chaque appel. N'affecte que <Image>/<Picture>
   // (les <img> bruts de la déco ne sont pas concernés).
   image: { layout: 'constrained' },
-  integrations: [icon(), react(), markdoc(), keystatic()],
+  integrations: [icon(), react(), markdoc(), keystatic(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
     // Swiper et PhotoSwipe sont importés de DEUX façons dans le projet : en
