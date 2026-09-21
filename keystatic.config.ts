@@ -437,6 +437,7 @@ export default config({
                linkedin: fields.text({ label: "linkedin" }),
                 website: fields.text({ label: "website" }),
                 twitter: fields.text({ label: "twitter" }),
+                instagram: fields.text({ label: "instagram" }),
              
             }),
  

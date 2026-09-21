@@ -7,6 +7,7 @@ interface Socials {
   linkedin?: string
   website?: string
   twitter?: string
+  instagram?: string
 }
 
 interface Props {
@@ -24,11 +25,13 @@ const socialIcons: Record<string, string> = {
   linkedin: "ph:linkedin-logo",
   website: "ph:globe",
   twitter: "ph:x-logo",
+  instagram: "ph:instagram-logo",
 }
 const socialUrl = (key: string, handle: string) => {
   const h = handle.replace("@", "")
   if (key === "linkedin") return `https://www.linkedin.com/in/${h}`
   if (key === "twitter") return `https://x.com/${h}`
+  if (key === "instagram") return handle.startsWith("http") ? handle : `https://www.instagram.com/${h}`
   if (key === "website") return handle.startsWith("http") ? handle : `https://${handle}`
   return null
 }

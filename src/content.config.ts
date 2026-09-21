@@ -35,6 +35,7 @@ const blog = defineCollection({
           linkedin: z.string().optional(),
           website: z.string().optional(),
           twitter: z.string().optional(),
+          instagram: z.string().optional(),
         }).optional(),
       })).default([]),
 
