@@ -67,7 +67,7 @@ const frameClasses =
 
 {
   variant === 'full' && (
-    <div class={rootClasses} data-href={href || undefined} style={`--card-texture: url(${cardTextureUrl}); --card-texture2: url(${texture2Url})`} {...rest}>
+    <div class={rootClasses} data-href={href || undefined} style={`--card-texture: url("${cardTextureUrl}"); --card-texture2: url("${texture2Url}")`} {...rest}>
       <CornerOrnament size={34} corner="top-left" class="opacity-80" />
       <CornerOrnament size={34} corner="top-right" class="opacity-40" />
       <CornerOrnament size={34} corner="bottom-left" class="opacity-40" />
@@ -115,7 +115,7 @@ const frameClasses =
 
 {
   variant === 'compact' && (
-    <div class={rootClasses} data-href={href || undefined} style={`--card-texture: url(${cardTextureUrl}); --card-texture2: url(${texture2Url})`} {...rest}>
+    <div class={rootClasses} data-href={href || undefined} style={`--card-texture: url("${cardTextureUrl}"); --card-texture2: url("${texture2Url}")`} {...rest}>
 
        <CornerOrnament size={34} corner="top-left" class="opacity-80" />
       <CornerOrnament size={34} corner="top-right" class="opacity-40" />
@@ -169,6 +169,7 @@ const frameClasses =
 
     card.addEventListener("mouseenter", () => {
       card.style.transition = `transform 0.1s ease-out, ${SO}`
+      card.style.willChange = "transform"
       rect = card.getBoundingClientRect()
     })
 
@@ -187,6 +188,7 @@ const frameClasses =
       const cleanup = (e: TransitionEvent) => {
         if (e.propertyName === "transform") {
           card.style.transition = ""
+          card.style.willChange = ""
           card.removeEventListener("transitionend", cleanup)
         }
       }

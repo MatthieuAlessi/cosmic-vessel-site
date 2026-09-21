@@ -1,6 +1,7 @@
 import type { ImageMetadata } from "astro";
 import { getImage } from "astro:assets";
 import texture2Png from "../assets/images/decor/texture2.png";
+import texturePng from "../assets/images/decor/texture.png";
 
 // Images éditables CMS vivent dans src/assets/images/** (public/ n'est jamais optimisé
 // par Astro). import.meta.glob (eager) construit une table chemin → module, interrogée
@@ -67,21 +68,11 @@ export function classGem(name: string): string | undefined {
   return gemByClass[name];
 }
 
-// Texture de grain (overlay sur .class-card, global.css) — récupérée en URL de
-// build (pas en `?raw` comme lineArt : ~3400 paths, inliner ça dans le DOM de
-// chaque carte serait bien trop lourd pour un simple calque statique). Utilisée
-// en `background-image`, donc rasterisée une fois par le navigateur, pas répétée
-// en milliers de nœuds SVG par instance de carte.
-// Pattern ciblé sur ce seul fichier (pas `*.svg`) : un glob large aurait aussi
-// dupliqué astral/essence/wanderer.svg en copies `?url` inutilisées (déjà
-// couverts par lineArtSvgs ci-dessus, en `?raw`).
-const textureUrlGlob = import.meta.glob<string>("/src/assets/images/decor/texture.svg", {
-  eager: true,
-  query: "?url",
-  import: "default",
-});
-
-export const cardTextureUrl = textureUrlGlob["/src/assets/images/decor/texture.svg"];
+// Texture de grain (overlay sur .class-card, global.css). PNG pré-rasterisé depuis
+// texture.svg (900px, sharp) : en SVG (~3400 paths) le navigateur re-rasterisait
+// le vecteur à chaque changement d'échelle de la carte (coverflow, tilt, pile),
+// ce qui faisait laguer les sliders. texture.svg reste la source d'origine.
+export const cardTextureUrl = texturePng.src;
 
 // Second calque de grain (motif plus dense, superposé au premier — pas en
 // remplacement, .class-card__texture2, global.css). Vient d'un PNG, pas d'un SVG

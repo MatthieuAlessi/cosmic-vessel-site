@@ -1056,7 +1056,8 @@ top: 0rem;
 
 /* ─── ClassCard — tilt 3D + glow ──────────────────────────────────────────── */
 .class-card {
-  will-change: transform;
+  /* will-change: transform n'est posé que pendant le survol (script de tilt,
+     ClassCard.astro) : en permanence, chaque carte gardait son calque GPU. */
   /* Isolation stable pour le mix-blend-mode de .class-card__texture2 : sans elle,
      l'entrée/sortie du calque de compositing déclenché par le transform de tilt
      fait "sauter" le multiply pour une frame (grain doré qui flashe en pleine
@@ -1289,13 +1290,24 @@ top: 0rem;
     0 0 1px 0 var(--gem-color),
     0 0 3px 0.5px color-mix(in srgb, var(--gem-color) 55%, transparent),
     inset 0 0 1px rgba(0, 0, 0, 0.5);
-  animation: gem-pulse 2.4s var(--ease-cinematic) infinite;
   transition: box-shadow 0.45s var(--ease-cinematic);
   z-index: 2;
 }
+/* Pulse via l'opacity d'un voile blanc (composité GPU) et non `filter: brightness`
+   sur la gemme : un filter animé repeignait la carte entière à chaque frame, et
+   la carte filtrée entière dans les sliders (.voie-thumb, .voies-deck__item). */
+.class-card__gem::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #fff;
+  opacity: 0;
+  animation: gem-pulse 2.4s var(--ease-cinematic) infinite;
+}
 @keyframes gem-pulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.08); }
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.08; }
 }
 .class-card.is-active .class-card__gem,
 .voie-card.is-active .class-card__gem,
@@ -1477,19 +1489,36 @@ pointer-events: none;
   grid-area: 1 / 1;
   transform-origin: 50% 85%;
   cursor: pointer;
-  transition:
-    transform 0.35s var(--ease-cinematic),
-    filter 0.35s var(--ease-cinematic);
+  transition: transform 0.35s var(--ease-cinematic);
+}
+/* Assombrissement des cartes inactives (pile + miniatures) : voile noir dont on
+   n'anime que l'opacity, PAS un `filter: brightness()` sur la carte — un filter
+   sur un sous-arbre aussi chargé (SVG, textures en blend, gemme animée) était
+   recalculé à chaque frame. */
+:is(.voies-deck__item, .voie-thumb)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  border-radius: var(--radius-xl);
+  background: #000;
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-cinematic);
+}
+.voies-deck__item {
+  position: relative;
 }
 .voies-deck__item[data-pos] {
-  filter: brightness(0.4) saturate(0.7);
   pointer-events: none;
 }
 .voies-deck__item[data-pos="0"] {
   z-index: 40;
   transform: rotate(-2deg);
-  filter: none;
   pointer-events: auto;
+}
+.voies-deck__item[data-pos="0"]::after {
+  opacity: 0;
 }
 .voies-deck__item[data-pos="1"] {
   z-index: 30;
@@ -1510,8 +1539,6 @@ pointer-events: none;
   min-width: 0;
   cursor: pointer;
   transform-origin: 50% 100%;
-  filter: brightness(0.45) saturate(0.7);
-  transition: filter 0.4s var(--ease-cinematic);
 }
 @media (min-width: 64rem) {
   .voie-thumb {
@@ -1529,10 +1556,12 @@ pointer-events: none;
 .voies-mobile .swiper-slide {
   transition-timing-function: cubic-bezier(0.12, 0.45, 0.88, 0.47);
 }
-.voie-thumb:hover {
-  filter: brightness(0.75) saturate(0.85);
+.voie-thumb:hover::after {
+  opacity: 0.25;
 }
 .voie-thumb.is-active {
   z-index: 10;
-  filter: none;
+}
+.voie-thumb.is-active::after {
+  opacity: 0;
 }

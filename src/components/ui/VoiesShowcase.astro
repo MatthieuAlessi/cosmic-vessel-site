@@ -91,14 +91,14 @@ const arrowClass =
       <div>
         <p class="section-label mb-4">{heading?.label}</p>
         <h2 class="title-1 anim-blur">{heading?.title}</h2>
-        <DividerH width="max-w-sm" class="mt-6" />
+        <DividerH width="max-w-sm" class="mt-6 lg:mx-0" />
       </div>
       <p class="text-foreground-300 font-body text-sm lg:text-base leading-relaxed">
         {heading?.text}
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-32 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] gap-6 lg:gap-32 items-start">
 
       <div class="hidden lg:block relative w-full">
         <div class="voies-deck w-full lg:w-[84%] mr-auto pb-10">
@@ -167,7 +167,7 @@ const arrowClass =
 
               <div class="columns-1 md:columns-2 gap-8 space-y-4">
                 {voie.description?.split('\n\n').map((para) => (
-                  <p class="text-foreground-300 font-body text-xs leading-relaxed break-inside-avoid">{para}</p>
+                  <p class="text-foreground-300 font-body text-sm leading-relaxed break-inside-avoid">{para}</p>
                 ))}
               </div>
 
