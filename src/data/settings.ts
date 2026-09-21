@@ -7,6 +7,10 @@ interface SiteSettings {
   discordUrl?: string;
   twitterUrl?: string;
   youtubeUrl?: string;
+  linkedinUrl?: string;
+  redditUrl?: string;
+  tiktokUrl?: string;
+  instagramUrl?: string;
   youtubevideoID?: string;
   kofiUrl?: string;
   joinformUrl?: string;
@@ -28,8 +32,12 @@ export const trailerVideoId: string = settings.youtubevideoID || 'vEUQxe2uM-w';
 // d'affichage. Un lien vide dans l'admin est omis (plutôt qu'un bouton mort ou un lien
 // placeholder). Source unique : ne plus recopier ces URLs en dur dans les composants.
 export const socialLinks = [
-  { icon: 'ph:discord-logo', href: settings.discordUrl, label: 'Discord' },
-  { icon: 'ph:x-logo', href: settings.twitterUrl, label: 'X' },
+  { icon: 'ph:linkedin-logo', href: settings.linkedinUrl, label: 'LinkedIn' },
   { icon: 'ph:youtube-logo', href: settings.youtubeUrl, label: 'YouTube' },
+  { icon: 'ph:reddit-logo', href: settings.redditUrl, label: 'Reddit' },
+  { icon: 'ph:tiktok-logo', href: settings.tiktokUrl, label: 'TikTok' },
+  { icon: 'ph:instagram-logo', href: settings.instagramUrl, label: 'Instagram' },
+  { icon: 'ph:x-logo', href: settings.twitterUrl, label: 'X' },
+  { icon: 'ph:discord-logo', href: settings.discordUrl, label: 'Discord' },
   { icon: 'ph:coffee', href: settings.kofiUrl, label: 'Ko-fi' },
 ].filter((s): s is { icon: string; href: string; label: string } => Boolean(s.href));
