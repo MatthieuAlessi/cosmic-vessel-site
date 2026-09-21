@@ -53,18 +53,18 @@ const faqItems = (await getCollection("faq")).sort((a, b) => a.data.order - b.da
 
 // ─── Équipe (teaser home) ──────────────────────────────────────────────────
 // 8 avatars : les vrais membres (aplatis depuis les entrées département de la
-// collection team), complétés par des placeholders pravatar.cc. teamTotal placeholder.
+// collection team), complétés par des placeholders pravatar.cc.
 const team = await getCollection("team")
 const allMembers = team.flatMap((d) => d.data.members)
 const teamAvatars = Array.from({ length: 8 }, (_, i) => ({
   name: allMembers[i]?.name ?? "Team Member",
   avatar: allMembers[i]?.avatar ?? `https://i.pravatar.cc/200?img=${Math.ceil(Math.random() * 70)}`,
 }))
-const teamTotal = 30
+const teamTotal = allMembers.length
  
 ---
 
-<Layout title={`${modName} — Origin Mod for Baldur's Gate 3`}>
+<Layout title={`${modName} | Origin Mod for Baldur's Gate 3`}>
   <Nav />
 
   <!-- ─── Hero ──────────────────────────────────────────────────────────── -->
@@ -431,7 +431,7 @@ const teamTotal = 30
 
  
   <div class="char mask-galaxy--img">
-    <Image src={charRender} alt="" layout="none" widths={[600, 800, 1100, 1400]} sizes="(min-width: 1024px) 700px, 400px" />
+    <Image src={charRender} alt="Saira, the Cosmic Vessel" layout="none" widths={[600, 800, 1100, 1400]} sizes="(min-width: 1024px) 700px, 400px" />
   </div>
 
  
