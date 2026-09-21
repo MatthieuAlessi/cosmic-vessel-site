@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components"
+import CornerOrnament from '@components/decor/CornerOrnament.astro';
+
+interface Props {
+  question: string
+  answer: string
+  name?: string
+  open?: boolean
+  class?: string
+}
+const { question, answer, name, open = false, class: className = "" } = Astro.props
+---
+
+<details
+  name={name}
+  open={open}
+  class:list={[
+    "group relative border-panel border border-primary-700/30   bg-background-300/60 backdrop-blur-xs",
+    "transition-colors duration-300 hover:border-primary-700/40 open:border-primary-700/40",
+    "details-content:grid details-content:grid-rows-[0fr] open:details-content:grid-rows-[1fr] details-content:transition-discrete",
+    "motion-safe:details-content:transition-[grid-template-rows,content-visibility] motion-safe:details-content:duration-400 motion-safe:details-content:ease-cinematic",
+    className,
+  ]}
+>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 p-4 lg:p-5 [&::-webkit-details-marker]:hidden"
+  >
+    <CornerOrnament size={34} corner="top-left" class="opacity-80" />
+    <CornerOrnament size={34} corner="bottom-right" class="opacity-80" />
+    <h3 class="font-body text-sm md:text-lg font-weight-500 text-foreground-100">{question}</h3>
+    <span
+      class="flex items-center justify-center w-8 aspect-square rounded-full border border-primary/40 bg-primary/10 text-primary-100 shrink-0 transition-transform duration-300 group-open:-rotate-90"
+    >
+      <Icon name="ph:caret-down" class="w-4 h-4" />
+    </span>
+  </summary>
+  <div class="min-h-0 overflow-hidden">
+    <p class="px-4 pb-4 lg:px-5 lg:pb-5 font-body text-xs md:text-sm text-foreground-300 leading-relaxed whitespace-pre-line opacity-0 group-open:opacity-100 group-open:delay-100 motion-safe:transition-opacity motion-safe:duration-300">
+      {answer}
+    </p>
+  </div>
+</details>

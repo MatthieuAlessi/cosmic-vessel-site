@@ -78,5 +78,9 @@
   "news": {
     "label": "Latest articles about the project",
     "title": "Latest News"
+  },
+  "faq": {
+    "label": "Got questions?",
+    "title": "Frequently asked questions"
   }
 }

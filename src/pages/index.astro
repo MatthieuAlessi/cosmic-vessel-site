@@ -17,6 +17,7 @@ import RoadmapDigest from "@components/ui/RoadmapDigest.astro"
 import StatCard from "@components/ui/StatCard.astro"
 import TrailerCard from "@components/ui/TrailerCard.astro"
 import ClassCard from "@components/ui/ClassCard.astro"
+import BlocFaq from "@components/ui/BlocFaq.astro"
 import SectionPrefooter from "@components/ui/SectionPrefooter.astro"
 import { Icon } from "astro-icon/components"
 import { getCollection } from "astro:content"
@@ -31,7 +32,7 @@ import { homepageData } from "@data/homepage";
 
 const { discordUrl, kofiUrl } = settings
 
- const { hero, section1, section2, sectioncharacter, sectionclass, gallery, roadmap, team: teamSection, news } = homepageData;
+ const { hero, section1, section2, sectioncharacter, sectionclass, gallery, roadmap, team: teamSection, news, faq } = homepageData;
 
 const joinTeamUrl = settings.joinformUrl
 
@@ -47,6 +48,8 @@ const subclasses = await getCollection("classes")
 const recentPosts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4)
+
+const faqItems = (await getCollection("faq")).sort((a, b) => a.data.order - b.data.order)
 
 // ─── Équipe (teaser home) ──────────────────────────────────────────────────
 // 8 avatars : les vrais membres (aplatis depuis les entrées département de la
@@ -611,10 +614,9 @@ const teamTotal = 30
 </div>
 
     </div>
-  </div>   
+  </div>
 
 
- 
 <!-- ─── Galerie teaser ───────────────────────────────────────────────── -->
 <section class="relative bg-background-500 py-12 lg:py-24 overflow-hidden">
   <div class="overlay-bottom z-2"></div>
@@ -660,6 +662,35 @@ const teamTotal = 30
   </div>
    <Divider position="top" />  
 </section>
+
+
+
+<!-- ─── FAQ ──────────────────────────────────────────────────────────── -->
+{
+  faqItems.length > 0 && (
+    <section class="relative bg-background-500 py-12 md:py-20 lg:py-24">
+
+  <div class="overlay-bottom z-2"></div>
+
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 z-5  relative">
+        <div class="text-center relative z-20 mb-8 lg:mb-12">
+          <p class="section-label mb-4 lg:mb-6 mx-auto">{faq?.label}</p>
+          <h2 class="title-1 anim-blur w-fit mx-auto">{faq?.title}</h2>
+        </div>
+
+        <div class="flex flex-col gap-2 md:gap-3">
+          {faqItems.map((item) => (
+            <BlocFaq name="home-faq" question={item.data.question} answer={item.data.answer} />
+          ))}
+        </div>
+      </div>
+
+        <Divider position="top" />
+    </section>
+  )
+}
+
+
 
 <!-- ─── Roadmap ───────────────────────────────────────────────────────── -->
 

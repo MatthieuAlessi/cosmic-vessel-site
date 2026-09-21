@@ -212,6 +212,14 @@ export default config({
       { label: "News", description: "News section heading (articles = blog collection)" },
     ),
 
+    faq: fields.object(
+      {
+        label: fields.text({ label: "Label" }),
+        title: fields.text({ label: "Title" }),
+      },
+      { label: "FAQ", description: "FAQ section heading (questions come from the FAQ collection)" },
+    ),
+
 
 
 
@@ -450,6 +458,18 @@ export default config({
       },
     }),
 
+
+  faq: collection({
+    label: "FAQ",
+    path: "src/content/faq/*",
+    format: { data: "json" },
+    slugField: "question",
+    schema: {
+      question: fields.slug({ name: { label: "Question" } }),
+      answer: fields.text({ label: "Answer", multiline: true }),
+      order: fields.integer({ label: "Display order (lowest first)", defaultValue: 1 }),
+    },
+  }),
 
   news: collection({
     label: "News",

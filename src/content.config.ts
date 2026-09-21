@@ -97,4 +97,13 @@ const classes = defineCollection({
   }),
 });
 
-export const collections = { blog, team, character, roadmapCategories, classes };
+const faq = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/faq' }),
+  schema: z.object({
+    question: z.string(),
+    answer: z.string().default(''),
+    order: z.number().default(0),
+  }),
+});
+
+export const collections = { blog, team, character, roadmapCategories, classes, faq };

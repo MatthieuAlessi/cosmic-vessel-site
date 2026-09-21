@@ -75,6 +75,11 @@ export interface Homepage {
     label?: string;
     title?: string;
   };
+
+  faq?: {
+    label?: string;
+    title?: string;
+  };
 }
 
 export const homepageData: Homepage = homepage;

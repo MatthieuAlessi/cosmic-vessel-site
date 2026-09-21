@@ -1057,7 +1057,13 @@ top: 0rem;
 /* ─── ClassCard — tilt 3D + glow ──────────────────────────────────────────── */
 .class-card {
   will-change: transform;
-  transform-style: preserve-3d;
+  /* Isolation stable pour le mix-blend-mode de .class-card__texture2 : sans elle,
+     l'entrée/sortie du calque de compositing déclenché par le transform de tilt
+     fait "sauter" le multiply pour une frame (grain doré qui flashe en pleine
+     lumière au hover). PAS de transform-style: preserve-3d ici — inutile (le tilt
+     est un transform unique sur la carte, ses enfants n'ont pas de transform 3D à
+     composer) et c'est justement lui qui cassait le blend en créant un contexte 3D. */
+  isolation: isolate;
   /* Container query : les ornements de coin (CornerOrnament/CornerRays) se
      dimensionnent en cqw (ClassCard.astro) pour rester proportionnels à la
      carte elle-même — pas à la largeur de viewport, qui ne dit rien de la
