@@ -4,19 +4,7 @@ import Nav from "@components/ui/Nav.astro"
 import BgImage from "@components/decor/BgImage.astro"
 import CornerOrnament from "@components/decor/CornerOrnament.astro"
 import { Icon } from "astro-icon/components"
-
-// ─── Liens communauté (placeholder, à remplacer) ──────────────────────────
-const discordUrl = "https://discord.gg/your-invite"
-const kofiUrl = "https://ko-fi.com/your-page"
-const twitterUrl = "https://x.com/your-handle"
-const youtubeUrl = "https://youtube.com/@your-channel"
-
-const socials = [
-  { icon: "ph:discord-logo", href: discordUrl, label: "Discord" },
-  { icon: "ph:x-logo", href: twitterUrl, label: "X" },
-  { icon: "ph:youtube-logo", href: youtubeUrl, label: "YouTube" },
-  { icon: "ph:coffee", href: kofiUrl, label: "Ko-fi" },
-]
+import { socialLinks } from "@data/settings"
 
 // "Join the team" retiré : les candidatures passent par le Google Form (settings.joinformUrl).
 const subjects = ["General question", "Press & media", "Bug report", "Other"]
@@ -49,7 +37,7 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1.5"
 
         <div class="relative z-10 flex items-center gap-3">
           {
-            socials.map((s) => (
+            socialLinks.map((s) => (
               <a
                 href={s.href}
                 target="_blank"

@@ -23,3 +23,13 @@ export const modName: string = settings.modName || 'Cosmic Vessel';
 // Fallback : un ID absent produirait une vignette YouTube grise.
 // `||` (pas `??`) : un champ vidé dans l'admin vaut `""`, pas `null`.
 export const trailerVideoId: string = settings.youtubevideoID || 'vEUQxe2uM-w';
+
+// Réseaux affichés dans le Footer et sur /contact : dérivés des réglages, dans l'ordre
+// d'affichage. Un lien vide dans l'admin est omis (plutôt qu'un bouton mort ou un lien
+// placeholder). Source unique : ne plus recopier ces URLs en dur dans les composants.
+export const socialLinks = [
+  { icon: 'ph:discord-logo', href: settings.discordUrl, label: 'Discord' },
+  { icon: 'ph:x-logo', href: settings.twitterUrl, label: 'X' },
+  { icon: 'ph:youtube-logo', href: settings.youtubeUrl, label: 'YouTube' },
+  { icon: 'ph:coffee', href: settings.kofiUrl, label: 'Ko-fi' },
+].filter((s): s is { icon: string; href: string; label: string } => Boolean(s.href));

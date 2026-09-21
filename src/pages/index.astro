@@ -106,13 +106,17 @@ const teamTotal = 30
             <div class="flex   flex-wrap lg:flex-wrap lg:items-center justify-center gap-2   mt-6 lg:mt-10">
               <Button size="md" href="/character">Discover the mod</Button>
 
-              <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
-                Join Discord
-              </Button>
+              {discordUrl && (
+                <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
+                  Join Discord
+                </Button>
+              )}
 
-              <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
-                Donate on Ko-fi
-              </Button>
+              {kofiUrl && (
+                <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
+                  Donate on Ko-fi
+                </Button>
+              )}
             </div>
           </div>
         ) : (
@@ -131,13 +135,17 @@ const teamTotal = 30
               <div class="flex flex-col lg:flex-row flex-nowrap lg:flex-wrap lg:items-center justify-center lg:justify-start gap-2 lg:gap-4 mt-8 lg:mt-10">
                 <Button size="md" href="/character">Discover the mod</Button>
 
-                <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
-                  Join Discord
-                </Button>
+                {discordUrl && (
+                  <Button size="md" variant="outline" href={discordUrl} target="_blank" icon="ph:discord-logo">
+                    Join Discord
+                  </Button>
+                )}
 
-                <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
-                  Donate on Ko-fi
-                </Button>
+                {kofiUrl && (
+                  <Button size="md" variant="outline" href={kofiUrl} target="_blank" icon="ph:coffee">
+                    Donate on Ko-fi
+                  </Button>
+                )}
               </div>
             </div>
 

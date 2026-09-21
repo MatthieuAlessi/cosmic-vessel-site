@@ -22,7 +22,7 @@ const roster = (await getCollection("team")).map((entry) => ({
 }))
 
 // ─── Liens ─────────────────────────────────────────────────────────────────
-const discordUrl = "https://discord.gg/your-invite" // placeholder, à remplacer
+const { discordUrl } = settings
 // Candidatures : formulaire Google externe (Keystatic `joinformUrl`), pas /contact.
 const joinTeamUrl = settings.joinformUrl ?? "#"
 ---
@@ -92,15 +92,17 @@ const joinTeamUrl = settings.joinformUrl ?? "#"
           <Icon name="ph:users-three" class="w-5 h-5" />
           Join the team
         </a>
-        <a
-          href={discordUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn--outline py-3 px-8 text-sm"
-        >
-          <Icon name="ph:discord-logo" class="w-5 h-5" />
-          Discord
-        </a>
+        {discordUrl && (
+          <a
+            href={discordUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--outline py-3 px-8 text-sm"
+          >
+            <Icon name="ph:discord-logo" class="w-5 h-5" />
+            Discord
+          </a>
+        )}
       </div>
     </div>
   </section>

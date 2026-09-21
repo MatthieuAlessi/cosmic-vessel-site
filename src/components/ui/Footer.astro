@@ -1,18 +1,10 @@
 ---
 import { Icon } from "astro-icon/components"
 import { navLinks } from "@data/navigation"
-import { modName } from "@data/settings"
+import { modName, socialLinks } from "@data/settings"
 import Divider from "@components/decor/Divider.astro"
 import DividerH from "@components/decor/DividerH.astro"
 const year = new Date().getFullYear()
-
-// Réseaux (placeholder — à remplacer par les vrais liens, cf. /contact).
-const socials = [
-  { icon: "ph:discord-logo", href: "https://discord.gg/your-invite", label: "Discord" },
-  { icon: "ph:x-logo", href: "https://x.com/your-handle", label: "X" },
-  { icon: "ph:youtube-logo", href: "https://youtube.com/@your-channel", label: "YouTube" },
-  { icon: "ph:coffee", href: "https://ko-fi.com/your-page", label: "Ko-fi" },
-]
 
 const currentPath = Astro.url.pathname
 ---
@@ -36,8 +28,9 @@ const currentPath = Astro.url.pathname
     </nav>
 
     <!-- Réseaux -->
+    {socialLinks.length > 0 && (
     <div class="flex items-center gap-3">
-      {socials.map((s) => (
+      {socialLinks.map((s) => (
         <a
           href={s.href}
           target="_blank"
@@ -49,6 +42,7 @@ const currentPath = Astro.url.pathname
         </a>
       ))}
     </div>
+    )}
 
     <!-- Mentions -->
     <div class="pt-2">
