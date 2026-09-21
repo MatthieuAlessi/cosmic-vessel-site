@@ -34,7 +34,7 @@ export default defineConfig({
   // sans répéter `widths`/`layout` à chaque appel. N'affecte que <Image>/<Picture>
   // (les <img> bruts de la déco ne sont pas concernés).
   image: { layout: 'constrained' },
-  integrations: [icon(), react(), markdoc(), keystatic(), sitemap()],
+  integrations: [icon(), react(), markdoc(), keystatic(), sitemap({ filter: (page) => !page.includes('/contact/success') })],
   vite: {
     plugins: [tailwindcss()],
     // Swiper et PhotoSwipe sont importés de DEUX façons dans le projet : en

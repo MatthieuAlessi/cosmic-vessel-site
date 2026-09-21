@@ -1,0 +1,21 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Nav from '@components/ui/Nav.astro';
+import { Icon } from 'astro-icon/components';
+import { modName } from '@data/settings';
+---
+
+<Layout
+  title={`Message sent | ${modName}`}
+  description="Your message has been sent to the Cosmic Vessel team."
+>
+  <Nav />
+  <main class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+    <Icon name="ph:paper-plane-tilt" class="w-12 h-12 text-primary-100 mb-6" />
+    <h1 class="font-display text-3xl tracking-widest text-primary-100 uppercase mb-4">Message sent</h1>
+    <p class="text-foreground-500 font-body mb-10 max-w-md">
+      Thanks for reaching out — we'll get back to you within a few days.
+    </p>
+    <a href="/" class="btn btn--outline">Back to home</a>
+  </main>
+</Layout>

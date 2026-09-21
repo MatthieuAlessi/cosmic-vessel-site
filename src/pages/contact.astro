@@ -17,7 +17,7 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1.5"
 ---
 
 <Layout
-  title="Contact — Cosmic Vessel"
+  title="Contact | Cosmic Vessel"
   description="Get in touch with the team behind the Cosmic Vessel mod for Baldur's Gate 3."
 >
   <Nav />
@@ -73,7 +73,7 @@ const labelClass = "block font-ui text-sm text-foreground-100 mb-1.5"
             We usually reply within a few days.
           </p>
 
-          <form class="flex flex-col gap-4" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" name="contact">
+          <form class="flex flex-col gap-4" method="POST" action="/contact/success" data-netlify="true" data-netlify-honeypot="bot-field" name="contact">
             <input type="hidden" name="form-name" value="contact" />
 
             {/* Piege a bots : champ masque, jamais rempli par un humain. Netlify
